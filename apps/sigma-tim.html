@@ -1,0 +1,927 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Tim Enam Tahap</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: bilah atas + tangga enam tahap + satu kolom kerja; warna tiap tahap konsisten di seluruh aplikasi */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --sunk:#E9EDF2; --ink:#16202D; --muted:#566273; --line:#D9DFE7;
+  --accent:#23408F; --accent-ink:#FFFFFF;
+  --s1:#B86E0B; --s2:#2C64CF; --s3:#17805A; --s4:#7346C2; --s5:#C13A35; --s6:#0C8287;
+  --good:#17805A; --warn:#B86E0B; --bad:#C13A35;
+  --mark:#FFE7A8;
+  --f-disp:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F141B; --surface:#171E28; --sunk:#202936; --ink:#E7ECF3; --muted:#9AA6B6; --line:#2B3645;
+  --accent:#8FA9F0; --accent-ink:#0F141B;
+  --s1:#E6A03C; --s2:#7FA6F2; --s3:#4FC392; --s4:#AE8BEB; --s5:#EF7D77; --s6:#4CC2C6;
+  --good:#4FC392; --warn:#E6A03C; --bad:#EF7D77; --mark:#5C4A16; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0F141B; --surface:#171E28; --sunk:#202936; --ink:#E7ECF3; --muted:#9AA6B6; --line:#2B3645;
+  --accent:#8FA9F0; --accent-ink:#0F141B;
+  --s1:#E6A03C; --s2:#7FA6F2; --s3:#4FC392; --s4:#AE8BEB; --s5:#EF7D77; --s6:#4CC2C6;
+  --good:#4FC392; --warn:#E6A03C; --bad:#EF7D77; --mark:#5C4A16; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+h1,h2,h3,h4{font-family:var(--f-disp);line-height:1.15;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:1.55rem} h3{font-size:1.15rem} h4{font-size:1rem}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1100px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-disp);font-weight:800;font-size:1.15rem}
+.steps-ico{display:flex;align-items:flex-end;gap:2px;height:22px}
+.steps-ico i{display:block;width:4px;border-radius:1px}
+.who{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.9rem;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--surface);font-size:.85rem;white-space:nowrap}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;padding-bottom:0}
+nav.tabs a{padding:8px 14px;text-decoration:none;color:var(--muted);font-weight:600;border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs a[aria-current="page"]{color:var(--ink);border-color:var(--accent)}
+main{padding-block:22px 60px;display:grid;gap:22px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600}
+.btn:hover{border-color:var(--muted)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.good{background:var(--good);color:#fff;border-color:var(--good)}
+.btn.bad{background:transparent;color:var(--bad);border-color:var(--bad)}
+.btn.sm{padding:4px 10px;font-size:.85rem}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.link{background:none;border:0;color:var(--accent);cursor:pointer;padding:0;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.stack{display:grid;gap:12px}
+.eyebrow{font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--muted)}
+label.f{display:grid;gap:4px;font-weight:600;font-size:.92rem}
+input[type=text],input[type=date],input[type=number],select,textarea{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 10px;width:100%;min-width:0}
+textarea{min-height:150px;resize:vertical;line-height:1.6}
+.mono{font-family:var(--f-mono)}
+.tnum{font-variant-numeric:tabular-nums}
+/* Tangga tahap */
+.ladder{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;align-items:end}
+.rung{border:0;background:var(--sunk);border-radius:8px 8px 4px 4px;padding:8px 8px 10px;text-align:left;cursor:pointer;position:relative;overflow:hidden;color:var(--ink);min-width:0}
+.rung .n{font-family:var(--f-disp);font-weight:800;font-size:1.3rem;color:var(--sc)}
+.rung .k{font-weight:700;font-size:.85rem;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rung .d{font-size:.72rem;color:var(--muted);display:block}
+.rung .fill{position:absolute;left:0;bottom:0;height:4px;background:var(--sc)}
+.rung[aria-pressed="true"]{outline:2px solid var(--sc);background:var(--surface)}
+.rung.now::after{content:"Sekarang";position:absolute;top:6px;right:6px;font-size:.62rem;font-weight:700;color:var(--sc);text-transform:uppercase;letter-spacing:.06em}
+@media (max-width:640px){.rung .k,.rung .d{display:none}.rung.now::after{content:"•";font-size:1rem}}
+.days{display:flex;flex-wrap:wrap;gap:5px}
+.day{width:38px;height:34px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:700;font-size:.85rem;position:relative;font-variant-numeric:tabular-nums}
+.day[aria-pressed="true"]{background:var(--sc);color:#fff;border-color:var(--sc)}
+.day.ok{box-shadow:inset 0 -3px 0 var(--good)}
+.day.sub{box-shadow:inset 0 -3px 0 var(--warn)}
+.day.today{border-color:var(--sc);border-width:2px}
+.day:disabled{opacity:.35;cursor:not-allowed}
+/* Panel tahap */
+.stagehead{border-left:5px solid var(--sc);padding-left:14px;display:grid;gap:4px}
+.stagehead .eyebrow{color:var(--sc)}
+.verbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:10px}
+.verb{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--surface);display:grid;gap:3px}
+.verb .forms{font-family:var(--f-mono);font-weight:700;font-size:.95rem}
+.verb .forms span{color:var(--muted);font-weight:500}
+.verb .m{font-size:.85rem;color:var(--muted)}
+.verb.big .forms{font-size:1.1rem}
+.verb .ex{font-size:.85rem;font-style:italic}
+.say{border:0;background:none;cursor:pointer;color:var(--accent);font-size:.8rem;font-weight:700;padding:0;justify-self:start}
+table.t{border-collapse:collapse;width:100%;font-size:.92rem}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+table.t th{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.scroll{overflow-x:auto}
+.hide-forms .hv{color:transparent;background:var(--sunk);border-radius:4px;cursor:pointer;user-select:none}
+.formula{font-family:var(--f-mono);font-size:.9rem;background:var(--sunk);border-radius:6px;padding:6px 10px}
+.ex-list{display:grid;gap:8px}
+.ex-list > div{border-left:3px solid var(--sc);padding-left:10px}
+.ex-list .id{color:var(--muted);font-size:.88rem}
+.quizbox{border:2px solid var(--sc);border-radius:var(--r);padding:18px;display:grid;gap:12px}
+.qv{font-family:var(--f-mono);font-size:1.8rem;font-weight:700}
+.prog{height:6px;background:var(--sunk);border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--sc)}
+.fb-ok{color:var(--good);font-weight:700}.fb-no{color:var(--bad);font-weight:700}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:6px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 12px;cursor:pointer}
+.opt.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--surface))}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--surface))}
+.status{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.85rem;border-radius:999px;padding:3px 10px}
+.st-ok{background:color-mix(in srgb,var(--good) 15%,transparent);color:var(--good)}
+.st-sub{background:color-mix(in srgb,var(--warn) 15%,transparent);color:var(--warn)}
+.st-no{background:color-mix(in srgb,var(--bad) 15%,transparent);color:var(--bad)}
+.st-none{background:var(--sunk);color:var(--muted)}
+mark.vk{background:var(--mark);color:inherit;border-radius:3px;padding:0 2px}
+.preview{border:1px dashed var(--line);border-radius:8px;padding:12px;font-size:.95rem;max-height:260px;overflow:auto}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:4px 0}
+.chk input{margin-top:5px}
+/* Matriks koordinator */
+.matrix td,.matrix th{padding:3px;text-align:center}
+.matrix th:first-child,.matrix td:first-child{text-align:left;white-space:nowrap;padding-right:10px;position:sticky;left:0;background:var(--surface)}
+.cell{width:26px;height:26px;border-radius:5px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:.72rem;font-weight:700}
+.cell.ok{background:var(--good);border-color:var(--good);color:#fff}
+.cell.sub{background:color-mix(in srgb,var(--warn) 25%,var(--surface));border-color:var(--warn)}
+.cell.no{background:color-mix(in srgb,var(--bad) 20%,var(--surface));border-color:var(--bad)}
+.cell.sel{outline:2px solid var(--ink)}
+.simak{display:flex;flex-wrap:wrap;gap:6px}
+.simak button{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:4px 8px;font-family:var(--f-mono);font-size:.82rem;cursor:pointer}
+.simak button.err{background:var(--bad);border-color:var(--bad);color:#fff}
+.setlabel{font-size:.72rem;font-weight:700;color:var(--muted);width:100%;margin-top:4px}
+/* Debat */
+.timer{font-family:var(--f-mono);font-size:clamp(3rem,12vw,6rem);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.timer.warn{color:var(--warn)}.timer.over{color:var(--bad)}
+.side{border-radius:var(--r);padding:14px;border:1px solid var(--line)}
+.side.pos{border-top:5px solid var(--s2)}.side.neg{border-top:5px solid var(--s5)}
+.phases{display:flex;gap:4px;flex-wrap:wrap}
+.ph{font-size:.75rem;font-weight:700;padding:4px 8px;border-radius:6px;background:var(--sunk);color:var(--muted)}
+.ph.cur{background:var(--s5);color:#fff}.ph.done{text-decoration:line-through}
+.notice{border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--surface);padding:10px 14px;border-radius:8px;font-size:.92rem}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-weight:600;z-index:20;max-width:calc(100% - 32px)}
+.ai{white-space:pre-wrap;background:var(--sunk);border-radius:8px;padding:12px;font-size:.93rem}
+details summary{cursor:pointer;font-weight:700}
+.teamcard{display:grid;gap:6px;text-align:left;cursor:pointer}
+.teamcard:hover{border-color:var(--muted)}
+.slotgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:10px}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.rung,.day,.btn{transition:background .15s,border-color .15s}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <div class="brand"><span class="steps-ico" aria-hidden="true"><i style="height:6px;background:var(--s1)"></i><i style="height:9px;background:var(--s2)"></i><i style="height:12px;background:var(--s3)"></i><i style="height:15px;background:var(--s4)"></i><i style="height:18px;background:var(--s5)"></i><i style="height:22px;background:var(--s6)"></i></span>Tim Enam Tahap</div>
+      <div class="who" id="who"></div>
+    </div>
+    <nav class="tabs" id="tabs"></nav>
+  </div>
+</header>
+<main class="wrap" id="main"><div class="empty">Memuat data tim…</div></main>
+<div id="toast" class="toast" hidden></div>
+
+<script src="sigma-tim-content.js"></script>
+<script src="sigma-tim-core.js"></script>
+<script>
+(function(){
+const E = window.ET, esc = E.esc;
+const $ = s => document.querySelector(s);
+const clone = o => JSON.parse(JSON.stringify(o || {}));
+const SC = n => `var(--s${n})`;
+const S = { mode:null, uid:null, owner:false, teams:{}, teamsLoaded:false, tid:null, logs:{}, debates:{},
+  view:"belajar", st:null, dy:null, drafts:{}, q1:null, q2:{}, rev:null, revStage:null, simak:null,
+  debateId:null, hideForms:false, verbPick:{}, ai:{}, guest:false, confirm:null, slow:false };
+const LS = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
+let store = null, unsubs = [];
+
+/* ---------- Penyimpanan: db bersama atau lokal ---------- */
+function localStore(){
+  const KEY = "et_tim_local_v1"; let data;
+  try { data = JSON.parse(LS.get(KEY)) || {}; } catch(e){ data = {}; }
+  data.teams = data.teams || {}; data.logs = data.logs || {}; data.debates = data.debates || {};
+  const subs = { teams:[], logs:{}, debates:{} };
+  const save = () => LS.set(KEY, JSON.stringify(data));
+  const emit = (kind, tid) => { if (kind === "teams") subs.teams.forEach(f => f(clone(data.teams))); else (subs[kind][tid]||[]).forEach(f => f(clone(data[kind][tid]||{}))); };
+  const sub = (kind, tid, cb) => { (subs[kind][tid] = subs[kind][tid] || []).push(cb); setTimeout(() => cb(clone(data[kind][tid]||{})), 0); return () => { subs[kind][tid] = (subs[kind][tid]||[]).filter(f => f !== cb); }; };
+  return {
+    onTeams(cb){ subs.teams.push(cb); setTimeout(() => cb(clone(data.teams)), 0); return () => {}; },
+    onLogs:(tid, cb) => sub("logs", tid, cb), onDebates:(tid, cb) => sub("debates", tid, cb),
+    async setTeam(tid, o){ data.teams[tid] = clone(o); save(); emit("teams"); },
+    async setLog(tid, id, o){ (data.logs[tid] = data.logs[tid] || {})[id] = clone(o); save(); emit("logs", tid); },
+    async setDebate(tid, id, o){ (data.debates[tid] = data.debates[tid] || {})[id] = clone(o); save(); emit("debates", tid); },
+    async delDebate(tid, id){ if (data.debates[tid]) delete data.debates[tid][id]; save(); emit("debates", tid); }
+  };
+}
+function dbStore(db){
+  const coll = (path, cb) => db.collection(path).onSnapshot(s => { const o = {}; s.docs.forEach(d => { o[d.id] = d.data(); }); cb(o, s.metadata); }, err => { toast("Data tidak bisa dimuat: " + (err && err.message || "coba muat ulang halaman")); });
+  return {
+    onTeams: cb => coll("teams", cb),
+    onLogs: (tid, cb) => coll(`teams/${tid}/logs`, cb),
+    onDebates: (tid, cb) => coll(`teams/${tid}/debates`, cb),
+    setTeam: (tid, o) => db.doc(`teams/${tid}`).set(o),
+    setLog: (tid, id, o) => db.doc(`teams/${tid}/logs/${id}`).set(o),
+    setDebate: (tid, id, o) => db.doc(`teams/${tid}/debates/${id}`).set(o),
+    delDebate: (tid, id) => db.doc(`teams/${tid}/debates/${id}`).delete()
+  };
+}
+const writeErr = e => toast(e && e.code === "invalid_argument" ? "Anda belum punya izin menyimpan. Minta pemilik aplikasi mengundang Anda sebagai Editor." : e && e.code === "quota_exceeded" ? "Penyimpanan penuh. Hubungi pemilik aplikasi." : "Gagal menyimpan. Periksa koneksi lalu coba lagi.");
+
+/* ---------- Identitas ---------- */
+const team = () => S.teams[S.tid];
+function mySlot(){
+  const t = team(); if (!t) return null;
+  if (S.guest) return null;
+  if (S.uid){
+    if (t.coord && t.coord.uid === S.uid) return "koor";
+    const m = (t.members||[]).find(m => m.uid === S.uid); if (m) return m.k;
+  }
+  return null;
+}
+const isKoor = () => mySlot() === "koor" || (S.owner && S.mode === "db");
+const nameOf = (k, t=team()) => { if (!t) return ""; if (k === "koor") return t.coord.name; const m = (t.members||[]).find(m => m.k === k); return m ? m.name : k; };
+const people = (t=team()) => t ? [{k:"koor", name:t.coord.name, role:"Koordinator"}].concat((t.members||[]).map(m => ({k:m.k, name:m.name, role:"Anggota"}))) : [];
+const pos = () => { const t = team(); return t ? E.position(t.start, t.holidays||{}) : null; };
+
+/* ---------- Log ---------- */
+const logId = (k, s, d) => `${k}_s${s}_d${d}`;
+const getLog = (k, s, d) => S.logs[logId(k, s, d)] || null;
+function saveLog(k, s, d, patch){
+  if (!k) { toast("Pilih nama Anda dulu agar hasil tersimpan."); return; }
+  const id = logId(k, s, d); const cur = clone(S.logs[id] || {k, s, d});
+  Object.assign(cur, patch, {upd: Date.now()});
+  S.logs[id] = cur; render();
+  store.setLog(S.tid, id, cur).catch(writeErr);
+}
+const statusOf = l => !l ? "none" : l.status === "diterima" ? "ok" : l.status === "ulang" ? "no" : (l.quiz || l.text || l.used || l.notes || l.prep) ? "sub" : "none";
+const STATUS_TXT = {ok:"Diterima koordinator", sub:"Menunggu verifikasi", no:"Perlu diulang", none:"Belum dikerjakan"};
+const statusPill = l => { const s = statusOf(l); return `<span class="status st-${s}">${STATUS_TXT[s]}</span>`; };
+
+/* ---------- Render utama ---------- */
+let toastT;
+function toast(msg){ const el = $("#toast"); el.textContent = msg; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => el.hidden = true, 3600); }
+const VIEWS = [["belajar","Belajar"],["tim","Tim & Verifikasi"],["debat","Debat"],["jadwal","Jadwal"],["panduan","Panduan"]];
+
+function render(){
+  const ae = document.activeElement; const fid = ae && ae.id; let sel = null;
+  if (fid && ae.selectionStart != null) { try { sel = [ae.selectionStart, ae.selectionEnd]; } catch(e){} }
+  renderHeader();
+  const m = $("#main");
+  if (!S.teamsLoaded) m.innerHTML = `<div class="empty">${S.slow ? "Data tim belum bisa dijangkau. Periksa koneksi; halaman akan memuat otomatis begitu tersambung." : "Memuat data tim…"}</div>`;
+  else if (!team()) m.innerHTML = viewTeams();
+  else if (!mySlot() && !S.guest && !isKoor()) m.innerHTML = viewClaim();
+  else {
+    const v = S.view;
+    m.innerHTML = v === "tim" ? viewTim() : v === "debat" ? viewDebat() : v === "jadwal" ? viewJadwal() : v === "panduan" ? viewPanduan() : viewBelajar();
+  }
+  if (fid) { const el = document.getElementById(fid); if (el) { el.focus({preventScroll:true}); if (sel && el.setSelectionRange) try { el.setSelectionRange(sel[0], sel[1]); } catch(e){} } }
+  tickTimer();
+}
+function renderHeader(){
+  const t = team(), slot = mySlot();
+  const p = pos();
+  $("#who").innerHTML = !t ? (S.mode === "local" ? `<span class="chip">Mode lokal</span>` : "") :
+    `<span class="chip">${esc(t.name)}</span>` +
+    (p ? `<span class="chip" style="border-color:${SC(p.stage)}">${p.before ? "Mulai " + E.fmtShort(t.start) : p.done ? "Program selesai" : `Tahap ${p.stage} · Hari ${p.day}`}</span>` : "") +
+    `<span class="chip">${slot ? esc(nameOf(slot)) + (slot === "koor" ? " · Koordinator" : " · Anggota") : isKoor() ? "Pemilik · Admin" : "Tamu"}</span>` +
+    `<button class="link small" data-act="switch-team">Ganti tim</button>`;
+  $("#tabs").innerHTML = t && (mySlot() || S.guest || isKoor()) ? VIEWS.map(([k,n]) => `<a href="#${k}" ${S.view===k?'aria-current="page"':""}>${n}</a>`).join("") : "";
+}
+
+/* ---------- Pilih / buat tim ---------- */
+function nextMonday(){ const d = new Date(); d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7)); return E.iso(d); }
+function viewTeams(){
+  const list = Object.entries(S.teams).sort((a,b) => (a[1].created||0) - (b[1].created||0));
+  return `
+  <section class="stack">
+    <div class="stagehead" style="--sc:var(--accent)"><span class="eyebrow">Mulai di sini</span><h2>Pilih tim Anda atau buat tim baru</h2>
+    <p class="muted">Satu tim terdiri dari 1 koordinator dan 5 anggota. Setiap tim menjalani 6 tahap, masing-masing 30 hari kerja, mulai dari tanggal yang ditentukan tim.</p></div>
+    ${S.mode === "local" ? `<div class="notice">Mode lokal: data hanya tersimpan di perangkat ini. Buka aplikasi melalui tautan Claude agar tim bisa berbagi data.</div>` : ""}
+    ${list.length ? `<div class="grid2">${list.map(([id,t]) => { const p = E.position(t.start, t.holidays||{}); return `
+      <button class="card teamcard" data-act="pick-team" data-id="${id}">
+        <span class="eyebrow">${p.before ? "Mulai " + E.fmt(t.start) : p.done ? "Selesai" : "Tahap " + p.stage + " · " + E.STAGES[p.stage-1].k + " · Hari " + p.day}</span>
+        <h3>${esc(t.name)}</h3>
+        <span class="small muted">Koordinator: ${esc(t.coord.name)} · Anggota: ${(t.members||[]).map(m => esc(m.name)).join(", ")}</span>
+      </button>`; }).join("")}</div>` : `<div class="card empty">Belum ada tim. Buat tim pertama dengan formulir di bawah.</div>`}
+  </section>
+  <section class="card stack">
+    <h3>Buat tim baru</h3>
+    <p class="small muted">Orang yang membuat tim otomatis menjadi koordinatornya.</p>
+    <div class="grid2">
+      <label class="f">Nama tim<input type="text" id="nt-name" placeholder="mis. Tim Melati" value="${esc(S.drafts["nt-name"]||"")}"></label>
+      <label class="f">Nama koordinator (Anda)<input type="text" id="nt-coord" value="${esc(S.drafts["nt-coord"]||"")}"></label>
+      <label class="f">Tanggal mulai (hari kerja)<input type="date" id="nt-start" value="${esc(S.drafts["nt-start"]||nextMonday())}"></label>
+    </div>
+    <div class="grid2">${[1,2,3,4,5].map(i => `<label class="f">Anggota ${i}<input type="text" id="nt-m${i}" value="${esc(S.drafts["nt-m"+i]||"")}"></label>`).join("")}</div>
+    <div class="row"><button class="btn pri" data-act="create-team">Buat tim</button></div>
+  </section>`;
+}
+function createTeam(){
+  const v = id => (document.getElementById(id).value || "").trim();
+  const name = v("nt-name"), coord = v("nt-coord"), start = v("nt-start");
+  const mem = [1,2,3,4,5].map(i => v("nt-m"+i));
+  if (!name || !coord || mem.some(x => !x) || !start) { toast("Lengkapi nama tim, koordinator, 5 anggota, dan tanggal mulai."); return; }
+  const tid = "t" + Date.now().toString(36);
+  const t = { name, start, created: Date.now(), coord:{name:coord, uid:S.uid || null}, holidays: clone(E.HOLIDAYS),
+    members: mem.map((n,i) => ({k:"m"+(i+1), name:n, uid:null})) };
+  S.teams[tid] = t; S.tid = tid; LS.set("et_tim_tid", tid); S.drafts = {};
+  store.setTeam(tid, t).then(() => toast("Tim dibuat. Bagikan tautan aplikasi ini kepada anggota.")).catch(writeErr);
+  subscribeTeam(); location.hash = "#panduan"; render();
+}
+function viewClaim(){
+  const t = team();
+  const slots = people(t).map(p => { const raw = p.k === "koor" ? t.coord : t.members.find(m => m.k === p.k); return {...p, taken: !!(raw && raw.uid)}; });
+  return `<section class="stack">
+    <div class="stagehead" style="--sc:var(--accent)"><span class="eyebrow">${esc(t.name)}</span><h2>Siapa Anda?</h2>
+    <p class="muted">Pilih nama Anda sekali saja. Setelah itu aplikasi mengenali Anda setiap kali dibuka. ${S.uid ? "" : "Identitas Anda tidak terbaca, jadi pilihan ini hanya tersimpan di perangkat ini."}</p></div>
+    <div class="slotgrid">${slots.map(p => `<button class="card teamcard" data-act="claim" data-k="${p.k}" ${p.taken ? "disabled" : ""}>
+      <span class="eyebrow">${p.role}</span><h3>${esc(p.name)}</h3><span class="small muted">${p.taken ? "Sudah dipakai" : "Pilih nama ini"}</span></button>`).join("")}</div>
+    ${S.confirm && S.confirm.type === "claim" ? `<div class="card row"><span>Anda adalah <b>${esc(nameOf(S.confirm.k))}</b>?</span><button class="btn pri" data-act="claim-yes">Ya, ini saya</button><button class="btn" data-act="claim-no">Batal</button></div>` : ""}
+    <div class="row"><button class="link" data-act="guest">Lihat sebagai tamu (tanpa menyimpan)</button></div>
+  </section>`;
+}
+function claim(k){
+  const t = clone(team()); const me = S.uid || localId();
+  if (k === "koor") { if (t.coord.uid) return; t.coord.uid = me; }
+  else { const m = t.members.find(m => m.k === k); if (!m || m.uid) return; m.uid = me; }
+  if (!S.uid) S.uid = me;
+  S.teams[S.tid] = t; S.confirm = null; render();
+  store.setTeam(S.tid, t).then(() => toast("Selamat datang, " + nameOf(k) + "!")).catch(writeErr);
+}
+function localId(){ let id = LS.get("et_tim_uid"); if (!id) { id = "local_" + Math.random().toString(36).slice(2,10); LS.set("et_tim_uid", id); } return id; }
+
+/* ---------- Belajar ---------- */
+function ladder(selSt, p, who){
+  return `<div class="ladder">${E.STAGES.map(s => {
+    let done = 0; for (let d=1; d<=30; d++) if (statusOf(getLog(who, s.n, d)) === "ok") done++;
+    const now = p && !p.before && !p.done && p.stage === s.n;
+    const r = p ? `${E.fmtShort(p.list[(s.n-1)*30])}–${E.fmtShort(p.list[(s.n-1)*30+29])}` : "";
+    return `<button class="rung ${now?"now":""}" style="--sc:${SC(s.n)};padding-top:${8 + s.n*4}px" aria-pressed="${selSt===s.n}" data-act="pick-stage" data-s="${s.n}">
+      <span class="n">${s.n}</span><span class="k">${s.k}</span><span class="d">${r}</span><span class="fill" style="width:${done/30*100}%"></span></button>`;
+  }).join("")}</div>`;
+}
+function viewBelajar(){
+  const p = pos(); const who = mySlot();
+  const curSt = p.before ? 1 : p.stage, curDy = p.before ? 1 : p.day;
+  const st = S.st || curSt, dy = S.dy || (st === curSt ? curDy : 1);
+  const unlockedIdx = p.before ? -1 : p.idx;
+  const dayBtns = Array.from({length:30}, (_,i) => {
+    const d = i+1, idx = (st-1)*30 + i, l = getLog(who, st, d), s = statusOf(l);
+    return `<button class="day ${s==="ok"?"ok":s==="sub"?"sub":""} ${idx===p.idx && !p.before?"today":""}" aria-pressed="${d===dy}" data-act="pick-day" data-d="${d}" title="${E.fmt(p.list[idx], true)}">${d}</button>`;
+  }).join("");
+  const idx = (st-1)*30 + dy - 1;
+  const future = idx > unlockedIdx && !isKoor();
+  const S_ = E.STAGES[st-1];
+  return `
+  <section class="stack">
+    ${ladder(st, p, who)}
+    <div class="card stack" style="--sc:${SC(st)}">
+      <div class="row" style="justify-content:space-between">
+        <div class="stagehead"><span class="eyebrow">Tahap ${st} · ${S_.k} (${S_.id})</span><h2>Hari ${dy} · ${E.fmt(p.list[idx], true)}</h2></div>
+        <div class="row">${statusPill(getLog(who, st, dy))}${(st!==curSt||dy!==curDy) ? `<button class="btn sm" data-act="go-today">Ke hari ini</button>` : ""}</div>
+      </div>
+      <div class="days" aria-label="Pilih hari">${dayBtns}</div>
+      ${p.before ? `<div class="notice">Program dimulai ${E.fmt(team().start, true)}. Materi hari pertama bisa dipelajari lebih dulu.</div>` : ""}
+      ${future ? `<div class="notice">Ini hari yang belum tiba (pratinjau). Anda bisa mempelajari materinya, tetapi setoran baru dibuka pada ${E.fmt(p.list[idx], true)}.</div>` : ""}
+      ${!who ? `<div class="notice">${isKoor() ? "Anda melihat sebagai pemilik/admin. Hasil latihan di sini tidak dicatat sebagai setoran anggota." : "Anda melihat sebagai tamu. Hasil latihan tidak disimpan."}</div>` : ""}
+    </div>
+    ${stagePanel(st, dy, who, future)}
+  </section>`;
+}
+function stagePanel(st, dy, who, future){
+  const ctx = {st, dy, who, canSave: !!who && !future, log: getLog(who, st, dy)};
+  return `<div style="--sc:${SC(st)}" class="stack">${[p1,p2,p3,p4,p5,p6][st-1](ctx)}</div>`;
+}
+const verbCard = (v, big, ex) => `<div class="verb ${big?"big":""}">
+  <div class="forms">${esc(v.b)} <span>·</span> ${esc(v.p)} <span>·</span> ${esc(v.pp)}</div>
+  <div class="m">${esc(v.m)}</div>${ex ? `<div class="ex">${esc(E.conj(v,"spast"))}<br>${esc(E.conj(v,"pperf"))}</div>` : ""}
+  ${E.canSpeak ? `<button class="say" data-act="say" data-t="${esc(v.b + ", " + E.first(v.p) + ", " + E.first(v.pp))}">▶ Dengarkan</button>` : ""}</div>`;
+const reviewNote = l => l && l.review && (l.review.note || (l.review.errors||[]).length) ? `<div class="notice"><b>Catatan koordinator:</b> ${esc(l.review.note||"")} ${(l.review.errors||[]).length ? `<br>Kata yang perlu diulang: <span class="mono">${l.review.errors.map(i => esc(E.VERBS[i][0])).join(", ")}</span>` : ""}</div>` : "";
+
+/* Tahap 1: Remembering */
+function p1(c){
+  const prev = []; for (let n=1; n<c.dy; n++) prev.push(n);
+  const today = E.setVerbs(c.dy);
+  const q = S.q1 && S.q1.dy === c.dy ? S.q1 : null;
+  return `
+  <div class="card stack">
+    <div class="row" style="justify-content:space-between"><h3>Langkah 1 · Ulang dulu Set 1${c.dy>2 ? "–" + (c.dy-1) : ""} </h3>
+      ${prev.length ? `<label class="row small"><input type="checkbox" id="hideforms" data-act="hideforms" ${S.hideForms?"checked":""}> Sembunyikan V2/V3 untuk menguji diri</label>` : ""}</div>
+    ${prev.length ? `<p class="small muted">Ucapkan berurutan, dari set pertama sampai set kemarin, sebelum masuk ke kata baru. Klik kotak abu-abu untuk membuka jawaban.</p>
+    <div class="scroll ${S.hideForms?"hide-forms":""}"><table class="t"><thead><tr><th>Set</th><th>V1</th><th>V2</th><th>V3</th><th>Arti</th></tr></thead><tbody>
+      ${prev.map(n => E.setVerbs(n).map((v,j) => `<tr>${j===0?`<td rowspan="5" class="tnum"><b>${n}</b></td>`:""}<td class="mono">${esc(v.b)}</td><td class="mono"><span class="hv" data-act="reveal">${esc(v.p)}</span></td><td class="mono"><span class="hv" data-act="reveal">${esc(v.pp)}</span></td><td class="small">${esc(v.m)}</td></tr>`).join("")).join("")}
+    </tbody></table></div>` : `<p class="muted">Hari pertama: belum ada kata sebelumnya. Langsung ke 5 kata baru.</p>`}
+  </div>
+  <div class="card stack">
+    <h3>Langkah 2 · 5 kata baru hari ini (Set ${c.dy})</h3>
+    <div class="verbs">${today.map(v => verbCard(v, true, true)).join("")}</div>
+  </div>
+  <div class="card stack">
+    <div class="row" style="justify-content:space-between"><h3>Langkah 3 · Kuis setoran (Set 1–${c.dy}, berurutan)</h3>${c.log && c.log.quiz ? `<span class="chip tnum">Nilai terakhir: ${c.log.quiz.score}/${c.log.quiz.total}</span>` : ""}</div>
+    <p class="small muted">Kuis selalu dimulai dari Set 1, lalu Set 2, dan seterusnya sampai set hari ini. Tulis V2 dan V3 untuk setiap kata. Nilai minimal 90% sebelum setoran lisan kepada koordinator.</p>
+    ${q ? quiz1(q) : `<div class="row"><button class="btn pri" data-act="q1-start" data-mode="full">Mulai kuis setoran (${c.dy*5} kata)</button><button class="btn" data-act="q1-start" data-mode="today">Latihan 5 kata hari ini saja</button></div>`}
+  </div>
+  <div class="card stack"><h3>Langkah 4 · Setoran lisan kepada koordinator</h3>
+    <p class="small muted">Koordinator menyimak Anda mengucapkan semua kata dari Set 1 sampai Set ${c.dy} (V1–V2–V3), lalu menandai kata yang salah dan menerima setoran.</p>
+    <div class="row">${statusPill(c.log)}</div>${reviewNote(c.log)}</div>`;
+}
+function quiz1(q){
+  if (q.i >= q.items.length) {
+    const sc = q.res.filter(Boolean).length, tot = q.items.length, pct = Math.round(sc/tot*100);
+    const wrong = q.items.filter((_,i) => !q.res[i]);
+    return `<div class="quizbox"><h3>Selesai: ${sc}/${tot} (${pct}%)</h3>
+      <p class="${pct>=90?"fb-ok":"fb-no"}">${pct>=90 ? "Bagus! Siap disetor kepada koordinator." : "Belum mencapai 90%. Ulangi kata yang salah lalu coba lagi."}</p>
+      ${wrong.length ? `<div class="verbs">${wrong.map(i => verbCard(E.verb(i))).join("")}</div>` : ""}
+      <div class="row">${q.mode==="full" ? `<span class="small muted">${q.saved ? "Hasil tersimpan." : ""}</span>` : `<span class="small muted">Latihan tidak disimpan.</span>`}<button class="btn" data-act="q1-close">Tutup</button></div></div>`;
+  }
+  const v = E.verb(q.items[q.i]), fb = q.fb;
+  return `<div class="quizbox">
+    <div class="prog"><i style="width:${q.i/q.items.length*100}%"></i></div>
+    <div class="row" style="justify-content:space-between"><span class="eyebrow">Set ${v.set} · kata ${q.i+1} dari ${q.items.length}</span><span class="small tnum">Benar: ${q.res.filter(Boolean).length}</span></div>
+    <div><div class="qv">${esc(v.b)}</div><div class="muted">${esc(v.m)}</div></div>
+    <div class="grid2"><label class="f">V2 (past)<input type="text" id="q1-p" autocomplete="off" autocapitalize="off" spellcheck="false" ${fb?"disabled":""} value="${esc(fb?fb.p:"")}"></label>
+    <label class="f">V3 (past participle)<input type="text" id="q1-pp" autocomplete="off" autocapitalize="off" spellcheck="false" ${fb?"disabled":""} value="${esc(fb?fb.pp:"")}"></label></div>
+    ${fb ? `<p class="${fb.ok?"fb-ok":"fb-no"}">${fb.ok ? "Benar!" : "Belum tepat."} <span class="mono">${esc(v.b)} – ${esc(v.p)} – ${esc(v.pp)}</span></p>
+      <div class="row"><button class="btn pri" id="q1-next" data-act="q1-next">Lanjut ↵</button></div>`
+    : `<div class="row"><button class="btn pri" data-act="q1-check">Periksa ↵</button></div>`}
+  </div>`;
+}
+function q1Start(mode, dy){
+  const items = mode === "today" ? [0,1,2,3,4].map(j => (dy-1)*5+j) : Array.from({length: dy*5}, (_,i) => i);
+  S.q1 = {dy, mode, items, i:0, res:[], fb:null}; render(); setTimeout(() => { const el = $("#q1-p"); if (el) el.focus(); }, 0);
+}
+function q1Check(){
+  const q = S.q1; const v = E.verb(q.items[q.i]);
+  const p = $("#q1-p").value, pp = $("#q1-pp").value;
+  const ok = E.ok(p, v.p) && E.ok(pp, v.pp);
+  q.res[q.i] = ok; q.fb = {p, pp, ok}; render(); setTimeout(() => { const b = $("#q1-next"); if (b) b.focus(); }, 0);
+}
+function q1Next(){
+  const q = S.q1; q.i++; q.fb = null;
+  if (q.i >= q.items.length && q.mode === "full") {
+    const sc = q.res.filter(Boolean).length;
+    saveLog(mySlot(), 1, q.dy, {quiz:{score:sc, total:q.items.length, wrong:q.items.filter((_,i)=>!q.res[i]), at:Date.now()}, status: (getLog(mySlot(),1,q.dy)||{}).status === "diterima" ? "diterima" : "menunggu"});
+    q.saved = !!mySlot();
+  }
+  render(); setTimeout(() => { const el = $("#q1-p"); if (el) el.focus(); }, 0);
+}
+
+/* Tahap 2: Understanding */
+function tenseTable(v){
+  return `<div class="scroll"><table class="t"><thead><tr><th>Tense</th><th>Kalimat (+)</th></tr></thead><tbody>${E.TENSES.map(t => { const s = E.conj(v, t.k); return `<tr><td class="small"><b>${t.n}</b><br><span class="muted">${t.id}</span></td><td>${s ? esc(s) : `<span class="muted small">Kata kerja statif: tidak lazim dalam bentuk continuous</span>`}</td></tr>`; }).join("")}</tbody></table></div>`;
+}
+const verbSelect = (id, val) => `<select id="${id}" data-act="verbpick">${E.VERBS.map((v,i) => `<option value="${i}" ${i==val?"selected":""}>Set ${Math.floor(i/5)+1} · ${esc(v[0])}</option>`).join("")}</select>`;
+function mcQuiz(key, qs, onDone){
+  const st = S.q2[key] || (S.q2[key] = {ans:{}});
+  const done = Object.keys(st.ans).length === qs.length;
+  const sc = qs.filter((q,i) => st.ans[i] === q.a).length;
+  return `<div class="stack">${qs.map((q,i) => `<div class="stack" style="gap:6px"><b>${i+1}. ${esc(q.q)}</b><div class="opts">${q.o.map((o,j) => {
+    const a = st.ans[i]; const cls = a == null ? "" : j === q.a ? "right" : j === a ? "wrong" : "";
+    return `<button class="opt ${cls}" data-act="mc" data-key="${key}" data-i="${i}" data-j="${j}" ${a!=null?"disabled":""}>${esc(o)}</button>`; }).join("")}</div></div>`).join("")}
+    ${done ? `<p class="${sc===qs.length?"fb-ok":"fb-no"}">Nilai: ${sc}/${qs.length}</p><div class="row">${onDone ? `<button class="btn pri" data-act="${onDone}">Simpan hasil</button>` : ""}<button class="btn" data-act="mc-reset" data-key="${key}">Ulangi</button></div>` : ""}</div>`;
+}
+function p2(c){
+  const L = E.LESSONS[c.dy-1]; const setV = E.setVerbs(c.dy);
+  const pick = S.verbPick["s2"] != null ? S.verbPick["s2"] : (c.dy-1)*5;
+  const v = E.verb(+pick);
+  return `
+  <div class="card stack">
+    <h3>${esc(L.t)}</h3><p>${esc(L.s)}</p>
+    <div class="stack" style="gap:6px">${L.f.map(f => `<div class="formula">${esc(f)}</div>`).join("")}</div>
+    <h4>Contoh</h4><div class="ex-list">${L.ex.map(e => `<div><div>${esc(e[0])}</div><div class="id">${esc(e[1])}</div></div>`).join("")}</div>
+    <p class="small"><b>Tips:</b> ${esc(L.tip)}</p>
+  </div>
+  <div class="card stack">
+    <h3>Kata hafalan dalam pelajaran ini</h3>
+    <p class="small muted">Set ${c.dy} muncul lagi di sini supaya hafalan tahap 1 terpakai dalam struktur kalimat.</p>
+    ${L.tk ? `<div class="scroll"><table class="t"><thead><tr><th>Kata</th><th>(+)</th><th>(−)</th><th>(?)</th></tr></thead><tbody>${setV.map(v => { const a = E.conj(v,L.tk,"+"); return `<tr><td class="mono"><b>${esc(v.b)}</b></td>${a ? `<td>${esc(a)}</td><td>${esc(E.conj(v,L.tk,"-"))}</td><td>${esc(E.conj(v,L.tk,"?"))}</td>` : `<td colspan="3" class="muted small">Kata kerja statif: tidak lazim dalam bentuk continuous.</td>`}</tr>`; }).join("")}</tbody></table></div>`
+      : `<div class="verbs">${setV.map(v => verbCard(v)).join("")}</div>`}
+    ${L.showFam ? `<h4>Tabel keluarga kata</h4><div class="scroll"><table class="t"><thead><tr><th>Noun</th><th>Verb</th><th>Adjective</th><th>Adverb</th></tr></thead><tbody>${E.WORDFAM.map(r => `<tr>${r.map(x => `<td>${esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` : ""}
+    ${(L.tk || L.showAll) ? `<details ${L.showAll?"open":""}><summary>Lihat satu kata dalam 16 tenses</summary><div class="stack" style="margin-top:10px"><label class="f">Pilih kata kerja${verbSelect("vp-s2", pick)}</label>${tenseTable(v)}</div></details>` : ""}
+  </div>
+  <div class="card stack"><div class="row" style="justify-content:space-between"><h3>Latihan pemahaman</h3>${c.log && c.log.quiz ? `<span class="chip tnum">Tersimpan: ${c.log.quiz.score}/${c.log.quiz.total}</span>` : ""}</div>
+    ${mcQuiz("s2d"+c.dy, L.q, c.canSave ? "save-s2" : null)}
+    <p class="small muted">Setelah latihan, jelaskan kembali pola pelajaran ini secara lisan kepada koordinator dengan kata-kata Anda sendiri.</p>
+    <div class="row">${statusPill(c.log)}</div>${reviewNote(c.log)}</div>`;
+}
+
+/* Tahap 3: Implementing */
+function targetVerbs(dy){ return E.targetSets(dy).flatMap(n => E.setVerbs(n)); }
+function p3(c){
+  const T = E.IMPL[c.dy-1]; const tv = targetVerbs(c.dy); const used = new Set((c.log && c.log.used) || []);
+  const nd = "s3n-"+c.dy;
+  return `
+  <div class="card stack"><h3>${esc(T.t)}</h3>
+    <p class="small muted">Diskusi terpimpin 45 menit, dipandu koordinator. Semua anggota wajib memakai kata target.</p>
+    <div class="scroll"><table class="t"><tbody>
+      <tr><td class="tnum"><b>5′</b></td><td><b>Pemanasan:</b> koordinator menyebut 10 kata target; anggota menjawab V2–V3 secara bergiliran.</td></tr>
+      <tr><td class="tnum"><b>30′</b></td><td><b>Diskusi terpimpin:</b> setiap anggota menjawab minimal satu pertanyaan, lalu bertanya balik kepada anggota lain.</td></tr>
+      <tr><td class="tnum"><b>10′</b></td><td><b>Penutup:</b> tiap anggota membacakan kalimat terbaiknya hari ini; koordinator memberi koreksi.</td></tr></tbody></table></div>
+  </div>
+  <div class="grid2">
+    <div class="card stack"><h4>Pertanyaan pemandu</h4><ol style="margin:0;padding-left:20px">${T.q.map(x => `<li>${esc(x)}</li>`).join("")}</ol>
+      <h4>Ungkapan berguna</h4><div class="stack" style="gap:6px">${T.e.map(x => `<div class="formula">${esc(x)}</div>`).join("")}</div></div>
+    <div class="card stack"><h4>10 kata target (Set ${E.targetSets(c.dy).join(" & ")})</h4><p class="small muted">Centang kata yang sudah Anda pakai dalam diskusi.</p>
+      <div>${tv.map(v => `<label class="chk"><input type="checkbox" data-act="use" data-i="${v.i}" ${used.has(v.i)?"checked":""} ${c.canSave?"":"disabled"}><span><span class="mono"><b>${esc(v.b)}</b> · ${esc(v.p)} · ${esc(v.pp)}</span> <span class="small muted">${esc(v.m)}</span></span></label>`).join("")}</div>
+      <span class="small tnum">${used.size}/10 kata terpakai</span></div>
+  </div>
+  <div class="card stack"><label class="f">Kalimat terbaik saya hari ini<textarea id="${nd}" style="min-height:90px">${esc(S.drafts[nd] ?? ((c.log && c.log.notes) || ""))}</textarea></label>
+    <div class="row"><button class="btn pri" data-act="save-s3" ${c.canSave?"":"disabled"}>Simpan</button>${statusPill(c.log)}</div>${reviewNote(c.log)}</div>`;
+}
+
+/* Tahap 4: Analysing */
+function aiBox(key){
+  const a = S.ai[key]; if (!a) return "";
+  return `<div class="ai">${a.err ? `<span class="fb-no">${esc(a.err)}</span>` : esc(a.text || "Sedang membaca tulisan Anda…")}</div>`;
+}
+function p4(c){
+  const T = E.ANAL[c.dy-1], F = E.FRAMES[T.f], tv = targetVerbs(c.dy);
+  const id = "s4t-"+c.dy, txt = S.drafts[id] ?? ((c.log && c.log.text) || ""), sc = E.scan(txt), wc = E.words(txt);
+  return `
+  <div class="card stack"><span class="eyebrow">Kerangka: ${F.n}</span><h3>${esc(T.t)}</h3>
+    <ol style="margin:0;padding-left:20px">${T.q.map(x => `<li>${esc(x)}</li>`).join("")}</ol></div>
+  <div class="grid2">
+    <div class="card stack"><h4>Langkah analisis</h4><ol style="margin:0;padding-left:20px">${F.steps.map(x => `<li>${esc(x)}</li>`).join("")}</ol>
+      <h4>Ungkapan analisis</h4><div class="stack" style="gap:6px">${F.p.map(x => `<div class="formula">${esc(x)}</div>`).join("")}</div></div>
+    <div class="card stack"><h4>Pembagian peran diskusi (60 menit)</h4>
+      <div class="small stack" style="gap:6px"><div><b>Koordinator:</b> moderator, menjaga waktu, memberi pertanyaan lanjutan.</div><div><b>Anggota 1–2:</b> memaparkan analisis langkah 1–2.</div><div><b>Anggota 3–4:</b> memaparkan langkah 3–4 dan menanggapi.</div><div><b>Anggota 5:</b> notulis; merangkum kesimpulan di akhir.</div><div class="muted">Peran bergilir setiap hari.</div></div>
+      <h4>Kata target</h4><p class="mono small">${tv.map(v => esc(v.b)).join(", ")}</p></div>
+  </div>
+  <div class="card stack"><label class="f">Ringkasan analisis saya (minimal 80 kata)<textarea id="${id}">${esc(txt)}</textarea></label>
+    <div class="row small"><span class="chip tnum">${wc} kata</span><span class="chip tnum">${sc.used.length} kata hafalan terpakai</span></div>
+    ${txt ? `<div class="preview">${sc.html}</div>` : ""}
+    <div class="row"><button class="btn pri" data-act="save-s4" ${c.canSave?"":"disabled"}>Kirim analisis</button>${S.sample !== null ? `<button class="btn" data-act="ai" data-key="${id}" data-kind="analysis">Minta umpan balik AI</button>` : ""}${statusPill(c.log)}</div>
+    ${aiBox(id)}${reviewNote(c.log)}</div>`;
+}
+
+/* Tahap 5: Evaluating */
+function p5(c){
+  const M = E.MOTIONS[c.dy-1];
+  const deb = Object.entries(S.debates).filter(([,d]) => d.day === c.dy);
+  const id = "s5p-"+c.dy;
+  return `
+  <div class="card stack"><span class="eyebrow">Mosi hari ${c.dy} (dipilih sistem)</span><h3 style="font-size:1.35rem">${esc(M[0])}</h3><p class="muted">${esc(M[1])}</p>
+    <div class="phases">${E.DEBATE_PHASES.map(ph => `<span class="ph">${ph.n}${ph.sec ? " · " + (ph.sec/60).toString().replace(".",",") + "′" : ""}</span>`).join("")}</div>
+    <div class="row">${deb.length ? deb.map(([did,d]) => `<button class="btn" data-act="open-debate" data-id="${did}">Buka debat: ${esc(d.title||"Debat hari "+c.dy)}</button>`).join("") : `<span class="small muted">Belum ada sesi debat untuk hari ini.</span>`}
+      ${isKoor() ? `<button class="btn pri" data-act="new-debate" data-d="${c.dy}">Siapkan debat hari ini</button>` : ""}</div></div>
+  <div class="card stack"><label class="f">Catatan persiapan saya (argumen, sanggahan, contoh)<textarea id="${id}">${esc(S.drafts[id] ?? ((c.log && c.log.prep) || ""))}</textarea></label>
+    <div class="row"><button class="btn pri" data-act="save-s5" ${c.canSave?"":"disabled"}>Simpan catatan</button>${statusPill(c.log)}</div>${reviewNote(c.log)}</div>`;
+}
+
+/* Tahap 6: Creating */
+function p6(c){
+  const W = E.WEEKS.find(w => c.dy >= w.d[0] && c.dy <= w.d[1]);
+  const id = "s6t-"+c.dy, tid = "s6title-"+c.dy, pid = "s6topic-"+c.dy;
+  const txt = S.drafts[id] ?? ((c.log && c.log.text) || ""), sc = E.scan(txt), wc = E.words(txt);
+  const topic = S.drafts[pid] ?? ((c.log && c.log.topic) || E.ART_TOPICS[(c.dy-1) % (E.ART_TOPICS.length-1)]);
+  const rub = c.log && c.log.review && c.log.review.rubric;
+  return `
+  <div class="card stack"><span class="eyebrow">Minggu: ${esc(W.n)} · target ${W.w} kata</span><h3>${esc(W.g)}</h3>
+    <div class="grid2"><label class="f">Topik<select id="${pid}" data-act="draft">${E.ART_TOPICS.map(t => `<option ${t===topic?"selected":""}>${esc(t)}</option>`).join("")}</select></label>
+    <label class="f">Judul artikel<input type="text" id="${tid}" value="${esc(S.drafts[tid] ?? ((c.log && c.log.title) || ""))}"></label></div>
+    <label class="f">Artikel<textarea id="${id}" style="min-height:260px">${esc(txt)}</textarea></label>
+    <div class="row small"><span class="chip tnum" style="${wc>=W.w?"border-color:var(--good)":""}">${wc}/${W.w} kata</span><span class="chip tnum">${sc.used.length} kata hafalan terpakai</span></div>
+    ${txt ? `<details><summary>Lihat kata hafalan yang terpakai</summary><div class="preview" style="margin-top:8px">${sc.html}</div></details>` : ""}
+    <div class="row"><button class="btn pri" data-act="save-s6" ${c.canSave?"":"disabled"}>Kirim artikel</button>${S.sample !== null ? `<button class="btn" data-act="ai" data-key="${id}" data-kind="article">Minta umpan balik AI</button>` : ""}${statusPill(c.log)}</div>
+    ${aiBox(id)}
+    ${rub ? `<div class="notice"><b>Nilai rubrik:</b> ${E.RUBRIC.map(([k,n]) => `${n} ${rub[k]||"–"}/5`).join(" · ")} · <b>Total ${rubTotal(rub)}/100</b></div>` : ""}
+    ${reviewNote(c.log)}</div>`;
+}
+const rubTotal = r => Math.round(E.RUBRIC.reduce((a,[k]) => a + (+r[k]||0), 0) / 25 * 100);
+
+/* ---------- Tim & Verifikasi ---------- */
+function viewTim(){
+  const t = team(), p = pos(), koor = isKoor();
+  const st = S.revStage || (p.before ? 1 : p.stage);
+  const mem = t.members || [];
+  const rev = S.rev && S.rev.s === st ? S.rev : null;
+  return `<section class="stack">
+    <div class="stagehead" style="--sc:${SC(st)}"><span class="eyebrow">${koor ? "Panel koordinator" : "Kemajuan tim (hanya baca)"}</span><h2>${esc(t.name)}</h2>
+      <p class="muted small">Klik kotak untuk meninjau setoran. Hijau = diterima, kuning = menunggu, merah = perlu diulang.</p></div>
+    <div class="row">${E.STAGES.map(s => `<button class="btn sm" style="${s.n===st?`background:${SC(s.n)};color:#fff;border-color:${SC(s.n)}`:""}" data-act="rev-stage" data-s="${s.n}">${s.n}. ${s.k}</button>`).join("")}</div>
+    <div class="card scroll"><table class="matrix"><thead><tr><th>Anggota</th>${Array.from({length:30},(_,i)=>`<th class="small tnum">${i+1}</th>`).join("")}<th class="small">✓</th></tr></thead><tbody>
+      ${mem.map(m => { let ok = 0; const cells = Array.from({length:30}, (_,i) => { const l = getLog(m.k, st, i+1), s = statusOf(l); if (s==="ok") ok++; const sel = rev && rev.k===m.k && rev.d===i+1; return `<td><button class="cell ${s==="none"?"":s} ${sel?"sel":""}" data-act="rev-cell" data-k="${m.k}" data-d="${i+1}" aria-label="${esc(m.name)} hari ${i+1}: ${STATUS_TXT[s]}">${s==="ok"?"✓":s==="no"?"!":s==="sub"?"•":""}</button></td>`; }).join("");
+        return `<tr><td><b>${esc(m.name)}</b>${m.uid?"":` <span class="small muted">(belum masuk)</span>`}</td>${cells}<td class="tnum"><b>${ok}</b></td></tr>`; }).join("")}
+    </tbody></table></div>
+    ${rev ? reviewPanel(rev) : `<div class="card"><div class="row"><span class="muted">Tinjau semua anggota untuk satu hari:</span>${[p.before?1:(p.stage===st?p.day:1)].map(d => `<button class="btn sm" data-act="rev-cell" data-k="${mem[0]?mem[0].k:""}" data-d="${d}">Mulai dari hari ${d}</button>`).join("")}</div></div>`}
+    ${koor ? teamSettings() : ""}
+  </section>`;
+}
+function reviewPanel(r){
+  const t = team(), l = getLog(r.k, r.s, r.d), koor = isKoor(), st = r.s;
+  const mem = t.members; const i = mem.findIndex(m => m.k === r.k);
+  const nav = `<div class="row"><button class="btn sm" data-act="rev-move" data-dk="-1" ${i<=0?"disabled":""}>← Anggota sebelumnya</button><button class="btn sm" data-act="rev-move" data-dk="1" ${i>=mem.length-1?"disabled":""}>Anggota berikutnya →</button><button class="btn sm" data-act="rev-day" data-dd="-1" ${r.d<=1?"disabled":""}>Hari −1</button><button class="btn sm" data-act="rev-day" data-dd="1" ${r.d>=30?"disabled":""}>Hari +1</button><button class="link small" data-act="rev-close">Tutup</button></div>`;
+  const noteId = `rv-note-${r.k}-${st}-${r.d}`;
+  const rv = (l && l.review) || {};
+  let body = "";
+  if (st === 1) {
+    const sim = S.simak && S.simak.key === logId(r.k, 1, r.d) ? S.simak : null;
+    body = `${l && l.quiz ? `<p>Kuis sistem: <b class="tnum">${l.quiz.score}/${l.quiz.total}</b> (${Math.round(l.quiz.score/l.quiz.total*100)}%) ${l.quiz.wrong && l.quiz.wrong.length ? `· salah: <span class="mono small">${l.quiz.wrong.map(i => esc(E.VERBS[i][0])).join(", ")}</span>` : ""}</p>` : `<p class="muted">Belum mengerjakan kuis sistem.</p>`}
+      ${koor ? (sim ? `<div class="stack"><p class="small"><b>Mode simak:</b> minta anggota mengucapkan V1–V2–V3 berurutan dari Set 1. Klik kata yang salah.</p>
+        <div class="simak">${Array.from({length:r.d}, (_,n) => `<span class="setlabel">Set ${n+1}</span>` + E.setVerbs(n+1).map(v => `<button class="${sim.err.has(v.i)?"err":""}" data-act="simak-tog" data-i="${v.i}">${esc(v.b)}</button>`).join("")).join("")}</div>
+        <span class="small tnum">${sim.err.size} kata salah dari ${r.d*5}</span></div>`
+        : `<div class="row"><button class="btn" data-act="simak-start" data-k="${r.k}" data-d="${r.d}">Mulai simak setoran lisan (Set 1–${r.d})</button></div>`) : ""}`;
+  } else if (st === 2) {
+    body = l && l.quiz ? `<p>Latihan pemahaman: <b class="tnum">${l.quiz.score}/${l.quiz.total}</b>. Minta anggota menjelaskan kembali pola "${esc(E.LESSONS[r.d-1].t)}" secara lisan.</p>` : `<p class="muted">Belum menyimpan latihan pelajaran "${esc(E.LESSONS[r.d-1].t)}".</p>`;
+  } else if (st === 3) {
+    body = `<p>Kata target terpakai: <b class="tnum">${(l && l.used || []).length}/10</b></p>${l && l.notes ? `<div class="preview">${E.scan(l.notes).html}</div>` : ""}
+      ${koor ? `<div class="row"><label class="row"><input type="checkbox" id="rv-hadir" ${rv.hadir!==false?"checked":""}> Hadir</label><label class="row">Keaktifan <select id="rv-aktif">${[1,2,3,4,5].map(n => `<option ${+(rv.aktif||3)===n?"selected":""}>${n}</option>`).join("")}</select></label></div>` : ""}`;
+  } else if (st === 4 || st === 6) {
+    const txt = (l && l.text) || "";
+    body = txt ? `${st===6 ? `<h4>${esc(l.title||"(tanpa judul)")}</h4><p class="small muted">Topik: ${esc(l.topic||"")}</p>` : ""}<div class="row small"><span class="chip tnum">${E.words(txt)} kata</span><span class="chip tnum">${E.scan(txt).used.length} kata hafalan</span></div><div class="preview" style="max-height:340px">${E.scan(txt).html}</div>${l.ai ? `<details><summary>Umpan balik AI yang diminta anggota</summary><div class="ai" style="margin-top:8px">${esc(l.ai)}</div></details>` : ""}` : `<p class="muted">Belum mengirim tulisan.</p>`;
+    if (st === 6 && koor) { const rb = rv.rubric || {}; body += `<div class="grid2">${E.RUBRIC.map(([k,n]) => `<label class="f">${n}<select id="rb-${k}">${[1,2,3,4,5].map(x => `<option ${+(rb[k]||3)===x?"selected":""}>${x}</option>`).join("")}</select></label>`).join("")}</div>`; }
+  } else if (st === 5) {
+    body = `${l && l.prep ? `<div class="preview">${esc(l.prep)}</div>` : `<p class="muted">Belum ada catatan persiapan.</p>`}<p class="small muted">Nilai debat dicatat di halaman Debat.</p>`;
+  }
+  return `<div class="card stack" style="--sc:${SC(st)}">
+    <div class="row" style="justify-content:space-between"><div class="stagehead"><span class="eyebrow">Tahap ${st} · Hari ${r.d}</span><h3>${esc(nameOf(r.k))}</h3></div>${statusPill(l)}</div>
+    ${nav}${body}
+    ${koor ? `<label class="f">Catatan untuk anggota<input type="text" id="${noteId}" value="${esc(S.drafts[noteId] ?? (rv.note||""))}"></label>
+      <div class="row"><button class="btn good" data-act="verify" data-v="diterima">Terima setoran</button><button class="btn bad" data-act="verify" data-v="ulang">Minta ulang</button></div>` : (rv.note ? `<p class="small"><b>Catatan:</b> ${esc(rv.note)}</p>` : "")}
+  </div>`;
+}
+function verify(v){
+  const r = S.rev; const noteId = `rv-note-${r.k}-${r.s}-${r.d}`;
+  const cur = getLog(r.k, r.s, r.d) || {};
+  const review = clone(cur.review || {});
+  review.note = ($("#"+CSS.escape(noteId)) || {}).value || "";
+  review.by = mySlot() || "admin"; review.at = Date.now();
+  if (r.s === 1 && S.simak && S.simak.key === logId(r.k, 1, r.d)) review.errors = [...S.simak.err];
+  if (r.s === 3) { review.hadir = $("#rv-hadir").checked; review.aktif = +$("#rv-aktif").value; }
+  if (r.s === 6) { review.rubric = {}; E.RUBRIC.forEach(([k]) => { const el = $("#rb-"+k); if (el) review.rubric[k] = +el.value; }); }
+  delete S.drafts[noteId];
+  saveLog(r.k, r.s, r.d, {review, status: v});
+  toast(v === "diterima" ? "Setoran " + nameOf(r.k) + " diterima." : "Diminta mengulang. Catatan terkirim.");
+}
+function teamSettings(){
+  const t = team(); const hol = Object.entries(t.holidays||{}).sort();
+  return `<details class="card"><summary>Pengaturan tim</summary><div class="stack" style="margin-top:12px">
+    <div class="grid2"><label class="f">Nama tim<input type="text" id="ts-name" value="${esc(t.name)}"></label>
+    <label class="f">Tanggal mulai<input type="date" id="ts-start" value="${esc(t.start)}"></label>
+    <label class="f">Koordinator<input type="text" id="ts-coord" value="${esc(t.coord.name)}"></label></div>
+    <div class="grid2">${t.members.map((m,i) => `<div class="stack" style="gap:4px"><label class="f">Anggota ${i+1}<input type="text" id="ts-m${i}" value="${esc(m.name)}"></label>${m.uid ? `<button class="link small" data-act="unclaim" data-k="${m.k}" style="justify-self:start">Lepas tautan akun (jika salah pilih nama)</button>` : `<span class="small muted">Belum masuk</span>`}</div>`).join("")}</div>
+    <div class="row"><button class="btn pri" data-act="save-team">Simpan pengaturan</button></div>
+    <h4>Hari libur (tidak dihitung sebagai hari kerja)</h4>
+    <p class="small muted">Terisi libur nasional dan cuti bersama 2026–2027 dari SKB 3 Menteri. Hapus cuti bersama jika tim tetap berkegiatan.</p>
+    <div class="row"><input type="date" id="hol-d" style="width:auto"><input type="text" id="hol-n" placeholder="Keterangan" style="width:auto;flex:1"><button class="btn" data-act="hol-add">Tambah libur</button></div>
+    <div class="scroll" style="max-height:260px"><table class="t"><tbody>${hol.map(([d,n]) => `<tr><td class="tnum">${E.fmt(d,true)}</td><td>${esc(n)}</td><td><button class="link small" data-act="hol-del" data-d="${d}">Hapus</button></td></tr>`).join("")}</tbody></table></div>
+  </div></details>`;
+}
+function saveTeam(mut){ const t = clone(team()); mut(t); S.teams[S.tid] = t; render(); store.setTeam(S.tid, t).then(() => toast("Tersimpan.")).catch(writeErr); }
+
+/* ---------- Debat ---------- */
+const allPeople = () => Object.entries(S.teams).flatMap(([tid,t]) => people(t).map(p => ({ref: tid+":"+p.k, name:p.name, team:t.name})));
+function viewDebat(){
+  const list = Object.entries(S.debates).sort((a,b) => (b[1].created||0) - (a[1].created||0));
+  if (S.debateId && S.debates[S.debateId]) return debateRoom(S.debateId, S.debates[S.debateId]);
+  if (S.debateId === "new") return debateForm();
+  return `<section class="stack" style="--sc:var(--s5)">
+    <div class="stagehead"><span class="eyebrow">Tahap 5 · Evaluating</span><h2>Debat</h2>
+    <p class="muted">Dua tim berisi 3 orang: Pemerintah (pro) dan Oposisi (kontra). Mosi dipilih sistem sesuai hari. Pemerintah mendapat 30 menit persiapan untuk menyusun themeline. Pembicara bergantian Pemerintah → Oposisi sampai pembicara ketiga, masing-masing maksimal 7,5 menit. Sebelum penutupan, Oposisi mengulas jalannya debat selama maksimal 5 menit.</p></div>
+    ${isKoor() ? `<div class="row"><button class="btn pri" data-act="new-debate">Siapkan debat baru</button></div>` : ""}
+    ${list.length ? `<div class="grid2">${list.map(([id,d]) => `<button class="card teamcard" data-act="open-debate" data-id="${id}"><span class="eyebrow">Hari ${d.day} · ${E.DEBATE_PHASES[d.phase||0].n}</span><h3>${esc(d.motion[0])}</h3><span class="small muted">Pemerintah: ${d.pos.map(x=>esc(x.name)).join(", ")}<br>Oposisi: ${d.neg.map(x=>esc(x.name)).join(", ")}</span>${d.winner ? `<span class="status st-ok">Pemenang: ${d.winner==="pos"?"Pemerintah":"Oposisi"}</span>` : ""}</button>`).join("")}</div>` : `<div class="card empty">Belum ada sesi debat.</div>`}
+  </section>`;
+}
+function debateForm(){
+  const p = pos(); const day = S.newDay || (p.stage === 5 ? p.day : 1);
+  const used = new Set(Object.values(S.debates).map(d => d.motion[0]));
+  const ppl = allPeople(); const mine = people().map(x => S.tid + ":" + x.k);
+  const def = S.newSides || {pos: mine.slice(0,3), neg: mine.slice(3,6)};
+  const opts = (sel) => `<option value="">— pilih —</option>` + Object.entries(S.teams).map(([tid,t]) => `<optgroup label="${esc(t.name)}">${people(t).map(x => `<option value="${tid}:${x.k}" ${sel===tid+":"+x.k?"selected":""}>${esc(x.name)}</option>`).join("")}</optgroup>`).join("");
+  const mIdx = S.newMotion != null ? S.newMotion : day-1;
+  return `<section class="stack" style="--sc:var(--s5)">
+    <div class="row"><button class="link" data-act="debate-back">← Semua debat</button></div>
+    <div class="card stack"><h2>Siapkan debat</h2>
+      <div class="grid2"><label class="f">Hari ke- (tahap 5)<select id="nd-day" data-act="nd-day">${Array.from({length:30},(_,i)=>`<option ${i+1===day?"selected":""}>${i+1}</option>`).join("")}</select></label></div>
+      <div class="notice"><span class="eyebrow">Mosi dari sistem</span><div style="font-size:1.15rem;font-weight:700;margin-top:4px">${esc(E.MOTIONS[mIdx][0])}</div><div class="muted small">${esc(E.MOTIONS[mIdx][1])}</div>
+        <div class="row" style="margin-top:8px"><button class="btn sm" data-act="nd-random">Acak mosi yang belum dipakai</button>${used.has(E.MOTIONS[mIdx][0]) ? `<span class="small fb-no">Mosi ini sudah pernah dipakai.</span>` : ""}</div></div>
+      <p class="small muted">Peserta boleh dari satu kelompok (koordinator + 5 anggota dibagi 3 lawan 3) atau mempertemukan dua tim berbeda.</p>
+      <div class="grid2">
+        <div class="side pos stack"><h4>Pemerintah (pro)</h4>${[0,1,2].map(i => `<label class="f">Pembicara ${i+1}<select id="nd-pos-${i}">${opts(def.pos[i])}</select></label>`).join("")}</div>
+        <div class="side neg stack"><h4>Oposisi (kontra)</h4>${[0,1,2].map(i => `<label class="f">Pembicara ${i+1}<select id="nd-neg-${i}">${opts(def.neg[i])}</select></label>`).join("")}</div>
+      </div>
+      <div class="row"><button class="btn pri" data-act="nd-create">Mulai sesi debat</button></div>
+    </div></section>`;
+}
+function createDebate(){
+  const day = +$("#nd-day").value; const mIdx = S.newMotion != null ? S.newMotion : day-1;
+  const ppl = Object.fromEntries(allPeople().map(x => [x.ref, x]));
+  const pick = side => [0,1,2].map(i => $(`#nd-${side}-${i}`).value);
+  const P = pick("pos"), N = pick("neg"), all = P.concat(N);
+  if (all.some(x => !x)) { toast("Pilih 3 pembicara untuk setiap pihak."); return; }
+  if (new Set(all).size !== 6) { toast("Satu orang hanya boleh muncul sekali."); return; }
+  const id = "d" + Date.now().toString(36);
+  const d = { day, motion: E.MOTIONS[mIdx], pos: P.map(r => ({ref:r, name:ppl[r].name})), neg: N.map(r => ({ref:r, name:ppl[r].name})),
+    themeline:"", oppLine:"", phase:0, run:false, t0:0, left:E.DEBATE_PHASES[0].sec, scores:{}, winner:"", feedback:"", created:Date.now(), by: mySlot()||"admin" };
+  S.debates[id] = d; S.debateId = id; S.newMotion = null; S.newDay = null; render();
+  store.setDebate(S.tid, id, d).catch(writeErr);
+}
+const remaining = d => d.run ? d.left - (Date.now() - d.t0)/1000 : d.left;
+const mmss = s => { const neg = s < 0; s = Math.abs(Math.round(s)); return (neg ? "+" : "") + Math.floor(s/60) + ":" + String(s%60).padStart(2,"0"); };
+function debateRoom(id, d){
+  const ph = E.DEBATE_PHASES[d.phase||0]; const koor = isKoor();
+  const speaker = ph.side ? (ph.i === -1 ? d[ph.side][0] : d[ph.side][ph.i]) : null;
+  const sideName = s => s === "pos" ? "Pemerintah" : "Oposisi";
+  const scoreRow = (key, label, half) => { const sc = (d.scores||{})[key] || {}; const tot = E.DEBATE_CRIT.reduce((a,[k]) => a + (+sc[k]||0), 0);
+    return `<tr><td class="small"><b>${esc(label)}</b></td>${E.DEBATE_CRIT.map(([k,n,max]) => `<td><input type="number" min="0" max="${half?max/2:max}" id="sc-${key}-${k}" data-act="score" data-key="${key}" data-c="${k}" value="${sc[k]!=null?sc[k]:""}" ${koor?"":"disabled"} style="width:70px"></td>`).join("")}<td class="tnum"><b>${tot||"–"}</b></td></tr>`; };
+  const tot = side => (side === "pos" ? ["P1","P2","P3"] : ["N1","N2","N3"]).reduce((a,k) => a + E.DEBATE_CRIT.reduce((b,[c]) => b + (+((d.scores||{})[k]||{})[c]||0), 0), 0);
+  const thId = "th-"+id, opId = "op-"+id, fbId = "fb-"+id;
+  return `<section class="stack" style="--sc:var(--s5)">
+    <div class="row"><button class="link" data-act="debate-back">← Semua debat</button></div>
+    <div class="card stack"><span class="eyebrow">Mosi · Hari ${d.day}</span><h2>${esc(d.motion[0])}</h2><p class="muted">${esc(d.motion[1])}</p>
+      <div class="phases">${E.DEBATE_PHASES.map((p,i) => `<span class="ph ${i===d.phase?"cur":i<d.phase?"done":""}">${p.n}</span>`).join("")}</div></div>
+    <div class="card stack" style="text-align:center;justify-items:center">
+      <span class="eyebrow">${esc(ph.n)}</span>
+      ${speaker ? `<h3>${esc(speaker.name)} <span class="muted small">(${sideName(ph.side)})</span></h3>` : ""}
+      <p class="small muted">${esc(ph.who)}</p>
+      ${ph.sec ? `<div class="timer" id="timer" data-id="${id}">${mmss(remaining(d))}</div><p class="small muted" id="timer-note"></p>` : `<p>Debat selesai. Juri mengisi nilai di bawah.</p>`}
+      ${koor ? `<div class="row" style="justify-content:center">
+        <button class="btn" data-act="ph-prev" ${d.phase<=0?"disabled":""}>← Sebelumnya</button>
+        ${ph.sec ? (d.run ? `<button class="btn pri" data-act="ph-pause">Jeda</button>` : `<button class="btn pri" data-act="ph-start">${d.left < ph.sec ? "Lanjutkan" : "Mulai waktu"}</button>`) : ""}
+        ${ph.sec ? `<button class="btn" data-act="ph-reset">Ulang waktu</button>` : ""}
+        <button class="btn" data-act="ph-next" ${d.phase>=E.DEBATE_PHASES.length-1?"disabled":""}>Berikutnya →</button></div>` : `<p class="small muted">Waktu dikendalikan koordinator dan tersinkron ke semua perangkat.</p>`}
+    </div>
+    <div class="grid2">
+      <div class="side pos stack"><h4>Pemerintah</h4><ol style="margin:0;padding-left:20px">${d.pos.map(x => `<li>${esc(x.name)}</li>`).join("")}</ol>
+        <label class="f">Themeline Pemerintah<textarea id="${thId}" style="min-height:90px">${esc(S.drafts[thId] ?? d.themeline)}</textarea></label><button class="btn sm" data-act="deb-text" data-f="themeline" data-el="${thId}" style="justify-self:start">Simpan themeline</button></div>
+      <div class="side neg stack"><h4>Oposisi</h4><ol style="margin:0;padding-left:20px">${d.neg.map(x => `<li>${esc(x.name)}</li>`).join("")}</ol>
+        <label class="f">Themeline Oposisi<textarea id="${opId}" style="min-height:90px">${esc(S.drafts[opId] ?? d.oppLine)}</textarea></label><button class="btn sm" data-act="deb-text" data-f="oppLine" data-el="${opId}" style="justify-self:start">Simpan themeline</button></div>
+    </div>
+    <div class="card stack"><h3>Lembar nilai juri</h3><p class="small muted">Matter 40, Manner 40, Method 20 per pembicara. Ulasan Oposisi dinilai separuh skala (20/20/10) dan dicatat terpisah, karena hanya satu pihak yang mendapat ulasan.</p>
+      <div class="scroll"><table class="t"><thead><tr><th>Pembicara</th>${E.DEBATE_CRIT.map(([,n]) => `<th>${n}</th>`).join("")}<th>Total</th></tr></thead><tbody>
+        ${d.pos.map((x,i) => scoreRow("P"+(i+1), "P"+(i+1)+" · "+x.name)).join("")}
+        ${d.neg.map((x,i) => scoreRow("N"+(i+1), "N"+(i+1)+" · "+x.name)).join("")}
+        ${scoreRow("RN", "Ulasan Oposisi · "+d.neg[0].name, true)}
+      </tbody></table></div>
+      <div class="row"><span class="chip tnum">Pemerintah: <b>${tot("pos")}</b></span><span class="chip tnum">Oposisi: <b>${tot("neg")}</b></span>${d.winner ? `<span class="status st-ok">Pemenang: ${sideName(d.winner)}</span>` : ""}</div>
+      ${koor ? `<label class="f">Umpan balik juri<textarea id="${fbId}" style="min-height:90px">${esc(S.drafts[fbId] ?? d.feedback)}</textarea></label>
+        <div class="row"><button class="btn" data-act="deb-text" data-f="feedback" data-el="${fbId}">Simpan umpan balik</button><button class="btn good" data-act="deb-win" data-w="pos">Pemerintah menang</button><button class="btn good" data-act="deb-win" data-w="neg">Oposisi menang</button><button class="btn bad" data-act="deb-del">Hapus sesi</button></div>
+        ${S.confirm && S.confirm.type === "deb-del" ? `<div class="notice row">Hapus sesi debat ini beserta nilainya? <button class="btn bad sm" data-act="deb-del-yes">Ya, hapus</button><button class="btn sm" data-act="claim-no">Batal</button></div>` : ""}`
+      : d.feedback ? `<div class="notice"><b>Umpan balik juri:</b> ${esc(d.feedback)}</div>` : ""}
+    </div></section>`;
+}
+function updDebate(mut){ const id = S.debateId; const d = clone(S.debates[id]); mut(d); S.debates[id] = d; render(); store.setDebate(S.tid, id, d).catch(writeErr); }
+let lastBeep = null;
+function tickTimer(){
+  const el = $("#timer"); if (!el) return; const d = S.debates[el.dataset.id]; if (!d) return;
+  const r = remaining(d); el.textContent = mmss(r);
+  el.className = "timer" + (r < 0 ? " over" : r <= 60 ? " warn" : "");
+  const n = $("#timer-note"); if (n) n.textContent = !d.run ? "Waktu berhenti." : r < 0 ? "Waktu habis. Pembicara diminta menutup." : r <= 60 ? "Satu menit terakhir." : "";
+}
+setInterval(tickTimer, 250);
+
+/* ---------- Jadwal & Panduan ---------- */
+function viewJadwal(){
+  const t = team(), p = pos();
+  return `<section class="stack">
+    <div class="stagehead" style="--sc:var(--accent)"><span class="eyebrow">Jadwal ${esc(t.name)}</span><h2>180 hari kerja, 6 tahap</h2>
+    <p class="muted">Dihitung dari ${E.fmt(t.start, true)}, melewati Sabtu, Minggu, dan ${Object.keys(t.holidays||{}).length} hari libur yang terdaftar.</p></div>
+    ${ladder(p.before?1:p.stage, p, mySlot())}
+    <div class="grid2">${E.STAGES.map(s => { const a = p.list[(s.n-1)*30], b = p.list[(s.n-1)*30+29]; return `<div class="card stack" style="--sc:${SC(s.n)}"><div class="stagehead"><span class="eyebrow">Tahap ${s.n} · ${E.fmt(a)} – ${E.fmt(b)}</span><h3>${s.k} <span class="muted small">(${s.id})</span></h3></div><p class="small">${esc(s.d)}</p>
+      <details><summary class="small">Lihat 30 hari</summary><div class="scroll" style="margin-top:8px"><table class="t small"><tbody>${Array.from({length:30},(_,i) => `<tr ${p.idx===(s.n-1)*30+i && !p.before?'style="background:var(--sunk)"':""}><td class="tnum">Hari ${i+1}</td><td class="tnum">${E.fmt(p.list[(s.n-1)*30+i], true)}</td><td>${esc(dayTitle(s.n, i+1))}</td></tr>`).join("")}</tbody></table></div></details></div>`; }).join("")}</div>
+  </section>`;
+}
+const dayTitle = (s, d) => s===1 ? "Set " + d + ": " + E.setVerbs(d).map(v=>v.b).join(", ") : s===2 ? E.LESSONS[d-1].t : s===3 ? E.IMPL[d-1].t : s===4 ? E.ANAL[d-1].t : s===5 ? E.MOTIONS[d-1][0] : E.WEEKS.find(w => d>=w.d[0] && d<=w.d[1]).n;
+function viewPanduan(){
+  const flow = [
+    ["Remembering","Anggota mengulang semua set sebelumnya, mempelajari 5 kata baru, lalu mengerjakan kuis berurutan dari Set 1. Setelah nilai ≥ 90%, anggota menyetor lisan. Koordinator menyimak dengan mode simak, menandai kata yang salah, lalu menerima atau meminta ulang."],
+    ["Understanding","Satu pelajaran per hari: 16 tenses, passive, modal, conditional, reported speech, pembentukan kata. Set kata hafalan hari itu ditampilkan dalam tense yang dipelajari. Anggota mengerjakan latihan, lalu menjelaskan kembali kepada koordinator."],
+    ["Implementing","Diskusi terpimpin 45 menit dengan topik keseharian. Ada 10 kata target per hari, dan anggota mencentang kata yang dipakai. Koordinator mencatat kehadiran dan keaktifan."],
+    ["Analysing","Diskusi topik yang ditentukan dengan kerangka analisis. Setiap anggota mengirim ringkasan analisis minimal 80 kata, dan aplikasi menandai kata hafalan yang terpakai."],
+    ["Evaluating","Debat 3 lawan 3 dengan mosi dari sistem, persiapan 30 menit, 7,5 menit per pembicara, dan ulasan Oposisi 5 menit. Timer tersinkron ke semua perangkat, dan juri mengisi lembar nilai."],
+    ["Creating","Artikel dengan topik pilihan. Target kata naik tiap minggu (100 sampai 400). Koordinator menilai dengan rubrik 5 aspek."]
+  ];
+  return `<section class="stack">
+    <div class="stagehead" style="--sc:var(--accent)"><span class="eyebrow">Panduan</span><h2>Cara kerja aplikasi</h2></div>
+    <div class="grid2">
+      <div class="card stack"><h3>Peran</h3>
+        <p><b>Koordinator</b> memastikan 5 anggotanya menyetor setiap hari kerja: memverifikasi hafalan, memimpin diskusi, menjadi juri debat, dan menilai artikel. Semuanya dilakukan di halaman <i>Tim & Verifikasi</i>.</p>
+        <p><b>Anggota</b> membuka halaman <i>Belajar</i> setiap hari. Aplikasi otomatis menampilkan tahap dan hari sesuai jadwal tim.</p></div>
+      <div class="card stack"><h3>Memulai</h3><ol style="margin:0;padding-left:20px">
+        <li>Koordinator membuat tim: nama, 5 anggota, dan tanggal mulai.</li>
+        <li>Pemilik aplikasi membagikan tautan ini dan mengundang setiap orang sebagai <b>Editor</b> agar bisa menyimpan setoran.</li>
+        <li>Setiap orang membuka tautan, memilih tim, lalu memilih namanya sendiri.</li>
+        <li>Setiap hari kerja, anggota mengerjakan tugas di halaman Belajar dan koordinator memverifikasinya.</li></ol></div>
+    </div>
+    <div class="card stack"><h3>Enam tahap, 30 hari kerja masing-masing</h3>
+      ${flow.map(([k,t],i) => `<div class="stagehead" style="--sc:${SC(i+1)}"><span class="eyebrow">Tahap ${i+1} · ${k}</span><p>${esc(t)}</p></div>`).join("")}</div>
+    <div class="card stack"><h3>Status setoran</h3><div class="row">${["none","sub","ok","no"].map(s => `<span class="status st-${s}">${STATUS_TXT[s]}</span>`).join("")}</div>
+      <p class="small muted">Hari yang belum tiba bisa dipratinjau. Setoran baru dibuka pada tanggalnya. Hari yang terlewat tetap bisa dikejar.</p></div>
+  </section>`;
+}
+
+/* ---------- AI umpan balik ---------- */
+async function askAI(key, kind){
+  if (S.sample === undefined) { try { S.sample = window.claude && window.claude.use ? await window.claude.use("sample") : null; } catch(e){ S.sample = null; } }
+  const sample = S.sample; if (!sample) { toast("Umpan balik AI tidak tersedia di tampilan ini."); render(); return; }
+  const el = document.getElementById(key); const text = el ? el.value.trim() : "";
+  if (E.words(text) < 20) { toast("Tulis minimal 20 kata dulu."); return; }
+  S.ai[key] = {text:""}; render();
+  const prompt = `You are a supportive English writing coach for Indonesian adult learners. Give feedback in Bahasa Indonesia, with the English corrections quoted in English.\nTask type: ${kind === "article" ? "short article" : "written analysis of a discussion topic"}.\nReturn plain text, no markdown headings, in this order:\n1) Kesan umum (2 kalimat).\n2) Koreksi tata bahasa: up to 6 items, each "kalimat asli → perbaikan (alasan singkat)". Pay special attention to tense use and irregular verb forms (V2/V3).\n3) Saran kosakata: 3 items.\n4) Satu saran untuk struktur.\n5) Perkiraan nilai 1–5 untuk: isi, organisasi, kosakata, tata bahasa, ejaan.\nText:\n"""${text.slice(0, 6000)}"""`;
+  try {
+    const r = await sample(prompt, { onText: ({text}) => { S.ai[key] = {text}; const box = document.querySelectorAll(".ai"); render(); } });
+    S.ai[key] = {text: r.text};
+    const c = curCtx(); if (c && mySlot()) saveLog(mySlot(), c.st, c.dy, {ai: r.text.slice(0, 4000)}); else render();
+  } catch(e) {
+    S.ai[key] = {err: e && e.code === "not_granted" ? "Izin umpan balik AI tidak diberikan." : e && e.code === "rate_limited" ? "Terlalu banyak permintaan. Coba lagi beberapa menit lagi." : "Umpan balik AI gagal. Coba lagi."};
+    if (e && e.code === "not_granted") S.sample = null;
+    render();
+  }
+}
+function curCtx(){ const p = pos(); if (!p) return null; const st = S.st || (p.before?1:p.stage); const dy = S.dy || (st === (p.before?1:p.stage) ? (p.before?1:p.day) : 1); return {st, dy}; }
+
+/* ---------- Event ---------- */
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const a = b.dataset.act, c = curCtx();
+  switch (a) {
+    case "switch-team": S.tid = null; S.guest = false; LS.set("et_tim_tid", ""); unsubs.forEach(f => f()); unsubs = []; S.logs = {}; S.debates = {}; render(); break;
+    case "pick-team": S.tid = b.dataset.id; LS.set("et_tim_tid", S.tid); S.st = S.dy = null; subscribeTeam(); render(); break;
+    case "create-team": createTeam(); break;
+    case "claim": S.confirm = {type:"claim", k:b.dataset.k}; render(); break;
+    case "claim-yes": claim(S.confirm.k); break;
+    case "claim-no": S.confirm = null; render(); break;
+    case "guest": S.guest = true; render(); break;
+    case "pick-stage": S.st = +b.dataset.s; S.dy = null; S.q1 = null; render(); break;
+    case "pick-day": S.dy = +b.dataset.d; if (!S.st) { const p = pos(); S.st = p.before ? 1 : p.stage; } S.q1 = null; render(); break;
+    case "go-today": S.st = S.dy = null; S.q1 = null; render(); break;
+    case "say": E.say(b.dataset.t); break;
+    case "reveal": b.style.color = "inherit"; b.style.background = "transparent"; break;
+    case "q1-start": q1Start(b.dataset.mode, c.dy); break;
+    case "q1-check": q1Check(); break;
+    case "q1-next": q1Next(); break;
+    case "q1-close": S.q1 = null; render(); break;
+    case "mc": { const st = S.q2[b.dataset.key]; st.ans[+b.dataset.i] = +b.dataset.j; render(); break; }
+    case "mc-reset": S.q2[b.dataset.key] = {ans:{}}; render(); break;
+    case "save-s2": { const L = E.LESSONS[c.dy-1]; const st = S.q2["s2d"+c.dy]; const sc = L.q.filter((q,i) => st.ans[i] === q.a).length; saveLog(mySlot(), 2, c.dy, {quiz:{score:sc, total:L.q.length, at:Date.now()}, status: keepOk(2,c.dy)}); toast("Hasil latihan tersimpan."); break; }
+    case "save-s3": { const id = "s3n-"+c.dy; saveLog(mySlot(), 3, c.dy, {notes: ($("#"+id)||{}).value || "", status: keepOk(3,c.dy)}); delete S.drafts[id]; toast("Tersimpan."); break; }
+    case "save-s4": { const id = "s4t-"+c.dy; const v = $("#"+id).value; if (E.words(v) < 80) { toast("Ringkasan minimal 80 kata (sekarang " + E.words(v) + ")."); break; } saveLog(mySlot(), 4, c.dy, {text:v, status: keepOk(4,c.dy, true)}); delete S.drafts[id]; toast("Analisis terkirim ke koordinator."); break; }
+    case "save-s5": { const id = "s5p-"+c.dy; saveLog(mySlot(), 5, c.dy, {prep: $("#"+id).value, status: keepOk(5,c.dy)}); delete S.drafts[id]; toast("Catatan tersimpan."); break; }
+    case "save-s6": { const id = "s6t-"+c.dy, v = $("#"+id).value; if (E.words(v) < 30) { toast("Artikel masih terlalu pendek."); break; } saveLog(mySlot(), 6, c.dy, {text:v, title: $("#s6title-"+c.dy).value, topic: $("#s6topic-"+c.dy).value, status: keepOk(6,c.dy,true)}); ["s6t-","s6title-","s6topic-"].forEach(k => delete S.drafts[k+c.dy]); toast("Artikel terkirim ke koordinator."); break; }
+    case "ai": askAI(b.dataset.key, b.dataset.kind); break;
+    case "rev-stage": S.revStage = +b.dataset.s; S.rev = null; S.simak = null; render(); break;
+    case "rev-cell": if (!b.dataset.k) break; S.rev = {k:b.dataset.k, d:+b.dataset.d, s: S.revStage || (pos().before?1:pos().stage)}; S.simak = null; render(); break;
+    case "rev-close": S.rev = null; S.simak = null; render(); break;
+    case "rev-move": { const mem = team().members; const i = mem.findIndex(m => m.k === S.rev.k) + (+b.dataset.dk); if (mem[i]) { S.rev.k = mem[i].k; S.simak = null; render(); } break; }
+    case "rev-day": S.rev.d = Math.min(30, Math.max(1, S.rev.d + (+b.dataset.dd))); S.simak = null; render(); break;
+    case "simak-start": { const l = getLog(b.dataset.k, 1, +b.dataset.d); S.simak = {key: logId(b.dataset.k, 1, +b.dataset.d), err: new Set((l && l.review && l.review.errors) || [])}; render(); break; }
+    case "simak-tog": { const i = +b.dataset.i; S.simak.err.has(i) ? S.simak.err.delete(i) : S.simak.err.add(i); render(); break; }
+    case "verify": verify(b.dataset.v); break;
+    case "save-team": saveTeam(t => { t.name = $("#ts-name").value.trim() || t.name; t.start = $("#ts-start").value || t.start; t.coord.name = $("#ts-coord").value.trim() || t.coord.name; t.members.forEach((m,i) => { m.name = $("#ts-m"+i).value.trim() || m.name; }); }); break;
+    case "unclaim": saveTeam(t => { const m = t.members.find(m => m.k === b.dataset.k); if (m) m.uid = null; }); break;
+    case "hol-add": { const d = $("#hol-d").value, n = $("#hol-n").value.trim() || "Libur"; if (!d) { toast("Pilih tanggal libur."); break; } saveTeam(t => { t.holidays = t.holidays || {}; t.holidays[d] = n; }); break; }
+    case "hol-del": saveTeam(t => { delete t.holidays[b.dataset.d]; }); break;
+    case "new-debate": S.debateId = "new"; S.newDay = b.dataset.d ? +b.dataset.d : null; S.newMotion = null; location.hash = "#debat"; S.view = "debat"; render(); break;
+    case "nd-random": { const used = new Set(Object.values(S.debates).map(d => d.motion[0])); const free = E.MOTIONS.map((m,i) => i).filter(i => !used.has(E.MOTIONS[i][0])); const pool = free.length ? free : E.MOTIONS.map((m,i)=>i); S.newMotion = pool[Math.floor(Math.random()*pool.length)]; keepSides(); render(); break; }
+    case "nd-create": createDebate(); break;
+    case "open-debate": S.debateId = b.dataset.id; location.hash = "#debat"; S.view = "debat"; render(); break;
+    case "debate-back": S.debateId = null; S.confirm = null; render(); break;
+    case "ph-start": updDebate(d => { d.run = true; d.t0 = Date.now(); }); break;
+    case "ph-pause": updDebate(d => { d.left = remaining(d); d.run = false; }); break;
+    case "ph-reset": updDebate(d => { d.left = E.DEBATE_PHASES[d.phase].sec; d.run = false; }); break;
+    case "ph-next": updDebate(d => { d.phase = Math.min(E.DEBATE_PHASES.length-1, d.phase+1); d.left = E.DEBATE_PHASES[d.phase].sec; d.run = false; }); break;
+    case "ph-prev": updDebate(d => { d.phase = Math.max(0, d.phase-1); d.left = E.DEBATE_PHASES[d.phase].sec; d.run = false; }); break;
+    case "deb-text": { const el = $("#"+b.dataset.el); updDebate(d => { d[b.dataset.f] = el.value; }); delete S.drafts[b.dataset.el]; toast("Tersimpan."); break; }
+    case "deb-win": updDebate(d => { d.winner = b.dataset.w; }); break;
+    case "deb-del": S.confirm = {type:"deb-del"}; render(); break;
+    case "deb-del-yes": { const id = S.debateId; delete S.debates[id]; S.debateId = null; S.confirm = null; render(); store.delDebate(S.tid, id).catch(writeErr); break; }
+  }
+});
+const keepOk = (s, d, resubmit) => { const l = getLog(mySlot(), s, d); return l && l.status === "diterima" && !resubmit ? "diterima" : "menunggu"; };
+function keepSides(){ const g = side => [0,1,2].map(i => { const el = $(`#nd-${side}-${i}`); return el ? el.value : ""; }); if ($("#nd-pos-0")) S.newSides = {pos:g("pos"), neg:g("neg")}; }
+document.addEventListener("input", e => {
+  const el = e.target;
+  if (el.id && (el.tagName === "TEXTAREA" || (el.tagName === "INPUT" && el.type === "text"))) {
+    if (/^(q1-)/.test(el.id)) return;
+    S.drafts[el.id] = el.value;
+    if (/^s[46]t-/.test(el.id)) { clearTimeout(el._t); el._t = setTimeout(render, 500); }
+  }
+});
+document.addEventListener("change", e => {
+  const el = e.target, a = el.dataset.act;
+  if (a === "hideforms") { S.hideForms = el.checked; render(); }
+  else if (a === "verbpick") { S.verbPick["s2"] = +el.value; render(); }
+  else if (a === "draft") { S.drafts[el.id] = el.value; }
+  else if (a === "nd-day") { keepSides(); S.newDay = +el.value; S.newMotion = null; render(); }
+  else if (a === "use") { const c = curCtx(); const l = getLog(mySlot(), 3, c.dy); const u = new Set((l && l.used) || []); el.checked ? u.add(+el.dataset.i) : u.delete(+el.dataset.i); saveLog(mySlot(), 3, c.dy, {used:[...u], status: keepOk(3,c.dy)}); }
+  else if (a === "score") { const v = el.value === "" ? null : Math.max(0, Math.min(+el.max, +el.value)); updDebate(d => { d.scores = d.scores || {}; d.scores[el.dataset.key] = d.scores[el.dataset.key] || {}; d.scores[el.dataset.key][el.dataset.c] = v; }); }
+});
+document.addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+  if (e.target.id === "q1-p") { e.preventDefault(); $("#q1-pp").focus(); }
+  else if (e.target.id === "q1-pp") { e.preventDefault(); q1Check(); }
+});
+function route(){ const h = (location.hash || "").slice(1); S.view = VIEWS.some(v => v[0] === h) ? h : "belajar"; if (S.view !== "debat") S.debateId = null; render(); }
+window.addEventListener("hashchange", route);
+
+/* ---------- Langganan data ---------- */
+function subscribeTeam(){
+  unsubs.forEach(f => f()); unsubs = []; S.logs = {}; S.debates = {};
+  if (!S.tid) return;
+  unsubs.push(store.onLogs(S.tid, o => { S.logs = o; render(); }));
+  unsubs.push(store.onDebates(S.tid, o => { S.debates = o; render(); }));
+}
+async function init(){
+  route();
+  let db = null, user = null;
+  try { if (window.claude && window.claude.use) [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]); } catch(e) {}
+  if (db) { store = dbStore(db); S.mode = "db"; if (user) { try { S.uid = await user.id(); S.owner = await user.isOwner(); } catch(e){} } }
+  else { store = localStore(); S.mode = "local"; S.uid = localId(); }
+  const slow = setTimeout(() => { if (!S.teamsLoaded) { S.slow = true; render(); } }, 10000);
+  store.onTeams(o => {
+    S.teams = o; S.teamsLoaded = true; clearTimeout(slow);
+    if (!S.tid) { const saved = LS.get("et_tim_tid"); if (saved && o[saved]) { S.tid = saved; subscribeTeam(); } }
+    else if (!o[S.tid]) { /* tim baru belum kembali dari server */ }
+    render();
+  });
+  if (window.claude && window.claude.use) window.claude.use("sample").then(s => { S.sample = s; render(); }).catch(() => { S.sample = null; });
+  else S.sample = null;
+}
+init();
+})();
+</script>
+
+</body></html>
