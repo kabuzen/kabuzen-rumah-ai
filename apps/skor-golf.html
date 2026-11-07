@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Skor Golf</title>
+<style>
+:root{
+  --bg:#0E1411; --surface:#18211C; --surface2:#1F2B24; --text:#F3F1E8; --muted:#9DAA9F; --border:#2B3A31;
+  --accent:#FFC72C; --accent-soft:#3A3112; --on-accent:#111111; --success:#2E9E5B; --warning:#F59E0B; --danger:#E5484D;
+}
+body.light{
+  --bg:#F4F2EA; --surface:#FFFFFF; --surface2:#EDEADF; --text:#17201A; --muted:#667268; --border:#D6D2C3;
+  --accent-soft:#FBEFC4;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:"Space Grotesk","Segoe UI",Helvetica,Arial,sans-serif;font-size:17px}
+button{font-family:inherit;color:inherit;cursor:pointer}
+#app{max-width:520px;margin:0 auto;height:100vh;display:flex;flex-direction:column;background:var(--bg);position:relative;border-left:1px solid var(--border);border-right:1px solid var(--border)}
+main{flex:1;overflow-y:auto;overflow-x:hidden}
+.topbar{display:flex;align-items:center;gap:10px;padding:10px 20px;border-bottom:1px solid var(--border)}
+.logo{width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex:none}
+.topbar h1{font-size:18px;margin:0;line-height:1.2}
+.topbar small{display:block;color:var(--muted);font-size:12px;letter-spacing:.8px;text-transform:uppercase}
+.grow{flex:1;min-width:0}
+.icon-btn{width:44px;height:44px;border:0;background:transparent;border-radius:12px;font-size:20px}
+.icon-btn:active{background:var(--surface)}
+h2.title{font-size:24px;text-transform:uppercase;margin:0;padding:14px 20px 6px}
+.pad{padding:0 20px}
+.label{color:var(--muted);font-size:12px;letter-spacing:1.4px;text-transform:uppercase;font-weight:600}
+.section{padding:24px 20px 8px}
+.muted{color:var(--muted)}
+.holeinfo{display:flex;align-items:center;padding:12px 20px 0}
+.holenum{font-size:56px;font-weight:700;color:var(--accent);line-height:1.1}
+.holeright{border-left:2px solid var(--border);padding-left:20px;text-align:right;font-size:24px;font-weight:600;line-height:1.3}
+.card{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:12px;margin:0 20px 10px}
+.card.sel{border-color:var(--accent)}
+.prow{display:flex;align-items:center;gap:8px}
+.pname{flex:1;background:none;border:0;text-align:left;font-size:18px;font-weight:600;min-height:44px;padding:0}
+.badge{background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.6px;padding:3px 8px;border-radius:6px}
+.rank{color:var(--muted);font-weight:600}
+.stepper{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.step{width:72px;height:72px;border-radius:14px;border:2px solid var(--border);background:transparent;font-size:40px;line-height:1;display:flex;align-items:center;justify-content:center;transition:transform .08s}
+.step.plus{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.step:active{transform:scale(.94);opacity:.8}
+.tot{display:flex;justify-content:flex-end;align-items:baseline;gap:6px;margin-top:6px;font-size:12px;color:var(--muted)}
+.tot b{font-size:24px;color:var(--text)}
+.mark{display:inline-flex;align-items:center;justify-content:center;font-weight:700;position:relative;flex:none}
+.mark.empty{color:var(--muted)}
+.m-birdie{border:2.5px solid currentColor;border-radius:50%}
+.m-eagle,.m-albatross{border:2.5px solid currentColor;border-radius:50%}
+.m-eagle::after,.m-albatross::after{content:"";position:absolute;inset:4px;border:2px solid currentColor;border-radius:50%}
+.m-bogey{border:2.5px solid currentColor}
+.m-double{border:2.5px solid currentColor}
+.m-double::after{content:"";position:absolute;inset:4px;border:2px solid currentColor}
+.m-hio{background:var(--accent);color:var(--on-accent);border-radius:50%}
+.strip{display:flex;margin:4px 20px 16px;background:var(--surface);border:2px solid var(--border);border-radius:14px;overflow:hidden}
+.strip .names{width:58px;flex:none;border-right:1px solid var(--border)}
+.strip .names div{height:28px;padding-left:8px;font-size:11px;color:var(--muted);display:flex;align-items:center;font-weight:600}
+.strip .names div:last-child{height:44px;color:var(--text);font-size:14px}
+.strip .cols{display:flex;overflow-x:auto;flex:1}
+.sc{width:40px;flex:none;border:0;background:transparent;padding:0}
+.sc.active{background:var(--accent);color:var(--on-accent)}
+.sc div{height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+.sc div.p{color:var(--muted);font-weight:500}
+.sc.active div.p{color:var(--on-accent)}
+.sc div.m{height:44px}
+.sep{width:26px;flex:none;background:var(--accent-soft);color:var(--accent);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.bottombar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--border);padding:10px 20px}
+.btnrow{display:flex;gap:8px}
+.btn{height:56px;border-radius:14px;border:2px solid var(--text);background:transparent;font-size:18px;font-weight:600;width:100%;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.small{height:48px;font-size:16px}
+.btn.danger{border-color:var(--danger);color:var(--danger)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:active{transform:scale(.98);opacity:.85}
+.btn.back{width:70px;flex:none;font-size:13px;flex-direction:column;gap:0;border-color:var(--border)}
+.linkrow{display:flex;justify-content:space-between;margin-top:6px}
+.link{background:none;border:0;color:var(--accent);font-weight:600;font-size:14px;min-height:44px;padding:0}
+.link.t{color:var(--text)}
+.seg{display:flex;height:48px;border:2px solid var(--border);background:var(--surface);border-radius:12px;overflow:hidden}
+.seg button{flex:1;border:0;background:transparent;text-transform:uppercase;font-weight:600;font-size:15px;letter-spacing:.5px}
+.seg button.on{background:var(--accent);color:var(--on-accent)}
+.nav{display:flex;border-top:1px solid var(--border);background:var(--surface);flex:none}
+.nav button{flex:1;border:0;background:transparent;padding:10px 0 12px;color:var(--muted);font-size:12px;font-weight:500;display:flex;flex-direction:column;align-items:center;gap:3px}
+.nav button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav button.on{color:var(--accent)}
+.banner{background:var(--accent);color:var(--on-accent);padding:16px;margin-top:16px;display:flex;gap:12px;align-items:center}
+.banner .l{font-size:12px;letter-spacing:1px;font-weight:600}
+.banner .v{font-size:22px;font-weight:700;line-height:1.25}
+.tablewrap{margin-top:16px;display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow-x:auto}
+table.sc-table{border-collapse:collapse;min-width:100%}
+.sc-table th,.sc-table td{text-align:center;padding:0;height:56px;min-width:44px;font-size:14px}
+.sc-table thead th,.sc-table .hd td{height:32px;background:var(--surface);color:var(--muted);font-size:12px;font-weight:600}
+.sc-table .nm{position:sticky;left:0;background:inherit;text-align:left;padding-left:16px;min-width:88px;font-weight:600;font-size:15px;z-index:1;background:var(--surface2)}
+.sc-table td.nm{background:var(--bg)}
+.sc-table tr.sel td{background:var(--accent-soft)}
+.sc-table tr.sel td.nm{background:var(--accent-soft);color:var(--accent)}
+.sc-table tr.alt td{background:var(--surface)}
+.sc-table tr.alt td.nm{background:var(--surface)}
+.sc-table td.sub{background:var(--accent-soft);font-weight:700}
+.sc-table td button{border:0;background:transparent;width:100%;height:56px;display:flex;align-items:center;justify-content:center}
+.sc-table td.big{font-size:20px;font-weight:700;min-width:52px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;padding:16px 20px;color:var(--muted);font-size:12px}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+.empty-note{text-align:center;color:var(--muted);padding:32px 24px;font-size:16px;line-height:1.4}
+.summary{display:flex;align-items:center;padding:16px 20px;gap:16px}
+.summary .big{font-size:72px;font-weight:700;line-height:1.1}
+.krow{display:flex;align-items:center;min-height:56px;border:0;border-bottom:1px solid var(--border);width:100%;background:transparent;text-align:left;gap:12px;padding:0}
+.krow .ico{width:26px;display:flex;justify-content:center}
+.krow .bar{height:8px;border-radius:4px;background:var(--surface);margin-top:6px;overflow:hidden}
+.krow .bar i{display:block;height:100%;border-radius:4px}
+.krow .n{font-size:28px;font-weight:700;min-width:40px;text-align:right}
+.h2hs{display:flex;gap:8px;flex-wrap:wrap}
+.h2h{flex:1;min-width:150px;border:2px solid var(--border);background:var(--surface);border-radius:14px;padding:12px;text-align:left}
+.green{color:var(--success)}.red{color:var(--danger)}.amber{color:var(--warning)}.acc{color:var(--accent)}
+.row{display:flex;align-items:center;min-height:56px;padding:0 20px;gap:12px}
+.row.band{background:var(--surface)}
+.row input[type=text]{flex:1;min-height:44px;background:transparent;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:0 12px;font:inherit;font-size:16px}
+.row input[type=text]:focus{outline:2px solid var(--accent);border-color:var(--accent)}
+.row .x{width:44px;height:44px;border:0;background:transparent;color:var(--danger);font-size:20px}
+.rowbtn{display:flex;align-items:center;gap:12px;width:100%;border:0;background:transparent;min-height:56px;padding:0 20px;text-align:left;font-size:16px;font-weight:600}
+.rowbtn:active{background:var(--surface)}
+.rowbtn.danger{color:var(--danger)}
+.switch{position:relative;width:51px;height:31px;flex:none}
+.switch input{opacity:0;position:absolute;inset:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:2}
+.switch i{position:absolute;inset:0;background:var(--border);border-radius:999px;transition:.2s}
+.switch i::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;transition:.2s}
+.switch input:checked + i{background:var(--success)}
+.switch input:checked + i::after{left:22px}
+.sheet{background:#fff;color:#111;padding:20px;margin:0 20px}
+.sheet h3{font-size:28px;margin:0;line-height:1.2}
+.sheet .sub{color:#555;font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-top:4px;font-weight:600}
+.sheet .rule{height:3px;background:#111;margin:12px 0}
+.sheet .congrats{background:var(--accent);color:#111;padding:16px}
+.sheet .congrats b{font-size:40px;display:block;line-height:1.2;text-transform:uppercase}
+.sheet .congrats span{font-size:24px;font-weight:700;line-height:1.3}
+.sheet table{width:100%;border-collapse:collapse;margin-top:12px}
+.sheet th{background:#111;color:#fff;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:6px 4px;text-align:center}
+.sheet td{border-bottom:1px solid #bbb;text-align:center;padding:4px 2px;font-size:15px;font-weight:700}
+.sheet td.l,.sheet th.l{text-align:left}
+.sheet h4{margin:18px 0 4px;font-size:14px;letter-spacing:1px;text-transform:uppercase;border-bottom:3px solid #111;padding-bottom:4px}
+.sheet .mark{color:#111}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:15px;font-weight:600;z-index:50;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;z-index:40}
+.modal{background:var(--surface);width:100%;border-radius:16px 16px 0 0;padding:20px;display:flex;flex-direction:column;gap:10px}
+.modal h3{margin:0 0 4px;font-size:20px}
+.modal p{margin:0 0 6px;color:var(--muted);font-size:16px}
+.err{color:var(--danger);font-size:15px;font-weight:600;padding:0 20px 8px}
+svg text{font-family:inherit}
+@media print{
+  html,body{background:#fff;height:auto}
+  #app{max-width:none;height:auto;border:0;display:block}
+  main{overflow:visible}
+  .nav,.topbar,.noprint,.toast{display:none!important}
+  .sheet{margin:0;padding:0}
+  @page{margin:14mm}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+(function(){
+'use strict';
+
+var KEY='golf:html:v1';
+var BESAR=[4,3,5,4,4,3,4,5,4,4,3,5,4,4,3,4,5,4];
+var MINI=[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3];
+var KINDS=[
+  {key:'hio',label:'HOLE IN ONE',color:'var(--accent)'},
+  {key:'albatross',label:'ALBATROS',color:'#B58CFF'},
+  {key:'eagle',label:'EAGLE',color:'#4FA3FF'},
+  {key:'birdie',label:'BIRDIE',color:'var(--success)'},
+  {key:'par',label:'PAR',color:'var(--muted)'},
+  {key:'bogey',label:'BOGEY',color:'var(--warning)'},
+  {key:'double',label:'DOUBLE BOGEY',color:'var(--danger)'}
+];
+function kindLabel(k){for(var i=0;i<KINDS.length;i++)if(KINDS[i].key===k)return KINDS[i].label;return '';}
+
+function uid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function empty18(){var a=[];for(var i=0;i<18;i++)a.push(null);return a;}
+function newRound(players){
+  var sc={};players.forEach(function(p){sc[p.id]=empty18();});
+  return {id:'r'+Date.now(),scores:sc,currentHole:1,mode:'18',finished9:false,startedAt:new Date().toISOString()};
+}
+function defaults(){
+  var players=[{id:uid(),name:'Pemain 1'},{id:uid(),name:'Pemain 2'}];
+  return {course:{name:'Lapangan Golf',type:'besar',par:BESAR.slice()},players:players,round:newRound(players),
+    selected:players[0].id,history:[],light:false};
+}
+function load(){
+  try{
+    var raw=localStorage.getItem(KEY);
+    if(raw){
+      var s=JSON.parse(raw), d=defaults();
+      if(s&&typeof s==='object'&&s.players&&s.players.length&&s.round&&s.course){
+        s.history=s.history||[];s.selected=s.selected||s.players[0].id;
+        if(!s.course.par||s.course.par.length!==18)s.course.par=(s.course.type==='mini'?MINI:BESAR).slice();
+        return s;
+      }
+      return d;
+    }
+  }catch(e){}
+  return defaults();
+}
+var S=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){toast('Gagal menyimpan: penyimpanan browser penuh atau diblokir.');}}
+
+var view='skor';
+var ui={rekapRange:S.round.mode==='9'?'9':'18',aPlayer:null,tapped:null,kirimMode:'ringkasan',inclAna:false,allHoles:true,modal:null,h2hText:'',err:''};
+var lastView=null;
+
+/* ---------- logic ---------- */
+function isNum(n){return typeof n==='number'&&isFinite(n);}
+function scoreKind(s,par){
+  if(!isNum(s)||!isNum(par)||s<=0)return null;
+  if(s===1)return 'hio';
+  var d=s-par;
+  if(d<=-3)return 'albatross';
+  if(d===-2)return 'eagle';
+  if(d===-1)return 'birdie';
+  if(d===0)return 'par';
+  if(d===1)return 'bogey';
+  return 'double';
+}
+function par(i){var p=S.course.par[i];return isNum(p)?p:4;}
+function scoresOf(pid){return (S.round.scores[pid])||empty18();}
+function stat(pid,n){
+  var a=scoresOf(pid),total=0,diff=0,played=0;
+  for(var i=0;i<(n||18);i++){var s=a[i];if(isNum(s)&&s>0){total+=s;diff+=s-par(i);played++;}}
+  return {total:total,diff:diff,played:played};
+}
+function fmt(n){return n>0?'+'+n:(n===0?'E':String(n));}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function first(n){return String(n||'').trim().split(/\s+/)[0]||'—';}
+function pl(id){for(var i=0;i<S.players.length;i++)if(S.players[i].id===id)return S.players[i];return null;}
+function selId(){return pl(S.selected)?S.selected:(S.players[0]&&S.players[0].id);}
+function counts(pid,n){
+  var c={hio:0,albatross:0,eagle:0,birdie:0,par:0,bogey:0,double:0},a=scoresOf(pid);
+  for(var i=0;i<(n||18);i++){var k=scoreKind(a[i],par(i));if(k)c[k]++;}
+  return c;
+}
+function h2h(a,b){
+  var A=scoresOf(a),B=scoresOf(b),w=0,t=0,l=0,holes=[];
+  for(var i=0;i<18;i++){
+    if(isNum(A[i])&&A[i]>0&&isNum(B[i])&&B[i]>0){
+      if(A[i]<B[i]){w++;holes.push(i+1);}else if(A[i]===B[i])t++;else l++;
+    }
+  }
+  return {w:w,t:t,l:l,holes:holes};
+}
+function anyScore(){return S.players.some(function(p){return scoresOf(p.id).some(function(s){return isNum(s)&&s>0;});});}
+function rankOf(pid){
+  var st=stat(pid);if(!st.played)return '#–';
+  var lower=S.players.filter(function(o){var so=stat(o.id);return so.played>0&&so.total<st.total;}).length;
+  return '#'+(lower+1);
+}
+function winners(n){
+  var rows=S.players.map(function(p){var s=stat(p.id,n);s.p=p;return s;}).filter(function(r){return r.played>0;});
+  if(!rows.length)return {list:[],best:null};
+  var mp=Math.max.apply(null,rows.map(function(r){return r.played;}));
+  var el=rows.filter(function(r){return r.played===mp;});
+  var best=Math.min.apply(null,el.map(function(r){return r.total;}));
+  return {list:el.filter(function(r){return r.total===best;}),best:best};
+}
+function setStroke(pid,hole,delta){
+  var idx=hole-1;if(idx<0||idx>17)return;
+  var a=scoresOf(pid).slice();
+  var cur=a[idx]==null?0:a[idx];
+  var next=Math.max(0,cur+delta);
+  a[idx]=(delta<0&&next===0)?null:next;
+  S.round.scores[pid]=a;
+  save();
+}
+function finishRound(mode){
+  S.round.mode=mode;S.round.finished9=mode==='9';
+  S.round.currentHole=mode==='9'?9:18;
+  var covered=mode==='9'?9:18,totals={};
+  S.players.forEach(function(p){var a=scoresOf(p.id),sum=0;for(var i=0;i<covered;i++)sum+=a[i]||0;totals[p.id]=sum;});
+  var entry={roundId:S.round.id,date:new Date().toISOString(),totals:totals};
+  var found=false;
+  S.history=S.history.map(function(h){if(h.roundId===S.round.id){found=true;return entry;}return h;});
+  if(!found)S.history.push(entry);
+  ui.rekapRange=mode==='9'?'9':'18';
+  save();
+}
+
+/* ---------- views ---------- */
+function markHtml(strokes,p,size){
+  size=size||32;
+  var fs=Math.round(size*.46);
+  if(!isNum(strokes)||strokes<=0)return '<span class="mark empty" style="width:'+size+'px;height:'+size+'px;font-size:'+fs+'px">–</span>';
+  var k=scoreKind(strokes,p);
+  var cls=(k==='hio'||k==='birdie'||k==='eagle'||k==='albatross'||k==='bogey'||k==='double')?'m-'+k:'';
+  return '<span class="mark '+cls+'" style="width:'+size+'px;height:'+size+'px;font-size:'+fs+'px">'+(k==='hio'?'★':strokes)+'</span>';
+}
+function markShape(k,size){
+  var cls='m-'+k;
+  return '<span class="mark '+cls+'" style="width:'+size+'px;height:'+size+'px"></span>';
+}
+function seg(opts,val,act){
+  return '<div class="seg">'+opts.map(function(o){
+    return '<button class="'+(o.k===val?'on':'')+'" data-act="'+act+'" data-arg="'+o.k+'">'+esc(o.l)+'</button>';
+  }).join('')+'</div>';
+}
+function playerSeg(val,act){
+  return '<div class="seg">'+S.players.map(function(p){
+    return '<button class="'+(p.id===val?'on':'')+'" data-act="'+act+'" data-arg="'+p.id+'">'+esc(first(p.name))+'</button>';
+  }).join('')+'</div>';
+}
+function totalPar(){return S.course.par.reduce(function(a,b){return a+b;},0);}
+
+function vSkor(){
+  var hole=S.round.currentHole,hi=hole-1,hp=par(hi),sid=selId(),sel=pl(sid);
+  var h='<div class="topbar"><div class="logo"><svg width="40" height="40" viewBox="0 0 40 40"><ellipse cx="20" cy="30" rx="10" ry="3" fill="#111" opacity=".85"/><line x1="20" y1="9" x2="20" y2="30" stroke="#111" stroke-width="2.4" stroke-linecap="round"/><polygon points="20,9 30,13 20,17" fill="#111"/></svg></div>'+
+    '<div class="grow"><h1>'+esc(S.course.name)+'</h1><small>'+(S.course.type==='mini'?'MINI':'BESAR')+' · PAR '+totalPar()+' · 18 HOLE</small></div>'+
+    '<button class="icon-btn" data-act="theme" title="Ganti tema gelap/terang">'+(S.light?'🌙':'☀️')+'</button></div>';
+  h+='<div class="holeinfo"><div class="grow"><div class="label">HOLE '+hole+' DARI 18</div><div class="holenum">'+hole+'</div></div>'+
+    '<div class="holeright">PAR '+hp+'<br>'+(S.course.type==='mini'?'—':'')+'</div></div>';
+  if(!anyScore())h+='<div class="pad muted" style="margin-top:8px;font-size:16px">Mulai dari Hole 1. Tekan + untuk pukulan pertama.</div>';
+  h+='<div style="margin-top:12px">';
+  S.players.forEach(function(p){
+    var s=scoresOf(p.id)[hi],has=isNum(s)&&s>0,k=has?scoreKind(s,hp):null,st=stat(p.id);
+    h+='<div class="card'+(p.id===sid?' sel':'')+'"><div class="prow"><button class="pname" data-act="selp" data-arg="'+p.id+'">'+esc(p.name)+'</button>'+
+      (k?'<span class="badge">'+kindLabel(k)+'</span>':'')+'<span class="rank">'+rankOf(p.id)+'</span></div>'+
+      '<div class="stepper"><button class="step" aria-label="Kurangi pukulan '+esc(p.name)+'" data-act="minus" data-arg="'+p.id+'">−</button>'+
+      '<div>'+markHtml(has?s:null,hp,64)+'</div>'+
+      '<button class="step plus" aria-label="Tambah pukulan '+esc(p.name)+'" data-act="plus" data-arg="'+p.id+'">+</button></div>'+
+      '<div class="tot">TOTAL <b>'+st.total+'</b> &nbsp; VS PAR <b class="'+(st.diff>0?'red':st.diff<0?'green':'')+'">'+(st.played?fmt(st.diff):'–')+'</b></div></div>';
+  });
+  h+='</div>';
+  var arr=sel?scoresOf(sel.id):empty18();
+  h+='<div class="strip"><div class="names"><div>HOLE</div><div>PAR</div><div>'+esc(first(sel&&sel.name))+'</div></div><div class="cols" id="strip">';
+  for(var i=0;i<18;i++){
+    if(i===9)h+='<div class="sep">IN</div>';
+    h+='<button class="sc'+(i===hi?' active':'')+'" data-act="hole" data-arg="'+(i+1)+'"><div>'+(i+1)+'</div><div class="p">'+par(i)+'</div><div class="m">'+markHtml(arr[i],par(i),28)+'</div></button>';
+    if(i===8)h+='<div class="sep">OUT</div>';
+  }
+  h+='</div></div>';
+  h+='<div class="bottombar"><div class="btnrow"><button class="btn back" data-act="prev" '+(hole<=1?'disabled':'')+'>←<span>Hole '+Math.max(1,hole-1)+'</span></button>'+
+    '<button class="btn primary" data-act="next">'+(hole>=18?'Selesaikan':'Hole Berikutnya')+'</button></div>'+
+    '<div class="linkrow"><button class="link" data-act="finish">Selesaikan ronde</button><button class="link t" data-act="goto" data-arg="analisis">Analisis '+esc(first(sel&&sel.name))+' ›</button></div></div>';
+  return h;
+}
+
+function vRekap(){
+  var n=ui.rekapRange==='9'?9:18,starts=n===18?[0,9]:[0],sid=selId();
+  var h='<h2 class="title">Rekap Ronde</h2><div class="pad" style="margin-top:8px">'+seg([{k:'9',l:'9 Hole'},{k:'18',l:'18 Hole'}],ui.rekapRange,'rk')+'</div>';
+  if(!anyScore()){
+    return h+'<div class="empty-note" style="padding-top:48px">Belum ada skor. Mulai ronde dari tab Skor Hole.</div><div class="pad"><button class="btn" data-act="goto" data-arg="skor">Ke tab Skor Hole</button></div>';
+  }
+  var w=winners(n);
+  var line=w.list.length?w.list.map(function(x){return esc(x.p.name);}).join(' &amp; ')+' · '+w.best+' pukulan ('+fmt(w.list[0].diff)+')':'—';
+  h+='<div class="banner"><div style="font-size:28px">🏆</div><div><div class="l">TERENDAH · TERBAIK</div><div class="v">'+line+'</div></div></div>';
+  h+='<div class="tablewrap"><table class="sc-table"><thead><tr class="hd"><td class="nm" style="background:var(--surface2)">HOLE</td>';
+  starts.forEach(function(s){for(var k=0;k<9;k++)h+='<td>'+(s+k+1)+'</td>';h+='<td class="sub acc">'+(s===0?'OUT':'IN')+'</td>';});
+  h+='<td>TOTAL</td><td>VS</td></tr><tr class="hd"><td class="nm" style="background:var(--surface2)">PAR</td>';
+  starts.forEach(function(s){var sp=0;for(var k=0;k<9;k++){h+='<td>'+par(s+k)+'</td>';sp+=par(s+k);}h+='<td class="sub acc">'+sp+'</td>';});
+  var tp=0;for(var q=0;q<n;q++)tp+=par(q);
+  h+='<td>'+tp+'</td><td>PAR</td></tr></thead><tbody>';
+  S.players.forEach(function(p,r){
+    var a=scoresOf(p.id),st=stat(p.id,n),sel=p.id===sid;
+    h+='<tr class="'+(sel?'sel':(r%2?'alt':''))+'"><td class="nm">'+esc(first(p.name))+'</td>';
+    starts.forEach(function(s){
+      var sub=0,any=false;
+      for(var k=0;k<9;k++){var i=s+k;if(isNum(a[i])&&a[i]>0){sub+=a[i];any=true;}
+        h+='<td><button data-act="openhole" data-arg="'+p.id+'|'+(i+1)+'" aria-label="Hole '+(i+1)+' '+esc(p.name)+'">'+markHtml(a[i],par(i),30)+'</button></td>';}
+      h+='<td class="sub">'+(any?sub:'–')+'</td>';
+    });
+    h+='<td class="big">'+(st.played?st.total:'–')+'</td><td style="font-weight:600" class="'+(!st.played?'':st.diff>0?'red':st.diff<0?'green':'')+'">'+(st.played?fmt(st.diff):'')+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="legend"><span>'+markShape('hio',20)+'Hole in One</span><span>'+markShape('eagle',20)+'Albatros/Eagle</span><span>'+markShape('birdie',20)+'Birdie</span><span>Par</span><span>'+markShape('bogey',20)+'Bogey</span><span>'+markShape('double',20)+'Double Bogey</span></div>';
+  h+='<div class="pad" style="padding-bottom:24px;display:flex;flex-direction:column;gap:8px">';
+  if(S.round.finished9&&S.round.mode==='9')h+='<button class="btn" data-act="cont18">Lanjutkan ke hole 10–18</button>';
+  h+='<button class="btn primary" data-act="goto" data-arg="kirim">Kirim Hasil</button></div>';
+  return h;
+}
+
+function vAnalisis(){
+  var sid=ui.aPlayer&&pl(ui.aPlayer)?ui.aPlayer:selId(),sel=pl(sid);
+  var h='<h2 class="title">Analisis</h2><div class="pad" style="margin-top:8px">'+playerSeg(sid,'ap')+'</div>';
+  if(!sel)return h+'<div class="empty-note">Belum ada pemain. Tambahkan pemain di tab Akun.</div>';
+  var st=stat(sid),has=st.played>0,c=counts(sid),max=Math.max(1,Math.max.apply(null,KINDS.map(function(k){return c[k.key];})));
+  var prev=S.history.map(function(x){return {date:x.date,v:x.totals&&x.totals[sid],rid:x.roundId};}).filter(function(x){return isNum(x.v)&&x.rid!==S.round.id;});
+  var last=prev.length?prev[prev.length-1]:null;
+  var better=(last&&has)?last.v-st.total:null;
+  h+='<div class="summary"><div class="big">'+(has?st.total:'—')+'</div><div class="grow"><div style="font-size:28px;font-weight:700" class="'+(st.diff>0?'red':'green')+'">'+(has?fmt(st.diff):'—')+'</div><div class="label">VS PAR</div>'+
+    (better!=null&&better!==0?'<div class="muted" style="font-size:14px;margin-top:4px">'+(better>0?'▲':'▼')+' '+Math.abs(better)+' '+(better>0?'lebih baik':'lebih buruk')+' dari ronde lalu ('+last.v+')</div>':'')+'</div></div>';
+  h+='<div class="section" style="padding-top:8px"><div class="label">RINCIAN JENIS SKOR</div></div><div class="pad">';
+  KINDS.forEach(function(k){
+    var n=c[k.key];
+    h+='<button class="krow" data-act="kind" data-arg="'+k.key+'"><div class="ico">'+(k.key==='hio'?'<span style="color:var(--accent);font-size:22px">★</span>':k.key==='par'?'<span class="mark" style="width:22px;height:22px;border:1px solid var(--muted);border-radius:50%"></span>':'<span style="color:'+k.color+'">'+markShape(k.key,22)+'</span>')+'</div>'+
+      '<div class="grow"><div class="label" style="color:var(--text)">'+k.label+'</div><div class="bar"><i style="width:'+(n/max*100)+'%;background:'+k.color+'"></i></div></div><div class="n">'+n+'</div></button>';
+  });
+  h+='</div><div class="section"><div class="label">ADU LANGSUNG</div></div><div class="pad">';
+  var others=S.players.filter(function(p){return p.id!==sid;});
+  if(!others.length)h+='<div class="muted">Tambahkan pemain lain untuk adu langsung.</div>';
+  else{
+    h+='<div class="h2hs">';
+    others.forEach(function(o){
+      var r=h2h(sid,o.id),d=st.total-stat(o.id).total;
+      h+='<button class="h2h" data-act="h2h" data-arg="'+o.id+'"><div class="label" style="color:var(--text)">'+esc(first(sel.name)).toUpperCase()+' VS '+esc(first(o.name)).toUpperCase()+'</div>'+
+        '<div style="margin-top:8px;font-weight:600;font-size:15px"><span class="green">Menang '+r.w+' hole</span> · Seri '+r.t+' · <span class="red">Kalah '+r.l+'</span></div>'+
+        '<div class="muted" style="font-size:11px;margin-top:8px">SELISIH TOTAL</div><div style="font-size:22px;font-weight:700" class="'+(d>0?'red':'green')+'">'+(has?fmt(d):'—')+'</div></button>';
+    });
+    h+='</div>';
+    if(ui.h2hText)h+='<div class="muted" style="margin-top:8px;font-size:15px">'+ui.h2hText+'</div>';
+  }
+  h+='</div><div class="section"><div class="label">TREN RONDE</div></div><div class="pad">';
+  var pts=prev.slice();if(has)pts.push({date:S.round.startedAt,v:st.total,cur:true});
+  if(!prev.length)h+='<div class="muted">Belum ada ronde sebelumnya untuk dibandingkan. Tekan “Selesaikan ronde” di tab Skor Hole untuk menyimpan ronde ke riwayat.</div>';
+  else h+=trendSvg(pts);
+  h+='</div><div class="pad" style="padding:24px 20px 32px"><button class="btn" data-act="goto" data-arg="rekap">Lihat rekap</button></div>';
+  return h;
+}
+function dlabel(d){var x=new Date(d);return isNaN(x.getTime())?'':x.toLocaleDateString('id-ID',{day:'2-digit',month:'short'}).toUpperCase();}
+function trendSvg(pts){
+  var W=320,H=130,vals=pts.map(function(p){return p.v;}),mn=Math.min.apply(null,vals)-4,mx=Math.max.apply(null,vals)+4;
+  var xy=pts.map(function(p,i){return {x:24+(pts.length>1?i*(W-48)/(pts.length-1):(W-48)/2),y:16+(H-48)*(1-(p.v-mn)/Math.max(1,mx-mn)),p:p,i:i};});
+  var s='<svg width="100%" viewBox="0 0 '+W+' '+H+'"><line x1="8" y1="'+(H-24)+'" x2="'+(W-8)+'" y2="'+(H-24)+'" stroke="var(--border)"/>'+
+    '<polyline points="'+xy.map(function(q){return q.x+','+q.y;}).join(' ')+'" fill="none" stroke="var(--muted)" stroke-width="2.5"/>';
+  xy.forEach(function(q,i){
+    var l=i===xy.length-1;
+    s+='<circle data-act="trend" data-arg="'+q.i+'" cx="'+q.x+'" cy="'+q.y+'" r="'+(l?7:5)+'" fill="'+(l?'var(--accent)':'var(--surface)')+'" stroke="'+(l?'var(--accent)':'var(--muted)')+'" stroke-width="2" style="cursor:pointer"/>'+
+      '<text x="'+q.x+'" y="'+(q.y-12)+'" text-anchor="middle" font-size="12" fill="'+(l?'var(--accent)':'var(--text)')+'">'+q.p.v+'</text>'+
+      '<text x="'+q.x+'" y="'+(H-6)+'" text-anchor="middle" font-size="9" fill="var(--muted)">'+dlabel(q.p.date)+'</text>';
+  });
+  s+='</svg><div class="muted" style="font-size:14px">';
+  s+=ui.tapped!=null&&pts[ui.tapped]?pts[ui.tapped].v+' pukulan · '+dlabel(pts[ui.tapped].date)+(pts[ui.tapped].cur?' (ronde ini)':''):'Klik titik untuk melihat skor dan tanggal.';
+  return s+'</div>';
+}
+
+function toggleRow(label,on,act){
+  return '<div class="row" style="border-bottom:1px solid var(--border)"><span class="grow label" style="color:var(--text)">'+label+'</span><label class="switch"><input type="checkbox" data-act="'+act+'" '+(on?'checked':'')+'><i></i></label></div>';
+}
+function vKirim(){
+  var covered=S.round.mode==='9'&&!S.allHolesOverride?9:18;
+  var nHoles=ui.allHoles?18:covered;
+  var h='<div class="topbar noprint"><button class="icon-btn" data-act="goto" data-arg="rekap" aria-label="Kembali">‹</button><div class="grow"><h1>Kirim Hasil</h1></div></div>';
+  h+='<div class="pad noprint" style="padding-top:12px;padding-bottom:12px">'+seg([{k:'ringkasan',l:'Ringkasan'},{k:'lengkap',l:'Lengkap'}],ui.kirimMode,'km')+'</div>';
+  var w=winners(nHoles),rows=S.players.map(function(p){var s=stat(p.id,nHoles);s.p=p;return s;});
+  h+='<div class="sheet"><h3>'+esc(S.course.name)+'</h3><div class="sub">Lapangan '+(S.course.type==='mini'?'Mini':'Besar')+' · Par '+totalPar()+' · '+new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})+'</div><div class="rule"></div>';
+  if(!w.list.length){h+='<div class="empty-note" style="color:#555">Belum ada skor. Mulai ronde dari tab Skor Hole.</div></div>';}
+  else{
+    h+='<div class="congrats"><b>Congrats!</b><span>'+w.list.map(function(x){return esc(x.p.name);}).join(' &amp; ')+' · '+w.best+' pukulan ('+fmt(w.list[0].diff)+')</span></div>';
+    var sorted=rows.slice().sort(function(a,b){if(!a.played)return 1;if(!b.played)return -1;return a.total-b.total;});
+    h+='<table><thead><tr><th>#</th><th class="l">Pemain</th><th>Pukulan</th><th>+/- Par</th></tr></thead><tbody>'+sorted.map(function(r,i){
+      return '<tr><td>'+(i+1)+'</td><td class="l">'+esc(r.p.name)+'</td><td>'+(r.played?r.total:'–')+'</td><td>'+(r.played?fmt(r.diff):'–')+'</td></tr>';}).join('')+'</tbody></table>';
+    if(ui.allHoles){
+      h+='<h4>Skor per hole</h4><table><thead><tr><th>Hole</th><th>Par</th>'+rows.map(function(r){return '<th>'+esc(first(r.p.name))+'</th>';}).join('')+'</tr></thead><tbody>';
+      for(var i=0;i<nHoles;i++){
+        h+='<tr><td>'+(i+1)+'</td><td>'+par(i)+'</td>'+rows.map(function(r){return '<td>'+markHtml(scoresOf(r.p.id)[i],par(i),30)+'</td>';}).join('')+'</tr>';
+      }
+      h+='<tr><td colspan="2">Total</td>'+rows.map(function(r){return '<td>'+(r.played?r.total:'–')+'</td>';}).join('')+'</tr></tbody></table>';
+    }
+    if(ui.inclAna){
+      h+='<h4>Rincian jenis skor</h4><table><thead><tr><th class="l">Jenis</th>'+rows.map(function(r){return '<th>'+esc(first(r.p.name))+'</th>';}).join('')+'</tr></thead><tbody>'+
+        KINDS.map(function(k){return '<tr><td class="l">'+k.label+'</td>'+rows.map(function(r){return '<td>'+counts(r.p.id,nHoles)[k.key]+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table>';
+      if(rows.length>1){
+        var lines='';
+        for(var a=0;a<rows.length;a++)for(var b=a+1;b<rows.length;b++){var r2=h2h(rows[a].p.id,rows[b].p.id);
+          lines+='<tr><td class="l">'+esc(first(rows[a].p.name))+' vs '+esc(first(rows[b].p.name))+'</td><td>'+r2.w+'</td><td>'+r2.t+'</td><td>'+r2.l+'</td></tr>';}
+        h+='<h4>Adu langsung (hole)</h4><table><thead><tr><th class="l">Duel</th><th>Menang</th><th>Seri</th><th>Kalah</th></tr></thead><tbody>'+lines+'</tbody></table>';
+      }
+    }
+    h+='<div style="font-size:12px;color:#555;margin-top:12px">Lingkaran = birdie · lingkaran ganda = eagle/albatros · bintang = hole in one · kotak = bogey · kotak ganda = double bogey atau lebih</div></div>';
+  }
+  h+='<div class="noprint" style="padding:8px 20px">'+toggleRow('Sertakan analisis',ui.inclAna,'tAna')+toggleRow('Sertakan semua hole',ui.allHoles,'tAll')+'</div>';
+  h+='<div class="bottombar noprint"><button class="btn primary" data-act="print">🖨 Cetak / Simpan PDF</button><div style="height:8px"></div><button class="btn small" data-act="share">Bagikan sebagai teks</button></div>';
+  return h;
+}
+
+function vAkun(){
+  var h='<h2 class="title">Akun &amp; Pengaturan</h2>';
+  h+='<div class="section"><div class="label">Lapangan</div></div>';
+  h+='<div class="row band"><span class="muted" style="font-size:14px">Nama lapangan:</span><input type="text" id="cname" value="'+esc(S.course.name)+'" maxlength="60" /></div>';
+  h+='<div class="row" style="padding-top:12px;padding-bottom:12px;display:block">'+seg([{k:'mini',l:'Mini 54'},{k:'besar',l:'Besar 72'}],S.course.type,'ctype')+'</div>';
+  h+='<div class="section"><div class="label">Pemain</div></div>';
+  S.players.forEach(function(p,i){
+    h+='<div class="row'+(i%2?'':' band')+'"><input type="text" class="pn" data-id="'+p.id+'" value="'+esc(p.name)+'" maxlength="30" aria-label="Nama pemain" /><button class="x" data-act="delp" data-arg="'+p.id+'" aria-label="Hapus '+esc(p.name)+'">✕</button></div>';
+  });
+  h+='<div class="row"><input type="text" id="newp" placeholder="Nama pemain baru" maxlength="30" /><button class="btn small" style="width:auto;padding:0 18px" data-act="addp">Tambah</button></div>';
+  if(ui.err)h+='<div class="err">'+esc(ui.err)+'</div>';
+  h+='<div class="section"><div class="label">Ronde</div></div>';
+  h+='<button class="rowbtn" data-act="newround">➕ Mulai ronde baru</button>';
+  h+='<button class="rowbtn danger" data-act="delround">🗑 Hapus catatan ronde ini</button>';
+  h+='<div class="section"><div class="label">Tampilan &amp; data</div></div>';
+  h+=toggleRow('Tema terang',S.light,'tTheme');
+  h+='<button class="rowbtn" data-act="export">⬇ Unduh cadangan data (JSON)</button>';
+  h+='<label class="rowbtn" style="cursor:pointer">⬆ Pulihkan dari cadangan<input type="file" id="imp" accept="application/json,.json" style="display:none"></label>';
+  h+='<button class="rowbtn danger" data-act="resetall">⚠ Hapus semua data</button>';
+  h+='<div class="pad muted" style="font-size:14px;padding-top:16px;padding-bottom:32px">Semua data tersimpan di browser ini (localStorage) dan tetap ada walaupun tanpa internet. Membuka file ini di browser/komputer lain tidak membawa data — gunakan cadangan JSON untuk memindahkannya.</div>';
+  return h;
+}
+
+var ICONS={
+  skor:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/>',
+  rekap:'<rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/>',
+  analisis:'<polyline points="3 17 9 11 13 15 21 6"/><polyline points="15 6 21 6 21 12"/>',
+  akun:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>'
+};
+var TABS=[['skor','Skor Hole'],['rekap','Rekap'],['analisis','Analisis'],['akun','Akun']];
+
+function render(){
+  document.body.classList.toggle('light',!!S.light);
+  var app=document.getElementById('app');
+  var m=app.querySelector('main'),st=(m&&lastView===view)?m.scrollTop:0;
+  var body=view==='skor'?vSkor():view==='rekap'?vRekap():view==='analisis'?vAnalisis():view==='akun'?vAkun():vKirim();
+  var navOn=view==='kirim'?'rekap':view;
+  var html='<main>'+body+'</main><nav class="nav">'+TABS.map(function(t){
+    return '<button class="'+(t[0]===navOn?'on':'')+'" data-act="tab" data-arg="'+t[0]+'"><svg viewBox="0 0 24 24">'+ICONS[t[0]]+'</svg>'+t[1]+'</button>';
+  }).join('')+'</nav>';
+  if(ui.modal){
+    html+='<div class="overlay" data-act="mclose-bg"><div class="modal"><h3>'+esc(ui.modal.title)+'</h3><p>'+esc(ui.modal.text)+'</p>'+
+      ui.modal.buttons.map(function(b){return '<button class="btn '+(b.cls||'')+'" data-act="'+b.act+'" data-arg="'+(b.arg||'')+'">'+esc(b.label)+'</button>';}).join('')+'</div></div>';
+  }
+  app.innerHTML=html;
+  var m2=app.querySelector('main');
+  if(m2)m2.scrollTop=st;
+  lastView=view;
+  var strip=document.getElementById('strip');
+  if(strip){var a=strip.querySelector('.active');if(a)strip.scrollLeft=Math.max(0,a.offsetLeft-strip.clientWidth/2+20);}
+}
+
+var toastTimer=null;
+function toast(msg){
+  var old=document.querySelector('.toast');if(old)old.remove();
+  var d=document.createElement('div');d.className='toast';d.textContent=msg;document.body.appendChild(d);
+  clearTimeout(toastTimer);toastTimer=setTimeout(function(){d.remove();},2400);
+}
+function go(v){view=v;ui.err='';ui.h2hText='';render();}
+
+function plainText(){
+  var n=ui.allHoles?18:(S.round.mode==='9'?9:18),w=winners(n);
+  var lines=[S.course.name,'Lapangan '+(S.course.type==='mini'?'Mini':'Besar')+' · Par '+totalPar(),''];
+  if(w.list.length)lines.push('CONGRATS! '+w.list.map(function(x){return x.p.name;}).join(' & ')+' · '+w.best+' pukulan ('+fmt(w.list[0].diff)+')','');
+  S.players.forEach(function(p){
+    var st=stat(p.id,n);lines.push(p.name+': '+st.total+' pukulan ('+fmt(st.diff)+')');
+    if(ui.allHoles)lines.push('  Hole: '+scoresOf(p.id).slice(0,n).map(function(x){return isNum(x)?x:'-';}).join(' '));
+    if(ui.inclAna){var c=counts(p.id,n);lines.push('  '+(KINDS.filter(function(k){return c[k.key];}).map(function(k){return k.label+' '+c[k.key];}).join(', ')||'Tidak ada hole bernama khusus'));}
+  });
+  return lines.join('\n');
+}
+
+/* ---------- actions ---------- */
+var A={
+  tab:function(a){go(a);},
+  goto:function(a){go(a);},
+  theme:function(){S.light=!S.light;save();render();},
+  tTheme:function(){S.light=!S.light;save();render();},
+  selp:function(a){S.selected=a;save();render();},
+  plus:function(a){setStroke(a,S.round.currentHole,1);render();},
+  minus:function(a){setStroke(a,S.round.currentHole,-1);render();},
+  hole:function(a){S.round.currentHole=+a;save();render();},
+  prev:function(){S.round.currentHole=Math.max(1,S.round.currentHole-1);save();render();},
+  next:function(){
+    if(S.round.currentHole>=18){A.finish();return;}
+    var lim=(S.round.mode==='9'&&!S.round.finished9)?9:18;
+    S.round.currentHole=Math.min(lim<18?18:18,S.round.currentHole+1);save();render();
+  },
+  finish:function(){
+    if(!anyScore()){alert('Belum ada skor. Isi pukulan dulu sebelum menyelesaikan ronde.');return;}
+    ui.modal={title:'Selesaikan ronde',text:'Pilih jumlah hole yang dihitung.',buttons:[
+      {label:'9 hole (1-9)',act:'finishgo',arg:'9'},{label:'18 hole',act:'finishgo',arg:'18',cls:'primary'},{label:'Batal',act:'mclose'}]};
+    render();
+  },
+  finishgo:function(a){finishRound(a);ui.modal=null;view='rekap';render();toast('Ronde disimpan ke riwayat');},
+  mclose:function(){ui.modal=null;render();},
+  'mclose-bg':function(a,el,ev){if(ev.target===el){ui.modal=null;render();}},
+  rk:function(a){ui.rekapRange=a;render();},
+  openhole:function(a){var p=a.split('|');S.selected=p[0];S.round.currentHole=+p[1];save();go('skor');},
+  cont18:function(){S.round.mode='18';S.round.finished9=false;S.round.currentHole=10;save();go('skor');},
+  ap:function(a){ui.aPlayer=a;S.selected=a;ui.tapped=null;ui.h2hText='';save();render();},
+  kind:function(){go('rekap');},
+  h2h:function(a){
+    var sid=ui.aPlayer&&pl(ui.aPlayer)?ui.aPlayer:selId(),o=pl(a),r=h2h(sid,a);
+    ui.h2hText='Hole dimenangkan vs '+esc(first(o&&o.name))+': '+(r.holes.length?'Hole '+r.holes.join(', '):'belum ada hole yang dimenangkan.');
+    render();
+  },
+  trend:function(a){ui.tapped=+a;render();},
+  km:function(a){
+    ui.kirimMode=a;
+    if(a==='lengkap'){ui.inclAna=true;ui.allHoles=true;}else ui.inclAna=false;
+    render();
+  },
+  tAna:function(){ui.inclAna=!ui.inclAna;render();},
+  tAll:function(){ui.allHoles=!ui.allHoles;render();},
+  print:function(){
+    if(!winners(18).list.length){alert('Belum ada skor. Isi pukulan di tab Skor Hole sebelum mencetak.');return;}
+    window.print();
+  },
+  share:function(){
+    if(!winners(18).list.length){alert('Belum ada skor. Isi pukulan di tab Skor Hole sebelum membagikan.');return;}
+    var t=plainText();
+    if(navigator.share){navigator.share({title:S.course.name,text:t}).catch(function(){});return;}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){toast('Hasil disalin ke clipboard');},function(){window.prompt('Salin teks hasil:',t);});
+    }else window.prompt('Salin teks hasil:',t);
+  },
+  ctype:function(a){
+    S.course.type=a;S.course.par=(a==='mini'?MINI:BESAR).slice();save();render();toast('Par lapangan diperbarui');
+  },
+  addp:function(){
+    var inp=document.getElementById('newp'),n=(inp&&inp.value||'').trim();
+    if(!n){ui.err='Isi nama pemain dulu.';render();return;}
+    if(S.players.length>=8){ui.err='Maksimal 8 pemain.';render();return;}
+    var p={id:uid(),name:n};S.players.push(p);S.round.scores[p.id]=empty18();ui.err='';save();render();toast(n+' ditambahkan');
+  },
+  delp:function(a){
+    if(S.players.length<=1){ui.err='Minimal harus ada satu pemain.';render();return;}
+    var p=pl(a);
+    if(!confirm('Hapus pemain '+(p?p.name:'')+' dan semua skornya di ronde ini?'))return;
+    S.players=S.players.filter(function(x){return x.id!==a;});delete S.round.scores[a];
+    if(S.selected===a)S.selected=S.players[0].id;
+    ui.err='';save();render();
+  },
+  newround:function(){
+    if(anyScore()&&!confirm('Mulai ronde baru? Skor ronde berjalan akan dikosongkan (riwayat yang sudah diselesaikan tetap ada).'))return;
+    S.round=newRound(S.players);ui.rekapRange='18';save();go('skor');toast('Ronde baru dimulai');
+  },
+  delround:function(){
+    if(!confirm('Hapus catatan ronde ini? Semua pukulan pada ronde berjalan akan dihapus.'))return;
+    S.history=S.history.filter(function(h){return h.roundId!==S.round.id;});
+    S.round=newRound(S.players);save();render();toast('Catatan ronde dihapus');
+  },
+  resetall:function(){
+    if(!confirm('Hapus SEMUA data (pemain, skor, riwayat)? Tindakan ini tidak bisa dibatalkan.'))return;
+    S=defaults();ui.aPlayer=null;ui.tapped=null;save();go('skor');toast('Semua data dihapus');
+  },
+  'export':function(){
+    try{
+      var blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+      var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+      a.download='skor-golf-cadangan.json';document.body.appendChild(a);a.click();a.remove();
+      toast('Cadangan diunduh');
+    }catch(e){alert('Gagal mengunduh cadangan: '+e.message);}
+  }
+};
+
+document.addEventListener('click',function(ev){
+  var el=ev.target.closest?ev.target.closest('[data-act]'):null;
+  if(!el||el.tagName==='INPUT')return;
+  var f=A[el.getAttribute('data-act')];
+  if(f)f(el.getAttribute('data-arg')||'',el,ev);
+});
+document.addEventListener('change',function(ev){
+  var t=ev.target;
+  if(t.getAttribute&&t.getAttribute('data-act')&&t.type==='checkbox'){var f=A[t.getAttribute('data-act')];if(f)f();return;}
+  if(t.id==='cname'){
+    var n=t.value.trim();
+    if(!n){alert('Nama lapangan kosong. Isi nama lapangan dulu.');t.value=S.course.name;return;}
+    S.course.name=n;save();toast('Nama lapangan disimpan');return;
+  }
+  if(t.classList&&t.classList.contains('pn')){
+    var p=pl(t.getAttribute('data-id')),nm=t.value.trim();
+    if(!nm){alert('Nama pemain tidak boleh kosong.');if(p)t.value=p.name;return;}
+    if(p){p.name=nm;save();toast('Nama pemain disimpan');}
+    return;
+  }
+  if(t.id==='imp'){
+    var file=t.files&&t.files[0];if(!file)return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      try{
+        var d=JSON.parse(rd.result);
+        if(!d||!d.players||!d.players.length||!d.round||!d.course)throw new Error('Format file cadangan tidak dikenali.');
+        if(!confirm('Pulihkan data dari cadangan? Data saat ini akan diganti.'))return;
+        localStorage.setItem(KEY,JSON.stringify(d));S=load();ui.aPlayer=null;go('skor');toast('Data dipulihkan');
+      }catch(e){alert('Gagal memulihkan: '+e.message);}
+    };
+    rd.onerror=function(){alert('File tidak bisa dibaca.');};
+    rd.readAsText(file);
+  }
+});
+document.addEventListener('keydown',function(ev){
+  if(ev.key==='Enter'&&ev.target&&ev.target.id==='newp')A.addp();
+});
+
+render();
+})();
+</script>
+</body>
+</html>

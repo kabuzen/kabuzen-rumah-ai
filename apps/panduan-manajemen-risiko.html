@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153d4b">
+  <title>Panduan Empat Tingkat Manajemen Risiko — Studi Kasus Taiwan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18323b;
+      --muted: #536b74;
+      --paper: #ffffff;
+      --canvas: #eef3f4;
+      --line: #d6e1e4;
+      --navy: #153d4b;
+      --teal: #0c716b;
+      --teal-soft: #e2f2ef;
+      --amber: #8a5a08;
+      --amber-soft: #fff1cb;
+      --red: #9c3028;
+      --red-soft: #fde8e6;
+      --blue-soft: #eaf1f8;
+      --shadow: 0 16px 42px rgba(18, 54, 66, .08);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--canvas); line-height: 1.62; }
+    a { color: #075e71; text-underline-offset: 3px; }
+    a:hover { color: #0a7971; }
+    .shell { width: min(1120px, calc(100% - 32px)); margin: 28px auto 56px; }
+    .hero {
+      overflow: hidden;
+      position: relative;
+      padding: clamp(28px, 5vw, 58px);
+      border-radius: 26px;
+      color: #f7fbfc;
+      background: linear-gradient(125deg, #133b49, #1b5762 68%, #277d78);
+      box-shadow: var(--shadow);
+    }
+    .hero::after {
+      position: absolute; content: ""; width: 250px; height: 250px; right: -55px; top: -70px;
+      border: 1px solid rgba(255,255,255,.18); border-radius: 50%;
+      box-shadow: 0 0 0 28px rgba(255,255,255,.035), 0 0 0 58px rgba(255,255,255,.025);
+      pointer-events: none;
+    }
+    .eyebrow { margin: 0 0 10px; color: #b7e5df; font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 820px; margin: 0; font-size: clamp(2rem, 5vw, 3.45rem); line-height: 1.08; letter-spacing: -.035em; }
+    .hero p { max-width: 780px; margin: 20px 0 0; color: #dfedef; font-size: clamp(1rem, 2vw, 1.18rem); }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+    .hero-tag { padding: 6px 11px; border: 1px solid rgba(255,255,255,.24); border-radius: 999px; color: #f1f9f8; background: rgba(255,255,255,.09); font-size: .83rem; font-weight: 700; }
+    .warning {
+      margin: 18px 0; padding: 17px 19px; border: 1px solid #edcf84; border-left: 5px solid #d59b23;
+      border-radius: 15px; background: #fff8e7; color: #5c481c;
+    }
+    .warning strong { color: #533c0b; }
+    .notice { margin: 18px 0; padding: 16px 18px; border: 1px solid #efb7b2; border-left: 5px solid var(--red); border-radius: 14px; background: var(--red-soft); color: #56231f; }
+    .good { border-color: #a9d5ce; border-left-color: var(--teal); background: var(--teal-soft); color: #1d4945; }
+    .toc { display: flex; flex-wrap: wrap; gap: 9px; margin: 18px 0 24px; padding: 14px; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); }
+    .toc a { padding: 7px 11px; border-radius: 999px; text-decoration: none; color: var(--ink); background: #f0f5f6; font-size: .91rem; font-weight: 700; }
+    .toc a:hover { background: var(--teal-soft); }
+    .card { margin: 20px 0; padding: clamp(20px, 3vw, 34px); border: 1px solid var(--line); border-radius: 20px; background: var(--paper); box-shadow: 0 5px 18px rgba(18,54,66,.035); }
+    h2 { margin: 0 0 14px; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.2; letter-spacing: -.02em; }
+    h3 { margin: 24px 0 9px; font-size: 1.16rem; line-height: 1.3; }
+    h4 { margin: 0 0 7px; font-size: 1rem; }
+    p { margin: 9px 0 13px; }
+    .lede { color: var(--muted); font-size: 1.08rem; }
+    .small { color: var(--muted); font-size: .91rem; }
+    .label { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 10px; padding: 4px 9px; border-radius: 999px; font-size: .76rem; font-weight: 850; letter-spacing: .04em; text-transform: uppercase; }
+    .label.fact { color: #245781; background: var(--blue-soft); }
+    .label.sim { color: #6b4a0d; background: var(--amber-soft); }
+    .label.demo { color: #205a55; background: var(--teal-soft); }
+    .cols2, .cols3, .cols4 { display: grid; gap: 14px; }
+    .cols2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cols3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cols4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .mini { padding: 17px; border: 1px solid var(--line); border-radius: 15px; background: #fbfdfd; }
+    .mini p:last-child, .mini ul:last-child { margin-bottom: 0; }
+    .layer { position: relative; min-height: 100%; padding: 19px; border: 1px solid var(--line); border-radius: 16px; background: #fbfdfd; }
+    .layer .num { display: inline-grid; width: 30px; height: 30px; place-items: center; margin-right: 6px; border-radius: 50%; color: white; background: var(--navy); font-weight: 850; }
+    .layer .model { display: block; margin-top: 10px; color: var(--teal); font-size: 1.03rem; font-weight: 850; }
+    .flow { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; margin: 17px 0; padding: 14px; border-radius: 14px; background: #f2f7f7; text-align: center; font-weight: 800; }
+    .flow .down { color: var(--teal); }
+    .flow .up { color: #955d0b; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: #334f58; background: #f0f5f6; font-size: .84rem; }
+    tr:last-child td { border-bottom: 0; }
+    .chip { display: inline-block; padding: 4px 9px; border-radius: 999px; font-size: .79rem; font-weight: 800; white-space: nowrap; }
+    .chip.red { color: var(--red); background: var(--red-soft); }
+    .chip.amber { color: var(--amber); background: var(--amber-soft); }
+    .chip.green { color: #176248; background: #e2f3e7; }
+    .steps { counter-reset: step; list-style: none; padding: 0; }
+    .steps li { position: relative; min-height: 42px; margin: 0 0 12px; padding: 2px 0 0 48px; }
+    .steps li::before { counter-increment: step; content: counter(step); position: absolute; top: 0; left: 0; display: grid; width: 32px; height: 32px; place-items: center; border-radius: 50%; color: #fff; background: var(--teal); font-weight: 850; }
+    .screen { margin: 15px 0 21px; overflow: hidden; border: 1px solid #cbdadd; border-radius: 14px; background: #f2f6f7; box-shadow: 0 7px 18px rgba(21,61,75,.08); }
+    .screen img { display: block; width: 100%; height: auto; }
+    .screen figcaption { padding: 10px 13px; color: var(--muted); background: #f8fbfb; font-size: .87rem; }
+    .screen.row img { min-height: 68px; object-fit: cover; }
+    .score { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0; padding: 13px 15px; border-radius: 12px; background: #f1f6f6; font-size: 1.02rem; font-weight: 800; }
+    .score .arrow { color: var(--teal); font-size: 1.2rem; }
+    .formula { padding: 14px; border: 1px dashed #9bb6bc; border-radius: 12px; background: #f7fafb; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 800; overflow-wrap: anywhere; }
+    .checklist { padding-left: 22px; }
+    .checklist li { margin: 7px 0; }
+    details { margin: 10px 0; border: 1px solid var(--line); border-radius: 13px; background: #fbfdfd; }
+    summary { padding: 13px 15px; cursor: pointer; font-weight: 800; }
+    details .inside { padding: 0 15px 15px; }
+    .pill { display: inline-block; margin: 2px 4px 2px 0; padding: 4px 8px; border-radius: 999px; color: #38535c; background: #edf3f4; font-size: .79rem; font-weight: 750; }
+    .source-list { padding-left: 21px; }
+    .source-list li { margin: 11px 0; }
+    .footer { margin-top: 22px; padding: 18px; color: var(--muted); text-align: center; font-size: .88rem; }
+    .print-note { color: var(--muted); font-size: .84rem; }
+    @media (max-width: 820px) {
+      .cols4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .cols3 { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; }
+      .flow .arrow { transform: rotate(90deg); }
+    }
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 18px, 1120px); margin: 9px auto 28px; }
+      .hero { border-radius: 18px; }
+      .card { border-radius: 16px; }
+      .cols2, .cols4 { grid-template-columns: 1fr; }
+      .screen.row img { min-height: 50px; }
+    }
+    @media print {
+      body { background: white; }
+      .shell { width: 100%; margin: 0; }
+      .hero, .card, .screen { box-shadow: none; }
+      .toc { display: none; }
+      a { color: inherit; }
+      .card, .layer, .screen, table, tr { break-inside: avoid; }
+      details:not([open]) > :not(summary) { display: block; }
+      .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <p class="eyebrow">Risk Dojo · Panduan simulasi keputusan</p>
+      <h1>Dari kebijakan ke keselamatan warga</h1>
+      <p>Panduan awam menggunakan satu studi kasus untuk melihat bagaimana informasi risiko bergerak dari unit lapangan hingga Mabesal—dan bagaimana kebijakan serta kontrol turun kembali.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Mabesal · ALARP</span>
+        <span class="hero-tag">Kotama · SPE</span>
+        <span class="hero-tag">Satuan · GAR</span>
+        <span class="hero-tag">Unit · HRI</span>
+        <span class="hero-tag">Satu ID risiko · tanpa mencampur skor</span>
+      </div>
+    </header>
+
+    <div class="warning"><strong>PENTING — LATIHAN, BUKAN PERINTAH.</strong> Bencana Hualien di Taiwan pada 2025 adalah peristiwa nyata. Keterlibatan TNI AL dalam evakuasi pada panduan ini sepenuhnya <b>simulasi pedagogis</b>; saya tidak menemukan bukti bahwa TNI AL menjalankan operasi tersebut. Panduan ini bukan SOP, izin, ROE, rencana operasi, atau penilaian kesiapan kapal. Kapal digambarkan secara generik.</div>
+
+    <nav class="toc" aria-label="Daftar isi">
+      <a href="#latar">Latar dan batas</a>
+      <a href="#alur">Peta empat tingkat</a>
+      <a href="#register">Satu register</a>
+      <a href="#langkah">Tutorial langkah demi langkah</a>
+      <a href="#bukti">Bukti dan pemantauan</a>
+      <a href="#keputusan">Keputusan latihan</a>
+      <a href="#evaluasi">Evaluasi</a>
+      <a href="#rujukan">Rujukan</a>
+    </nav>
+
+    <section class="card" id="latar">
+      <span class="label fact">Fakta yang dirujuk</span>
+      <h2>1. Latar: banjir Hualien, bukan operasi TNI AL</h2>
+      <p class="lede">Pada 23 September 2025, luapan danau penghalang di Sungai Matai'an, Kabupaten Hualien, menyebabkan banjir. Pemerintah Taiwan melaporkan koordinasi tanggap darurat dan upaya penyelamatan; pemberitahuan pemerintah daerah saat itu meminta warga di wilayah peringatan untuk segera mengungsi atau menuju tempat yang lebih tinggi. Peristiwa ini menjadi konteks kemanusiaan untuk latihan, bukan bukti penugasan Angkatan Laut Indonesia. Skenario hipotetis TNI AL di panduan ini merupakan latihan terpisah: tidak menyatakan bahwa banjir Hualien memicu operasi evakuasi maritim atau pengerahan TNI AL. Lihat rujukan resmi Taiwan nomor 1–2.</p>
+      <div class="cols2">
+        <article class="mini">
+          <span class="label fact">Yang terverifikasi</span>
+          <ul class="checklist">
+            <li>Peristiwa banjir Hualien setelah luapan Matai'an terjadi pada September 2025.</li>
+            <li>Otoritas Taiwan mengoordinasikan tanggap darurat dan evakuasi warga setempat.</li>
+            <li>Peristiwa tersebut adalah respons Taiwan; bukan laporan operasi TNI AL.</li>
+          </ul>
+        </article>
+        <article class="mini">
+          <span class="label sim">Asumsi latihan</span>
+          <ul class="checklist">
+            <li>Dalam latihan hipotetis, diterima permintaan bantuan kemanusiaan yang sah dan harus diperiksa melalui otoritas terkait.</li>
+            <li>Peserta menguji risiko keselamatan dan perlindungan warga, bukan merancang operasi militer.</li>
+            <li>Semua nama kebijakan, penilaian dan angka latihan di halaman ini hanya contoh.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="notice"><strong>Pemetaan empat metode adalah rancangan pedagogis pengguna.</strong> Ini tidak saya klaim sebagai doktrin atau kebijakan resmi TNI AL. ALARP dapat menjadi cara berpikir pengurangan risiko di semua tingkat; penempatan satu metode utama pada tiap tingkat hanya membantu latihan membaca alur.</div>
+      <p class="small">Saya sengaja tidak memasukkan rute, titik embarkasi, jadwal, susunan pasukan, penggunaan senjata, atau kemampuan/kesiapan KRI tertentu. Data nyata dan SOP satuan harus divalidasi oleh pejabat berwenang.</p>
+    </section>
+
+    <section class="card" id="alur">
+      <span class="label demo">Kerangka belajar</span>
+      <h2>2. Empat tingkat, empat pertanyaan</h2>
+      <p>Bayangkan ada satu persoalan: <b>kepadatan dan keselamatan warga saat pemindahan</b>. Setiap tingkat melihat bagian yang sesuai kewenangannya. Masing-masing menyimpan penilaian sendiri; skor antar-metode tidak dijumlahkan atau dikonversi.</p>
+      <div class="cols4">
+        <article class="layer"><span class="num">1</span><b>Mabesal</b><span class="model">ALARP</span><p>Apa pilihan kebijakan yang dapat mengurangi risiko lebih jauh? Kontrol apa yang wajib? Siapa berwenang menerima risiko sisa?</p></article>
+        <article class="layer"><span class="num">2</span><b>Kotama</b><span class="model">SPE</span><p>Risiko mana yang paling memerlukan perhatian lintas-satuan dan dukungan sumber daya?</p></article>
+        <article class="layer"><span class="num">3</span><b>Satuan kapal / Marinir</b><span class="model">GAR</span><p>Apakah kondisi dan kesiapan tim berada pada kategori latihan hijau, amber, atau merah—dan mengapa?</p></article>
+        <article class="layer"><span class="num">4</span><b>Unit kapal / batalion Marinir</b><span class="model">HRI</span><p>Bahaya spesifik apa yang ditemukan? Kontrol apa yang benar-benar dilakukan dan diverifikasi?</p></article>
+      </div>
+      <div class="flow" aria-label="Arah informasi dan kebijakan">
+        <span class="up">Bukti, perubahan kondisi, kebutuhan dan risiko sisa naik</span>
+        <span class="arrow">↕</span>
+        <span class="down">Kebijakan, kontrol, penanggung jawab dan tenggat turun</span>
+      </div>
+      <p class="small">HRI, GAR, SPE, dan ALARP bukan empat satuan ukur yang dapat dirata-ratakan. Agregasi lintas tingkat dilakukan atas <b>status tindakan, kontrol kritis, mutu bukti, verifikasi, eskalasi dan risiko sisa</b>—bukan atas skor gabungan.</p>
+    </section>
+
+    <section class="card" id="register">
+      <span class="label demo">Satu register</span>
+      <h2>3. Hubungkan semuanya dengan ID yang sama</h2>
+      <p>Di aplikasi demo, catatan contoh memakai ID risiko <b>EV-TW-01</b> dan ID kebijakan <b>POL-DEMO-01</b>. Gunakan ID tersebut sebagai benang penghubung, bukan sebagai nomor kejadian nyata.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Rekaman</th><th>Contoh isi</th><th>Naik / turun</th><th>Yang harus dapat ditelusuri</th></tr></thead>
+          <tbody>
+            <tr><td><b>EV-TW-01</b></td><td>Kepadatan saat embarkasi; HRI unit belum dinilai karena matriks resmi tidak tersedia.</td><td>Risiko dan bukti naik</td><td>Bahaya, akibat, pemilik risiko, kontrol, nilai awal/residual bila metodenya sah, ketidakpastian.</td></tr>
+            <tr><td><b>POL-DEMO-01</b></td><td>Contoh kebijakan perlindungan sipil dan gerbang verifikasi.</td><td>Keputusan dan kontrol turun</td><td>Versi, pejabat penetap sesuai kewenangan, tanggal, syarat, PIC, tenggat, pemicu penilaian ulang.</td></tr>
+            <tr><td><b>ACT-01—ACT-06</b></td><td>Tindakan untuk otoritas, prioritas sumber daya, kesiapan satuan, kapasitas, akses pertolongan dan penilaian ulang.</td><td>Status dan bukti naik</td><td>Belum dimulai / berjalan / terverifikasi; bukti; pemeriksa; waktu; tindak lanjut.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="good notice"><strong>Gerbang yang terlihat di aplikasi:</strong> tindakan kritis baru dihitung terverifikasi jika statusnya “Terverifikasi” <em>dan</em> bukti diisi. Angka “0/5” di layar berarti bukti contoh belum lengkap—bukan hasil pemeriksaan operasional yang sungguh terjadi.</div>
+    </section>
+
+    <section class="card" id="langkah">
+      <span class="label demo">Tutorial penggunaan</span>
+      <h2>4. Jalankan studi kasus dari atas ke bawah</h2>
+      <p class="lede">Ikuti urutan kebijakan Mabesal → prioritas Kotama → kesiapan satuan → kontrol unit. Setelah itu, kirim bukti dan perubahan kondisi kembali ke atas.</p>
+      <ol class="steps">
+        <li>Pada <b>Dashboard</b>, lihat ID EV-TW-01 dan pilih perspektif peran di kotak “Perspektif peran”.</li>
+        <li>Buka <b>Ruang peran</b> untuk membaca pertanyaan tiap tingkat: Unit/HRI, Satuan/GAR, Kotama/SPE, Mabesal/ALARP.</li>
+        <li>Buka <b>Register &amp; kebijakan</b> untuk menelusuri POL-DEMO-01, ACT-01—ACT-06, PIC, status dan bukti.</li>
+        <li>Gunakan <b>Jejak perubahan</b> untuk meninjau revisi; jangan menghapus atau mereset data latihan tanpa memahami akibatnya.</li>
+      </ol>
+      <p class="small"><b>Catatan gambar:</b> Gambar 1 adalah tangkapan layar dashboard aplikasi. Gambar 2–5 adalah potongan baris dari satu tangkapan layar aktual pada tabel “Status per tingkat”, bukan empat tampilan formulir/peran yang berbeda. Potongan itu menyorot status tiap tingkat dalam register yang sama.</p>
+
+      <article class="mini" id="mabesal">
+        <span class="label demo">Tingkat 1 · Mabesal · ALARP</span>
+        <h3>Bandingkan pilihan, bukan sekadar memberi warna</h3>
+        <ol class="steps">
+          <li><b>Buat kebijakan latihan.</b> Contoh POL-DEMO-01: perlindungan warga sipil menjadi prioritas; otoritas/koordinasi, kontrol kritis dan dukungan yang disyaratkan harus diverifikasi; perubahan kondisi memicu penilaian ulang.</li>
+          <li><b>Bandingkan opsi.</b> “Tahan aktivitas terdampak sampai kontrol diverifikasi”; “ubah metode untuk menurunkan paparan”; atau “lanjut hanya setelah seluruh persetujuan dan kontrol yang diwajibkan dipenuhi.” Ini pilihan konseptual, bukan perintah operasi.</li>
+          <li><b>Tanyakan apa lagi yang wajar dilakukan.</b> Apakah pemeriksaan independen, konfirmasi kapasitas, pemantauan cuaca/peringatan, dan kesiapan pertolongan dapat menurunkan risiko? Catat manfaat, waktu, personel/sumber daya, ketidakpastian, dan alasan bila kontrol tidak dipilih.</li>
+          <li><b>Tentukan jalur keputusan.</b> Jika kontrol wajib belum terbukti, tahan bagian yang terdampak dan eskalasi. Risiko sisa hanya dapat diterima oleh pejabat yang memang berwenang menurut aturan yang berlaku.</li>
+        </ol>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Opsi latihan</th><th>Manfaat keselamatan</th><th>Pengorbanan / hal yang diuji</th><th>Hasil contoh</th></tr></thead>
+            <tbody>
+              <tr><td>Tahan sementara</td><td>Mencegah tindakan sebelum otorisasi dan kontrol dipastikan.</td><td>Bantuan dapat tertunda; butuh pembaruan informasi dan koordinasi.</td><td><b>Pilih untuk kondisi layar saat ini:</b> masih 0/5 kontrol kritis terverifikasi.</td></tr>
+              <tr><td>Ubah metode / tambah kontrol</td><td>Dapat menurunkan kepadatan, paparan dan waktu respons.</td><td>Memerlukan dukungan, verifikasi, dan penilaian ulang.</td><td>Evaluasi bila pilihan itu sah, efektif dan dapat dilaksanakan.</td></tr>
+              <tr><td>Lanjut dengan catatan belum lengkap</td><td>Tidak ada manfaat risiko yang dapat dibuktikan dari catatan tersebut.</td><td>Ketidakpastian dan risiko warga/personel tetap tinggi.</td><td><b>Tolak sebagai hasil latihan</b> selama kontrol kritis belum terbukti.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figure class="screen"><img src="assets/01-dashboard.png" alt="Tangkapan layar dashboard aplikasi demo: perspektif Mabesal ALARP, risiko EV-TW-01, kontrol kritis 0 dari 5 terverifikasi, GAR dan SPE simulasi." loading="lazy"><figcaption><b>Gambar 1 — Dashboard aplikasi.</b> Perspektif Mabesal • ALARP dipilih; register EV-TW-01; kontrol kritis 0/5. Tangkapan layar asli dashboard demo, diambil tanpa mengubah isian.</figcaption></figure>
+        <figure class="screen row"><img src="assets/02-mabesal.png" alt="Potongan baris Mabesal ALARP pada status per tingkat aplikasi demo." loading="lazy"><figcaption><b>Gambar 2 — Potongan baris Mabesal.</b> Ringkasan aplikasi meminta aktivitas terdampak ditahan sampai kontrol kritis diverifikasi. Ini status demo, bukan keputusan operasi nyata.</figcaption></figure>
+        <p class="small"><b>ALARP dan ROE:</b> ALARP membantu menimbang langkah pengurangan risiko keselamatan. Ia bukan dasar hukum tunggal dan tidak menetapkan ROE. Panduan ini tidak membuat aturan penggunaan senjata atau kewenangan penggunaan kekuatan; setiap kebijakan/ROE nyata harus melalui proses hukum dan komando yang berwenang.</p>
+      </article>
+
+      <article class="mini" id="kotama">
+        <span class="label demo">Tingkat 2 · Kotama · SPE</span>
+        <h3>Prioritaskan risiko dan kebutuhan dukungan</h3>
+        <p>Kotama membaca informasi dari unit dan satuan, lalu menilai prioritas secara mandiri memakai Severity, Probability, dan Exposure. Contoh faktor berikut hanya membantu memahami perkalian; tidak menetapkan skala atau ambang resmi.</p>
+        <div class="formula">Awal (simulasi): Severity 5 × Probability 4 × Exposure 3 = 60<br>Residual (simulasi): Severity 5 × Probability 2 × Exposure 2 = 20</div>
+        <p>Severity tetap 5 karena akibat terburuk masih mungkin serius; peluang dan paparan pada residual hanya boleh dinilai ulang setelah kontrol benar-benar dilakukan dan diverifikasi. <b>Dalam tangkapan layar saat ini, kontrol kritis masih 0/5 terverifikasi; jadi angka 20 belum merupakan residual yang terbukti.</b> Itu hanya nilai contoh yang tertanam dalam demo. Jangan turunkan skor hanya karena kontrol direncanakan. Jika skala satuan berbeda atau belum disahkan, tampilkan “metode belum divalidasi”, bukan angka seolah resmi.</p>
+        <ul class="checklist">
+          <li>Prioritaskan risiko dengan paparan warga/personel luas, dampak serius atau informasi yang belum pasti.</li>
+          <li>Catat dukungan yang diperlukan: pemeriksaan kapasitas, koordinasi lintas-instansi, pertolongan medis, komunikasi, pengawasan dan pengaturan istirahat—sesuai rencana yang sah.</li>
+          <li>Kirim arahan/PIC/tenggat ke bawah; kirim kebutuhan sumber daya dan risiko residual ke Mabesal.</li>
+        </ul>
+        <figure class="screen row"><img src="assets/03-kotama.png" alt="Potongan baris Kotama SPE pada status per tingkat aplikasi demo, dengan angka awal 60 dan residual 20." loading="lazy"><figcaption><b>Gambar 3 — Potongan baris Kotama.</b> Aplikasi menampilkan SPE awal 60 → residual 20. Rumus faktor di halaman ini contoh pedagogis; skala dan ambang resmi harus diverifikasi.</figcaption></figure>
+      </article>
+
+      <article class="mini" id="satuan">
+        <span class="label demo">Tingkat 3 · Satuan kapal / Marinir · GAR</span>
+        <h3>Tentukan kesiapan dan jangan sembunyikan celah kontrol</h3>
+        <p>Unsur pelaksana menguji apakah pengawasan, komunikasi, dukungan medis, pembagian tugas dan kemampuan menghentikan kegiatan dapat dijalankan bersama. “Merah” meminta penahanan dan eskalasi; “amber” bukan otomatis berarti boleh lanjut; “hijau” pun bukan izin operasi.</p>
+        <div class="score"><span class="chip red">GAR awal 46 · Red</span><span class="arrow">→</span><span class="chip amber">Residual 27 · Amber</span><span class="small">nilai contoh yang sudah tertanam dalam demo</span></div>
+        <p>Jangan menciptakan rumus faktor atau batas warna. Aplikasi hanya menyediakan angka contoh; matriks/ambang GAR resmi untuk satuan belum diberikan. Satuan harus merujuk pedoman yang disahkan, menjelaskan alasan status, menetapkan PIC, dan mengirim bukti verifikasi. Residual Amber 27 pada layar juga belum tervalidasi, karena tindakan kritis di dashboard masih belum lengkap.</p>
+        <figure class="screen row"><img src="assets/04-satuan.png" alt="Potongan baris satuan kapal dan Marinir, GAR awal 46 Red menuju residual 27 Amber, dengan dua tindakan belum terverifikasi." loading="lazy"><figcaption><b>Gambar 4 — Potongan baris satuan.</b> GAR demo berubah dari Red ke Amber, tetapi 0/2 tindakan masih belum lengkap; status Amber tidak menghapus kewajiban kontrol atau mengesahkan kelanjutan.</figcaption></figure>
+      </article>
+
+      <article class="mini" id="unit">
+        <span class="label demo">Tingkat 4 · Unit kapal / batalion Marinir · HRI</span>
+        <h3>Catat bahaya nyata; jangan mengarang matriks</h3>
+        <p>Unit adalah tempat bahaya dan kontrol diamati. Untuk latihan ini, fokus pada kepadatan, akses pertolongan, kondisi warga yang membutuhkan bantuan, kapasitas yang telah disahkan, perubahan cuaca, komunikasi, dan kelelahan personel. Tidak ada instruksi teknis embarkasi atau data kapal tertentu.</p>
+        <div class="notice"><strong>Skor HRI: belum dinilai.</strong> Aplikasi menyatakan matriks HRI resmi belum dimasukkan. Catat deskripsi risiko dan bukti, lalu tunggu matriks yang disahkan; jangan mengganti HRI dengan skor GAR atau SPE.</div>
+        <ul class="checklist">
+          <li>Jelaskan bahaya, siapa yang dapat terdampak, kontrol yang diwajibkan, penanggung jawab, dan bukti.</li>
+          <li>Catat kontrol hanya setelah benar-benar dilakukan. Verifikator menilai bukti; tanda centang mandiri bukan verifikasi independen.</li>
+          <li>Jika kapasitas, dukungan pertolongan, cuaca, kondisi warga, komunikasi atau kondisi personel berubah, hentikan penilaian lama dan minta penilaian ulang sesuai kewenangan.</li>
+        </ul>
+        <figure class="screen row"><img src="assets/05-unit.png" alt="Potongan baris unit: HRI belum dinilai dengan matriks resmi, dua tindakan belum terverifikasi." loading="lazy"><figcaption><b>Gambar 5 — Potongan baris unit.</b> HRI tertulis “Belum dinilai dengan matriks resmi”; 0 dari 2 tindakan memiliki status dan bukti lengkap.</figcaption></figure>
+      </article>
+    </section>
+
+    <section class="card" id="bukti">
+      <span class="label demo">Monitoring dan audit</span>
+      <h2>5. Bukti naik, arahan turun</h2>
+      <p>Setiap ACT ditautkan ke POL-DEMO-01 dan risiko EV-TW-01. Dashboard tingkat atas harus menjawab: kebijakan mana sudah dilaksanakan, kontrol mana belum lengkap, bukti mana belum diperiksa, siapa yang bertanggung jawab, kapan tenggatnya, dan masalah apa yang perlu dukungan/keputusan.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Lapisan</th><th>Contoh bukti yang dikirim ke atas</th><th>Arahan / tindak lanjut ke bawah</th><th>Pemeriksaan</th></tr></thead>
+          <tbody>
+            <tr><td>Mabesal</td><td>Identitas dan versi kebijakan, catatan otoritas/koordinasi, alasan membandingkan opsi, penerimaan/penolakan risiko sisa oleh pejabat berwenang.</td><td>Syarat wajib, batas kebijakan, prioritas dukungan, pemilik dan tenggat.</td><td>Tinjauan pejabat berwenang; dasar dan versi dapat diaudit.</td></tr>
+            <tr><td>Kotama</td><td>Penilaian SPE yang dijelaskan, daftar dependensi, kebutuhan sumber daya, perubahan risiko.</td><td>Prioritas dan koordinasi lintas-satuan; eskalasi bila kebutuhan tidak tersedia.</td><td>Periksa sumber data, definisi skala, dan perubahan sejak laporan terakhir.</td></tr>
+            <tr><td>Satuan kapal / Marinir</td><td>Penilaian GAR sesuai pedoman sah, pembagian pengawasan, komunikasi, dukungan dan status kontrol.</td><td>Pengendalian pelaksanaan dan syarat tahan/lapor/penilaian ulang.</td><td>Verifikasi oleh pihak yang ditetapkan, bukan sekadar pengisi data.</td></tr>
+            <tr><td>Unit kapal / batalion</td><td>Temuan HRI sesuai matriks sah, bukti kontrol, pemeriksaan, anomali dan kondisi aktual.</td><td>Instruksi kontrol yang jelas, PIC, batas waktu, eskalasi.</td><td>Pastikan bukti cocok dengan kegiatan dan waktunya; simpan jejak revisi.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Daftar bukti latihan</h3>
+      <div class="cols2">
+        <article class="mini"><h4>Dokumen dan konfirmasi</h4><ul class="checklist"><li>Dasar penugasan dan jalur otorisasi telah diverifikasi oleh unsur yang berwenang.</li><li>Koordinasi pihak terkait dicatat dengan waktu, versi informasi dan PIC.</li><li>Dokumen kapasitas/dukungan yang digunakan adalah yang berlaku dan telah diperiksa.</li><li>Informasi cuaca/peringatan dan perubahan situasi memiliki cap waktu.</li></ul></article>
+        <article class="mini"><h4>Pelaksanaan dan verifikasi</h4><ul class="checklist"><li>Kontrol yang dilakukan, siapa pelaksana, kapan, dan hasilnya.</li><li>Konfirmasi dukungan medis, komunikasi, pengawasan dan kesiapan personel sesuai prosedur sah.</li><li>Catatan verifikator dan bukti objektif, bukan hanya tulisan “sudah”.</li><li>Alasan menerima/menahan risiko sisa dan siapa yang mengambil keputusan.</li></ul></article>
+      </div>
+      <p class="small"><b>Catatan kemampuan aplikasi:</b> demo yang terlihat menyimpan data secara lokal di browser. Itu cukup untuk mengajarkan struktur register, tetapi belum membuktikan sinkronisasi, akun, hak akses, atau monitoring lintas perangkat/markas. Jangan memasukkan informasi operasi nyata ke demo.</p>
+    </section>
+
+    <section class="card" id="keputusan">
+      <span class="label sim">Contoh keputusan akhir</span>
+      <h2>6. Apa yang diputuskan dalam latihan ini?</h2>
+      <p>Karena layar demo menunjukkan <b>0/5 kontrol kritis terverifikasi</b>, semua tindakan penting masih “Belum diverifikasi”, GAR berstatus awal Red, dan HRI belum punya matriks resmi, hasil latihan yang masuk akal adalah:</p>
+      <div class="notice"><strong>TAHAN aktivitas terdampak dan eskalasi untuk pemeriksaan.</strong> Lengkapi otorisasi/koordinasi, bukti kontrol dan pemeriksaan independen; telaah kebutuhan dukungan; perbarui penilaian pada semua lapisan. Tidak ada keputusan “operasi dapat dilaksanakan” yang dapat disimpulkan dari skor contoh.</div>
+      <p>Setelah perubahan dilakukan, tim memperbarui status dan bukti. Mabesal meninjau kembali opsi dan risiko sisa. Hanya otoritas nyata yang dapat memutuskan tindakan nyata menurut hukum, kebijakan, SOP dan informasi saat itu.</p>
+      <h3>Pemicu penilaian ulang</h3>
+      <div class="cols3">
+        <div class="mini"><b>Situasi berubah</b><p>Cuaca/peringatan, kondisi warga, kapasitas, waktu paparan atau akses pertolongan berubah.</p></div>
+        <div class="mini"><b>Kontrol gagal</b><p>Bukti kedaluwarsa, dukungan tidak hadir, komunikasi gagal, atau pemeriksaan menemukan penyimpangan.</p></div>
+        <div class="mini"><b>Orang dan kewenangan berubah</b><p>PIC/verifikator berganti, personel lelah, mandat berubah, atau koordinasi/izin perlu dikonfirmasi ulang.</p></div>
+      </div>
+      <details><summary>Pertanyaan latihan: apakah GAR Amber berarti otomatis boleh lanjut?</summary><div class="inside"><b>Tidak.</b> Amber adalah sinyal penilaian dalam model, bukan izin. Tinjau kontrol wajib, bukti, ketidakpastian, otoritas dan syarat keputusan sesuai pedoman satuan.</div></details>
+      <details><summary>Pertanyaan latihan: bolehkah skor HRI diturunkan karena SPE residual 20?</summary><div class="inside"><b>Tidak.</b> HRI dan SPE tidak disetarakan. Unit menilai dengan matriks HRI resmi; jika matriks tidak tersedia, tandai “belum dinilai” dan eskalasi kebutuhan.</div></details>
+      <details><summary>Pertanyaan latihan: jika kontrol kritis belum lengkap tetapi waktu mendesak, apa langkah aplikasi?</summary><div class="inside">Catat kondisi dan bukti yang ada, tahan bagian terdampak sesuai kebijakan/otoritas, eskalasi, pertimbangkan opsi lain yang sah, lalu nilai ulang. Jangan mengubah urgensi menjadi bukti bahwa kontrol sudah ada.</div></details>
+    </section>
+
+    <section class="card" id="evaluasi">
+      <span class="label demo">Kesimpulan</span>
+      <h2>7. Apakah susunannya koheren?</h2>
+      <p><b>Ya, koheren sebagai rancangan pembelajaran.</b> ALARP membantu pengambil kebijakan mempertimbangkan pengurangan risiko sisa; SPE memberi bahasa untuk memprioritaskan; GAR membantu satuan menilai kondisi; HRI mengarahkan perhatian unit ke bahaya dan kontrol. Register bersama memungkinkan implementasi kebijakan dipantau dari atas ke bawah dan bukti dikonsolidasikan dari bawah ke atas.</p>
+      <p><b>Batas utamanya:</b> model, skala, ambang penerimaan, matriks HRI, otoritas, format bukti, keamanan data dan alur lintas-perangkat belum divalidasi sebagai sistem resmi. Karena itu, contoh ini menunjukkan <em>cara berpikir dan memonitor</em>, bukan standar resmi, izin, perintah atau kesiapan operasional.</p>
+      <div class="good notice"><strong>Inti yang mudah diingat:</strong> satu risiko, satu ID, banyak penilaian yang tetap terpisah; bukti dan status naik, kontrol dan keputusan turun; kontrol kritis yang belum diverifikasi tetap terlihat dan tidak boleh tertutup oleh skor rendah.</div>
+    </section>
+
+    <section class="card" id="rujukan">
+      <span class="label fact">Rujukan dan batas penggunaan</span>
+      <h2>8. Sumber terbuka</h2>
+      <ol class="source-list">
+        <li><a href="https://english.ey.gov.tw/Page/61BF20C3E89B856/f9b02905-677b-4eee-bcf6-a268c448548e" target="_blank" rel="noopener noreferrer">Executive Yuan Taiwan — “Premier: Step up disaster response for Hualien flooding, rescue the missing,” 25 September 2025.</a> Sumber resmi untuk konteks banjir dan koordinasi tanggap darurat.</li>
+        <li><a href="https://www.hl.gov.tw/ysh/News.aspx?PageSize=20&amp;n=41177&amp;page=3&amp;sms=28955" target="_blank" rel="noopener noreferrer">Pemerintah Kabupaten Hualien — pemberitahuan resmi Matai'an, 23 September 2025.</a> Rujukan daerah untuk konteks peringatan dan tanggap banjir; halaman berbahasa Mandarin.</li>
+        <li><a href="https://www.hse.gov.uk/pubns/priced/hsg244.pdf" target="_blank" rel="noopener noreferrer">UK Health and Safety Executive — panduan ALARP (HSG244).</a> Rujukan konsep umum tentang mempertimbangkan manfaat pengurangan risiko dan pengorbanan kontrol; konteksnya sektor industri Inggris, bukan kebijakan TNI AL.</li>
+        <li><a href="https://risk-management-tnial.vercel.app" target="_blank" rel="noopener noreferrer">Demo aplikasi Risk Management yang ditinjau untuk panduan ini.</a> Isian dan skor di dalamnya adalah contoh lokal/demo, bukan laporan operasi.</li>
+      </ol>
+      <p class="print-note">Dokumen dibuat untuk pembelajaran dan diskusi. Sebelum penggunaan resmi, rujuk doktrin, hukum, kebijakan, SOP, matriks yang disahkan, kewenangan penerimaan risiko, serta validasi pejabat/pakar terkait.</p>
+    </section>
+
+    <footer class="footer">Risk Dojo · Panduan belajar berbahasa Indonesia · Seluruh angka demonstrasi ditandai sebagai simulasi</footer>
+  </main>
+</body>
+</html>

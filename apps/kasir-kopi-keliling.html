@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasir Kopi Keliling</title>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --text: #212529;
+            --primary: #d32f2f; /* Biru Kopi Keliling */
+            --secondary: #ffb300; /* Kuning Kunyit */
+            --white: #ffffff;
+            --border: #dee2e6;
+            --success: #2e7d32;
+            --plate-bg: #e3f2fd;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            max-width: 480px; 
+            margin: 0 auto; 
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Header & Tabs */
+        header { background: var(--white); padding: 12px 16px; text-align: center; border-bottom: 1px solid var(--border); }
+        header h1 { color: var(--primary); font-size: 1.4rem; margin-bottom: 4px; }
+        .tabs { display: flex; background: var(--white); border-bottom: 1px solid var(--border); }
+        .tab-btn { 
+            flex: 1; padding: 12px; font-weight: 600; background: transparent; 
+            border: none; border-bottom: 3px solid transparent; color: #666; cursor: pointer; 
+        }
+        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+        /* Views */
+        .view-section { display: none; flex: 1; overflow-y: auto; padding: 16px; }
+        .view-section.active { display: flex; flex-direction: column; }
+
+        /* Area Piring (Cart) */
+        .plate-area {
+            background: var(--plate-bg); border: 2px dashed #90caf9; border-radius: 12px;
+            padding: 16px; margin-bottom: 16px; position: sticky; top: 0; z-index: 10;
+        }
+        .plate-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .plate-header h3 { font-size: 1.1rem; color: #1565c0; }
+        .plate-items { max-height: 120px; overflow-y: auto; margin-bottom: 12px; }
+        .plate-item { display: flex; justify-content: space-between; font-size: 0.95rem; margin-bottom: 4px; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .plate-item-del { color: var(--primary); font-weight: bold; cursor: pointer; padding: 0 8px; }
+        .plate-total { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-top: 2px solid #90caf9; padding-top: 8px; }
+        .btn-bayar { background: var(--success); color: var(--white); border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 1.1rem; margin-top: 12px; cursor: pointer; }
+        .btn-bayar:disabled { background: #ccc; }
+
+        /* Menu Kopi */
+        .menu-category { font-weight: bold; margin: 16px 0 8px; color: #555; }
+        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .lauk-btn {
+            background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+            padding: 12px 4px; text-align: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: 0.1s;
+        }
+        .lauk-btn:active { background: var(--secondary); transform: scale(0.95); }
+        .lauk-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; line-height: 1.2; height: 2em; display: flex; align-items: center; justify-content: center; }
+        .lauk-price { font-size: 0.75rem; color: var(--primary); font-weight: bold; }
+
+        /* Modal Bayar */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: flex-end; }
+        .modal { background: var(--white); width: 100%; max-width: 480px; margin: 0 auto; border-radius: 20px 20px 0 0; padding: 24px 16px; }
+        .modal-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 16px; text-align: center; }
+        .quick-cash { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+        .btn-cash { background: #f0f0f0; border: none; padding: 10px; border-radius: 6px; font-weight: bold; }
+        .btn-cash:active { background: #e0e0e0; }
+        .input-bayar { width: 100%; padding: 12px; font-size: 1.2rem; border: 2px solid var(--border); border-radius: 8px; margin-bottom: 16px; text-align: right; }
+        .kembalian-text { font-size: 1.2rem; font-weight: bold; color: var(--success); text-align: center; margin-bottom: 16px; }
+        .modal-actions { display: flex; gap: 10px; }
+        .modal-actions button { flex: 1; padding: 14px; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; }
+        .btn-cancel { background: #eee; color: #333; }
+        .btn-confirm { background: var(--primary); color: var(--white); }
+
+        /* Rekap */
+        .rekap-card { background: var(--white); padding: 16px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border); }
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .stat-val { font-weight: bold; }
+        
+        footer { text-align: center; padding: 12px; font-size: 0.75rem; color: #888; background: var(--white); border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🍛 Kasir Kopi</h1>
+    <p style="font-size: 0.8rem; color: #666;">Transaksi Penjualan Kopi - 100% Offline</p>
+</header>
+
+<div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('kasir')">🍽️ Jual Kopi</button>
+    <button class="tab-btn" onclick="switchTab('rekap')">📊 Rekap Harian</button>
+</div>
+
+<!-- KASIR VIEW -->
+<div id="kasir-view" class="view-section active">
+    
+    <!-- Area Penjualan (Cart) -->
+    <div class="plate-area">
+        <div class="plate-header">
+            <h3>Isi Penjualan Saat Ini</h3>
+            <button onclick="kosongkanPenjualan()" style="background:transparent; border:none; color:var(--primary); font-size:0.85rem; font-weight:bold; cursor:pointer;">Kosongkan</button>
+        </div>
+        <div class="plate-items" id="plate-items">
+            <div style="text-align:center; color:#888; font-size:0.9rem; padding:10px 0;">Penjualan masih kosong. Tap jenis terjual di bawah.</div>
+        </div>
+        <div class="plate-total">
+            <span>Total:</span>
+            <span id="plate-total-price">Rp 0</span>
+        </div>
+        <button class="btn-bayar" id="btn-bayar" onclick="bukaModalBayar()" disabled>Simpan & Bayar</button>
+    </div>
+
+    <!-- Menu Grid -->
+    <div id="menu-container"></div>
+</div>
+
+<!-- REKAP VIEW -->
+<div id="rekap-view" class="view-section">
+    <div class="rekap-card">
+        <h3 style="margin-bottom: 12px; color: var(--primary);">Pendapatan Hari Ini</h3>
+        <div class="stat-row">
+            <span>Total Transaksi:</span>
+            <span class="stat-val" id="rekap-trx">0 Gelas/Botol</span>
+        </div>
+        <div class="stat-row">
+            <span>Total Omzet:</span>
+            <span class="stat-val" style="color:var(--success); font-size:1.2rem;" id="rekap-omzet">Rp 0</span>
+        </div>
+    </div>
+
+    <div class="rekap-card">
+        <h3 style="margin-bottom: 12px;">Kopi Paling Laku (Hari Ini)</h3>
+        <div id="rekap-lauk-list"></div>
+    </div>
+    
+    <button onclick="hapusRekap()" style="background:var(--primary); color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; width:100%; margin-top:10px;">Reset Data Hari Ini</button>
+</div>
+
+<!-- MODAL BAYAR -->
+<div class="modal-overlay" id="modal-bayar">
+    <div class="modal">
+        <div class="modal-title">Pembayaran</div>
+        <div style="font-size:1.5rem; font-weight:bold; text-align:center; margin-bottom:16px;" id="modal-total">Rp 0</div>
+        
+        <input type="number" class="input-bayar" id="input-uang" placeholder="Masukkan uang diterima" inputmode="numeric">
+        
+        <div class="quick-cash">
+            <button class="btn-cash" onclick="setUang(20000)">20k</button>
+            <button class="btn-cash" onclick="setUang(50000)">50k</button>
+            <button class="btn-cash" onclick="setUang(100000)">100k</button>
+            <button class="btn-cash" onclick="setUang('pas')">Uang Pas</button>
+        </div>
+
+        <div class="kembalian-text" id="modal-kembalian">Kembalian: Rp 0</div>
+
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="tutupModalBayar()">Batal</button>
+            <button class="btn-confirm" onclick="selesaikanTransaksi()">Selesai (Simpan)</button>
+        </div>
+    </div>
+</div>
+
+<footer>Dibuat oleh Kabuzen AI | Client-Side Mode</footer>
+
+<script>
+    const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+
+    const menuData = [
+        { category: "Kopi & Dasar", items: [
+            { id: 'kopi1', name: "Kopi Hitam", price: 7500 },
+            { id: 'kopi2', name: "Kopi Susu", price: 15000 },
+            { id: 'es', name: "Es Batu", price: 1000 }
+        ]},
+        { category: "Lauk Utama (Daging/Ayam)", items: [
+            { id: 'gulaaren', name: "Kopgul Aren", price: 20000 },
+            { id: 'matcha', name: "Matcha Latte", price: 18000 },
+            { id: 'caramel', name: "Kopi Caramel", price: 18000 },
+            { id: 'teh', name: "Teh Tarik", price: 95000 },
+            { id: 'coklat', name: "Coklat Susu", price: 15000 },
+            { id: 'Coklatori', name: "Cokelat Panas", price: 17000 }
+        ]},
+        { category: "Tambahan Minuman", items: [
+            { id: 'Mineral', name: "Aqua", price: 30000 },
+            { id: 'Teh', name: "Es Teh Manis", price: 4500 },
+            { id: 'Sachet', name: "Nutrisari Dingin", price: 5000 },
+            { id: 'Kapalapi', name: "Kapal Api Latte", price: 3000 },
+            { id: 'jasjus', name: "Jas Jus Dingin", price: 3000 },
+            { id: 'tehpucuk', name: "Teh Pucuk", price: 5000 }
+        ]},
+        { category: "Minuman", items: [
+            { id: 'esteh', name: "Es Teh Manis", price: 5000 },
+            { id: 'esjeruk', name: "Es Jeruk", price: 6000 },
+            { id: 'mineral', name: "Air Mineral", price: 4000 }
+        ]}
+    ];
+
+    let currentPlate = [];
+    let currentTotal = 0;
+
+    // Render Menu
+    const renderMenu = () => {
+        const container = document.getElementById('menu-container');
+        let html = '';
+        menuData.forEach(cat => {
+            html += `<div class="menu-category">${cat.category}</div><div class="menu-grid">`;
+            cat.items.forEach(item => {
+                html += `
+                    <div class="lauk-btn" onclick="tambahKePiring('${item.id}', '${item.name}', ${item.price})">
+                        <div class="lauk-name">${item.name}</div>
+                        <div class="lauk-price">${formatRupiah(item.price)}</div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+        });
+        container.innerHTML = html;
+    };
+
+    // Plate Logic
+    const tambahKePiring = (id, name, price) => {
+        const existing = currentPlate.find(i => i.id === id);
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            currentPlate.push({ id, name, price, qty: 1 });
+        }
+        updatePlateUI();
+    };
+
+    const kurangiDariPiring = (id) => {
+        const index = currentPlate.findIndex(i => i.id === id);
+        if (index !== -1) {
+            if (currentPlate[index].qty > 1) {
+                currentPlate[index].qty -= 1;
+            } else {
+                currentPlate.splice(index, 1);
+            }
+        }
+        updatePlateUI();
+    };
+
+    const kosongkanPiring = () => {
+        currentPlate = [];
+        updatePlateUI();
+    };
+
+    const updatePlateUI = () => {
+        const container = document.getElementById('plate-items');
+        currentTotal = 0;
+        
+        if (currentPlate.length === 0) {
+            container.innerHTML = '<div style="text-align:center; color:#888; font-size:0.9rem; padding:10px 0;">Piring masih kosong. Tap lauk di bawah.</div>';
+            document.getElementById('btn-bayar').disabled = true;
+        } else {
+            let html = '';
+            currentPlate.forEach(item => {
+                const subtotal = item.price * item.qty;
+                currentTotal += subtotal;
+                html += `
+                    <div class="plate-item">
+                        <div>
+                            <span class="plate-item-del" onclick="kurangiDariPiring('${item.id}')">✖</span>
+                            ${item.qty}x ${item.name}
+                        </div>
+                        <div>${formatRupiah(subtotal)}</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            document.getElementById('btn-bayar').disabled = false;
+        }
+        document.getElementById('plate-total-price').textContent = formatRupiah(currentTotal);
+    };
+
+    // Modal Bayar Logic
+    const bukaModalBayar = () => {
+        document.getElementById('modal-total').textContent = formatRupiah(currentTotal);
+        document.getElementById('input-uang').value = '';
+        document.getElementById('modal-kembalian').textContent = 'Kembalian: Rp 0';
+        document.getElementById('modal-bayar').style.display = 'flex';
+    };
+
+    const tutupModalBayar = () => {
+        document.getElementById('modal-bayar').style.display = 'none';
+    };
+
+    const setUang = (val) => {
+        if(val === 'pas') val = currentTotal;
+        document.getElementById('input-uang').value = val;
+        hitungKembalian();
+    };
+
+    const hitungKembalian = () => {
+        const bayar = parseInt(document.getElementById('input-uang').value) || 0;
+        const kembalian = bayar - currentTotal;
+        const el = document.getElementById('modal-kembalian');
+        if (kembalian < 0) {
+            el.textContent = 'Uang Kurang!';
+            el.style.color = 'var(--primary)';
+        } else {
+            el.textContent = `Kembalian: ${formatRupiah(kembalian)}`;
+            el.style.color = 'var(--success)';
+        }
+    };
+
+    document.getElementById('input-uang').addEventListener('input', hitungKembalian);
+
+    // Database (LocalStorage) Logic
+    const getDateKey = () => new Date().toISOString().split('T')[0];
+    
+    const selesaikanTransaksi = () => {
+        const bayar = parseInt(document.getElementById('input-uang').value) || 0;
+        if (bayar < currentTotal) {
+            alert('Uang pembayaran kurang!');
+            return;
+        }
+
+        const todayKey = getDateKey();
+        let db = JSON.parse(localStorage.getItem('wartegDB')) || {};
+        if(!db[todayKey]) db[todayKey] = { omzet: 0, trx: 0, items: {} };
+
+        db[todayKey].omzet += currentTotal;
+        db[todayKey].trx += 1;
+
+        currentPlate.forEach(item => {
+            if(!db[todayKey].items[item.name]) db[todayKey].items[item.name] = 0;
+            db[todayKey].items[item.name] += item.qty;
+        });
+
+        localStorage.setItem('wartegDB', JSON.stringify(db));
+        
+        tutupModalBayar();
+        kosongkanPiring();
+        
+        // Show floating success message
+        const msg = document.createElement('div');
+        msg.textContent = '✅ Transaksi Tersimpan';
+        msg.style.cssText = 'position:fixed; top:20px; left:50%; transform:translateX(-50%); background:var(--success); color:white; padding:10px 20px; border-radius:20px; z-index:1000; font-weight:bold;';
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 2000);
+    };
+
+    // Rekap Logic
+    const muatRekap = () => {
+        const todayKey = getDateKey();
+        const db = JSON.parse(localStorage.getItem('wartegDB')) || {};
+        const dataHariIni = db[todayKey] || { omzet: 0, trx: 0, items: {} };
+
+        document.getElementById('rekap-trx').textContent = `${dataHariIni.trx} Porsi/Bungkus`;
+        document.getElementById('rekap-omzet').textContent = formatRupiah(dataHariIni.omzet);
+
+        const listContainer = document.getElementById('rekap-lauk-list');
+        const itemsArr = Object.keys(dataHariIni.items).map(name => ({ name, qty: dataHariIni.items[name] }));
+        itemsArr.sort((a,b) => b.qty - a.qty);
+
+        if (itemsArr.length === 0) {
+            listContainer.innerHTML = '<div style="text-align:center; color:#888; font-size:0.9rem;">Belum ada penjualan hari ini.</div>';
+        } else {
+            listContainer.innerHTML = itemsArr.map(i => `
+                <div class="stat-row" style="border-bottom:1px solid #eee; padding-bottom:4px;">
+                    <span>${i.name}</span>
+                    <span class="stat-val">${i.qty} x</span>
+                </div>
+            `).join('');
+        }
+    };
+
+    const hapusRekap = () => {
+        if(confirm('Yakin hapus data HARI INI?')) {
+            const todayKey = getDateKey();
+            let db = JSON.parse(localStorage.getItem('wartegDB')) || {};
+            delete db[todayKey];
+            localStorage.setItem('wartegDB', JSON.stringify(db));
+            muatRekap();
+        }
+    };
+
+    // Tabs Logic
+    const switchTab = (tab) => {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+        
+        if (tab === 'kasir') {
+            document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+            document.getElementById('kasir-view').classList.add('active');
+        } else {
+            document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+            document.getElementById('rekap-view').classList.add('active');
+            muatRekap();
+        }
+    };
+
+    // Init
+    renderMenu();
+</script>
+</body>
+</html>

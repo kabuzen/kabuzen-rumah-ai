@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+</head>
+<body>
+<meta charset="utf-8">
+<title>Akademi PM Pelabuhan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Tata letak: pita sampul bergradasi (laut fajar) → bilah navigasi lengket → satu kolom isi 1080px.
+   Modul = kepala bergradasi + tab (Materi, Perintah, Folder, Galeri, Flash card, Benar-Salah, Pilihan Ganda). */
+:root {
+  --bg: #F3F6F8;  --surface: #FFFFFF;  --ink: #0F2233;  --muted: #557086;  --line: #D6E0E7;
+  --navy: #0E2A47; --teal: #1F9AA0; --signal: #E3651D; --signal-ink: #B44A0C;
+  --ok: #1E8A5A; --ok-wash: #E1F3EA; --bad: #C2412F; --bad-wash: #FBE6E2;
+  --code-bg: #0D1B2A; --code-ink: #D7E3EA;
+  --g1: #0E2A47; --g2: #1F6F8B; --g3: #1F9AA0; --g4: #E3A05B;
+  --f-display: 'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif;
+  --f-body: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #08131F; --surface: #0F1F30; --ink: #E4EDF3; --muted: #8FA6B8; --line: #22384D;
+  --navy: #071321; --teal: #3FC1C6; --signal: #F07A35; --signal-ink: #FF9C5F;
+  --ok: #4CC08A; --ok-wash: #0F2E22; --bad: #F2766B; --bad-wash: #3A1A17;
+  --code-bg: #050D16; --code-ink: #D7E3EA;
+  --g1: #071321; --g2: #12445C; --g3: #1C7F86; --g4: #B9733A; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #08131F; --surface: #0F1F30; --ink: #E4EDF3; --muted: #8FA6B8; --line: #22384D;
+  --navy: #071321; --teal: #3FC1C6; --signal: #F07A35; --signal-ink: #FF9C5F;
+  --ok: #4CC08A; --ok-wash: #0F2E22; --bad: #F2766B; --bad-wash: #3A1A17;
+  --code-bg: #050D16; --code-ink: #D7E3EA;
+  --g1: #071321; --g2: #12445C; --g3: #1C7F86; --g4: #B9733A; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--f-body); margin: 0; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--navy); }
+a { color: var(--teal); }
+h1, h2, h3 { text-wrap: balance; line-height: 1.15; margin: 0; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; border-radius: 4px; }
+
+/* Sampul */
+.cover { background: linear-gradient(160deg, var(--g1) 0%, var(--g2) 45%, var(--g3) 78%, var(--g4) 100%); color: #F4F8FA; position: relative; overflow: hidden; }
+.cover .wrap { padding-block: 48px 40px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px; align-items: center; position: relative; z-index: 1; }
+.eyebrow { font: 600 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: #BFE7EA; }
+.cover h1 { font: 800 clamp(38px, 6vw, 62px)/.95 var(--f-display); letter-spacing: .01em; text-transform: uppercase; margin: 14px 0 12px; }
+.cover h1 span { color: #FFC59E; display: block; }
+.cover p.lead { max-width: 52ch; color: #DCEBF1; margin: 0 0 18px; }
+.author { font: 600 15px/1.4 var(--f-body); color: #FFFFFF; border-left: 3px solid #FFC59E; padding-left: 10px; margin-bottom: 20px; }
+.author small { display: block; font: 400 12px var(--f-mono); color: #BFE7EA; letter-spacing: .06em; }
+.cover .cta { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 14px var(--f-body); padding: 10px 16px; border-radius: 8px; border: 1px solid transparent; cursor: pointer; text-decoration: none; }
+.btn-signal { background: var(--signal); color: #fff; }
+.btn-ghost { background: rgba(255,255,255,.08); color: #F4F8FA; border-color: rgba(255,255,255,.35); }
+.btn-plain { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.btn-plain:hover { border-color: var(--teal); }
+.cover svg.scene { width: 100%; height: auto; max-width: 100%; }
+.stats { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 22px; font: 600 13px var(--f-mono); color: #DCEBF1; }
+.stats b { display: block; font: 800 30px/1 var(--f-display); color: #fff; }
+
+/* Navigasi */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--navy); border-bottom: 1px solid rgba(255,255,255,.08); }
+.nav .wrap { display: flex; gap: 4px; align-items: center; overflow-x: auto; padding-block: 8px; scrollbar-width: none; }
+.nav a { color: #CFE0EA; text-decoration: none; font: 600 13px var(--f-body); padding: 7px 11px; border-radius: 6px; white-space: nowrap; }
+.nav a:hover { background: rgba(255,255,255,.07); }
+.nav a[aria-current="page"] { background: var(--teal); color: #04181A; }
+.nav .brand { font: 800 18px var(--f-display); letter-spacing: .04em; text-transform: uppercase; color: #fff; margin-right: 8px; }
+
+main { padding-block: 32px 64px; }
+section.view { display: grid; gap: 24px; }
+.sec-title { font: 800 34px/1 var(--f-display); text-transform: uppercase; letter-spacing: .02em; }
+.sub { color: var(--muted); max-width: 70ch; margin: 6px 0 0; }
+
+/* Peta modul */
+.road { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; overflow-x: auto; }
+.road svg { min-width: 720px; width: 100%; height: auto; display: block; }
+.grid-mod { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.mod-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; text-decoration: none; color: var(--ink); display: grid; gap: 8px; align-content: start; transition: border-color .15s, transform .15s; }
+.mod-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+.mod-card .num { font: 800 40px/1 var(--f-display); background: linear-gradient(135deg, var(--g2), var(--g3) 60%, var(--g4)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mod-card h3 { font: 700 16px/1.3 var(--f-body); }
+.mod-card .fase { font: 600 11px var(--f-mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--g3), var(--g4)); }
+.mod-card .score { font: 400 12px var(--f-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+
+table.t { width: 100%; border-collapse: collapse; background: var(--surface); font-size: 14px; }
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+table.t th, table.t td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t th { font: 600 12px var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+table.t tr:last-child td { border-bottom: 0; }
+table.t code, p code, li code { font: 400 13px var(--f-mono); background: var(--bg); border: 1px solid var(--line); padding: 1px 5px; border-radius: 4px; }
+
+/* Kepala modul */
+.mhead { border-radius: 14px; padding: 24px; color: #F4F8FA; background: linear-gradient(130deg, var(--g1), var(--g2) 50%, var(--g3) 85%, var(--g4)); display: grid; gap: 10px; }
+.mhead .eyebrow { color: #BFE7EA; }
+.mhead h2 { font: 800 clamp(30px, 5vw, 46px)/1 var(--f-display); text-transform: uppercase; }
+.mhead p { margin: 0; max-width: 70ch; color: #E3F0F5; }
+.mhead .pn { display: flex; gap: 8px; flex-wrap: wrap; }
+.tabs { display: flex; gap: 6px; overflow-x: auto; border-bottom: 1px solid var(--line); padding-bottom: 0; }
+.tabs button { background: none; border: 0; border-bottom: 3px solid transparent; color: var(--muted); font: 600 14px var(--f-body); padding: 10px 12px; cursor: pointer; white-space: nowrap; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--signal); }
+.panel { display: grid; gap: 18px; min-width: 0; }
+.panel p { margin: 0; max-width: 72ch; }
+.cmd { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.cmd .bar2 { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg); border-bottom: 1px solid var(--line); font: 600 12px var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.cmd pre { margin: 0; padding: 14px 16px; background: var(--code-bg); color: var(--code-ink); font: 400 13.5px/1.55 var(--f-mono); overflow-x: auto; }
+.cmd .body { padding: 14px 16px; display: grid; gap: 12px; }
+.copy { font: 600 12px var(--f-body); background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.hasil { background: var(--ok-wash); border-radius: 8px; padding: 8px 12px; font-size: 14px; }
+.shot { border: 1px solid var(--line); border-radius: 8px; max-width: 100%; display: block; cursor: zoom-in; }
+
+.gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.gal figure { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; }
+.gal img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; cursor: zoom-in; display: block; }
+.gal figcaption { padding: 10px 12px; font-size: 13px; color: var(--muted); }
+.gal .missing { aspect-ratio: 16 / 10; display: grid; place-items: center; text-align: center; padding: 16px; background: repeating-linear-gradient(135deg, var(--bg) 0 10px, var(--surface) 10px 20px); color: var(--muted); font: 600 12px var(--f-mono); }
+
+/* Flash card */
+.flash { display: grid; gap: 14px; justify-items: center; }
+.card3d { width: min(560px, 100%); aspect-ratio: 16 / 9; perspective: 1200px; cursor: pointer; border: 0; background: none; padding: 0; }
+.card3d .in { position: relative; width: 100%; height: 100%; transition: transform .5s; transform-style: preserve-3d; }
+.card3d.flip .in { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 14px; display: grid; place-items: center; padding: 24px; text-align: center; font: 600 clamp(16px, 2.6vw, 21px)/1.4 var(--f-body); }
+.front { background: linear-gradient(140deg, var(--g1), var(--g2) 60%, var(--g3)); color: #F4F8FA; }
+.back { background: var(--surface); border: 2px solid var(--teal); color: var(--ink); transform: rotateY(180deg); }
+.face small { position: absolute; top: 12px; left: 16px; font: 600 11px var(--f-mono); letter-spacing: .1em; opacity: .75; }
+.fctl { display: flex; gap: 8px; align-items: center; font: 600 13px var(--f-mono); color: var(--muted); }
+
+/* Kuis */
+.q { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 10px; }
+.q .qt { font-weight: 600; }
+.q .qt b { font: 800 18px var(--f-display); color: var(--teal); margin-right: 6px; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt { font: 400 14px var(--f-body); border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 8px; padding: 8px 12px; cursor: pointer; text-align: left; }
+.opt:hover:not(:disabled) { border-color: var(--teal); }
+.opt.right { background: var(--ok-wash); border-color: var(--ok); }
+.opt.wrong { background: var(--bad-wash); border-color: var(--bad); }
+.opt:disabled { cursor: default; }
+.why { font-size: 14px; padding: 8px 12px; border-radius: 8px; background: var(--bg); }
+.why b.ok { color: var(--ok); } .why b.no { color: var(--bad); }
+.scorebar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 52px); z-index: 2; }
+.scorebar .big { font: 800 28px var(--f-display); font-variant-numeric: tabular-nums; }
+
+.docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.doc { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 6px; }
+.doc h3 { font: 700 16px var(--f-body); }
+.doc p { margin: 0; color: var(--muted); font-size: 14px; }
+.pill { display: inline-block; font: 600 11px var(--f-mono); letter-spacing: .06em; padding: 2px 8px; border-radius: 99px; background: var(--bg); border: 1px solid var(--line); color: var(--muted); }
+
+dialog { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 92vh; }
+dialog::backdrop { background: rgba(4, 12, 20, .82); }
+dialog img { max-width: 96vw; max-height: 86vh; display: block; border-radius: 8px; }
+dialog p { color: #E4EDF3; text-align: center; margin: 8px 0 0; font-size: 14px; }
+
+footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+footer .wrap { padding-block: 20px; }
+
+@media (max-width: 760px) {
+  .cover .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 32px 28px; }
+  .cover svg.scene { max-height: 200px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<header class="cover" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">LMS · 10 pertemuan · Edisi 7 November 2026</div>
+      <h1>Akademi PM Pelabuhan <span>dari naskah ke aplikasi</span></h1>
+      <p class="lead">Belajar membangun web app Project Management Pelabuhan Umum seperti yang benar-benar dikerjakan untuk transformasi TUKS PT Bintan Seroja: terminal, VS Code, Supabase, GitHub dan Vercel, lengkap dengan error nyata dan cara memperbaikinya.</p>
+      <div class="author">Dr. Arif Badrudin M. Mgt. Stud.<small>PENULIS DAN PENGAMPU</small></div>
+      <div class="cta">
+        <a class="btn btn-signal" href="#modul-1">Mulai Modul 1</a>
+        <a class="btn btn-ghost" href="#silabus">Lihat silabus</a>
+      </div>
+      <div class="stats">
+        <div><b>10</b>modul</div><div><b>80</b>flash card</div><div><b>200</b>soal kuis</div><div><b>22</b>studi kasus</div>
+      </div>
+    </div>
+    <svg class="scene" viewBox="0 0 480 320" role="img" aria-label="Ilustrasi pelabuhan: crane, kapal kontainer dan mercusuar di atas laut bergradasi">
+      <defs>
+        <linearGradient id="sea" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F9AA0" stop-opacity=".55"/><stop offset="1" stop-color="#0E2A47" stop-opacity=".9"/></linearGradient>
+        <linearGradient id="box" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC59E"/><stop offset="1" stop-color="#E3651D"/></linearGradient>
+        <linearGradient id="box2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FE3E6"/><stop offset="1" stop-color="#1F9AA0"/></linearGradient>
+        <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE3C4"/><stop offset="1" stop-color="#FFE3C4" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle cx="360" cy="110" r="90" fill="url(#sun)" opacity=".7"/>
+      <g fill="none" stroke="#DCEBF1" stroke-width="3" stroke-linecap="round">
+        <path d="M150 230V90M190 230V90M150 130L190 170M190 130L150 170"/>
+        <path d="M110 90H300M170 90V60L270 90M170 60L110 90"/>
+        <path d="M250 90V128"/>
+      </g>
+      <rect x="236" y="128" width="30" height="16" rx="2" fill="url(#box)"/>
+      <path d="M40 232H330L312 262H58Z" fill="#0B2238" stroke="#9FE3E6" stroke-opacity=".5"/>
+      <g>
+        <rect x="70" y="206" width="34" height="26" fill="url(#box)"/><rect x="106" y="194" width="34" height="38" fill="url(#box2)"/>
+        <rect x="142" y="206" width="34" height="26" fill="url(#box)"/><rect x="210" y="200" width="34" height="32" fill="url(#box2)"/>
+        <rect x="246" y="210" width="30" height="22" fill="url(#box)"/>
+      </g>
+      <g><rect x="410" y="150" width="18" height="86" fill="#F4F8FA"/><rect x="410" y="170" width="18" height="10" fill="#E3651D"/><rect x="410" y="200" width="18" height="10" fill="#E3651D"/><path d="M404 150H434L419 136Z" fill="#F4F8FA"/><path d="M428 142L476 128V156Z" fill="#FFE3C4" opacity=".55"/></g>
+      <path d="M0 246Q60 236 120 246T240 246T360 246T480 246V320H0Z" fill="url(#sea)"/>
+      <path d="M0 270Q60 262 120 270T240 270T360 270T480 270" fill="none" stroke="#DCEBF1" stroke-opacity=".35"/>
+    </svg>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Navigasi utama"><div class="wrap" id="nav"></div></nav>
+<main class="wrap" id="main"></main>
+<footer><div class="wrap">Akademi PM Pelabuhan · Dr. Arif Badrudin M. Mgt. Stud. · Kemajuan belajar tersimpan di browser ini saja.</div></footer>
+<dialog id="lb" aria-label="Pratinjau gambar"><img id="lbImg" alt=""><p id="lbCap"></p></dialog>
+
+<script src="akademi-data1.js"></script>
+<script src="akademi-data2.js"></script>
+<script>
+// ---------- Penyimpanan kemajuan (per browser, aman bila ditolak) ----------
+const KEY = 'akademi-pm.v1';
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } },
+  set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch { /* mode privat: abaikan */ } },
+  mod(no) { const s = this.get(); return s[no] || { bs: null, pg: null, flash: 0 }; },
+  save(no, patch) { const s = this.get(); s[no] = Object.assign(this.mod(no), patch); this.set(s); }
+};
+
+const DOC1 = 'https://claude.ai/artifact/4FMR47jBKxmXRKWGTRd7CG';
+const DOC2 = 'https://claude.ai/artifact/DegAZYYJaoFo1anJidn2pp';
+const M = window.LMS.modul.sort((a, b) => a.no - b.no);
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const FASE = { A: 'Fase A · di komputer sendiri', B: 'Fase B · layanan awan', C: 'Fase C · operasi' };
+
+function pct(no) {
+  const p = store.mod(no); const m = M[no - 1];
+  const parts = [p.flash / m.flash.length, (p.bs ?? 0) / 10, (p.pg ?? 0) / 10];
+  return Math.round(parts.reduce((a, b) => a + b, 0) / 3 * 100);
+}
+
+// ---------- Navigasi ----------
+function renderNav(active) {
+  const items = [['beranda', 'Beranda'], ['silabus', 'Silabus'], ...M.map(m => ['modul-' + m.no, 'M' + m.no]), ['kasus', 'Studi kasus'], ['glosarium', 'Glosarium']];
+  $('#nav').innerHTML = '<span class="brand">Akademi</span>' + items.map(([h, l]) => `<a href="#${h}"${h === active ? ' aria-current="page"' : ''}>${l}</a>`).join('');
+}
+
+// ---------- Peta 10 modul (SVG bergradasi) ----------
+function roadmap() {
+  const xs = M.map((m, i) => 50 + i * 70);
+  const dots = M.map((m, i) => {
+    const x = xs[i], up = i % 2 === 0, p = pct(m.no);
+    const words = m.judul.split(':')[0].split(' ');
+    const l1 = words.slice(0, 2).join(' '), l2 = words.slice(2, 4).join(' ');
+    return `<a href="#modul-${m.no}"><circle cx="${x}" cy="90" r="18" fill="var(--surface)" stroke="url(#rg)" stroke-width="3"/>
+      <circle cx="${x}" cy="90" r="18" fill="url(#rg)" fill-opacity="${0.12 + p / 130}"/>
+      <text x="${x}" y="95" text-anchor="middle" font-family="Big Shoulders Display, sans-serif" font-weight="800" font-size="17" fill="var(--ink)">${m.no}</text>
+      <text x="${x}" y="${up ? 52 : 130}" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">${esc(l1)}</text>
+      <text x="${x}" y="${up ? 66 : 144}" text-anchor="middle" font-size="11" fill="var(--muted)">${esc(l2)}</text></a>`;
+  }).join('');
+  const segs = xs.slice(0, -1).map((x, i) => `M${x + 20} 90H${xs[i + 1] - 20}`).join('');
+  return `<svg viewBox="0 0 720 170" role="img" aria-label="Peta 10 modul">
+    <defs><linearGradient id="rg" gradientUnits="userSpaceOnUse" x1="30" y1="0" x2="690" y2="0"><stop offset="0" stop-color="var(--g2)"/><stop offset=".6" stop-color="var(--g3)"/><stop offset="1" stop-color="var(--g4)"/></linearGradient></defs>
+    <rect x="20" y="4" width="412" height="18" rx="5" fill="var(--g3)" fill-opacity=".16"/><text x="226" y="17" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Fase A · komputer sendiri (M1–M6)</text>
+    <rect x="438" y="4" width="204" height="18" rx="5" fill="var(--g2)" fill-opacity=".2"/><text x="540" y="17" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Fase B · awan (M7–M9)</text>
+    <rect x="648" y="4" width="62" height="18" rx="5" fill="var(--g4)" fill-opacity=".25"/><text x="679" y="17" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">Fase C</text>
+    <path d="${segs}" stroke="url(#rg)" stroke-width="4" stroke-linecap="round" fill="none"/>${dots}</svg>`;
+}
+
+function modCards() {
+  return `<div class="grid-mod">${M.map(m => { const p = store.mod(m.no); return `<a class="mod-card" href="#modul-${m.no}">
+    <span class="num">${String(m.no).padStart(2, '0')}</span><span class="fase">${FASE[m.fase]}</span><h3>${esc(m.judul)}</h3>
+    <div class="bar"><i style="width:${pct(m.no)}%"></i></div>
+    <span class="score">B/S ${p.bs ?? '–'}/10 · PG ${p.pg ?? '–'}/10 · kartu ${p.flash}/${m.flash.length}</span></a>`; }).join('')}</div>`;
+}
+
+// ---------- Halaman ----------
+function viewBeranda() {
+  return `<section class="view">
+    <div><h2 class="sec-title">Peta belajar</h2><p class="sub">Ikuti urutan modul: setiap modul memakai hasil modul sebelumnya. Lingkaran makin pekat seiring kemajuan Anda.</p></div>
+    <div class="road">${roadmap()}</div>
+    ${modCards()}
+    <div><h2 class="sec-title">Dokumen pendamping</h2></div>
+    <div class="docs">
+      <div class="doc"><span class="pill">DOKUMEN 1</span><h3>Buku Panduan</h3><p>Rekap 9 tahap pembangunan, peta alat, skema database, alur login dan rilis, 22 studi kasus.</p><a href="${DOC1}" target="_blank" rel="noopener">Buka Buku Panduan</a></div>
+      <div class="doc"><span class="pill">DOKUMEN 2</span><h3>Silabus &amp; Modul 10 Pertemuan</h3><p>Penjelasan perintah baris demi baris dan 43 tangkapan layar hasil sebenarnya.</p><a href="${DOC2}" target="_blank" rel="noopener">Buka Silabus &amp; Modul</a></div>
+      <div class="doc"><span class="pill">DOKUMEN 3</span><h3>LMS ini</h3><p>Materi ringkas, perintah, isi folder, galeri, flash card, 10 soal benar/salah dan 10 pilihan ganda per modul.</p></div>
+    </div></section>`;
+}
+
+function viewSilabus() {
+  const rows = M.map(m => `<tr><td><b>${m.no}</b></td><td><a href="#modul-${m.no}">${esc(m.judul)}</a></td><td>${esc(m.tujuan)}</td><td>${FASE[m.fase].split(' · ')[1]}</td></tr>`).join('');
+  return `<section class="view"><div><h2 class="sec-title">Silabus</h2><p class="sub">Satu pertemuan 3 × 50 menit: penjelasan, praktik, kuis dan refleksi. Penilaian: kuis 20%, bukti praktik 40%, proyek akhir 40%.</p></div>
+    <div class="road">${roadmap()}</div>
+    <div class="tbl"><table class="t"><thead><tr><th>P</th><th>Modul</th><th>Kemampuan akhir</th><th>Tempat</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+}
+
+function viewKasus() {
+  const counts = {}; window.LMS.kasus.forEach(k => counts[k[0]] = (counts[k[0]] || 0) + 1);
+  const keys = Object.keys(counts).sort(), max = Math.max(...Object.values(counts));
+  const bars = keys.map((k, i) => { const w = counts[k] / max * 420; const y = 36 + i * 30;
+    return `<text x="0" y="${y + 15}" font-size="12" font-weight="600" fill="var(--ink)">Tahap ${k}</text>
+    <rect x="70" y="${y}" width="${w}" height="20" rx="4" fill="url(#kg)" fill-opacity="${counts[k] === max ? 1 : .55}"><title>Tahap ${k}: ${counts[k]} kasus</title></rect>
+    <text x="${78 + w}" y="${y + 15}" font-size="12" font-weight="600" fill="var(--ink)">${counts[k]}</text>`; }).join('');
+  const rows = window.LMS.kasus.map((k, i) => `<tr><td>${i + 1}</td><td>Tahap ${k[0]}</td><td>${esc(k[1])}</td><td>${esc(k[2])}</td></tr>`).join('');
+  return `<section class="view"><div><h2 class="sec-title">22 studi kasus</h2><p class="sub">Error yang benar-benar terjadi, dikelompokkan per tahap pembangunan. Uraian lengkapnya ada di Buku Panduan.</p></div>
+    <div class="road"><svg viewBox="0 0 560 ${46 + keys.length * 30}" role="img" aria-label="Jumlah studi kasus per tahap" style="min-width:480px">
+      <defs><linearGradient id="kg" x1="0" x2="1"><stop offset="0" stop-color="var(--g2)"/><stop offset="1" stop-color="var(--g4)"/></linearGradient></defs>
+      <text x="0" y="18" font-size="14" font-weight="700" fill="var(--ink)">Tahap 7 (login dan email) paling banyak kasusnya</text>${bars}</svg></div>
+    <div class="tbl"><table class="t"><thead><tr><th>#</th><th>Tahap</th><th>Gejala</th><th>Perbaikan</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+}
+
+function viewGlosarium() {
+  return `<section class="view"><div><h2 class="sec-title">Glosarium</h2><p class="sub">Istilah yang muncul di semua modul, dalam bahasa sehari-hari.</p></div>
+    <div class="tbl"><table class="t"><thead><tr><th>Istilah</th><th>Arti</th></tr></thead><tbody>${window.LMS.glosarium.map(g => `<tr><td><b>${esc(g[0])}</b></td><td>${esc(g[1])}</td></tr>`).join('')}</tbody></table></div></section>`;
+}
+
+// ---------- Modul ----------
+const TABS = [['materi', 'Materi'], ['perintah', 'Perintah'], ['folder', 'Folder'], ['galeri', 'Galeri'], ['flash', 'Flash card'], ['bs', 'Benar-Salah'], ['pg', 'Pilihan Ganda']];
+let curTab = 'materi';
+
+function viewModul(no) {
+  const m = M[no - 1];
+  const prev = no > 1 ? `<a class="btn btn-ghost" href="#modul-${no - 1}">← Modul ${no - 1}</a>` : '';
+  const next = no < M.length ? `<a class="btn btn-ghost" href="#modul-${no + 1}">Modul ${no + 1} →</a>` : '';
+  return `<section class="view">
+    <div class="mhead"><span class="eyebrow">Modul ${no} · ${FASE[m.fase]}</span><h2>${esc(m.judul)}</h2><p><b>Tujuan.</b> ${esc(m.tujuan)}</p><div class="pn">${prev}${next}</div></div>
+    <div class="tabs" role="tablist">${TABS.map(([k, l]) => `<button role="tab" data-tab="${k}" aria-selected="${k === curTab}">${l}</button>`).join('')}</div>
+    <div class="panel" id="panel"></div></section>`;
+}
+
+function panel(m) {
+  const P = $('#panel'); if (!P) return;
+  if (curTab === 'materi') P.innerHTML = m.materi.map(p => `<p>${esc(p)}</p>`).join('') +
+    `<p class="sub">Uraian lengkap dan tangkapan layar: <a href="${DOC2}" target="_blank" rel="noopener">Silabus &amp; Modul, Modul ${m.no}</a>.</p>`;
+  if (curTab === 'perintah') P.innerHTML = m.perintah.map((c, i) => `<div class="cmd">
+      <div class="bar2"><span>${esc(c.lang)}</span><button class="copy" data-copy="${i}">Salin</button></div>
+      <pre id="code-${i}">${esc(c.cmd)}</pre>
+      <div class="body"><div class="tbl"><table class="t"><thead><tr><th>Bagian</th><th>Artinya</th></tr></thead><tbody>${c.ket.map(k => `<tr><td><code>${esc(k[0])}</code></td><td>${esc(k[1])}</td></tr>`).join('')}</tbody></table></div>
+      <div class="hasil"><b>Hasil:</b> ${esc(c.hasil)}</div>
+      ${c.img ? `<img class="shot" src="${c.img}" alt="Hasil perintah" data-cap="${esc(c.hasil)}" loading="lazy">` : ''}</div></div>`).join('');
+  if (curTab === 'folder') P.innerHTML = `<div class="tbl"><table class="t"><thead><tr><th>Berkas / folder</th><th>Isinya</th></tr></thead><tbody>${m.folder.map(f => `<tr><td><code>${esc(f[0])}</code></td><td>${esc(f[1])}</td></tr>`).join('')}</tbody></table></div>`;
+  if (curTab === 'galeri') P.innerHTML = `<div class="gal">${m.galeri.map(g => `<figure>${g.src ? `<img src="${g.src}" alt="${esc(g.cap)}" data-cap="${esc(g.cap)}" loading="lazy">` : `<div class="missing">BELUM TERSEDIA<br>rekam sendiri sebelum kelas</div>`}<figcaption>${esc(g.cap)}</figcaption></figure>`).join('')}</div>`;
+  if (curTab === 'flash') flash(m, P);
+  if (curTab === 'bs') quiz(m, P, 'bs');
+  if (curTab === 'pg') quiz(m, P, 'pg');
+}
+
+function flash(m, P) {
+  let i = 0; const seen = new Set();
+  const draw = () => {
+    seen.add(i); const prog = store.mod(m.no);
+    if (seen.size > prog.flash) store.save(m.no, { flash: Math.min(m.flash.length, Math.max(prog.flash, seen.size)) });
+    P.innerHTML = `<div class="flash">
+      <button class="card3d" id="fc" aria-label="Balik kartu"><div class="in">
+        <div class="face front"><small>KARTU ${i + 1}/${m.flash.length} · PERTANYAAN</small>${esc(m.flash[i][0])}</div>
+        <div class="face back"><small>JAWABAN</small>${esc(m.flash[i][1])}</div></div></button>
+      <div class="fctl"><button class="btn btn-plain" id="fp">← Sebelumnya</button><span>Klik kartu untuk membalik</span><button class="btn btn-plain" id="fn">Berikutnya →</button></div></div>`;
+    $('#fc').onclick = e => e.currentTarget.classList.toggle('flip');
+    $('#fp').onclick = () => { i = (i - 1 + m.flash.length) % m.flash.length; draw(); };
+    $('#fn').onclick = () => { i = (i + 1) % m.flash.length; draw(); };
+  };
+  draw();
+}
+
+function quiz(m, P, kind) {
+  const items = m[kind]; const ans = {};
+  const label = kind === 'bs' ? 'Benar-Salah' : 'Pilihan Ganda';
+  const best = store.mod(m.no)[kind];
+  P.innerHTML = `<div class="scorebar"><div><span class="big" id="sc">0/${items.length}</span> <span class="sub" style="display:inline">dijawab benar · terbaik ${best ?? '–'}/10</span></div><button class="btn btn-plain" id="rst">Ulangi ${label}</button></div>` +
+    items.map((q, i) => {
+      const opts = kind === 'bs' ? ['Benar', 'Salah'] : q[1];
+      return `<div class="q" data-i="${i}"><div class="qt"><b>${i + 1}</b>${esc(q[0])}</div>
+        <div class="opts">${opts.map((o, j) => `<button class="opt" data-j="${j}">${kind === 'pg' ? String.fromCharCode(65 + j) + '. ' : ''}${esc(o)}</button>`).join('')}</div>
+        <div class="why" hidden></div></div>`;
+    }).join('');
+  P.querySelectorAll('.q').forEach(box => box.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || b.disabled) return;
+    const i = +box.dataset.i, j = +b.dataset.j, q = items[i];
+    const correct = kind === 'bs' ? (q[1] ? 0 : 1) : q[2];
+    const why = kind === 'bs' ? q[2] : q[3];
+    ans[i] = j === correct;
+    box.querySelectorAll('.opt').forEach((o, k) => { o.disabled = true; if (k === correct) o.classList.add('right'); else if (k === j) o.classList.add('wrong'); });
+    const w = box.querySelector('.why'); w.hidden = false;
+    w.innerHTML = `<b class="${ans[i] ? 'ok' : 'no'}">${ans[i] ? 'Tepat.' : 'Belum tepat.'}</b> ${esc(why)}`;
+    const score = Object.values(ans).filter(Boolean).length; $('#sc').textContent = `${score}/${items.length}`;
+    if (Object.keys(ans).length === items.length) { const prev = store.mod(m.no)[kind] ?? -1; if (score > prev) store.save(m.no, { [kind]: score }); }
+  }));
+  $('#rst').onclick = () => quiz(m, P, kind);
+}
+
+// ---------- Router hash ----------
+function route() {
+  const h = (location.hash || '#beranda').slice(1);
+  const mm = /^modul-(\d+)$/.exec(h);
+  const main = $('#main');
+  if (mm && M[+mm[1] - 1]) { main.innerHTML = viewModul(+mm[1]); panel(M[+mm[1] - 1]); }
+  else if (h === 'silabus') main.innerHTML = viewSilabus();
+  else if (h === 'kasus') main.innerHTML = viewKasus();
+  else if (h === 'glosarium') main.innerHTML = viewGlosarium();
+  else main.innerHTML = viewBeranda();
+  renderNav(mm ? h : (['silabus', 'kasus', 'glosarium'].includes(h) ? h : 'beranda'));
+  if (h !== 'beranda' && h !== '' && h !== 'top') $('#main').scrollIntoView({ block: 'start' });
+}
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-tab]');
+  if (t) { curTab = t.dataset.tab; const no = +(/modul-(\d+)/.exec(location.hash) || [0, 1])[1];
+    document.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-selected', b === t)); panel(M[no - 1]); return; }
+  const c = e.target.closest('[data-copy]');
+  if (c) { const pre = $('#code-' + c.dataset.copy); const txt = pre.textContent;
+    const done = () => { c.textContent = 'Tersalin'; setTimeout(() => c.textContent = 'Salin', 1500); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); c.textContent = 'Tekan Ctrl/Cmd + C'; };
+    try { navigator.clipboard.writeText(txt).then(done, fallback); } catch { fallback(); } return; }
+  const img = e.target.closest('img[data-cap]');
+  if (img) { $('#lbImg').src = img.src; $('#lbImg').alt = img.alt; $('#lbCap').textContent = img.dataset.cap; try { $('#lb').showModal(); } catch { /* tanpa dialog */ } return; }
+  if (e.target.id === 'lb' || e.target.closest('#lb')) $('#lb').close();
+});
+window.addEventListener('hashchange', () => { if (/^#modul-/.test(location.hash)) curTab = 'materi'; route(); });
+route();
+</script>
+
+</body>
+</html>
