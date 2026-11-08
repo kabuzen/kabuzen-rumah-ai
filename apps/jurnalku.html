@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f25c9a">
+<meta name="color-scheme" content="light">
+<title>JurnalKu 🌸</title>
+<style>
+:root{
+  --p50:#fff5f9;--p100:#ffe4ef;--p200:#ffc9de;--p300:#ffa3c6;--p400:#ff7eb3;--p500:#f25c9a;--p600:#d63f80;
+  --plum:#6b2a4c;--muted:#a26a88;--white:#fff;
+  --late:#e0435c;--urgent:#f0772b;--soon:#c98a00;--safe:#2f9e6c;
+  --shadow:0 6px 18px rgba(214,63,128,.13);--r:20px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{
+  font-family:"Nunito","Quicksand",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color:var(--plum);background-color:var(--p50);
+  background-image:radial-gradient(var(--p200) 1.2px,transparent 1.4px);background-size:22px 22px;
+  min-height:100vh;padding-bottom:calc(88px + env(safe-area-inset-bottom));
+  font-size:15px;line-height:1.45;
+}
+body.noscroll{overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{font-size:16px} /* cegah zoom otomatis di iPhone */
+h1,h2,h3{margin:0}
+.hidden,[hidden]{display:none!important}
+
+/* ---------- Header ---------- */
+header{
+  position:sticky;top:0;z-index:20;
+  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  background:linear-gradient(135deg,#ff8fbd,#f25c9a);color:#fff;
+  box-shadow:0 4px 14px rgba(214,63,128,.25);
+  display:flex;align-items:center;justify-content:space-between;
+}
+header h1{font-size:20px;font-weight:800;letter-spacing:.3px}
+header .lockbtn{background:rgba(255,255,255,.22);border:0;color:#fff;border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer}
+
+main{max-width:560px;margin:0 auto;padding:16px}
+.page{animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- Kartu ---------- */
+.card{background:var(--white);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--shadow);border:1.5px solid var(--p100)}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.ch h3{font-size:16px;font-weight:800}
+.small{font-size:13px;color:var(--muted);margin:6px 0}
+.link{background:none;border:0;color:var(--p600);font-weight:700;cursor:pointer;padding:4px 0;font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.empty{text-align:center;color:var(--muted);font-size:14px;padding:14px 8px;background:var(--p50);border-radius:14px;border:1.5px dashed var(--p200)}
+
+/* ---------- Beranda ---------- */
+.hero{
+  border-radius:24px;padding:20px 18px;margin-bottom:14px;color:#fff;position:relative;overflow:hidden;
+  background:linear-gradient(140deg,#ff9cc5 0%,#f25c9a 60%,#d63f80 100%);box-shadow:var(--shadow);
+}
+.hero::after{content:"🌸";position:absolute;right:-6px;bottom:-14px;font-size:84px;opacity:.25;transform:rotate(-12deg)}
+.hello{font-size:21px;font-weight:800}
+.hdate{opacity:.95;margin-top:2px}
+.hmood{margin-top:12px;font-size:14px}
+.hmood span{font-size:22px;vertical-align:middle}
+.hmood .link{color:#fff}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.stat{background:#fff;border-radius:18px;padding:12px 14px;box-shadow:var(--shadow);border:1.5px solid var(--p100)}
+.stat b{display:block;font-size:26px;color:var(--p600);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--muted)}
+.stat.warn{background:#fff1f3;border-color:#ffc9d2}
+.stat.warn b{color:var(--late)}
+.prog{height:10px;background:var(--p100);border-radius:99px;overflow:hidden}
+.prog div{height:100%;background:linear-gradient(90deg,var(--p300),var(--p500));border-radius:99px;transition:width .3s}
+.mini{padding:7px 0;border-bottom:1px dashed var(--p100);font-size:14px}
+.mini:last-child{border-bottom:0}
+.mini b{color:var(--p600);margin-right:4px}
+.mini.done{text-decoration:line-through;color:var(--muted)}
+.hint{background:#fff8e6;border:1.5px solid #ffe2a3;color:#7a5a12;border-radius:16px;padding:10px 12px;font-size:13.5px;margin-bottom:14px}
+
+/* ---------- Kartu tugas ---------- */
+.list{display:flex;flex-direction:column;gap:10px}
+.task{display:flex;gap:10px;align-items:flex-start;background:#fff;border-radius:16px;padding:12px;border:1.5px solid var(--p100);border-left:6px solid var(--p300);cursor:pointer}
+.task.late{border-left-color:var(--late);background:#fff7f8}
+.task.urgent{border-left-color:var(--urgent)}
+.task.soon{border-left-color:var(--soon)}
+.task.safe{border-left-color:var(--safe)}
+.task.done{border-left-color:var(--p200);opacity:.7}
+.task.done .ttitle{text-decoration:line-through}
+.tbody{flex:1;min-width:0}
+.trow{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px}
+.ttitle{font-weight:800;font-size:15px;word-wrap:break-word}
+.tmeta{font-size:12.5px;color:var(--muted);margin-top:3px}
+.tag{font-size:11.5px;font-weight:700;background:var(--p100);color:var(--p600);padding:2px 8px;border-radius:99px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tag.soft{background:#efe7ff;color:#6a4bb3}
+.prio{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:99px}
+.prio.tinggi{background:#ffe1e6;color:var(--late)}
+.prio.sedang{background:#fff1d6;color:#a26b00}
+.prio.rendah{background:#e2f6ec;color:var(--safe)}
+.badge{font-size:11.5px;font-weight:800;padding:2px 8px;border-radius:99px;color:#fff;background:var(--safe)}
+.badge.late{background:var(--late)}
+.badge.urgent{background:var(--urgent)}
+.badge.soon{background:var(--soon)}
+.badge.done{background:var(--p300)}
+.chk{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--p300);background:#fff;color:#fff;font-weight:900;cursor:pointer;display:grid;place-items:center;padding:0;font-size:15px}
+.chk.on{background:var(--p500);border-color:var(--p500)}
+.chk.sm{width:24px;height:24px;font-size:13px}
+
+/* ---------- Harian ---------- */
+.datenav{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.datenav .mid{flex:1;text-align:center;background:#fff;border-radius:18px;padding:8px 6px;box-shadow:var(--shadow);border:1.5px solid var(--p100);position:relative}
+.datenav .mid b{display:block;font-size:15px}
+.datenav .mid small{color:var(--muted);font-size:12.5px}
+.datenav .mid input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+.round{width:44px;height:44px;border-radius:50%;border:0;background:#fff;box-shadow:var(--shadow);color:var(--p600);font-size:22px;font-weight:800;cursor:pointer;flex:none}
+.todaybtn{display:block;margin:-6px auto 12px;font-size:13px}
+.moods{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.moods button{border:2px solid transparent;background:var(--p50);border-radius:14px;padding:6px 0 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center}
+.moods button span{font-size:26px;line-height:1.2}
+.moods button small{font-size:10px;color:var(--muted);line-height:1.2;text-align:center}
+.moods button.on{border-color:var(--p500);background:var(--p100)}
+.row{display:flex;gap:8px}
+.inp{width:100%;border:1.5px solid var(--p200);background:var(--p50);border-radius:14px;padding:10px 12px;outline:none}
+.inp:focus{border-color:var(--p500);background:#fff;box-shadow:0 0 0 3px rgba(242,92,154,.15)}
+.inp.time{width:108px;flex:none}
+textarea.inp{resize:vertical;min-height:90px}
+.addbtn{flex:none;width:46px;border:0;border-radius:14px;background:var(--p500);color:#fff;font-size:22px;font-weight:800;cursor:pointer}
+.keg{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--p100)}
+.keg:last-child{border-bottom:0}
+.kjam{font-weight:800;color:var(--p600);font-size:13.5px;width:44px;flex:none}
+.kteks{flex:1;word-wrap:break-word;min-width:0}
+.keg.done .kteks{text-decoration:line-through;color:var(--muted)}
+.del{flex:none;border:0;background:none;color:var(--p300);font-size:16px;cursor:pointer;padding:4px 6px}
+#kegList{margin-top:10px}
+.saved{font-size:12px;color:var(--safe);opacity:0;transition:opacity .3s}
+.saved.show{opacity:1}
+label.lbl{display:block;font-weight:700;font-size:13.5px;margin:10px 0 6px}
+
+/* ---------- Tugas ---------- */
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;border:1.5px solid var(--p200);background:#fff;border-radius:99px;padding:7px 14px;font-weight:700;font-size:13.5px;color:var(--p600);cursor:pointer}
+.chips button.on{background:var(--p500);border-color:var(--p500);color:#fff}
+.search{margin-bottom:12px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);margin-top:12px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:middle}
+
+/* ---------- Lainnya ---------- */
+.btn{border:0;border-radius:14px;padding:11px 16px;background:var(--p500);color:#fff;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(242,92,154,.3)}
+.btn.ghost{background:var(--p100);color:var(--p600);box-shadow:none}
+.btn.danger{background:#ffe3e8;color:var(--late);box-shadow:none}
+.btn.block{width:100%;margin-top:8px}
+.note{font-size:13px;color:var(--muted);margin:8px 0 0}
+.kv{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--p100);font-size:14px}
+.kv:last-child{border-bottom:0}
+ul.tips{margin:6px 0 0;padding-left:18px;font-size:13.5px}
+ul.tips li{margin-bottom:4px}
+
+/* ---------- Navigasi bawah & FAB ---------- */
+nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;
+  border-top:1.5px solid var(--p100);box-shadow:0 -4px 16px rgba(214,63,128,.1);
+  display:flex;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+  border-radius:22px 22px 0 0;
+}
+nav button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 0;border-radius:14px;cursor:pointer;color:var(--muted);font-size:11.5px;font-weight:700}
+nav button span{font-size:21px;filter:grayscale(.6);opacity:.75}
+nav button.on{color:var(--p600);background:var(--p50)}
+nav button.on span{filter:none;opacity:1}
+#fab{
+  position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:25;
+  border:0;border-radius:99px;padding:14px 20px;background:linear-gradient(135deg,#ff8fbd,#f25c9a);color:#fff;
+  font-weight:800;font-size:15px;box-shadow:0 8px 20px rgba(214,63,128,.4);cursor:pointer
+}
+
+/* ---------- Sheet (form) ---------- */
+#sheet{position:fixed;inset:0;z-index:50;background:rgba(107,42,76,.38);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+#sheet.open{opacity:1;pointer-events:auto}
+.panel{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:26px 26px 0 0;padding:10px 18px calc(18px + env(safe-area-inset-bottom));transform:translateY(30px);transition:transform .25s}
+#sheet.open .panel{transform:none}
+.grab{width:44px;height:5px;background:var(--p200);border-radius:99px;margin:4px auto 12px}
+.panel h3{font-size:18px;margin-bottom:6px}
+.panel label{display:block;font-weight:700;font-size:13.5px;margin-top:10px}
+.panel label .inp{margin-top:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+.actions .grow{margin-right:auto}
+
+/* ---------- Toast ---------- */
+#toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(10px);background:var(--plum);color:#fff;padding:10px 16px;border-radius:99px;font-size:14px;font-weight:700;z-index:90;opacity:0;pointer-events:none;transition:all .25s;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%)}
+
+/* ---------- Layar kunci ---------- */
+#lock{position:fixed;inset:0;z-index:100;background:linear-gradient(160deg,#ffd6e7,#ff9cc5 55%,#f25c9a);display:flex;align-items:center;justify-content:center;padding:20px}
+.lockbox{text-align:center;color:#fff;width:100%;max-width:320px}
+.lockbox .ic{font-size:46px}
+.lockbox h2{font-size:24px;margin:4px 0}
+.lockbox p{margin:0 0 16px;opacity:.95}
+#dots{display:flex;justify-content:center;gap:12px;height:18px;margin-bottom:22px}
+#dots i{width:14px;height:14px;border-radius:50%;border:2px solid #fff}
+#dots i.f{background:#fff}
+#dots.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-4px)}}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.keypad button{height:62px;border-radius:50%;border:0;background:rgba(255,255,255,.3);color:#fff;font-size:24px;font-weight:800;cursor:pointer;max-width:62px;width:62px;justify-self:center}
+.keypad button:active{background:rgba(255,255,255,.5)}
+.lockbox .link{color:#fff}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>JurnalKu 🎀</h1>
+  <button class="lockbtn hidden" id="lockNow" aria-label="Kunci aplikasi">🔒 Kunci</button>
+</header>
+
+<main>
+  <!-- ===== BERANDA ===== -->
+  <section class="page" id="beranda"><div id="homeBox"></div></section>
+
+  <!-- ===== HARIAN ===== -->
+  <section class="page" id="harian" hidden>
+    <div class="datenav">
+      <button class="round" id="prevDay" aria-label="Hari sebelumnya">‹</button>
+      <div class="mid">
+        <b id="dayTitle"></b><small id="daySub"></small>
+        <input type="date" id="dayPick" aria-label="Pilih tanggal">
+      </div>
+      <button class="round" id="nextDay" aria-label="Hari berikutnya">›</button>
+    </div>
+    <button class="link todaybtn hidden" id="toToday">Kembali ke hari ini</button>
+
+    <div class="card">
+      <div class="ch"><h3>💗 Mood-ku</h3></div>
+      <div class="moods" id="moods"></div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><h3>🌷 Kegiatan</h3></div>
+      <form class="row" id="kegForm" autocomplete="off">
+        <input class="inp time" type="time" id="kegJam" aria-label="Jam">
+        <input class="inp" id="kegTeks" maxlength="200" placeholder="cth. Kuliah Statistika" aria-label="Kegiatan">
+        <button class="addbtn" aria-label="Tambah kegiatan">＋</button>
+      </form>
+      <div id="kegList"></div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><h3>📝 Cerita Hari Ini</h3><span class="saved" id="savedMark">Tersimpan ✓</span></div>
+      <textarea class="inp" id="cerita" maxlength="10000" placeholder="Tulis apa saja yang terjadi hari ini…"></textarea>
+      <label class="lbl" for="syukur">🌼 Hal yang aku syukuri</label>
+      <textarea class="inp" id="syukur" maxlength="3000" style="min-height:60px" placeholder="Satu hal kecil pun boleh 💕"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="ch"><h3>⏰ Deadline di Tanggal Ini</h3></div>
+      <div id="dayDue"></div>
+    </div>
+  </section>
+
+  <!-- ===== TUGAS ===== -->
+  <section class="page" id="tugas" hidden>
+    <div class="chips" id="chips">
+      <button data-f="aktif">Belum selesai</button>
+      <button data-f="terlambat">Terlambat</button>
+      <button data-f="selesai">Selesai</button>
+      <button data-f="semua">Semua</button>
+    </div>
+    <input class="inp search" id="cari" type="search" placeholder="🔍 Cari judul / mata kuliah…" aria-label="Cari tugas">
+    <p class="small" id="taskCount"></p>
+    <div class="list" id="taskList"></div>
+    <div class="legend">
+      <span><i style="background:var(--late)"></i>Terlambat</span>
+      <span><i style="background:var(--urgent)"></i>Hari ini / besok</span>
+      <span><i style="background:var(--soon)"></i>≤ 7 hari</span>
+      <span><i style="background:var(--safe)"></i>&gt; 7 hari</span>
+    </div>
+  </section>
+
+  <!-- ===== LAINNYA ===== -->
+  <section class="page" id="lainnya" hidden>
+    <div class="card">
+      <div class="ch"><h3>🙋‍♀️ Profil</h3></div>
+      <label class="lbl" for="nama" style="margin-top:0">Nama panggilan</label>
+      <input class="inp" id="nama" maxlength="40" placeholder="cth. Nisa" autocomplete="off">
+      <p class="note">Hanya dipakai untuk sapaan di beranda.</p>
+    </div>
+
+    <div class="card">
+      <div class="ch"><h3>🔒 Kunci PIN</h3></div>
+      <p class="small" id="pinStatus"></p>
+      <button class="btn block" id="pinSet"></button>
+      <button class="btn danger block hidden" id="pinOff">Matikan PIN</button>
+      <p class="note">PIN berfungsi sebagai pengunci layar agar orang lain yang meminjam HP-mu tidak langsung bisa membaca isi jurnal. PIN <b>bukan</b> enkripsi: data tetap tersimpan biasa di penyimpanan browser HP-mu. Aplikasi otomatis terkunci lagi jika ditinggal lebih dari 1 menit.</p>
+    </div>
+
+    <div class="card">
+      <div class="ch"><h3>📦 Cadangan Data</h3></div>
+      <div id="dataInfo"></div>
+      <button class="btn block" id="expBtn">⬇️ Unduh file cadangan</button>
+      <button class="btn ghost block" id="impBtn">⬆️ Pulihkan dari file cadangan</button>
+      <input type="file" id="impFile" accept="application/json,.json" hidden>
+      <p class="note">Simpan file cadangan di tempat yang aman (misalnya penyimpanan pribadimu). File ini berisi seluruh jurnal dan tugasmu dalam bentuk teks biasa, jadi jangan dibagikan ke orang lain.</p>
+    </div>
+
+    <div class="card">
+      <div class="ch"><h3>🛡️ Privasi &amp; Penyimpanan</h3></div>
+      <ul class="tips">
+        <li>Semua data hanya disimpan di browser HP ini. Aplikasi tidak mengirim data ke server mana pun dan tidak memuat apa pun dari internet.</li>
+        <li>Data terikat pada browser yang dipakai. Buka file ini selalu dengan browser yang sama.</li>
+        <li>Jika kamu menghapus data/riwayat browser atau meng-uninstall browser, catatanmu bisa ikut terhapus. Rutinlah mengunduh cadangan.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="ch"><h3>⚠️ Zona Bahaya</h3></div>
+      <button class="btn danger block" id="wipeBtn">Hapus semua data</button>
+    </div>
+  </section>
+</main>
+
+<button id="fab">＋ Tugas</button>
+
+<nav>
+  <button data-tab="beranda" class="on"><span>🌸</span>Beranda</button>
+  <button data-tab="harian"><span>📔</span>Harian</button>
+  <button data-tab="tugas"><span>📚</span>Tugas</button>
+  <button data-tab="lainnya"><span>⚙️</span>Lainnya</button>
+</nav>
+
+<div id="sheet" role="dialog" aria-modal="true"><div class="panel"><div class="grab"></div><div id="sheetBody"></div></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<div id="lock" hidden>
+  <div class="lockbox">
+    <div class="ic">🔒</div>
+    <h2>JurnalKu</h2>
+    <p>Masukkan PIN kamu</p>
+    <div id="dots"></div>
+    <div class="keypad" id="keypad"></div>
+    <button class="link" id="forgot">Lupa PIN?</button>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ================= Utilitas ================= */
+const KEY = 'jurnalku_data_v1';
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const pad = n => String(n).padStart(2, '0');
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const HARI  = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const keyOf    = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parseKey = k => { const [y,m,d] = k.split('-').map(Number); return new Date(y, m-1, d); };
+const todayKey = () => keyOf(new Date());
+const addDays  = (k, n) => { const d = parseKey(k); d.setDate(d.getDate() + n); return keyOf(d); };
+const diffDays = (a, b) => Math.round((parseKey(a) - parseKey(b)) / 864e5);
+const fmtLong  = k => { const d = parseKey(k); return `${HARI[d.getDay()]}, ${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`; };
+const fmtShort = k => { const d = parseKey(k); return `${d.getDate()} ${BULAN[d.getMonth()].slice(0,3)}`; };
+
+const MOODS = [['😍','Bahagia'],['😊','Senang'],['😐','Biasa'],['😔','Sedih'],['😫','Capek'],['😤','Kesal']];
+const PRIO  = {tinggi:'Prioritas tinggi', sedang:'Sedang', rendah:'Santai'};
+const STATUS = {belum:'Belum mulai', proses:'Sedang dikerjakan', selesai:'Selesai'};
+
+/* Hash sederhana (cyrb53) untuk PIN — hanya pengunci layar, bukan enkripsi */
+function cyrb53(str, seed = 0){
+  let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+  for (let i = 0, ch; i < str.length; i++){
+    ch = str.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507); h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return String(4294967296 * (2097151 & h2) + (h1 >>> 0));
+}
+const hashPin = (pin, salt) => cyrb53(salt + ':' + pin, 7) + cyrb53(pin + ':' + salt, 13);
+
+/* ================= Data ================= */
+function blank(){ return {v:1, nama:'', jurnal:{}, tugas:[], pin:null, salt:null, pinLen:0, lastBackup:''}; }
+
+function normalize(d){
+  const o = blank();
+  if (!d || typeof d !== 'object') return o;
+  o.nama = typeof d.nama === 'string' ? d.nama.slice(0, 40) : '';
+  if (typeof d.pin === 'string' && typeof d.salt === 'string' && d.pinLen >= 4 && d.pinLen <= 6){
+    o.pin = d.pin; o.salt = d.salt; o.pinLen = d.pinLen;
+  }
+  o.lastBackup = typeof d.lastBackup === 'string' && DATE_RE.test(d.lastBackup) ? d.lastBackup : '';
+  if (d.jurnal && typeof d.jurnal === 'object'){
+    for (const k of Object.keys(d.jurnal)){
+      if (!DATE_RE.test(k)) continue;
+      const j = d.jurnal[k] || {};
+      o.jurnal[k] = {
+        mood:   typeof j.mood === 'string' ? j.mood : '',
+        cerita: typeof j.cerita === 'string' ? j.cerita : '',
+        syukur: typeof j.syukur === 'string' ? j.syukur : '',
+        kegiatan: Array.isArray(j.kegiatan) ? j.kegiatan
+          .filter(x => x && typeof x.teks === 'string')
+          .map(x => ({id:String(x.id || uid()), jam: typeof x.jam === 'string' ? x.jam : '', teks:x.teks, selesai:!!x.selesai})) : []
+      };
+    }
+  }
+  if (Array.isArray(d.tugas)){
+    o.tugas = d.tugas
+      .filter(t => t && typeof t.judul === 'string' && DATE_RE.test(t.deadline || ''))
+      .map(t => ({
+        id: String(t.id || uid()),
+        matkul: String(t.matkul || '').slice(0, 60),
+        judul: t.judul.slice(0, 120),
+        catatan: String(t.catatan || ''),
+        diterima: DATE_RE.test(t.diterima || '') ? t.diterima : t.deadline,
+        deadline: t.deadline,
+        jam: typeof t.jam === 'string' ? t.jam : '',
+        prioritas: PRIO[t.prioritas] ? t.prioritas : 'sedang',
+        status: STATUS[t.status] ? t.status : 'belum'
+      }));
+  }
+  return o;
+}
+
+function load(){
+  try { const raw = localStorage.getItem(KEY); return raw ? normalize(JSON.parse(raw)) : blank(); }
+  catch(e){ return blank(); }
+}
+let S = load();
+let storageOK = true;
+function save(){
+  try { localStorage.setItem(KEY, JSON.stringify(S)); storageOK = true; }
+  catch(e){ storageOK = false; toast('⚠️ Gagal menyimpan. Penyimpanan browser penuh atau diblokir.'); }
+}
+// Minta browser agar tidak menghapus data otomatis (jika didukung)
+try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch(e){}
+
+function entry(k, create){
+  if (!S.jurnal[k] && create) S.jurnal[k] = {mood:'', cerita:'', syukur:'', kegiatan:[]};
+  return S.jurnal[k];
+}
+function prune(k){
+  const j = S.jurnal[k];
+  if (j && !j.mood && !j.cerita.trim() && !j.syukur.trim() && !j.kegiatan.length) delete S.jurnal[k];
+}
+const hasEntry = k => !!S.jurnal[k];
+function streak(){
+  let k = todayKey(); if (!hasEntry(k)) k = addDays(k, -1);
+  let n = 0; while (hasEntry(k)){ n++; k = addDays(k, -1); }
+  return n;
+}
+const byDeadline = (a, b) => (a.deadline + (a.jam || '99:99')).localeCompare(b.deadline + (b.jam || '99:99'));
+const byJam = (a, b) => (a.jam || '99:99').localeCompare(b.jam || '99:99');
+const activeTasks = () => S.tugas.filter(t => t.status !== 'selesai').sort(byDeadline);
+
+function dl(t){
+  if (t.status === 'selesai') return {cls:'done', txt:'Selesai ✓'};
+  const n = diffDays(t.deadline, todayKey());
+  if (n < 0)   return {cls:'late',   txt:`Terlambat ${-n} hari`};
+  if (n === 0) return {cls:'urgent', txt:'Hari ini!'};
+  if (n === 1) return {cls:'urgent', txt:'Besok'};
+  if (n <= 7)  return {cls:'soon',   txt:`${n} hari lagi`};
+  return {cls:'safe', txt:`${n} hari lagi`};
+}
+
+/* ================= UI umum ================= */
+let toastTimer;
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+const empty = msg => `<div class="empty">${msg}</div>`;
+function greet(){
+  const h = new Date().getHours();
+  return h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
+}
+function openSheet(html){
+  $('#sheetBody').innerHTML = html;
+  $('#sheet').classList.add('open'); document.body.classList.add('noscroll');
+}
+function closeSheet(){
+  $('#sheet').classList.remove('open'); document.body.classList.remove('noscroll');
+  setTimeout(() => { if (!$('#sheet').classList.contains('open')) $('#sheetBody').innerHTML = ''; }, 250);
+}
+
+let tab = 'beranda', curDay = todayKey(), filter = 'aktif', q = '', lastToday = todayKey();
+function go(t){
+  tab = t;
+  $$('.page').forEach(p => p.hidden = p.id !== t);
+  $$('nav button').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+  $('#fab').hidden = !(t === 'beranda' || t === 'tugas');
+  window.scrollTo(0, 0);
+}
+
+/* ================= Kartu tugas ================= */
+function taskCard(t){
+  const d = dl(t), done = t.status === 'selesai';
+  return `<div class="task ${d.cls}" data-id="${esc(t.id)}">
+    <button class="chk ${done ? 'on' : ''}" data-act="toggle" aria-label="${done ? 'Tandai belum selesai' : 'Tandai selesai'}">${done ? '✓' : ''}</button>
+    <div class="tbody">
+      <div class="trow">
+        <span class="badge ${d.cls}">${d.txt}</span>
+        ${t.matkul ? `<span class="tag">${esc(t.matkul)}</span>` : ''}
+        ${!done ? `<span class="prio ${t.prioritas}">${PRIO[t.prioritas]}</span>` : ''}
+        ${t.status === 'proses' ? '<span class="tag soft">Dikerjakan</span>' : ''}
+      </div>
+      <div class="ttitle">${esc(t.judul)}</div>
+      <div class="tmeta">📥 Diterima ${fmtShort(t.diterima)} · ⏰ Deadline ${fmtShort(t.deadline)}${t.jam ? ' pukul ' + esc(t.jam) : ''}</div>
+    </div>
+  </div>`;
+}
+
+/* ================= Beranda ================= */
+function renderHome(){
+  const tk = todayKey(), act = activeTasks();
+  const late = act.filter(t => diffDays(t.deadline, tk) < 0).length;
+  const week = act.filter(t => { const n = diffDays(t.deadline, tk); return n >= 0 && n <= 7; }).length;
+  const j = S.jurnal[tk], keg = j ? j.kegiatan : [], done = keg.filter(x => x.selesai).length;
+  const hasData = S.tugas.length || Object.keys(S.jurnal).length;
+  const needBackup = hasData && (!S.lastBackup || diffDays(tk, S.lastBackup) >= 14);
+
+  $('#homeBox').innerHTML = `
+    <div class="hero">
+      <div class="hello">${greet()}, ${esc(S.nama || 'kamu')} 🌸</div>
+      <div class="hdate">${fmtLong(tk)}</div>
+      <div class="hmood">${j && j.mood ? `Mood hari ini: <span>${j.mood}</span>` : `<button class="link" data-go="harian">Gimana perasaanmu hari ini? ✍️</button>`}</div>
+    </div>
+    ${!storageOK ? '<div class="hint">⚠️ Browser ini tidak mengizinkan penyimpanan. Coba buka file dengan Chrome/Safari biasa (bukan mode samaran atau pratinjau file).</div>' : ''}
+    ${needBackup ? `<div class="hint">📦 ${S.lastBackup ? 'Sudah 2 minggu lebih sejak cadangan terakhir.' : 'Kamu belum pernah membuat cadangan.'} <button class="link" data-go="lainnya">Buat cadangan</button></div>` : ''}
+    <div class="stats">
+      <div class="stat"><b>${act.length}</b><span>Tugas belum selesai</span></div>
+      <div class="stat"><b>${week}</b><span>Deadline ≤ 7 hari</span></div>
+      <div class="stat ${late ? 'warn' : ''}"><b>${late}</b><span>Tugas terlambat</span></div>
+      <div class="stat"><b>${streak()}</b><span>Hari beruntun menulis</span></div>
+    </div>
+    <div class="card">
+      <div class="ch"><h3>⏰ Deadline Terdekat</h3><button class="link" data-go="tugas">Lihat semua</button></div>
+      ${act.length ? `<div class="list">${act.slice(0, 5).map(taskCard).join('')}</div>` : empty('Belum ada tugas aktif. Tambahkan lewat tombol ＋ Tugas 💕')}
+    </div>
+    <div class="card">
+      <div class="ch"><h3>🌷 Kegiatan Hari Ini</h3><button class="link" data-go="harian">Buka</button></div>
+      ${keg.length ? `
+        <div class="prog"><div style="width:${Math.round(done / keg.length * 100)}%"></div></div>
+        <p class="small">${done} dari ${keg.length} kegiatan selesai</p>
+        ${keg.slice().sort(byJam).slice(0, 6).map(x => `<div class="mini ${x.selesai ? 'done' : ''}">${x.jam ? `<b>${esc(x.jam)}</b>` : ''}${esc(x.teks)}</div>`).join('')}`
+      : empty('Belum ada kegiatan yang dicatat hari ini.')}
+    </div>`;
+}
+
+/* ================= Harian ================= */
+$('#moods').innerHTML = MOODS.map(([e, l]) => `<button data-m="${e}" aria-label="${l}"><span>${e}</span><small>${l}</small></button>`).join('');
+
+function renderHarian(){
+  const k = curDay, j = S.jurnal[k], n = diffDays(k, todayKey());
+  $('#dayTitle').textContent = fmtLong(k);
+  $('#daySub').textContent = n === 0 ? 'Hari ini · ketuk untuk pilih tanggal' : n < 0 ? `${-n} hari yang lalu` : `${n} hari lagi`;
+  $('#dayPick').value = k;
+  $('#toToday').classList.toggle('hidden', n === 0);
+  $$('#moods button').forEach(b => b.classList.toggle('on', !!j && j.mood === b.dataset.m));
+  renderKegiatan();
+  $('#cerita').value = j ? j.cerita : '';
+  $('#syukur').value = j ? j.syukur : '';
+  const due = S.tugas.filter(t => t.deadline === k).sort(byDeadline);
+  $('#dayDue').innerHTML = due.length ? `<div class="list">${due.map(taskCard).join('')}</div>` : empty('Tidak ada deadline di tanggal ini 🎀');
+}
+function renderKegiatan(){
+  const j = S.jurnal[curDay], list = j ? j.kegiatan.slice().sort(byJam) : [];
+  $('#kegList').innerHTML = list.length ? list.map(x => `
+    <div class="keg ${x.selesai ? 'done' : ''}" data-id="${esc(x.id)}">
+      <button class="chk sm ${x.selesai ? 'on' : ''}" data-act="kdone" aria-label="Tandai selesai">${x.selesai ? '✓' : ''}</button>
+      <span class="kjam">${esc(x.jam || '—')}</span>
+      <span class="kteks">${esc(x.teks)}</span>
+      <button class="del" data-act="kdel" aria-label="Hapus kegiatan">✕</button>
+    </div>`).join('') : empty('Belum ada kegiatan. Catat apa saja yang kamu lakukan ✨');
+}
+function setDay(k){ curDay = k; renderHarian(); }
+
+$('#prevDay').onclick = () => setDay(addDays(curDay, -1));
+$('#nextDay').onclick = () => setDay(addDays(curDay, 1));
+$('#toToday').onclick = () => setDay(todayKey());
+$('#dayPick').onchange = e => { if (DATE_RE.test(e.target.value)) setDay(e.target.value); };
+
+$('#moods').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const j = entry(curDay, true);
+  j.mood = j.mood === b.dataset.m ? '' : b.dataset.m;
+  prune(curDay); save(); renderHarian(); renderHome();
+};
+
+$('#kegForm').onsubmit = e => {
+  e.preventDefault();
+  const teks = $('#kegTeks').value.trim();
+  if (!teks) { toast('Tulis dulu kegiatannya ya 🌸'); return; }
+  entry(curDay, true).kegiatan.push({id:uid(), jam:$('#kegJam').value, teks, selesai:false});
+  save(); renderKegiatan(); renderHome();
+  $('#kegTeks').value = ''; $('#kegTeks').focus();
+};
+
+let typeTimer;
+['cerita', 'syukur'].forEach(id => {
+  $('#' + id).addEventListener('input', e => {
+    const j = entry(curDay, true); j[id] = e.target.value; prune(curDay);
+    clearTimeout(typeTimer);
+    typeTimer = setTimeout(() => {
+      save(); renderHome();
+      const m = $('#savedMark'); m.classList.add('show'); setTimeout(() => m.classList.remove('show'), 1200);
+    }, 500);
+  });
+});
+
+/* ================= Tugas ================= */
+function renderTugas(){
+  const tk = todayKey(); let list = S.tugas.slice();
+  if (filter === 'aktif') list = list.filter(t => t.status !== 'selesai').sort(byDeadline);
+  else if (filter === 'terlambat') list = list.filter(t => t.status !== 'selesai' && diffDays(t.deadline, tk) < 0).sort(byDeadline);
+  else if (filter === 'selesai') list = list.filter(t => t.status === 'selesai').sort((a, b) => byDeadline(b, a));
+  else list.sort(byDeadline);
+  if (q){ const s = q.toLowerCase(); list = list.filter(t => (t.judul + ' ' + t.matkul + ' ' + t.catatan).toLowerCase().includes(s)); }
+  $$('#chips button').forEach(b => b.classList.toggle('on', b.dataset.f === filter));
+  $('#taskCount').textContent = `${list.length} tugas ditampilkan · total ${S.tugas.length} tugas`;
+  const msg = {aktif:'Tidak ada tugas yang belum selesai. Hebat! 🎉', terlambat:'Tidak ada tugas terlambat 👏', selesai:'Belum ada tugas yang selesai.', semua:'Belum ada tugas. Ketuk ＋ Tugas untuk menambahkan.'};
+  $('#taskList').innerHTML = list.length ? list.map(taskCard).join('') : empty(q ? 'Tidak ada tugas yang cocok dengan pencarian.' : msg[filter]);
+}
+$('#chips').onclick = e => { const b = e.target.closest('button'); if (b){ filter = b.dataset.f; renderTugas(); } };
+$('#cari').addEventListener('input', e => { q = e.target.value.trim(); renderTugas(); });
+
+function openTask(id){
+  const t = id ? S.tugas.find(x => x.id === id) : null;
+  const tk = todayKey();
+  const mk = [...new Set(S.tugas.map(x => x.matkul).filter(Boolean))].sort();
+  const opt = (obj, val) => Object.entries(obj).map(([k, v]) => `<option value="${k}" ${k === val ? 'selected' : ''}>${v}</option>`).join('');
+  openSheet(`
+    <h3>${t ? 'Edit Tugas ✏️' : 'Tugas Baru 📚'}</h3>
+    <form id="tf" autocomplete="off">
+      <label>Mata kuliah<input class="inp" name="matkul" list="mkList" maxlength="60" value="${esc(t ? t.matkul : '')}" placeholder="cth. Pengantar Akuntansi"></label>
+      <datalist id="mkList">${mk.map(m => `<option value="${esc(m)}">`).join('')}</datalist>
+      <label>Judul tugas *<input class="inp" name="judul" maxlength="120" value="${esc(t ? t.judul : '')}" placeholder="cth. Makalah Bab 3"></label>
+      <div class="two">
+        <label>Tanggal diterima<input class="inp" type="date" name="diterima" value="${t ? t.diterima : tk}"></label>
+        <label>Deadline *<input class="inp" type="date" name="deadline" value="${t ? t.deadline : ''}"></label>
+      </div>
+      <div class="two">
+        <label>Jam deadline<input class="inp" type="time" name="jam" value="${t ? esc(t.jam) : ''}"></label>
+        <label>Prioritas<select class="inp" name="prioritas">${opt(PRIO, t ? t.prioritas : 'sedang')}</select></label>
+      </div>
+      <label>Status<select class="inp" name="status">${opt(STATUS, t ? t.status : 'belum')}</select></label>
+      <label>Catatan / detail<textarea class="inp" name="catatan" rows="3" maxlength="3000" placeholder="cth. format PDF, kumpul lewat e-learning, kelompok 3 orang">${esc(t ? t.catatan : '')}</textarea></label>
+      <div class="actions">
+        ${t ? '<button type="button" class="btn danger grow" id="tDel">Hapus</button>' : ''}
+        <button type="button" class="btn ghost" data-close>Batal</button>
+        <button type="submit" class="btn">Simpan</button>
+      </div>
+    </form>`);
+
+  $('#tf').onsubmit = e => {
+    e.preventDefault();
+    const f = new FormData(e.target), o = {};
+    for (const [k, v] of f.entries()) o[k] = String(v).trim();
+    if (!o.judul) return toast('Judul tugas wajib diisi');
+    if (!DATE_RE.test(o.deadline)) return toast('Tanggal deadline wajib diisi');
+    if (!DATE_RE.test(o.diterima)) o.diterima = tk;
+    if (o.deadline < o.diterima) return toast('Deadline tidak boleh sebelum tanggal diterima');
+    if (!PRIO[o.prioritas]) o.prioritas = 'sedang';
+    if (!STATUS[o.status]) o.status = 'belum';
+    if (t) Object.assign(t, o); else S.tugas.push(Object.assign({id:uid()}, o));
+    save(); closeSheet(); renderAll();
+    toast(t ? 'Tugas diperbarui 💗' : 'Tugas ditambahkan 💗');
+  };
+  if (t) $('#tDel').onclick = () => {
+    if (!confirm(`Hapus tugas "${t.judul}"?`)) return;
+    S.tugas = S.tugas.filter(x => x !== t); save(); closeSheet(); renderAll(); toast('Tugas dihapus');
+  };
+  if (!t) setTimeout(() => { const el = $('#tf [name="matkul"]'); if (el) el.focus(); }, 260);
+}
+$('#fab').onclick = () => openTask(null);
+
+/* ================= Klik global ================= */
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]');
+  if (g){ go(g.dataset.go); return; }
+
+  const task = e.target.closest('.task');
+  if (task){
+    const t = S.tugas.find(x => x.id === task.dataset.id); if (!t) return;
+    if (e.target.closest('[data-act="toggle"]')){
+      t.status = t.status === 'selesai' ? 'belum' : 'selesai';
+      save(); renderAll();
+      toast(t.status === 'selesai' ? 'Yeay, tugas selesai! 🎉' : 'Tugas ditandai belum selesai');
+    } else openTask(t.id);
+    return;
+  }
+
+  const keg = e.target.closest('.keg');
+  if (keg){
+    const j = S.jurnal[curDay]; if (!j) return;
+    const x = j.kegiatan.find(y => y.id === keg.dataset.id); if (!x) return;
+    const act = e.target.closest('[data-act]'); if (!act) return;
+    if (act.dataset.act === 'kdone') x.selesai = !x.selesai;
+    if (act.dataset.act === 'kdel'){ j.kegiatan = j.kegiatan.filter(y => y !== x); prune(curDay); toast('Kegiatan dihapus'); }
+    save(); renderKegiatan(); renderHome();
+    return;
+  }
+
+  if (e.target.closest('[data-close]') || e.target.id === 'sheet') closeSheet();
+});
+$$('nav button').forEach(b => b.onclick = () => go(b.dataset.tab));
+
+/* ================= Lainnya ================= */
+function renderLainnya(){
+  if (document.activeElement !== $('#nama')) $('#nama').value = S.nama;
+  $('#pinStatus').textContent = S.pin ? 'PIN aktif ✅' : 'PIN belum diatur.';
+  $('#pinSet').textContent = S.pin ? 'Ganti PIN' : 'Atur PIN';
+  $('#pinOff').classList.toggle('hidden', !S.pin);
+  $('#lockNow').classList.toggle('hidden', !S.pin);
+  const hari = Object.keys(S.jurnal).length;
+  $('#dataInfo').innerHTML = `
+    <div class="kv"><span>Jumlah tugas</span><b>${S.tugas.length}</b></div>
+    <div class="kv"><span>Hari jurnal terisi</span><b>${hari}</b></div>
+    <div class="kv"><span>Cadangan terakhir</span><b>${S.lastBackup ? fmtLong(S.lastBackup) : 'Belum pernah'}</b></div>`;
+}
+$('#nama').addEventListener('input', e => { S.nama = e.target.value.slice(0, 40); save(); renderHome(); });
+
+$('#pinSet').onclick = () => {
+  openSheet(`
+    <h3>${S.pin ? 'Ganti PIN 🔑' : 'Atur PIN 🔑'}</h3>
+    <p class="small">PIN berupa 4–6 angka. Ingat baik-baik: jika lupa, satu-satunya cara membuka aplikasi adalah menghapus semua data (kecuali kamu punya file cadangan).</p>
+    <form id="pf" autocomplete="off">
+      <label>PIN baru<input class="inp" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" name="a"></label>
+      <label>Ulangi PIN<input class="inp" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" name="b"></label>
+      <div class="actions"><button type="button" class="btn ghost" data-close>Batal</button><button class="btn">Simpan PIN</button></div>
+    </form>`);
+  $('#pf').onsubmit = e => {
+    e.preventDefault();
+    const a = e.target.a.value, b = e.target.b.value;
+    if (!/^\d{4,6}$/.test(a)) return toast('PIN harus 4–6 angka');
+    if (a !== b) return toast('PIN tidak sama, coba lagi');
+    S.salt = uid() + uid(); S.pin = hashPin(a, S.salt); S.pinLen = a.length;
+    save(); closeSheet(); renderLainnya(); toast('PIN berhasil diatur 🔒');
+  };
+};
+$('#pinOff').onclick = () => {
+  if (!confirm('Matikan kunci PIN?')) return;
+  S.pin = null; S.salt = null; S.pinLen = 0; save(); renderLainnya(); toast('PIN dimatikan');
+};
+
+$('#expBtn').onclick = () => {
+  try {
+    S.lastBackup = todayKey(); save();
+    const data = JSON.stringify(Object.assign({app:'JurnalKu', diekspor:new Date().toISOString()}, S), null, 2);
+    const blob = new Blob([data], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = `jurnalku-cadangan-${todayKey()}.json`;
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+    renderLainnya(); renderHome(); toast('File cadangan diunduh 📦');
+  } catch(err){ toast('Gagal membuat file cadangan di browser ini'); }
+};
+$('#impBtn').onclick = () => $('#impFile').click();
+$('#impFile').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const d = JSON.parse(r.result);
+      if (!d || typeof d !== 'object' || (!Array.isArray(d.tugas) && typeof d.jurnal !== 'object')) throw new Error('bukan cadangan');
+      const n = normalize(d);
+      if (!confirm(`Ganti SEMUA data di HP ini dengan isi file cadangan?\n\nIsi cadangan: ${n.tugas.length} tugas, ${Object.keys(n.jurnal).length} hari jurnal.${n.pin ? '\n\nCatatan: cadangan ini memakai PIN yang tersimpan di dalamnya.' : ''}`)) return;
+      S = n; save(); renderAll(); toast('Data berhasil dipulihkan 🎉');
+    } catch(err){ toast('File tidak valid atau bukan cadangan JurnalKu'); }
+    finally { e.target.value = ''; }
+  };
+  r.onerror = () => toast('File tidak bisa dibaca');
+  r.readAsText(f);
+};
+
+function wipe(){
+  try { localStorage.removeItem(KEY); } catch(e){}
+  S = blank(); curDay = todayKey(); renderAll();
+}
+$('#wipeBtn').onclick = () => {
+  if (!confirm('Hapus SEMUA jurnal dan tugas di HP ini? Tindakan ini tidak bisa dibatalkan.')) return;
+  const ketik = prompt('Ketik HAPUS untuk konfirmasi:');
+  if (ketik !== 'HAPUS') { toast('Dibatalkan'); return; }
+  wipe(); go('beranda'); toast('Semua data telah dihapus');
+};
+
+/* ================= Layar kunci ================= */
+let buf = '', hiddenAt = 0;
+$('#keypad').innerHTML = ['1','2','3','4','5','6','7','8','9','⌫','0','✓']
+  .map(k => `<button data-k="${k}" aria-label="${k === '⌫' ? 'Hapus' : k === '✓' ? 'Masuk' : k}">${k}</button>`).join('');
+function drawDots(){
+  const n = S.pinLen || 4;
+  $('#dots').innerHTML = Array.from({length:n}, (_, i) => `<i class="${i < buf.length ? 'f' : ''}"></i>`).join('');
+}
+function lock(){
+  if (!S.pin) return;
+  closeSheet(); buf = ''; drawDots(); $('#lock').hidden = false;
+}
+function tryUnlock(){
+  if (hashPin(buf, S.salt) === S.pin){ $('#lock').hidden = true; buf = ''; renderAll(); return; }
+  const d = $('#dots'); d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake');
+  buf = ''; setTimeout(drawDots, 300); toast('PIN salah');
+}
+function pressKey(k){
+  if (k === '⌫') buf = buf.slice(0, -1);
+  else if (k === '✓') { if (buf.length >= 4) tryUnlock(); return; }
+  else if (/\d/.test(k) && buf.length < 6) buf += k;
+  drawDots();
+  if (buf.length === S.pinLen) setTimeout(tryUnlock, 120);
+}
+$('#keypad').onclick = e => { const b = e.target.closest('button'); if (b) pressKey(b.dataset.k); };
+document.addEventListener('keydown', e => {
+  if ($('#lock').hidden) return;
+  if (/^\d$/.test(e.key)) pressKey(e.key);
+  else if (e.key === 'Backspace') pressKey('⌫');
+  else if (e.key === 'Enter') pressKey('✓');
+});
+$('#forgot').onclick = () => {
+  if (!confirm('PIN tidak bisa dipulihkan. Satu-satunya cara membuka aplikasi adalah MENGHAPUS SEMUA DATA di HP ini.\n\nJika kamu punya file cadangan, kamu bisa memulihkannya setelah ini (cadangan itu mungkin memakai PIN lama).\n\nLanjutkan?')) return;
+  if (!confirm('Yakin? Semua jurnal dan tugas akan terhapus permanen.')) return;
+  wipe(); $('#lock').hidden = true; go('beranda'); toast('Data dihapus. Kamu bisa mulai lagi.');
+};
+$('#lockNow').onclick = lock;
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden){ hiddenAt = Date.now(); return; }
+  if (S.pin && hiddenAt && Date.now() - hiddenAt > 60000) lock();
+  if (todayKey() !== lastToday){ // tanggal berganti saat aplikasi terbuka
+    if (curDay === lastToday) curDay = todayKey();
+    lastToday = todayKey();
+  }
+  renderAll();
+});
+
+/* ================= Mulai ================= */
+function renderAll(){ renderHome(); renderHarian(); renderTugas(); renderLainnya(); }
+renderAll();
+go('beranda');
+if (S.pin) lock();
+})();
+</script>
+</body>
+</html>
