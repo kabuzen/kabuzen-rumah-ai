@@ -2,6 +2,49 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+<!-- KABUZEN-DEMO -->
+<script id="kzd-script">(function(){
+var NAME="Kasir Kopi Keliling",WA="https://wa.me/628118102019?text="+encodeURIComponent("Halo Kabuzen, saya sudah mencoba versi demo “"+NAME+"” dan ingin membeli versi lengkapnya. Mohon info harga dan cara pembayarannya.");
+var css="#kzd-rib{position:fixed;right:-42px;bottom:14px;transform:rotate(-45deg);z-index:2147483600;background:#ffd60a;color:#1d0b78;font:800 10px/1 system-ui,-apple-system,sans-serif;letter-spacing:.16em;padding:5px 44px;box-shadow:0 4px 14px rgba(0,0,0,.35);pointer-events:none;opacity:.94}"+
+"#kzd-bar{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:2147483601;width:min(560px,calc(100% - 24px));display:flex;gap:10px;align-items:center;background:#1d0b78;color:#fff;border:2px solid #ffd60a;border-radius:14px;padding:10px 12px;font:14px/1.4 system-ui,-apple-system,sans-serif;box-shadow:0 14px 40px rgba(0,0,0,.4)}"+
+"#kzd-bar b{color:#ffd60a}#kzd-bar span{flex:1}#kzd-bar a,#kzd-mod a{background:#ffd60a;color:#1d0b78;font-weight:800;text-decoration:none;border-radius:999px;padding:8px 12px;white-space:nowrap;font-size:13px}"+
+"#kzd-bar button{background:none;border:0;color:#cfc8ff;font-size:20px;cursor:pointer;padding:0 4px;line-height:1}"+
+"#kzd-mod{position:fixed;inset:0;z-index:2147483602;background:rgba(6,4,30,.66);display:grid;place-items:center;padding:16px;font:15px/1.5 system-ui,-apple-system,sans-serif}"+
+"#kzd-mod>div{background:#fff;color:#1a1640;border-radius:18px;max-width:420px;width:100%;padding:22px;box-shadow:0 30px 70px rgba(0,0,0,.45);border-top:6px solid #ffd60a}"+
+"#kzd-mod h3{margin:0 0 6px;font-size:19px;color:#1d0b78}#kzd-mod p{margin:0 0 16px;color:#4a4670}#kzd-mod .r{display:flex;gap:10px;flex-wrap:wrap}"+
+"#kzd-mod a{font-size:14px;padding:11px 16px}#kzd-mod button{background:#eeecf9;border:0;border-radius:999px;padding:11px 16px;font:700 14px system-ui,sans-serif;color:#1d0b78;cursor:pointer}"+
+"@media print{body>*{display:none!important}body::after{content:'Versi demo: fitur cetak tersedia di versi lengkap. Hubungi Kabuzen Rumah AI.';display:block;padding:40px;font:18px system-ui,sans-serif}}";
+function el(t,h){var e=document.createElement(t);if(h)e.innerHTML=h;return e;}
+function modal(what){
+  if(document.getElementById("kzd-mod"))return;
+  var m=el("div",'<div role="dialog" aria-modal="true"><h3>Fitur ini ada di versi lengkap</h3><p>'+(what||"Ekspor, unduh, cetak, dan cadangan data")+' tidak tersedia di versi demo <b></b>. Beli versi lengkap untuk memakai semua fitur dan menyimpan data Anda.</p><div class="r"><a target="_blank" rel="noopener">Beli via WhatsApp</a><button type="button">Tutup</button></div></div>');
+  m.id="kzd-mod";m.querySelector("b").textContent=NAME;m.querySelector("a").href=WA;
+  m.onclick=function(e){if(e.target===m||e.target.tagName==="BUTTON")m.remove();};
+  (document.body||document.documentElement).appendChild(m);
+}
+window.KZDemo={modal:modal};
+function isExp(a){var h=a.getAttribute&&a.getAttribute("href")||"";return a.hasAttribute&&a.hasAttribute("download")||/^(blob:|data:)/i.test(h);}
+var oc=HTMLAnchorElement.prototype.click;
+HTMLAnchorElement.prototype.click=function(){if(isExp(this)){modal("Unduhan file");return;}return oc.apply(this,arguments);};
+var od=EventTarget.prototype.dispatchEvent;
+EventTarget.prototype.dispatchEvent=function(ev){if(this instanceof HTMLAnchorElement&&ev&&ev.type==="click"&&isExp(this)){modal("Unduhan file");return false;}return od.apply(this,arguments);};
+document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a");if(a&&isExp(a)){e.preventDefault();e.stopImmediatePropagation();modal("Unduhan file");}},true);
+window.print=function(){modal("Cetak");};
+var ow=window.open;window.open=function(u){if(typeof u==="string"&&/^(blob:|data:)/i.test(u)){modal("Unduhan file");return null;}return ow.apply(window,arguments);};
+try{if(navigator.share){var os=navigator.share.bind(navigator);navigator.share=function(d){if(d&&d.files&&d.files.length){modal("Berbagi file laporan");return Promise.reject(new DOMException("Versi demo","AbortError"));}return os(d);};}}catch(e){}
+try{if(window.showSaveFilePicker)window.showSaveFilePicker=function(){modal("Simpan file");return Promise.reject(new DOMException("Versi demo","AbortError"));};}catch(e){}
+function ui(){
+  var st=el("style");st.textContent=css;document.head?document.head.appendChild(st):document.body.appendChild(st);
+  var r=el("div","VERSI DEMO");r.id="kzd-rib";r.setAttribute("aria-hidden","true");document.body.appendChild(r);
+  var seen=false;try{seen=sessionStorage.getItem("kzd-seen")==="1";}catch(e){}
+  if(!seen){var b=el("div",'<span><b>Versi demo.</b> Silakan dicoba. Ekspor, unduh, cetak, dan cadangan data dimatikan.</span><a target="_blank" rel="noopener">Beli versi lengkap</a><button type="button" aria-label="Tutup">×</button>');
+    b.id="kzd-bar";b.setAttribute("role","status");b.querySelector("a").href=WA;
+    var close=function(){b.remove();try{sessionStorage.setItem("kzd-seen","1");}catch(e){}};
+    b.querySelector("button").onclick=close;setTimeout(function(){if(b.isConnected)close();},12000);document.body.appendChild(b);}
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",ui);else ui();
+})();</script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kasir Kopi Keliling</title>
     <style>

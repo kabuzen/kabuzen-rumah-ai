@@ -1,5 +1,48 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#123d32"><link rel="manifest" href="manifest.webmanifest"><title>Jejak Tilawah</title>
+<html lang="id"><head><meta charset="utf-8">
+<!-- KABUZEN-DEMO -->
+<script id="kzd-script">(function(){
+var NAME="Jejak Tilawah",WA="https://wa.me/628118102019?text="+encodeURIComponent("Halo Kabuzen, saya sudah mencoba versi demo “"+NAME+"” dan ingin membeli versi lengkapnya. Mohon info harga dan cara pembayarannya.");
+var css="#kzd-rib{position:fixed;right:-42px;bottom:14px;transform:rotate(-45deg);z-index:2147483600;background:#ffd60a;color:#1d0b78;font:800 10px/1 system-ui,-apple-system,sans-serif;letter-spacing:.16em;padding:5px 44px;box-shadow:0 4px 14px rgba(0,0,0,.35);pointer-events:none;opacity:.94}"+
+"#kzd-bar{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:2147483601;width:min(560px,calc(100% - 24px));display:flex;gap:10px;align-items:center;background:#1d0b78;color:#fff;border:2px solid #ffd60a;border-radius:14px;padding:10px 12px;font:14px/1.4 system-ui,-apple-system,sans-serif;box-shadow:0 14px 40px rgba(0,0,0,.4)}"+
+"#kzd-bar b{color:#ffd60a}#kzd-bar span{flex:1}#kzd-bar a,#kzd-mod a{background:#ffd60a;color:#1d0b78;font-weight:800;text-decoration:none;border-radius:999px;padding:8px 12px;white-space:nowrap;font-size:13px}"+
+"#kzd-bar button{background:none;border:0;color:#cfc8ff;font-size:20px;cursor:pointer;padding:0 4px;line-height:1}"+
+"#kzd-mod{position:fixed;inset:0;z-index:2147483602;background:rgba(6,4,30,.66);display:grid;place-items:center;padding:16px;font:15px/1.5 system-ui,-apple-system,sans-serif}"+
+"#kzd-mod>div{background:#fff;color:#1a1640;border-radius:18px;max-width:420px;width:100%;padding:22px;box-shadow:0 30px 70px rgba(0,0,0,.45);border-top:6px solid #ffd60a}"+
+"#kzd-mod h3{margin:0 0 6px;font-size:19px;color:#1d0b78}#kzd-mod p{margin:0 0 16px;color:#4a4670}#kzd-mod .r{display:flex;gap:10px;flex-wrap:wrap}"+
+"#kzd-mod a{font-size:14px;padding:11px 16px}#kzd-mod button{background:#eeecf9;border:0;border-radius:999px;padding:11px 16px;font:700 14px system-ui,sans-serif;color:#1d0b78;cursor:pointer}"+
+"@media print{body>*{display:none!important}body::after{content:'Versi demo: fitur cetak tersedia di versi lengkap. Hubungi Kabuzen Rumah AI.';display:block;padding:40px;font:18px system-ui,sans-serif}}";
+function el(t,h){var e=document.createElement(t);if(h)e.innerHTML=h;return e;}
+function modal(what){
+  if(document.getElementById("kzd-mod"))return;
+  var m=el("div",'<div role="dialog" aria-modal="true"><h3>Fitur ini ada di versi lengkap</h3><p>'+(what||"Ekspor, unduh, cetak, dan cadangan data")+' tidak tersedia di versi demo <b></b>. Beli versi lengkap untuk memakai semua fitur dan menyimpan data Anda.</p><div class="r"><a target="_blank" rel="noopener">Beli via WhatsApp</a><button type="button">Tutup</button></div></div>');
+  m.id="kzd-mod";m.querySelector("b").textContent=NAME;m.querySelector("a").href=WA;
+  m.onclick=function(e){if(e.target===m||e.target.tagName==="BUTTON")m.remove();};
+  (document.body||document.documentElement).appendChild(m);
+}
+window.KZDemo={modal:modal};
+function isExp(a){var h=a.getAttribute&&a.getAttribute("href")||"";return a.hasAttribute&&a.hasAttribute("download")||/^(blob:|data:)/i.test(h);}
+var oc=HTMLAnchorElement.prototype.click;
+HTMLAnchorElement.prototype.click=function(){if(isExp(this)){modal("Unduhan file");return;}return oc.apply(this,arguments);};
+var od=EventTarget.prototype.dispatchEvent;
+EventTarget.prototype.dispatchEvent=function(ev){if(this instanceof HTMLAnchorElement&&ev&&ev.type==="click"&&isExp(this)){modal("Unduhan file");return false;}return od.apply(this,arguments);};
+document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a");if(a&&isExp(a)){e.preventDefault();e.stopImmediatePropagation();modal("Unduhan file");}},true);
+window.print=function(){modal("Cetak");};
+var ow=window.open;window.open=function(u){if(typeof u==="string"&&/^(blob:|data:)/i.test(u)){modal("Unduhan file");return null;}return ow.apply(window,arguments);};
+try{if(navigator.share){var os=navigator.share.bind(navigator);navigator.share=function(d){if(d&&d.files&&d.files.length){modal("Berbagi file laporan");return Promise.reject(new DOMException("Versi demo","AbortError"));}return os(d);};}}catch(e){}
+try{if(window.showSaveFilePicker)window.showSaveFilePicker=function(){modal("Simpan file");return Promise.reject(new DOMException("Versi demo","AbortError"));};}catch(e){}
+function ui(){
+  var st=el("style");st.textContent=css;document.head?document.head.appendChild(st):document.body.appendChild(st);
+  var r=el("div","VERSI DEMO");r.id="kzd-rib";r.setAttribute("aria-hidden","true");document.body.appendChild(r);
+  var seen=false;try{seen=sessionStorage.getItem("kzd-seen")==="1";}catch(e){}
+  if(!seen){var b=el("div",'<span><b>Versi demo.</b> Silakan dicoba. Ekspor, unduh, cetak, dan cadangan data dimatikan.</span><a target="_blank" rel="noopener">Beli versi lengkap</a><button type="button" aria-label="Tutup">×</button>');
+    b.id="kzd-bar";b.setAttribute("role","status");b.querySelector("a").href=WA;
+    var close=function(){b.remove();try{sessionStorage.setItem("kzd-seen","1");}catch(e){}};
+    b.querySelector("button").onclick=close;setTimeout(function(){if(b.isConnected)close();},12000);document.body.appendChild(b);}
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",ui);else ui();
+})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#123d32"><link rel="manifest" href="manifest.webmanifest"><title>Jejak Tilawah</title>
 <style>
 :root{--g:#123d32;--g2:#23634e;--gold:#c6a45a;--paper:#fbf8ef;--ink:#26372f;--muted:#738078;--line:#e8e2d5}
 *{box-sizing:border-box}body{margin:0;background:#f3f1e9;color:var(--ink);font:15px system-ui,-apple-system,sans-serif}header{background:linear-gradient(130deg,#10372e,#23634e);color:#fff;padding:24px 18px;border-bottom:3px solid var(--gold)}.wrap{max-width:900px;margin:auto}header small{color:#e3d3a7;letter-spacing:.18em}h1{font:500 30px Georgia,serif;margin:5px 0}header p{margin:0;color:#dce9e2;font-size:13px}nav{display:flex;gap:7px;padding:12px;background:#fff;overflow:auto;position:sticky;top:0;z-index:3;border-bottom:1px solid var(--line)}nav button,.secondary{border:0;border-radius:22px;background:#f0f3ef;color:#315447;padding:10px 14px;font-weight:650;white-space:nowrap}nav button.active,.primary{background:var(--g);color:#fff}main{max-width:900px;margin:18px auto;padding:0 14px 60px}.tab{display:none}.tab.active{display:block}.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px;margin-bottom:14px;box-shadow:0 4px 16px #182e2010}h2{color:var(--g);font-size:18px;margin:0 0 12px}.muted{color:var(--muted);font-size:13px}.big{font-size:25px;font-weight:750;color:var(--g);margin:5px 0}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.metric{background:#f6f5ef;border-radius:12px;padding:13px}.metric b{display:block;font-size:22px;color:var(--g);margin-top:3px}.bar{height:9px;background:#e9e7df;border-radius:20px;overflow:hidden;margin:12px 0}.bar span{display:block;height:100%;background:linear-gradient(90deg,#23634e,#c6a45a)}button{cursor:pointer}.primary{border:0;border-radius:11px;padding:12px 16px;font-weight:700}.secondary{border:1px solid #dfe5dc;border-radius:11px}.danger{border:1px solid #efcfca;background:#fff2f0;color:#9b392e;border-radius:10px;padding:8px 10px}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.mushaf{background:var(--paper);border:1px solid #d9cba8;border-radius:9px;min-height:470px;padding:24px 16px;display:flex;flex-direction:column;justify-content:center;text-align:center;box-shadow:inset 0 0 0 5px #f4edda}.orn{color:#987b40;letter-spacing:.15em;font-size:12px;margin-bottom:20px}.placeholder{font:18px/1.8 Georgia,serif;color:#5c5138;max-width:520px;margin:auto}.mushaf img{display:block;width:100%;height:auto;max-height:850px;object-fit:contain;background:#fff;cursor:zoom-in}.mushaf.zoom img{max-height:none;cursor:zoom-out}.reader-tools{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:10px}.status{font-size:12px;color:#66756b}.status.online{color:#23634e}.status.offline{color:#9b392e}.loading{font:16px/1.7 Georgia,serif;color:#756746;padding:30px 8px}.sub{font-size:12px;color:#8a7c5b;margin-top:16px}.page{margin-top:22px;color:#927d4d;font-size:13px}label{display:block;font-size:12px;color:#5e6b63;margin:9px 0 5px}input,select,textarea{width:100%;padding:11px;border:1px solid #d8ded6;border-radius:10px;font:inherit;background:#fff;color:var(--ink)}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}table{width:100%;border-collapse:collapse;font-size:13px}td,th{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line)}small.note{display:block;background:#fbf7e9;color:#766640;padding:11px;border-radius:10px;line-height:1.5;margin-top:12px}.footer{text-align:center;color:#89938d;font-size:11px;padding:18px}
