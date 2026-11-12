@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sistem Manajemen Operasional UMKM</title>
+    <style>
+        :root {
+            --bg-main: #0B192C;
+            --bg-input: #112B4A;
+            --accent-primary: #FFC72C;
+            --accent-secondary: #00FFFF;
+            --text-main: #F5F5F5;
+            --text-muted: #A0B3C6;
+            --danger: #FF4D4D;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding: 16px;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            color: var(--accent-primary);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-top: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            border-bottom: 1px solid var(--accent-secondary);
+            padding-bottom: 12px;
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--accent-secondary);
+        }
+
+        input {
+            width: 100%;
+            background-color: var(--bg-input);
+            border: 1px solid var(--accent-secondary);
+            color: var(--text-main);
+            padding: 16px;
+            font-size: 1rem;
+            border-radius: 8px;
+            outline: none;
+            transition: box-shadow 0.2s;
+            color-scheme: dark; /* Ensures datetime picker matches dark mode */
+        }
+
+        input:focus {
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .row .input-group {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-primary);
+            color: var(--bg-main);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-secondary);
+            border: 2px solid var(--accent-secondary);
+        }
+
+        .btn-danger {
+            background-color: transparent;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            padding: 12px;
+            margin-top: 16px;
+        }
+
+        .btn-icon {
+            padding: 8px;
+            width: auto;
+            border-radius: 6px;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-top: 16px;
+        }
+
+        li {
+            background-color: var(--bg-input);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .todo-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .todo-text {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+        }
+        
+        .todo-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .todo-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            accent-color: var(--accent-primary);
+            flex-shrink: 0;
+        }
+
+        .completed .todo-text, .completed .todo-meta {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: bold;
+            color: var(--accent-primary);
+            margin-bottom: 4px;
+        }
+
+        .cart-item-calc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .cart-item-subtotal {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .pos-summary {
+            margin-top: 24px;
+            padding: 20px;
+            border: 2px dashed var(--accent-secondary);
+            border-radius: 8px;
+            background-color: rgba(0, 255, 255, 0.02);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .total-label {
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .total-amount {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Operasional UMKM</h1>
+
+    <!-- SECTION 1: TO-DO LIST RESTOK -->
+    <section>
+        <h2>📋 Restok & Persiapan</h2>
+        <div class="input-group">
+            <label>Nama Barang / Bahan</label>
+            <input type="text" id="todo-name" placeholder="Cth: 5kg Beras" autocomplete="off">
+        </div>
+        <div class="row">
+            <div class="input-group">
+                <label>Estimasi Harga (Rp)</label>
+                <input type="number" id="todo-price" placeholder="0" min="0">
+            </div>
+            <div class="input-group">
+                <label>Waktu Belanja</label>
+                <input type="datetime-local" id="todo-time">
+            </div>
+        </div>
+        <button class="btn-secondary" onclick="addTodo()">+ Tambah Daftar Belanja</button>
+        <ul id="todo-list"></ul>
+    </section>
+
+    <!-- SECTION 2: MINI POS -->
+    <section>
+        <h2>🛒 Kasir (Mini POS)</h2>
+        <div class="input-group">
+            <label>Nama Menu / Barang</label>
+            <input type="text" id="pos-name" placeholder="Cth: Nasi Goreng Spesial" autocomplete="off">
+        </div>
+        <div class="row">
+            <div class="input-group">
+                <label>Harga (Rp)</label>
+                <input type="number" id="pos-price" placeholder="0" min="0">
+            </div>
+            <div class="input-group">
+                <label>Jumlah</label>
+                <input type="number" id="pos-qty" placeholder="1" min="1" value="1">
+            </div>
+        </div>
+        <button class="btn-secondary" onclick="addToCart()">+ Tambah ke Pesanan</button>
+
+        <ul id="cart-list"></ul>
+
+        <!-- SECTION 3: SUMMARY & WHATSAPP GENERATOR -->
+        <div class="pos-summary">
+            <div class="total-row">
+                <span class="total-label">Total Bayar:</span>
+                <span class="total-amount" id="cart-total">Rp 0</span>
+            </div>
+            
+            <button class="btn-primary" id="btn-wa" onclick="generateAndCopyWA()">
+                📋 Salin Nota WhatsApp
+            </button>
+            <button class="btn-danger" onclick="clearCart()">
+                🗑️ Kosongkan Pesanan
+            </button>
+        </div>
+    </section>
+</div>
+
+<script>
+    // --- UTILITIES ---
+    const formatRp = (angka) => {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+    };
+
+    const formatWaktu = (waktuISO) => {
+        if (!waktuISO) return '-';
+        const date = new Date(waktuISO);
+        return date.toLocaleString('id-ID', { 
+            day: 'numeric', month: 'short', 
+            hour: '2-digit', minute: '2-digit' 
+        });
+    };
+
+    // --- TO-DO LIST LOGIC ---
+    let todos = JSON.parse(localStorage.getItem('umkm_todos_v2')) || [];
+
+    const todoName = document.getElementById('todo-name');
+    const todoPrice = document.getElementById('todo-price');
+    const todoTime = document.getElementById('todo-time');
+    const todoList = document.getElementById('todo-list');
+
+    function renderTodos() {
+        todoList.innerHTML = '';
+        todos.forEach((todo, index) => {
+            const li = document.createElement('li');
+            if (todo.completed) li.classList.add('completed');
+            
+            li.innerHTML = `
+                <div class="todo-item" onclick="toggleTodo(${index})">
+                    <input type="checkbox" ${todo.completed ? 'checked' : ''} onclick="event.stopPropagation(); toggleTodo(${index})">
+                    <div class="todo-details">
+                        <span class="todo-text">${todo.text}</span>
+                        <span class="todo-meta">🕒 ${formatWaktu(todo.time)} &nbsp;|&nbsp; 💰 ${formatRp(todo.price)}</span>
+                    </div>
+                </div>
+                <button class="btn-danger btn-icon" onclick="deleteTodo(${index})">✕</button>
+            `;
+            todoList.appendChild(li);
+        });
+        localStorage.setItem('umkm_todos_v2', JSON.stringify(todos));
+    }
+
+    function addTodo() {
+        const text = todoName.value.trim();
+        const price = parseInt(todoPrice.value) || 0;
+        const time = todoTime.value;
+
+        if (!text) {
+            alert("Nama barang/bahan harus diisi.");
+            return;
+        }
+
+        todos.push({ text, price, time, completed: false });
+        
+        todoName.value = '';
+        todoPrice.value = '';
+        todoTime.value = '';
+        todoName.focus();
+        
+        renderTodos();
+    }
+
+    function toggleTodo(index) {
+        todos[index].completed = !todos[index].completed;
+        renderTodos();
+    }
+
+    function deleteTodo(index) {
+        todos.splice(index, 1);
+        renderTodos();
+    }
+
+    // --- MINI POS & CART LOGIC ---
+    let cart = JSON.parse(localStorage.getItem('umkm_cart')) || [];
+
+    const posName = document.getElementById('pos-name');
+    const posPrice = document.getElementById('pos-price');
+    const posQty = document.getElementById('pos-qty');
+    const cartList = document.getElementById('cart-list');
+    const cartTotalDisplay = document.getElementById('cart-total');
+
+    function renderCart() {
+        cartList.innerHTML = '';
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            const subtotal = item.price * item.qty;
+            total += subtotal;
+
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <div class="cart-item-info">
+                    <div class="cart-item-title">${item.name}</div>
+                    <div class="cart-item-calc">${item.qty} x ${formatRp(item.price)}</div>
+                </div>
+                <div class="cart-item-subtotal">${formatRp(subtotal)}</div>
+                <button class="btn-danger btn-icon" style="margin-left: 12px; margin-top: 0;" onclick="deleteFromCart(${index})">✕</button>
+            `;
+            cartList.appendChild(li);
+        });
+
+        cartTotalDisplay.innerText = formatRp(total);
+        localStorage.setItem('umkm_cart', JSON.stringify(cart));
+    }
+
+    function addToCart() {
+        const name = posName.value.trim();
+        const price = parseInt(posPrice.value);
+        const qty = parseInt(posQty.value);
+
+        if (!name || isNaN(price) || price < 0 || isNaN(qty) || qty <= 0) {
+            alert("Mohon isi Nama Menu, Harga, dan Jumlah dengan benar.");
+            return;
+        }
+
+        cart.push({ name, price, qty });
+        
+        posName.value = '';
+        posPrice.value = '';
+        posQty.value = '1';
+        posName.focus();
+        
+        renderCart();
+    }
+
+    function deleteFromCart(index) {
+        cart.splice(index, 1);
+        renderCart();
+    }
+
+    function clearCart() {
+        if(confirm("Yakin ingin mengosongkan pesanan ini?")) {
+            cart = [];
+            renderCart();
+        }
+    }
+
+    // --- WHATSAPP GENERATOR LOGIC ---
+    function generateAndCopyWA() {
+        if (cart.length === 0) {
+            alert("Keranjang pesanan masih kosong.");
+            return;
+        }
+
+        const date = new Date();
+        const formattedDate = date.toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+        
+        let waText = `*NOTA PESANAN*\nTanggal: ${formattedDate}\n------------------------\n`;
+        let grandTotal = 0;
+
+        cart.forEach((item, index) => {
+            const subtotal = item.price * item.qty;
+            grandTotal += subtotal;
+            waText += `${index + 1}. ${item.name}\n   ${item.qty} x ${formatRp(item.price)} = ${formatRp(subtotal)}\n`;
+        });
+
+        waText += `------------------------\n*TOTAL: ${formatRp(grandTotal)}*\n\nTerima kasih atas pesanan Anda! 🙏`;
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(waText).then(() => {
+            const btnWA = document.getElementById('btn-wa');
+            const originalText = btnWA.innerHTML;
+            btnWA.innerHTML = "✅ Nota Berhasil Disalin!";
+            btnWA.style.backgroundColor = "#00FFFF";
+            btnWA.style.color = "#0B192C";
+            
+            setTimeout(() => {
+                btnWA.innerHTML = originalText;
+                btnWA.style.backgroundColor = "var(--accent-primary)";
+            }, 2500);
+        }).catch(err => {
+            console.error('Gagal menyalin teks: ', err);
+            alert("Browser tidak mendukung copy otomatis. Nota:\n\n" + waText);
+        });
+    }
+
+    // Initialize UI on load
+    renderTodos();
+    renderCart();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Ruang Debat SIGMA</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Tata letak: ruang debat tiga kolom (bangku Pemerintah | podium & timer | bangku Oposisi),
+   di bawahnya teks ucapan, garis waktu sembilan fase, kontrol, lalu lembar nilai juri. */
+:root{
+  --bg:#F2F4F8; --surface:#FFFFFF; --surface-2:#E9EDF4; --ink:#172031; --muted:#5A6476; --line:#D8DEE8;
+  --gov:#2A5ECC; --gov-soft:#E3EBFB; --opp:#C2372F; --opp-soft:#FAE6E4; --neutral:#465468; --neutral-soft:#E6EAF0;
+  --warn:#B97A06; --danger:#C2372F; --ok:#18794E; --mark:#FFE08A; --mark-ink:#3A2C00;
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E131B; --surface:#161D28; --surface-2:#1E2734; --ink:#E7EBF2; --muted:#9AA4B5; --line:#2A3443;
+  --gov:#76A0FF; --gov-soft:#1A2744; --opp:#FF7C70; --opp-soft:#3A1D1C; --neutral:#A3AFC2; --neutral-soft:#222C3A;
+  --warn:#F2B544; --danger:#FF7C70; --ok:#4CC38A; --mark:#7A5E12; --mark-ink:#FFF3CF; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E131B; --surface:#161D28; --surface-2:#1E2734; --ink:#E7EBF2; --muted:#9AA4B5; --line:#2A3443;
+  --gov:#76A0FF; --gov-soft:#1A2744; --opp:#FF7C70; --opp-soft:#3A1D1C; --neutral:#A3AFC2; --neutral-soft:#222C3A;
+  --warn:#F2B544; --danger:#FF7C70; --ok:#4CC38A; --mark:#7A5E12; --mark-ink:#FFF3CF; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:1080px;margin:0 auto;display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+.wrap>*{min-width:0}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+.eyebrow{font:700 12px/1 var(--f-display);letter-spacing:.14em;text-transform:uppercase;color:var(--opp)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+button{font:600 15px/1 var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);
+  border-radius:8px;padding:10px 14px;cursor:pointer;min-height:42px}
+button:hover{background:var(--surface-2)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gov);outline-offset:2px}
+button.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+mark{background:var(--mark);color:var(--mark-ink);border-radius:3px;padding:0 3px}
+
+/* Kepala: mosi hari ini */
+.head{display:grid;gap:8px;border-left:5px solid var(--opp);padding-left:14px}
+.head h1{font-size:clamp(22px,4.2vw,34px);line-height:1.12;font-weight:800}
+.head .tr{color:var(--muted);margin:0}
+
+/* Panggung debat */
+.stage{display:grid;gap:12px;grid-template-columns:1fr minmax(0,1.35fr) 1fr;
+  grid-template-areas:"judge judge judge" "gov center opp";padding:14px}
+.judge{grid-area:judge;display:flex;align-items:center;gap:10px;justify-content:center;
+  padding:8px 12px;background:var(--neutral-soft);border-radius:999px;font-size:14px;color:var(--muted);justify-self:center}
+.judge b{color:var(--ink)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--neutral);flex:none}
+.judge.on .dot{background:var(--ok);animation:pulse 1.2s ease-in-out infinite}
+.bench{display:grid;gap:8px;align-content:start;min-width:0}
+.bench.gov{grid-area:gov}.bench.opp{grid-area:opp}
+.bench h3{font-size:14px;letter-spacing:.06em;text-transform:uppercase;padding-bottom:6px;border-bottom:3px solid}
+.bench.gov h3{color:var(--gov);border-color:var(--gov)}.bench.opp h3{color:var(--opp);border-color:var(--opp)}
+.seat{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;border:1px solid var(--line);
+  background:var(--surface);transition:transform .35s ease,opacity .35s ease,background-color .35s ease;min-width:0}
+.seat .av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;
+  font:800 14px var(--f-display);color:#fff}
+.gov .av{background:var(--gov)}.opp .av{background:var(--opp)}
+.seat .nm{font-weight:700;line-height:1.15}.seat .rl{font-size:12px;color:var(--muted)}
+.seat.active{transform:scale(1.04)}
+.gov .seat.active{background:var(--gov-soft);border-color:var(--gov)}
+.opp .seat.active{background:var(--opp-soft);border-color:var(--opp)}
+.seat.done{opacity:.55}
+.seat .st{margin-left:auto;font:700 11px var(--f-display);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+.center{grid-area:center;display:grid;gap:10px;justify-items:center;text-align:center;
+  background:var(--surface-2);border-radius:var(--r);padding:16px 12px;min-width:0}
+.phase-tag{font:700 12px/1 var(--f-display);letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:999px;
+  background:var(--neutral-soft);color:var(--neutral)}
+.center[data-side="gov"] .phase-tag{background:var(--gov-soft);color:var(--gov)}
+.center[data-side="opp"] .phase-tag{background:var(--opp-soft);color:var(--opp)}
+.podium{display:flex;align-items:center;gap:12px;min-height:58px}
+.speaker-av{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font:800 18px var(--f-display);color:#fff;background:var(--neutral)}
+.center[data-side="gov"] .speaker-av{background:var(--gov)}
+.center[data-side="opp"] .speaker-av{background:var(--opp)}
+.speaker-av.in-left{animation:inLeft .5s ease-out}.speaker-av.in-right{animation:inRight .5s ease-out}.speaker-av.in-fade{animation:fade .5s ease-out}
+.speaker-name{font:800 20px/1.1 var(--f-display);text-align:left}
+.speaker-name small{display:block;font:600 13px var(--f-body);color:var(--muted)}
+.task{margin:0;color:var(--muted);font-size:15px;max-width:34ch}
+.timer{font:800 clamp(56px,11vw,92px)/1 var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:-.02em;transition:color .3s}
+.timer.warn{color:var(--warn)}.timer.danger{color:var(--danger)}.timer.idle{color:var(--muted)}
+.bar{width:100%;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ink);transform-origin:left;transform:scaleX(0)}
+.center[data-side="gov"] .bar i{background:var(--gov)}.center[data-side="opp"] .bar i{background:var(--opp)}
+.rulechip{font-size:13px;font-weight:700;color:var(--danger);border:1px dashed var(--danger);border-radius:6px;padding:3px 8px}
+
+/* Teks ucapan */
+.caption{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;min-height:96px}
+.caption .who{font:700 12px/1.2 var(--f-display);letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:6px;
+  background:var(--neutral-soft);color:var(--neutral);white-space:nowrap}
+.caption[data-side="gov"] .who{background:var(--gov-soft);color:var(--gov)}
+.caption[data-side="opp"] .who{background:var(--opp-soft);color:var(--opp)}
+.caption p{margin:0;font-size:clamp(17px,2.4vw,20px);line-height:1.45;min-width:0}
+.caption p.en{font-style:italic}
+.caption p.swap{animation:fade .45s ease-out}
+.legend{grid-column:1/-1;font-size:13px;color:var(--muted);margin:0}
+
+/* Garis waktu fase */
+.timeline{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:6px}
+.chip{display:grid;gap:4px;padding:8px 6px 6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);
+  text-align:left;min-height:0;cursor:pointer;font:inherit;color:inherit}
+.chip{min-width:0;overflow:hidden}
+.chip b{font:800 14px/1 var(--f-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chip span{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.chip .fill{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.chip .fill i{display:block;height:100%;transform-origin:left;transform:scaleX(0);background:var(--neutral)}
+.chip.gov b{color:var(--gov)}.chip.gov .fill i{background:var(--gov)}
+.chip.opp b{color:var(--opp)}.chip.opp .fill i{background:var(--opp)}
+.chip.now{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+
+/* Kontrol */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.speed{display:flex;align-items:center;gap:10px;margin-left:auto;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.speed input{width:160px;accent-color:var(--ink)}
+.speed output{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.two>*{min-width:0}
+h2{font-size:18px;margin-bottom:10px}
+.tl{display:grid;gap:10px}
+.tl div{border-left:4px solid;padding:6px 10px;border-radius:0 8px 8px 0}
+.tl .g{border-color:var(--gov);background:var(--gov-soft)}.tl .o{border-color:var(--opp);background:var(--opp-soft)}
+.tl small{display:block;font:700 11px var(--f-display);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.tl .g small{color:var(--gov)}.tl .o small{color:var(--opp)}
+.tl p{margin:0;font-style:italic;min-height:3em}
+.rules{margin:0;padding-left:18px;display:grid;gap:6px;font-size:15px}
+
+/* Lembar nilai juri */
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px;min-width:460px}
+th,td{padding:8px;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{font:700 11px var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td.tot{font-weight:800}
+tr.sep td{border-top:2px solid var(--line)}
+tr.rev td{animation:fade .4s ease-out}
+.teams{display:grid;gap:8px;margin-top:14px}
+.team{display:grid;grid-template-columns:110px 1fr 54px;gap:10px;align-items:center;font-weight:700}
+.team .track{height:14px;background:var(--surface-2);border-radius:7px;overflow:hidden}
+.team .track i{display:block;height:100%;transform-origin:left;transform:scaleX(0);transition:transform .8s ease-out}
+.team.g .track i{background:var(--gov)}.team.o .track i{background:var(--opp)}
+.team .v{text-align:right;font-variant-numeric:tabular-nums}
+.winner{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--neutral-soft);font-weight:600}
+.winner.g{background:var(--gov-soft);color:var(--gov)}.winner.o{background:var(--opp-soft);color:var(--opp)}
+.note{font-size:13px;color:var(--muted);margin:8px 0 0}
+
+@keyframes inLeft{from{transform:translateX(-36px);opacity:0}to{transform:none;opacity:1}}
+@keyframes inRight{from{transform:translateX(36px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes pulse{50%{opacity:.35}}
+
+@media (max-width:760px){
+  .stage{grid-template-columns:1fr 1fr;grid-template-areas:"judge judge" "center center" "gov opp"}
+  .timeline{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .two{grid-template-columns:1fr}
+  .speed{margin-left:0}
+  .caption{grid-template-columns:1fr}
+  .seat .st{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+
+<div class="wrap">
+  <header class="head">
+    <span class="eyebrow">Metode SIGMA · Tahap 5 Evaluating · Mosi hari ke-13</span>
+    <h1 id="motion">This House would make public transport free.</h1>
+    <p class="tr">Dewan ini akan menggratiskan transportasi umum. Debat 3 lawan 3: Pemerintah (pro) melawan Oposisi (kontra), sekitar 80 menit.</p>
+  </header>
+
+  <section class="card stage" aria-label="Ruang debat">
+    <div class="judge" id="judge"><span class="dot"></span><span>Juri &amp; pengendali timer: <b>Pak Arif</b> (koordinator)</span></div>
+    <div class="bench gov" id="benchGov"><h3>Pemerintah · pro</h3></div>
+    <div class="center" id="center" data-side="neutral">
+      <span class="phase-tag" id="phaseTag" aria-live="polite">Persiapan</span>
+      <div class="podium">
+        <div class="speaker-av" id="spkAv">30′</div>
+        <div class="speaker-name" id="spkName">Kedua tim<small>menyusun themeline</small></div>
+      </div>
+      <p class="task" id="task">Pemerintah menyusun themeline</p>
+      <div class="timer" id="timer">30:00</div>
+      <div class="bar"><i id="bar"></i></div>
+      <span class="rulechip" id="rule" hidden>Tanpa argumen baru</span>
+    </div>
+    <div class="bench opp" id="benchOpp"><h3>Oposisi · kontra</h3></div>
+  </section>
+
+  <section class="card caption" id="caption" data-side="neutral">
+    <span class="who" id="capWho">Narasi</span>
+    <p id="capText">Kedua tim menyusun themeline.</p>
+    <p class="legend">Kata yang ditandai kuning adalah kata hafalan dari 150 irregular verbs (Tahap 1).</p>
+  </section>
+
+  <nav class="timeline" id="timeline" aria-label="Urutan fase debat"></nav>
+
+  <section class="controls">
+    <button class="primary" id="btnPlay">Jeda</button>
+    <button id="btnPrev">← Fase sebelumnya</button>
+    <button id="btnNext">Fase berikutnya →</button>
+    <button id="btnReset">Ulang dari awal</button>
+    <label class="speed" for="speed">Kecepatan
+      <input type="range" id="speed" min="10" max="120" step="5" value="30">
+      <output id="speedOut">30×</output>
+    </label>
+  </section>
+  <p class="note" id="speedNote" style="margin-top:-8px"></p>
+
+  <section class="two">
+    <div class="card">
+      <h2>Themeline</h2>
+      <div class="tl">
+        <div class="g"><small>Pemerintah</small><p id="tlGov"></p></div>
+        <div class="o"><small>Oposisi</small><p id="tlOpp"></p></div>
+      </div>
+      <p class="note">Themeline adalah satu kalimat alasan utama mengapa mosi harus diterima atau ditolak.</p>
+    </div>
+    <div class="card">
+      <h2>Aturan waktu</h2>
+      <ul class="rules">
+        <li>Persiapan 30 menit untuk menyusun themeline.</li>
+        <li>Enam pembicara bergantian P1 → O1 → P2 → O2 → P3 → O3, masing-masing maksimal <b>7,5 menit</b>.</li>
+        <li>Pembicara ketiga tidak membawa argumen baru.</li>
+        <li>Ulasan Oposisi maksimal <b>5 menit</b>, tanpa argumen baru.</li>
+        <li>Timer berubah <b style="color:var(--warn)">kuning</b> di menit terakhir dan <b style="color:var(--danger)">merah</b> saat waktu habis.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Lembar nilai juri</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Pembicara</th><th>Matter (isi)</th><th>Manner (cara)</th><th>Method (struktur)</th><th>Total</th></tr></thead>
+        <tbody id="scoreBody"></tbody>
+      </table>
+    </div>
+    <div class="teams">
+      <div class="team g"><span>Pemerintah</span><div class="track"><i id="barGov"></i></div><span class="v" id="totGov">–</span></div>
+      <div class="team o"><span>Oposisi</span><div class="track"><i id="barOpp"></i></div><span class="v" id="totOpp">–</span></div>
+    </div>
+    <div class="winner" id="winner">Nilai diisi juri setelah ulasan Oposisi selesai.</div>
+    <p class="note">Matter 40, Manner 40, Method 20 per pembicara. Ulasan Oposisi dinilai separuh skala (20/20/10) dan dicatat terpisah, karena hanya satu pihak yang mendapat ulasan. Nilai di sini adalah contoh.</p>
+  </section>
+</div>
+
+<script>
+// ===== Konstanta (tidak ada nilai ajaib di bawah) =====
+const CONFIG = {
+  DT: 1 / 60,               // fixed timestep (detik layar)
+  kecepatanAwal: 30,        // 1 detik layar = 30 detik debat
+  percepatPersiapan: 3,     // persiapan 30' diputar 3× lebih cepat lagi agar tidak membosankan
+  batasKuning: 60,          // detik terakhir yang membuat timer kuning
+  jedaHabis: 1.4,           // detik layar timer merah 0:00 sebelum pindah fase
+  penilaianDetik: 10,       // durasi animasi penilaian (detik layar)
+  totalTim: 300             // skor maksimal tiga pembicara (3 × 100)
+};
+
+const PEOPLE = {
+  P1: { name: "Ani", side: "gov" }, P2: { name: "Budi", side: "gov" }, P3: { name: "Citra", side: "gov" },
+  O1: { name: "Fajar", side: "opp" }, O2: { name: "Gita", side: "opp" }, O3: { name: "Hana", side: "opp" }
+};
+
+const THEMELINE = {
+  gov: "Free public transport is an investment: it cuts traffic, saves families money and gives everyone equal access to work and school.",
+  opp: "Free is not the same as good: the money should first fix the quality, safety and reach of buses before making them free."
+};
+
+// {kata} = bentuk kata hafalan, ditandai kuning
+const PHASES = [
+  { key: "Persiapan", code: "Persiapan", side: "neutral", who: null, dur: 1800, en: false,
+    task: "Pemerintah menyusun themeline",
+    lines: ["Kedua tim duduk di bangkunya dan menyusun themeline: satu kalimat alasan utama.",
+            "Pemerintah menetapkan definisi mosi dan membagi argumen untuk P1 dan P2.",
+            "Oposisi menyiapkan sanggahan dan themeline tandingan. Setiap anggota menyimpan catatan persiapan."] },
+  { key: "P1", code: "P1", side: "gov", who: "P1", dur: 450, en: true, task: "Definisi, themeline, argumen pertama",
+    lines: ["Our themeline: free public transport is an investment, not a cost.",
+            "We define free as no ticket price on city buses, {paid} for by the city budget.",
+            "First argument: when buses are free, people {leave} their motorbikes at home and traffic {falls}."] },
+  { key: "O1", code: "O1", side: "opp", who: "O1", dur: 450, en: true, task: "Menegasi Pemerintah, themeline Oposisi",
+    lines: ["We reject the government's case. Free is not the same as good.",
+            "Our themeline: the money should first fix the quality, safety and reach of buses.",
+            "If a bus is late and crowded, people will not {ride} it, even for free."] },
+  { key: "P2", code: "P2", side: "gov", who: "P2", dur: 450, en: true, task: "Sanggah O1, argumen baru",
+    lines: ["The opposition {said} people avoid buses because of quality. For poor families, cost comes first.",
+            "New argument: free transport {gives} everyone equal access to work and school.",
+            "A worker who {spends} twenty thousand rupiah a day on tickets {keeps} that money for food."] },
+  { key: "O2", code: "O2", side: "opp", who: "O2", dur: 450, en: true, task: "Sanggah P1–P2, argumen baru",
+    lines: ["Our friends {forgot} one thing: free tickets do not build new routes.",
+            "When a service becomes free but not bigger, buses become too full to use.",
+            "New argument: the same budget could {build} shelters, street lights and new lines."] },
+  { key: "P3", code: "P3", side: "gov", who: "P3", dur: 450, en: true, task: "Sanggahan dan rangkuman", noNew: true,
+    lines: ["Let me summarise. The opposition never {showed} why quality and free cannot go together.",
+            "We have {proven} that cost blocks access, and access is what transport is for.",
+            "Free public transport is an investment. We are proud to propose."] },
+  { key: "O3", code: "O3", side: "opp", who: "O3", dur: 450, en: true, task: "Sanggahan dan rangkuman", noNew: true,
+    lines: ["Three clashes {arose} today: access, quality and the budget.",
+            "On each clash, the government {spoke} about hopes; we {brought} a plan.",
+            "Fix it first, then make it free. We are proud to oppose."] },
+  { key: "Ulasan", code: "Ulasan O", side: "opp", who: "O1", dur: 300, en: true, task: "Mengulas jalannya debat", noNew: true,
+    lines: ["Looking back, the debate {began} with a clear definition from the government.",
+            "The key clash was money: free tickets or better buses.",
+            "We believe our side {held} the stronger line, because we {told} you how the money is spent."] },
+  { key: "Penilaian", code: "Penilaian", side: "neutral", who: null, real: true, en: false, task: "Juri menghitung nilai",
+    lines: ["Juri mengisi Matter (40), Manner (40), dan Method (20) untuk setiap pembicara.",
+            "Ulasan Oposisi dinilai separuh skala (20/20/10) dan dicatat terpisah.",
+            "Juri menetapkan pemenang dan menulis umpan balik untuk kedua tim."] }
+];
+
+// Contoh nilai juri: [matter, manner, method]
+const SCORES = [
+  { id: "P1", v: [31, 30, 15] }, { id: "O1", v: [30, 32, 16] },
+  { id: "P2", v: [32, 31, 16] }, { id: "O2", v: [29, 30, 15] },
+  { id: "P3", v: [30, 32, 16] }, { id: "O3", v: [31, 30, 16] }
+];
+const REVIEW = { label: "Ulasan Oposisi · Fajar", v: [15, 16, 8], max: "20/20/10" };
+const FEEDBACK = "Pemerintah unggul tipis pada Matter: argumen akses yang dibawa P2 tidak pernah disanggah tuntas. Oposisi kuat di Manner dan ulasan yang runtut.";
+
+// ===== Elemen =====
+const $ = id => document.getElementById(id);
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+// Bangku pembicara
+for (const side of ["gov", "opp"]) {
+  const bench = $(side === "gov" ? "benchGov" : "benchOpp");
+  for (const [id, p] of Object.entries(PEOPLE)) {
+    if (p.side !== side) continue;
+    const el = document.createElement("div");
+    el.className = "seat"; el.id = "seat-" + id;
+    el.innerHTML = `<span class="av">${id}</span><span><span class="nm">${p.name}</span><span class="rl" style="display:block">Pembicara ${id[1]}</span></span><span class="st"></span>`;
+    bench.appendChild(el);
+  }
+}
+// Garis waktu
+PHASES.forEach((ph, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "chip " + ph.side; b.id = "chip-" + i;
+  b.innerHTML = `<b>${ph.code}</b><span>${ph.real ? "juri" : fmtDur(ph.dur)}</span><span class="fill"><i></i></span>`;
+  b.addEventListener("click", () => goTo(i));
+  $("timeline").appendChild(b);
+});
+// Baris nilai
+const rows = [...SCORES.map(s => ({ label: `${s.id} · ${PEOPLE[s.id].name}`, v: s.v })), { ...REVIEW, sep: true }];
+rows.forEach((r, i) => {
+  const tr = document.createElement("tr"); tr.id = "row-" + i; if (r.sep) tr.className = "sep";
+  tr.innerHTML = `<td>${r.label}</td><td>–</td><td>–</td><td>–</td><td class="tot">–</td>`;
+  $("scoreBody").appendChild(tr);
+});
+
+function fmtDur(s) { const m = s / 60; return (Number.isInteger(m) ? m : m.toFixed(1).replace(".", ",")) + "′"; }
+function fmtClock(s) { s = Math.ceil(s); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
+function markVerbs(t) { return t.replace(/\{(.+?)\}/g, "<mark>$1</mark>"); }
+const sum = a => a.reduce((x, y) => x + y, 0);
+
+// ===== State & simulasi waktu =====
+const state = { i: 0, t: 0, p: 0, hold: 0, playing: !reduceMotion.matches, speed: CONFIG.kecepatanAwal, done: false };
+
+function phaseSpeed(ph) { return state.speed * (ph.key === "Persiapan" ? CONFIG.percepatPersiapan : 1); }
+
+function step(dt) {
+  const ph = PHASES[state.i];
+  if (ph.real) {
+    state.p = Math.min(1, state.p + dt / CONFIG.penilaianDetik);
+    if (state.p >= 1) { state.done = true; state.playing = false; }
+    return;
+  }
+  if (state.t < ph.dur) { state.t = Math.min(ph.dur, state.t + dt * phaseSpeed(ph)); return; }
+  state.hold += dt;   // waktu habis: timer merah sebentar, lalu fase berikutnya
+  if (state.hold >= CONFIG.jedaHabis) goTo(state.i + 1);
+}
+
+function goTo(i) {
+  state.i = Math.max(0, Math.min(PHASES.length - 1, i));
+  state.t = 0; state.p = 0; state.hold = 0; state.done = false;
+}
+
+// ===== Render (hanya mengubah DOM bila nilainya berubah) =====
+const last = {};
+function setText(id, v) { if (last[id] !== v) { last[id] = v; $(id).textContent = v; } }
+
+function render() {
+  const ph = PHASES[state.i];
+  const frac = ph.real ? state.p : state.t / ph.dur;
+  const center = $("center");
+
+  if (last.phase !== state.i) {
+    last.phase = state.i;
+    center.dataset.side = ph.side;
+    $("caption").dataset.side = ph.side;
+    setText("phaseTag", ph.key === "Ulasan" ? "Ulasan Oposisi" : ph.key === "Persiapan" || ph.real ? ph.key : `Pembicara ${ph.code[1]} ${ph.side === "gov" ? "Pemerintah" : "Oposisi"}`);
+    setText("task", ph.task);
+    $("rule").hidden = !ph.noNew;
+    const av = $("spkAv");
+    if (ph.who) {
+      av.textContent = ph.who;
+      $("spkName").innerHTML = `${PEOPLE[ph.who].name}<small>${ph.side === "gov" ? "Pemerintah" : "Oposisi"}</small>`;
+    } else if (ph.real) {
+      av.textContent = "PA"; $("spkName").innerHTML = "Pak Arif<small>juri menilai</small>";
+    } else {
+      av.textContent = "30′"; $("spkName").innerHTML = "Kedua tim<small>menyusun themeline</small>";
+    }
+    av.className = "speaker-av";
+    if (!reduceMotion.matches) { void av.offsetWidth; av.classList.add(ph.side === "gov" ? "in-left" : ph.side === "opp" ? "in-right" : "in-fade"); }
+    $("judge").classList.toggle("on", !!ph.real);
+    $("capWho").textContent = ph.who ? `${ph.who} · ${PEOPLE[ph.who].name}` : ph.real ? "Juri" : "Narasi";
+    $("capText").className = ph.en ? "en" : "";
+    // Status bangku
+    const order = PHASES.map(p => p.key);
+    for (const id of Object.keys(PEOPLE)) {
+      const seat = $("seat-" + id);
+      const spoke = order.indexOf(id) > -1 && order.indexOf(id) < state.i;
+      seat.classList.toggle("active", ph.who === id);
+      seat.classList.toggle("done", spoke && ph.who !== id);
+      seat.querySelector(".st").textContent = ph.who === id ? "bicara" : spoke ? "selesai" : "";
+    }
+    PHASES.forEach((_, k) => $("chip-" + k).classList.toggle("now", k === state.i));
+  }
+
+  // Timer
+  const timer = $("timer");
+  let cls = "timer";
+  if (ph.real) { setText("timer", "–:––"); cls += " idle"; }
+  else {
+    const rem = Math.max(0, ph.dur - state.t);
+    setText("timer", fmtClock(rem));
+    if (rem <= 0) cls += " danger"; else if (rem <= CONFIG.batasKuning) cls += " warn";
+  }
+  if (timer.className !== cls) timer.className = cls;
+  $("bar").style.transform = `scaleX(${frac})`;
+
+  // Garis waktu
+  PHASES.forEach((_, k) => {
+    const f = k < state.i ? 1 : k > state.i ? 0 : frac;
+    const key = "chipf" + k; const v = f.toFixed(3);
+    if (last[key] !== v) { last[key] = v; $("chip-" + k).querySelector("i").style.transform = `scaleX(${v})`; }
+  });
+
+  // Teks ucapan berganti mengikuti bagian waktu fase
+  const li = Math.min(ph.lines.length - 1, Math.floor(frac * ph.lines.length));
+  const lk = state.i + ":" + li;
+  if (last.line !== lk) {
+    last.line = lk;
+    const cap = $("capText");
+    cap.innerHTML = markVerbs(ph.lines[li]);
+    cap.classList.remove("swap");
+    if (!reduceMotion.matches) { void cap.offsetWidth; cap.classList.add("swap"); }
+  }
+
+  // Themeline diketik selama persiapan
+  const prepI = 0;
+  const pf = state.i > prepI ? 1 : frac;
+  const gf = Math.min(1, pf / 0.6), of = Math.max(0, Math.min(1, (pf - 0.3) / 0.6));
+  setText("tlGov", gf === 0 ? "Sedang disusun…" : THEMELINE.gov.slice(0, Math.round(gf * THEMELINE.gov.length)));
+  setText("tlOpp", of === 0 ? "Sedang disusun…" : THEMELINE.opp.slice(0, Math.round(of * THEMELINE.opp.length)));
+
+  renderScores(ph, frac);
+
+  // Tombol putar
+  setText("btnPlay", state.done ? "Putar ulang" : state.playing ? "Jeda" : "Putar");
+}
+
+function renderScores(ph, frac) {
+  const judgeI = PHASES.length - 1;
+  const p = state.i < judgeI ? 0 : state.i > judgeI ? 1 : frac;
+  const slot = 0.8 / rows.length;      // 80% waktu untuk mengisi baris, sisanya untuk total & pemenang
+  let gov = 0, opp = 0;
+  rows.forEach((r, i) => {
+    const local = Math.max(0, Math.min(1, (p - i * slot) / slot));
+    const key = "row" + i; const v = local.toFixed(2);
+    if (last[key] === v) { if (!r.sep && local === 1) (i % 2 ? opp += sum(r.v) : gov += sum(r.v)); return; }
+    last[key] = v;
+    const tr = $("row-" + i), tds = tr.querySelectorAll("td");
+    if (local === 0) { for (let k = 1; k < 5; k++) tds[k].textContent = "–"; tr.classList.remove("rev"); }
+    else {
+      if (!tr.classList.contains("rev") && !reduceMotion.matches) tr.classList.add("rev");
+      r.v.forEach((x, k) => tds[k + 1].textContent = Math.round(x * local));
+      tds[4].textContent = Math.round(sum(r.v) * local) + (r.sep ? " / 50" : "");
+    }
+    if (!r.sep && local === 1) (i % 2 ? opp += sum(r.v) : gov += sum(r.v));
+  });
+  const showTot = p >= 0.82;
+  setText("totGov", showTot ? String(gov) : "–");
+  setText("totOpp", showTot ? String(opp) : "–");
+  $("barGov").style.transform = `scaleX(${showTot ? gov / CONFIG.totalTim : 0})`;
+  $("barOpp").style.transform = `scaleX(${showTot ? opp / CONFIG.totalTim : 0})`;
+  const w = $("winner");
+  let msg = "Nilai diisi juri setelah ulasan Oposisi selesai.", wc = "winner";
+  if (p > 0 && p < 0.92) msg = "Juri sedang mengisi lembar nilai…";
+  if (p >= 0.92) {
+    const g = gov > opp;
+    msg = `${g ? "Pemerintah" : "Oposisi"} menang (${Math.max(gov, opp)} : ${Math.min(gov, opp)}). Umpan balik juri: ${FEEDBACK}`;
+    wc += g ? " g" : " o";
+  }
+  if (w.className !== wc) w.className = wc;
+  setText("winner", msg);
+}
+
+// ===== Loop: fixed timestep dengan akumulator =====
+let acc = 0, prev = null;
+function frame(now) {
+  if (prev === null) prev = now;
+  const el = Math.min((now - prev) / 1000, 0.25);  // batasi lonjakan saat tab kembali aktif
+  prev = now;
+  if (state.playing) { acc += el; while (acc >= CONFIG.DT) { step(CONFIG.DT); acc -= CONFIG.DT; } }
+  render();
+  requestAnimationFrame(frame);
+}
+
+// ===== Kontrol =====
+function togglePlay() {
+  if (state.done) { goTo(0); state.playing = true; return; }
+  state.playing = !state.playing;
+}
+$("btnPlay").addEventListener("click", togglePlay);
+$("btnPrev").addEventListener("click", () => goTo(state.i - 1));
+$("btnNext").addEventListener("click", () => goTo(state.i + 1));
+$("btnReset").addEventListener("click", () => { goTo(0); state.playing = true; });
+function updateSpeed() {
+  state.speed = Number($("speed").value);
+  $("speedOut").textContent = state.speed + "×";
+  const timed = PHASES.filter(p => !p.real).reduce((s, p) => s + p.dur / phaseSpeedFor(p), 0) + CONFIG.penilaianDetik;
+  $("speedNote").textContent = `1 detik layar = ${state.speed} detik debat (persiapan ${CONFIG.percepatPersiapan}× lebih cepat). Seluruh debat ± ${Math.round(timed)} detik layar.`;
+}
+function phaseSpeedFor(p) { return state.speed * (p.key === "Persiapan" ? CONFIG.percepatPersiapan : 1); }
+$("speed").addEventListener("input", updateSpeed);
+document.addEventListener("keydown", e => {
+  if (e.code === "Space" && !["INPUT", "BUTTON"].includes(document.activeElement.tagName)) { e.preventDefault(); togglePlay(); }
+});
+
+updateSpeed();
+requestAnimationFrame(frame);
+</script>
+
+</body></html>
