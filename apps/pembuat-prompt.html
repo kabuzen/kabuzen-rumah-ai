@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pembuat Prompt</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Mono:wght@400;500&amp;display=swap">
+<style>
+/* Reset dasar (di artifact disediakan otomatis, di ekstensi harus ditulis sendiri) */
+[hidden]{display:none!important}
+body{margin:0}
+img{max-width:100%}
+
+/* Layout: satu kolom untuk HP (wizard di atas, pratinjau di bawah, bilah aksi tetap di dasar);
+   dua kolom ≥ 920px dengan pratinjau menempel di kanan. Tema gelap tunggal ala SIGMA. */
+:root{
+  color-scheme: dark;
+  --bg:#0A1230;
+  --bg-2:#0E1838;
+  --surface:#131D45;
+  --surface-2:#1A2656;
+  --line:#28376E;
+  --fg:#EEF2FF;
+  --muted:#A3AED6;
+  --faint:#6E7AA8;
+  /* enam aksen */
+  --c-peran:#FF6B8B;
+  --c-tugas:#FFB347;
+  --c-konteks:#34D3B4;
+  --c-batasan:#A78BFA;
+  --c-hasil:#4FB3FF;
+  --c-plus:#B7E44A;
+  --warn:#FFC857;
+  --on-accent:#0A1230;
+  --f-sans:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --r-s:10px; --r-m:16px; --r-l:22px;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--f-sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(600px 300px at 110% -5%, color-mix(in srgb,var(--c-hasil) 18%,transparent), transparent 70%),
+    radial-gradient(500px 260px at -15% 30%, color-mix(in srgb,var(--c-peran) 12%,transparent), transparent 70%),
+    var(--bg);
+  background-attachment:fixed;}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg-2)}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--c-plus);outline-offset:2px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
+p{margin:0}
+
+/* ---------- Header ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg-2) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.spectrum{height:4px;display:flex}
+.spectrum i{flex:1}
+.top-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:12px;padding-block:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;background:none;border:0;padding:0;text-align:left}
+.logo{width:34px;height:34px;border-radius:10px;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;overflow:hidden;flex:none}
+.logo i:nth-child(1){background:var(--c-peran)}.logo i:nth-child(2){background:var(--c-tugas)}.logo i:nth-child(3){background:var(--c-konteks)}
+.logo i:nth-child(4){background:var(--c-batasan)}.logo i:nth-child(5){background:var(--c-hasil)}.logo i:nth-child(6){background:var(--c-plus)}
+.brand b{font-weight:800;font-size:17px;letter-spacing:-.01em;white-space:nowrap}
+.brand small{display:block;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.meter{margin-left:auto;display:flex;align-items:center;gap:8px}
+.meter-bars{display:flex;gap:3px}
+.meter-bars i{width:14px;height:8px;border-radius:3px;background:var(--line);transition:background .25s}
+.meter-num{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.icon-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 10px;font-weight:600;font-size:13px}
+.icon-btn svg{width:18px;height:18px}
+.icon-btn:hover{border-color:var(--muted)}
+.hide-sm{display:none}
+@media (min-width:560px){.hide-sm{display:inline}}
+
+/* ---------- Main ---------- */
+main{max-width:1120px;margin:0 auto;padding-block:20px 120px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Beranda */
+.hero{display:grid;gap:10px;margin-bottom:18px}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-plus)}
+.hero h1{font-size:clamp(26px,6.4vw,40px);font-weight:800;letter-spacing:-.02em}
+.hero p{color:var(--muted);max-width:60ch}
+.formula{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+.formula span{font-weight:700;font-size:12.5px;padding:5px 10px;border-radius:999px;color:var(--on-accent)}
+.types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:700px){.types{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.type{position:relative;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r-m);padding:14px;display:grid;gap:8px;align-content:start;min-width:0;transition:transform .15s,border-color .15s,background .15s}
+.type:hover{transform:translateY(-2px);border-color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--surface))}
+.type .ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 22%,transparent);color:var(--c)}
+.type .ico svg{width:22px;height:22px}
+.type b{font-size:16px;font-weight:700}
+.type small{color:var(--muted);font-size:12.5px;line-height:1.4}
+.type.resume{grid-column:1/-1;display:flex;align-items:center;gap:12px;border-style:dashed}
+.type.resume b{font-size:14px}
+.home-foot{margin-top:22px;display:grid;gap:10px}
+.home-foot h2{font-size:15px;font-weight:700;color:var(--muted)}
+.contoh-row{display:grid;gap:10px}
+@media (min-width:700px){.contoh-row{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Wizard */
+.layout{display:grid;gap:18px}
+@media (min-width:920px){.layout{grid-template-columns:minmax(0,1fr) 420px;align-items:start}
+  .preview-col{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px)}}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.pill-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px 7px 8px;font-weight:600;font-size:13.5px}
+.pill-btn .dot{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 22%,transparent);color:var(--c)}
+.pill-btn .dot svg{width:15px;height:15px}
+.seg{margin-left:auto;display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:none;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:12px}
+.step{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 4px 7px;display:grid;justify-items:center;gap:4px;font-size:11.5px;font-weight:700;color:var(--muted);position:relative;min-width:0}
+.step .n{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:11px;border:2px solid var(--c);color:var(--c)}
+.step.done .n{background:var(--c);color:var(--on-accent)}
+.step[aria-current="step"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 16%,var(--surface));color:var(--fg)}
+.step span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+
+.sec{border-radius:var(--r-l);padding:18px;border:1px solid color-mix(in srgb,var(--c) 45%,var(--line));
+  background:linear-gradient(180deg,color-mix(in srgb,var(--c) 14%,var(--surface)),var(--surface) 70%);display:grid;gap:14px}
+.sec-head{display:grid;gap:4px}
+.sec-head .lab{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.sec-head h2{font-size:24px;font-weight:800;letter-spacing:-.015em}
+.sec-head p{color:var(--muted);font-size:13.5px}
+.field{display:grid;gap:7px}
+.field label{font-weight:700;font-size:15px}
+.field .sub{font-weight:600;font-size:13.5px;color:var(--muted)}
+textarea,input[type=text]{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-s);padding:11px 12px;font-size:15.5px;line-height:1.5;resize:vertical}
+textarea::placeholder,input::placeholder{color:var(--faint);font-style:italic}
+textarea:focus,input[type=text]:focus{outline:none;border-color:var(--c,var(--c-plus));box-shadow:0 0 0 3px color-mix(in srgb,var(--c,var(--c-plus)) 25%,transparent)}
+.chips-lab{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1.5px solid color-mix(in srgb,var(--c) 55%,var(--line));background:transparent;border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:600;color:var(--fg);transition:background .15s}
+.chip:hover{background:color-mix(in srgb,var(--c) 15%,transparent)}
+.chip[aria-pressed="true"]{background:var(--c);color:var(--on-accent);border-color:var(--c)}
+.chip[aria-pressed="true"]::before{content:"✓ "}
+.warns{display:grid;gap:6px}
+.warn{display:flex;gap:8px;align-items:flex-start;font-size:13px;background:color-mix(in srgb,var(--warn) 12%,transparent);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);border-radius:10px;padding:8px 10px;color:var(--fg)}
+.warn b{color:var(--warn)}
+.warn svg{flex:none;width:16px;height:16px;color:var(--warn);margin-top:2px}
+.nav{display:flex;gap:10px;justify-content:space-between}
+.btn{border:0;border-radius:12px;padding:11px 16px;font-weight:700;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.btn-ghost{background:var(--surface-2);color:var(--fg);border:1px solid var(--line)}
+.btn-fill{background:var(--c,var(--c-plus));color:var(--on-accent)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn svg{width:18px;height:18px}
+
+/* Pratinjau */
+.preview{border:1px solid var(--line);background:var(--bg-2);border-radius:var(--r-l);overflow:hidden}
+.pv-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.pv-head h3{font-size:14px;font-weight:700}
+.pv-meta{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-family:var(--f-mono);font-size:11px;padding:3px 8px;border-radius:999px;background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.tag.w{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.pv-body{padding:16px;font-size:15px;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;min-height:160px;max-height:62vh;overflow:auto}
+.pv-body .p{border-radius:4px;padding:1px 0}
+.p-peran{color:var(--c-peran)}.p-tugas{color:var(--c-tugas)}.p-konteks{color:var(--c-konteks)}.p-batasan{color:var(--c-batasan)}.p-hasil{color:var(--c-hasil)}.p-plus{color:var(--muted)}
+.pv-body .h{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;font-weight:500;opacity:.85}
+.pv-body .ghost{color:var(--faint);font-style:italic;border:1px dashed var(--line);border-radius:6px;padding:0 6px;display:inline-block;margin:1px 0}
+.pv-body mark{background:color-mix(in srgb,var(--warn) 22%,transparent);color:var(--warn);text-decoration:underline wavy var(--warn);text-underline-offset:3px;border-radius:3px;padding:0 2px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;padding:10px 14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:9px;height:9px;border-radius:3px;display:inline-block}
+.pv-actions{display:none;gap:8px;padding:12px 14px;border-top:1px solid var(--line)}
+@media (min-width:920px){.pv-actions{display:flex}}
+.pv-actions .btn{flex:1}
+
+/* Bilah aksi bawah (HP) */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:25;background:color-mix(in srgb,var(--bg-2) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.dock-in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:8px}
+.dock .btn{padding:12px 8px;font-size:14px}
+@media (min-width:920px){.dock{display:none}main{padding-bottom:40px}}
+.btn-ask{background:var(--c-plus);color:var(--on-accent)}
+.btn-copy{background:var(--fg);color:var(--bg)}
+
+/* Lembar (sheet) */
+.scrim{position:fixed;inset:0;z-index:40;background:rgba(3,6,20,.65);display:flex;align-items:flex-end;justify-content:center}
+@media (min-width:720px){.scrim{align-items:center}}
+.sheet{width:100%;max-width:640px;max-height:88vh;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:22px 22px 0 0;
+  padding-bottom:env(safe-area-inset-bottom,0px);animation:up .22s ease-out}
+@media (min-width:720px){.sheet{border-radius:22px;max-height:84vh}}
+@keyframes up{from{transform:translateY(30px);opacity:.6}to{transform:none;opacity:1}}
+.sheet-head{display:flex;align-items:center;gap:10px;padding:16px 18px 10px}
+.sheet-head h2{font-size:19px;font-weight:800}
+.sheet-head .x{margin-left:auto;border:0;background:var(--surface-2);border-radius:10px;width:36px;height:36px;display:grid;place-items:center}
+.sheet-body{overflow:auto;padding:4px 18px 18px;display:grid;gap:14px;align-content:start}
+.tabs{display:flex;gap:6px;padding:0 18px 8px;overflow-x:auto}
+.tabs button{border:1px solid var(--line);background:none;border-radius:999px;padding:6px 12px;font-weight:600;font-size:13px;white-space:nowrap;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.item{border:1px solid var(--line);border-radius:var(--r-m);padding:12px 14px;display:grid;gap:8px;background:var(--bg-2);min-width:0}
+.item-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.item b{font-size:15px;font-weight:700;min-width:0;overflow-wrap:anywhere}
+.badge{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;background:color-mix(in srgb,var(--c) 22%,transparent);color:var(--c)}
+.item p{color:var(--muted);font-size:13px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.item .row{display:flex;gap:6px;flex-wrap:wrap}
+.item .row button{border:1px solid var(--line);background:var(--surface-2);border-radius:9px;padding:6px 10px;font-size:13px;font-weight:600}
+.item .row button.go{background:var(--c-plus);color:var(--on-accent);border-color:var(--c-plus)}
+.item .row button.del{margin-left:auto;color:#FF9AAE}
+.item time{font-family:var(--f-mono);font-size:11px;color:var(--faint)}
+.empty{border:1px dashed var(--line);border-radius:var(--r-m);padding:18px;color:var(--muted);font-size:14px;text-align:center}
+.note{font-size:12.5px;color:var(--muted)}
+.save-row{display:grid;gap:8px;border:1px solid var(--line);border-radius:var(--r-m);padding:12px;background:var(--bg-2)}
+.save-row .btns{display:flex;gap:8px}
+.q-card{border:1px solid color-mix(in srgb,var(--c) 45%,var(--line));border-radius:var(--r-m);padding:12px;display:grid;gap:8px;background:color-mix(in srgb,var(--c) 8%,var(--bg-2))}
+.q-card .badge{justify-self:start}
+.q-card label{font-weight:700}
+.spin{width:22px;height:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--c-plus);animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loading{display:flex;gap:12px;align-items:center;color:var(--muted);padding:12px 0}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--fg);color:var(--bg);font-weight:700;font-size:14px;padding:10px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:calc(100% - 32px);text-align:center}
+@media (min-width:920px){.toast{bottom:28px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Penyesuaian panel samping Chrome (lebar 320–500px) */
+body{min-width:320px}
+.meter{flex:none}
+#btn-set{margin-left:auto}
+.meter:not([hidden])+#btn-set{margin-left:0}
+@media (max-width:440px){.brand small{display:none}}
+@media (max-width:420px){.top-in{gap:8px}.meter:not([hidden]) ~ .brand, .brand:has(+ .meter:not([hidden])) > span:last-child{display:none}.meter-bars i{width:11px}}
+.dock .btn{white-space:nowrap}
+@media (max-width:380px){.dock .btn svg{display:none}}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="spectrum" aria-hidden="true"><i style="background:var(--c-peran)"></i><i style="background:var(--c-tugas)"></i><i style="background:var(--c-konteks)"></i><i style="background:var(--c-batasan)"></i><i style="background:var(--c-hasil)"></i><i style="background:var(--c-plus)"></i></div>
+  <div class="top-in">
+    <button class="brand" id="btn-home" type="button" aria-label="Kembali ke awal">
+      <span class="logo" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span><b>Pembuat Prompt</b><small>Peran · Tugas · Konteks · Batasan · Hasil</small></span>
+    </button>
+    <div class="meter" id="meter" title="Kelengkapan 5 bagian" hidden>
+      <div class="meter-bars" id="meter-bars"></div>
+      <span class="meter-num" id="meter-num">0/5</span>
+    </div>
+    <button class="icon-btn" id="btn-set" type="button" aria-label="Pengaturan AI" title="Pengaturan AI">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-lib" type="button" aria-label="Buka pustaka prompt">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h4v16H4zM10 4h4v16h-4zM16.5 4.5l3.8 1-4 15-3.8-1z"/></svg>
+      <span class="hide-sm">Pustaka</span>
+    </button>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<nav class="dock" id="dock" hidden>
+  <div class="dock-in">
+    <button class="btn btn-ask" type="button" data-act="ask"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.4M12 16h.01"/></svg>Tanyai saya</button>
+    <button class="btn btn-ghost" type="button" data-act="save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>Simpan</button>
+    <button class="btn btn-copy" type="button" data-act="copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>Salin</button>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <div class="sheet-head"><h2 id="sheet-title"></h2><button class="x" type="button" id="sheet-x" aria-label="Tutup"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div id="sheet-tabs"></div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= DATA ================= */
+var KEYS = ["peran","tugas","konteks","batasan","hasil"];
+var COLOR = {peran:"var(--c-peran)",tugas:"var(--c-tugas)",konteks:"var(--c-konteks)",batasan:"var(--c-batasan)",hasil:"var(--c-hasil)",plus:"var(--c-plus)"};
+var SEC = {
+  peran:{label:"Peran",tip:"Peran menentukan sudut pandang, kosakata, dan standar mutu jawaban AI.",chipLab:"Saran peran (ketuk untuk mengisi)",
+    x:{label:"Pengalaman atau keahlian khusus",ph:"mis. sudah 10 tahun menangani hal serupa di sekolah negeri"}},
+  tugas:{label:"Tugas",tip:"Mulai dengan kata kerja. Satu prompt, satu tugas utama.",chipLab:"Awali dengan kata kerja",
+    x:{label:"Poin yang wajib ada",ph:"mis. tanggal, tempat, agenda, batas konfirmasi"}},
+  konteks:{label:"Konteks",tip:"AI tidak tahu situasi Anda. Sebut siapa, kapan, di mana, dan data yang sudah ada.",chipLab:"Tambahkan keterangan",
+    x:{label:"Sasaran pembaca atau pengguna",ph:"mis. orang tua siswa usia 30–50 tahun, membaca lewat HP"}},
+  batasan:{label:"Batasan",tip:"Batasan mencegah jawaban melebar: nada, panjang, gaya, dan larangan.",chipLab:"Batasan umum (ketuk untuk memilih)",
+    x:{label:"Yang harus dihindari",ph:"mis. istilah asing, janji yang belum pasti, data pribadi siswa"}},
+  hasil:{label:"Hasil",tip:"Gambarkan wujud jawaban agar langsung bisa dipakai tanpa diolah lagi.",chipLab:"Bentuk hasil",
+    x:{label:"Panjang atau jumlah",ph:"mis. 250–300 kata; 3 paragraf; 10 soal"}}
+};
+var VERBS = ["Tuliskan","Susun","Buatkan","Ringkas","Analisis","Perbaiki","Rancang"];
+var KONTEKS_CHIPS = [["Pembaca:","Siapa pembacanya?"],["Waktu & tempat:","Kapan & di mana?"],["Bahan yang ada:","Apa yang sudah ada?"],["Tujuan akhirnya:","Mengapa dibutuhkan?"]];
+var BATASAN_UMUM = ["Jangan mengarang fakta","Tanyakan dulu jika info kurang"];
+
+var ICONS = {
+  surat:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  laporan:'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9.5 17v-3M12.5 17v-6M15.5 17v-2"/>',
+  buku:'<path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v15H7.5A2.5 2.5 0 0 0 5 20.5z"/><path d="M5 20.5A2.5 2.5 0 0 1 7.5 18H19v3H7.5"/>',
+  aplikasi:'<rect x="6.5" y="2" width="11" height="20" rx="2.5"/><path d="M11 18.5h2"/>',
+  materi:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5M22 9v5"/>',
+  video:'<rect x="2.5" y="6" width="13" height="12" rx="2"/><path d="m15.5 10.5 6-3.5v10l-6-3.5"/>',
+  data:'<path d="M3 20h18M6 20v-6M11 20V6M16 20v-9M21 20V3"/>'
+};
+function icon(k){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+ICONS[k]+'</svg>';}
+
+var TYPES = {
+  surat:{nama:"Surat",c:"var(--c-peran)",ket:"Undangan rapat, surat izin, surat edaran, permohonan",
+    peran:{q:"Siapa yang paling pantas menulis surat ini?",ph:"mis. staf tata usaha sekolah yang terbiasa menulis surat dinas resmi",chips:["sekretaris kantor","staf tata usaha sekolah","kepala sekolah","staf HRD perusahaan","ketua RT/RW"]},
+    tugas:{q:"Surat apa yang perlu ditulis, untuk siapa, dan apa tujuannya?",ph:"mis. tuliskan surat undangan rapat wali murid kelas 7 tentang rencana studi wisata"},
+    konteks:{q:"Apa latar belakangnya? Siapa penerimanya dan bagaimana hubungan Anda dengan mereka?",ph:"mis. rapat Sabtu 15 Nov 2026 pukul 09.00 di aula SMPN 3 Batam; penerima orang tua siswa, sebagian belum pernah ke sekolah"},
+    batasan:{q:"Aturan apa yang harus dipatuhi surat ini?",ph:"mis. pakai kop sekolah, tanpa singkatan, tanda tangan kepala sekolah",chips:["Bahasa Indonesia baku (PUEBI)","Nada sopan dan resmi","Maks. 1 halaman","Tanpa singkatan","Sertakan nomor & perihal"]},
+    hasil:{q:"Seperti apa bentuk surat yang Anda harapkan?",ph:"mis. format surat dinas: kop, nomor, lampiran, perihal, isi 3 paragraf, tanda tangan",chips:["Surat dinas utuh (kop s.d. tanda tangan)","Hanya isi surat","Versi WhatsApp ≤ 80 kata","2 alternatif nada"]}},
+  laporan:{nama:"Laporan",c:"var(--c-tugas)",ket:"Laporan kegiatan, evaluasi program, notulen, LPJ",
+    peran:{q:"Siapa ahli yang biasa menyusun laporan seperti ini?",ph:"mis. analis program yang menulis laporan evaluasi untuk pimpinan dinas",chips:["analis kebijakan","auditor internal","guru penyusun laporan","konsultan manajemen","peneliti"]},
+    tugas:{q:"Laporan apa, periode berapa, dan keputusan apa yang ingin dibantu?",ph:"mis. susun laporan evaluasi program literasi semester ganjil 2026/2027 untuk kepala dinas"},
+    konteks:{q:"Data atau kejadian apa yang menjadi bahan? Siapa pembacanya?",ph:"mis. 12 sekolah ikut program, nilai literasi naik dari 61 ke 68, 3 sekolah belum melapor"},
+    batasan:{q:"Aturan apa yang harus dipatuhi laporan ini?",ph:"mis. ikuti sistematika dari dinas, angka dua desimal",chips:["Bahasa formal dan objektif","Pisahkan fakta dan opini","Sertakan sumber data","Maks. 5 halaman","Pakai angka, bukan perkiraan"]},
+    hasil:{q:"Struktur laporan seperti apa yang Anda perlukan?",ph:"mis. ringkasan eksekutif ½ halaman, latar, temuan, analisis, rekomendasi bernomor",chips:["Ringkasan eksekutif di awal","Bab sesuai format dinas","Tabel temuan","Rekomendasi bernomor"]}},
+  buku:{nama:"Buku",c:"var(--c-konteks)",ket:"Kerangka bab, draf bab, sinopsis, cerita anak",
+    peran:{q:"Penulis atau editor seperti apa yang Anda butuhkan?",ph:"mis. penulis buku sains populer untuk remaja dengan gaya bahasa hangat",chips:["penulis buku nonfiksi","editor penerbit","penulis cerita anak","ghostwriter","pakar di bidangnya"]},
+    tugas:{q:"Bagian buku mana yang dikerjakan: kerangka, bab, sinopsis, atau penyuntingan?",ph:"mis. buatkan kerangka 10 bab buku panduan budidaya ikan kerapu di keramba"},
+    konteks:{q:"Untuk siapa buku ini dan bahan apa yang sudah Anda punya?",ph:"mis. pembaca nelayan pemula di Kepulauan Riau; saya punya catatan lapangan 3 tahun"},
+    batasan:{q:"Gaya dan aturan penulisan apa yang harus dijaga?",ph:"mis. tiap bab dibuka dengan kisah nyata nelayan",chips:["Gaya bercerita","Bahasa setara pembaca SMP","Tiap bab 2.000–3.000 kata","Jelaskan setiap istilah asing","Sudut pandang orang ketiga"]},
+    hasil:{q:"Keluaran apa yang ingin Anda terima?",ph:"mis. daftar bab berisi judul, 3 poin isi, dan 1 kalimat tujuan per bab",chips:["Kerangka bab","Draf satu bab","Sinopsis 1 halaman","5 judul alternatif"]}},
+  aplikasi:{nama:"Aplikasi",c:"var(--c-batasan)",ket:"Aplikasi web, formulir, kalkulator, otomasi",
+    peran:{q:"Ahli apa yang paling tepat membangun aplikasi ini?",ph:"mis. pengembang web yang ahli membuat aplikasi ringan untuk HP",chips:["pengembang web senior","desainer UX","analis sistem","product manager","pengembang Android"]},
+    tugas:{q:"Aplikasi apa, masalah apa yang diselesaikan, dan apa fitur utamanya?",ph:"mis. buatkan aplikasi absensi siswa berbasis kode QR untuk wali kelas"},
+    konteks:{q:"Siapa penggunanya, perangkat apa, dan sistem apa yang sudah ada?",ph:"mis. 30 wali kelas, HP Android kelas menengah, sinyal sering lemah, data kini di Google Sheets"},
+    batasan:{q:"Syarat teknis atau aturan apa yang wajib dipenuhi?",ph:"mis. tanpa login, data tersimpan di perangkat",chips:["Bisa jalan offline","Tanpa biaya langganan","Antarmuka Bahasa Indonesia","Satu file HTML","Jaga data pribadi","Nyaman di layar HP"]},
+    hasil:{q:"Apa yang ingin Anda terima dari AI?",ph:"mis. kode lengkap siap jalan beserta langkah memasangnya",chips:["Kode lengkap","Rancangan fitur dulu","Alur layar (teks)","Langkah instalasi"]}},
+  materi:{nama:"Materi Ajar",c:"var(--c-hasil)",ket:"Modul ajar, LKPD, soal, rubrik, bahan tayang",
+    peran:{q:"Pendidik seperti apa yang Anda bayangkan?",ph:"mis. guru IPA SMP yang menerapkan Kurikulum Merdeka",chips:["guru berpengalaman","pengembang kurikulum","fasilitator pelatihan","dosen","tutor sebaya"]},
+    tugas:{q:"Materi apa, untuk jenjang dan fase apa, berapa pertemuan?",ph:"mis. susun modul ajar ekosistem untuk kelas 7 fase D, 2 × 40 menit"},
+    konteks:{q:"Bagaimana kondisi murid, sarana, dan capaian pembelajarannya?",ph:"mis. 32 murid, kemampuan beragam, ada proyektor, sekolah dekat hutan bakau"},
+    batasan:{q:"Aturan pembelajaran apa yang harus diikuti?",ph:"mis. kegiatan berkelompok 4 orang",chips:["Sesuai Kurikulum Merdeka","Pembelajaran berdiferensiasi","Contoh dari lingkungan sekitar","Tanpa alat yang mahal","Bahasa ramah murid"]},
+    hasil:{q:"Perangkat ajar apa yang Anda butuhkan?",ph:"mis. modul ajar berisi tujuan, langkah kegiatan per menit, asesmen, dan LKPD",chips:["Modul ajar","LKPD","Soal + kunci jawaban","Slide ringkas","Rubrik penilaian"]}},
+  video:{nama:"Video / Promosi",c:"var(--c-plus)",ket:"Naskah Reels/TikTok, iklan, caption, poster",
+    peran:{q:"Siapa yang paling paham cara menjual produk ini?",ph:"mis. kreator konten yang paham pasar UMKM kuliner",chips:["penulis naskah video","copywriter","kreator konten TikTok","pemasar digital","sutradara iklan"]},
+    tugas:{q:"Video atau promosi apa, di platform apa, dan tindakan apa yang diharapkan?",ph:"mis. buatkan naskah Reels 30 detik untuk promosi kue bingka khas Batam"},
+    konteks:{q:"Apa produknya, keunggulannya, harganya, dan siapa calon pembelinya?",ph:"mis. Rp25.000 per loyang, pesan via WhatsApp, pembeli ibu muda dan perantau"},
+    batasan:{q:"Aturan apa yang harus dipatuhi kontennya?",ph:"mis. tidak menyebut merek pesaing",chips:["Durasi maks. 30 detik","Hook di 3 detik pertama","Bahasa santai, tidak alay","Satu ajakan bertindak","Tanpa klaim berlebihan"]},
+    hasil:{q:"Bentuk naskah seperti apa yang Anda perlukan?",ph:"mis. tabel adegan: detik, visual, teks layar, narasi",chips:["Tabel adegan","Naskah narasi saja","3 variasi hook","Caption + tagar"]}},
+  data:{nama:"Analisis Data",c:"var(--c-peran)",ket:"Nilai ujian, penjualan, survei, keuangan",
+    peran:{q:"Ahli apa yang paling tepat membaca data ini?",ph:"mis. analis data yang terbiasa menjelaskan angka kepada orang awam",chips:["analis data","statistikawan","konsultan bisnis","peneliti pendidikan","akuntan"]},
+    tugas:{q:"Data apa yang dianalisis dan pertanyaan apa yang ingin dijawab?",ph:"mis. analisis nilai ujian 4 kelas untuk menemukan bab yang paling lemah"},
+    konteks:{q:"Dari mana datanya, berapa banyak, dan kolom apa saja?",ph:"mis. file Excel 128 baris: nama, kelas, nilai per bab (6 bab), kehadiran"},
+    batasan:{q:"Aturan analisis apa yang harus dipatuhi?",ph:"mis. abaikan baris dengan nilai kosong, sebutkan jumlahnya",chips:["Tunjukkan langkah hitung","Jangan menebak data hilang","Bedakan korelasi dan sebab","Pakai rumus Excel","Bahasa awam"]},
+    hasil:{q:"Hasil analisis seperti apa yang Anda perlukan?",ph:"mis. 3 temuan utama, tabel ringkas, dan saran tindak lanjut",chips:["Temuan utama berpoin","Tabel ringkasan","Usulan grafik","Rumus Excel","Kesimpulan 1 paragraf"]}}
+};
+var TYPE_ORDER = ["surat","laporan","buku","aplikasi","materi","video","data"];
+
+var VAGUE = {
+  "bagus":"Bagus menurut ukuran apa? Sebut cirinya, mis. bebas salah ketik atau dipahami murid kelas 7.",
+  "baik":"Sebut ukurannya, mis. nilai rata-rata ≥ 75 atau tanpa keluhan pelanggan.",
+  "menarik":"Menarik bagi siapa? Sebut caranya, mis. dibuka dengan pertanyaan atau memakai contoh lokal.",
+  "lengkap":"Sebut bagian yang harus ada, mis. tujuan, langkah, dan asesmen.",
+  "keren":"Ganti dengan ciri yang bisa dilihat, mis. warna cerah, huruf besar, ada ikon.",
+  "rapi":"Sebut aturannya, mis. pakai subjudul, poin bernomor, tabel.",
+  "jelas":"Jelas untuk siapa? Sebut tingkat bahasanya, mis. setara pembaca SMP.",
+  "detail":"Sebut sedalam apa, mis. tiap langkah 2–3 kalimat beserta contoh.",
+  "detil":"Sebut sedalam apa, mis. tiap langkah 2–3 kalimat beserta contoh.",
+  "singkat":"Sebut angkanya, mis. maks. 150 kata atau 5 poin.",
+  "panjang":"Sebut angkanya, mis. 800–1.000 kata.",
+  "sederhana":"Sebut ukurannya, mis. kalimat ≤ 15 kata, tanpa istilah teknis.",
+  "mudah":"Mudah bagi siapa? Sebut pengguna dan kemampuannya.",
+  "profesional":"Sebut cirinya, mis. bahasa baku, tanpa emoji, sapaan Bapak/Ibu.",
+  "kreatif":"Sebut bentuk kreativitasnya, mis. pakai analogi dari kehidupan nelayan.",
+  "unik":"Unik dibanding apa? Sebut pembedanya.",
+  "efektif":"Efektif untuk hasil apa? Sebut targetnya, mis. 20 pesanan per minggu.",
+  "optimal":"Sebut targetnya dengan angka.",
+  "maksimal":"Sebut targetnya dengan angka.",
+  "sempurna":"Sebut kriteria selesai yang bisa dicek.",
+  "berkualitas":"Sebut standar mutunya, mis. sesuai PUEBI dan bebas plagiasi.",
+  "informatif":"Sebut informasi apa saja yang wajib muncul.",
+  "menyenangkan":"Sebut kegiatannya, mis. permainan kelompok 10 menit.",
+  "secukupnya":"Sebut jumlahnya.",
+  "beberapa":"Sebut berapa tepatnya, mis. 3 atau 5.",
+  "banyak":"Sebut jumlahnya.",
+  "sedikit":"Sebut jumlahnya.",
+  "dll":"Tuliskan semua butirnya; AI tidak bisa menebak isi “dll”.",
+  "dsb":"Tuliskan semua butirnya.",
+  "sebagainya":"Tuliskan semua butirnya.",
+  "lain-lain":"Tuliskan semua butirnya."
+};
+var VAGUE_RE = new RegExp("(^|[^\\p{L}\\-])(" + Object.keys(VAGUE).sort(function(a,b){return b.length-a.length;}).join("|") + ")(nya)?(?=[^\\p{L}\\-]|$)","giu");
+
+var CONTOH = [
+  {judul:"Undangan rapat wali murid",kebutuhan:"surat",mode:"singkat",
+    f:{peran:"staf tata usaha sekolah yang terbiasa menulis surat dinas resmi",tugas:"tuliskan surat undangan rapat wali murid kelas 7 tentang rencana studi wisata ke Bintan",konteks:"rapat Sabtu 15 November 2026 pukul 09.00 di aula SMPN 3 Batam; penerima orang tua siswa, sebagian belum pernah datang ke sekolah",batasan:"",hasil:"",peran2:"",tugas2:"",konteks2:"",batasan2:"",hasil2:""},
+    chips:{batasan:["Bahasa Indonesia baku (PUEBI)","Nada sopan dan resmi","Maks. 1 halaman"],hasil:["Surat dinas utuh (kop s.d. tanda tangan)","Versi WhatsApp ≤ 80 kata"]}},
+  {judul:"Modul ajar ekosistem kelas 7",kebutuhan:"materi",mode:"lengkap",
+    f:{peran:"guru IPA SMP yang menerapkan Kurikulum Merdeka",peran2:"berpengalaman mengajar di sekolah pesisir",tugas:"susun modul ajar ekosistem untuk kelas 7 fase D, 2 × 40 menit",tugas2:"komponen biotik-abiotik, rantai makanan, dampak kerusakan bakau",konteks:"32 murid dengan kemampuan beragam, ada proyektor, sekolah dekat hutan bakau",konteks2:"murid usia 12–13 tahun",batasan:"kegiatan berkelompok 4 orang",batasan2:"istilah Latin tanpa penjelasan",hasil:"",hasil2:"modul 3–4 halaman"},
+    chips:{batasan:["Pembelajaran berdiferensiasi","Contoh dari lingkungan sekitar"],hasil:["Modul ajar","LKPD","Rubrik penilaian"]}},
+  {judul:"Naskah Reels kue bingka",kebutuhan:"video",mode:"singkat",
+    f:{peran:"kreator konten yang paham pasar UMKM kuliner",tugas:"buatkan naskah Reels 30 detik untuk promosi kue bingka khas Batam",konteks:"harga Rp25.000 per loyang, pesan lewat WhatsApp, pembeli utama ibu muda dan perantau yang rindu kampung",batasan:"",hasil:"",peran2:"",tugas2:"",konteks2:"",batasan2:"",hasil2:""},
+    chips:{batasan:["Hook di 3 detik pertama","Satu ajakan bertindak","Tanpa klaim berlebihan"],hasil:["Tabel adegan","3 variasi hook"]}}
+];
+
+/* ================= STATE ================= */
+function blankF(){return {peran:"",peran2:"",tugas:"",tugas2:"",konteks:"",konteks2:"",batasan:"",batasan2:"",hasil:"",hasil2:""};}
+var state = {view:"home",type:null,mode:"singkat",step:0,f:blankF(),chips:{batasan:[],hasil:[]}};
+var LS_DRAFT="pp-draft-v1", LS_LIB="pp-lib-v1";
+var LS_SET="pp-settings-v1";
+/* Penyimpanan: chrome.storage.local di ekstensi, localStorage bila dibuka sebagai halaman biasa */
+var MEM={},HAS_CS=!!(window.chrome&&chrome.storage&&chrome.storage.local);
+function lsGet(k){return MEM[k]===undefined?null:MEM[k];}
+function lsSet(k,v){MEM[k]=v;var o={};o[k]=v;
+  if(HAS_CS){try{chrome.storage.local.set(o);}catch(e){}}
+  else{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}}
+function storageLoad(keys){
+  return new Promise(function(res){
+    if(HAS_CS){try{chrome.storage.local.get(keys,function(r){MEM=Object.assign(MEM,r||{});res();});}catch(e){res();}return;}
+    keys.forEach(function(k){try{var v=localStorage.getItem(k);if(v)MEM[k]=JSON.parse(v);}catch(e){}});res();
+  });
+}
+var draft = null;
+var saveT=null;
+function saveDraft(){clearTimeout(saveT);saveT=setTimeout(function(){
+  if(state.type) lsSet(LS_DRAFT,{type:state.type,mode:state.mode,step:state.step,f:state.f,chips:state.chips,waktu:Date.now()});
+},400);}
+
+/* ================= HELPERS ================= */
+var $=function(s,r){return (r||document).querySelector(s);};
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function clean(s){return String(s||"").trim().replace(/\s+/g," ").replace(/[\s.;,:]+$/,"");}
+function lf(s){s=clean(s);if(s.length>1&&/^\p{Lu}\p{Ll}/u.test(s))return s.charAt(0).toLowerCase()+s.slice(1);return s;}
+function uf(s){s=clean(s);return s?s.charAt(0).toUpperCase()+s.slice(1):s;}
+function vagueIn(text){var out=[],m;VAGUE_RE.lastIndex=0;while((m=VAGUE_RE.exec(text||""))){var w=m[2].toLowerCase();if(out.indexOf(w)<0)out.push(w);}return out;}
+function filled(k){
+  var f=state.f,c=state.chips;
+  if(k==="peran")return clean(f.peran).length>=3;
+  if(k==="tugas")return clean(f.tugas).length>=10;
+  if(k==="konteks")return clean(f.konteks).length>=10;
+  if(k==="batasan")return c.batasan.length>0||clean(f.batasan).length>=3;
+  if(k==="hasil")return c.hasil.length>0||clean(f.hasil).length>=5;
+}
+function fmtTime(ms){try{return new Date(ms).toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"});}catch(e){return "";}}
+var toastT;
+function toast(msg){var t=$("#toast");t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true;},2400);}
+
+/* ================= PROMPT BUILDER ================= */
+/* returns [{k, head?, text}] ; text "" = belum diisi */
+function buildParts(src){
+  src=src||state;
+  var f=src.f,c=src.chips,full=src.mode==="lengkap",P=[];
+  // peran
+  var t="";
+  if(clean(f.peran)){t="Bertindaklah sebagai "+lf(f.peran)+".";if(full&&clean(f.peran2))t+="\nBekal pengalaman Anda: "+lf(f.peran2)+".";}
+  P.push({k:"peran",text:t});
+  // tugas
+  t="";
+  if(clean(f.tugas)){t=(full?"":"Tugas Anda: ")+(full?uf(f.tugas):lf(f.tugas))+".";if(full&&clean(f.tugas2))t+="\nPoin yang wajib ada: "+lf(f.tugas2)+".";}
+  P.push({k:"tugas",text:t});
+  // konteks
+  t="";
+  if(clean(f.konteks)){t=(full?uf(f.konteks):"Konteksnya: "+lf(f.konteks))+".";}
+  if(full&&clean(f.konteks2))t+=(t?"\n":"")+"Sasaran pembaca/pengguna: "+lf(f.konteks2)+".";
+  P.push({k:"konteks",text:t});
+  // batasan
+  var b=c.batasan.slice();if(clean(f.batasan))b.push(clean(f.batasan));
+  if(full&&clean(f.batasan2))b.push("Hindari: "+lf(f.batasan2));
+  t="";
+  if(b.length){t=full?b.map(function(x){return "- "+uf(x);}).join("\n"):"Batasan: "+b.map(lf).join("; ")+".";}
+  P.push({k:"batasan",text:t});
+  // hasil
+  var h=c.hasil.slice();if(clean(f.hasil))h.push(clean(f.hasil));
+  t="";
+  if(h.length){t=full?"Format: "+h.map(lf).join("; ")+".":"Sajikan hasilnya dalam bentuk: "+h.map(lf).join("; ")+".";}
+  if(full&&clean(f.hasil2))t+=(t?"\n":"")+"Panjang/jumlah: "+lf(f.hasil2)+".";
+  P.push({k:"hasil",text:t});
+  if(full)P.push({k:"plus",text:"Sebelum mulai, tanyakan kepada saya jika ada informasi penting yang belum jelas."});
+  return P;
+}
+function promptText(src){
+  var full=(src||state).mode==="lengkap";
+  return buildParts(src).filter(function(p){return p.text;}).map(function(p){
+    if(full&&p.k!=="plus")return SEC[p.k].label.toUpperCase()+"\n"+p.text;return p.text;
+  }).join(full?"\n\n":" ");
+}
+function hiVague(text){
+  var e=esc(text);VAGUE_RE.lastIndex=0;
+  return e.replace(VAGUE_RE,function(m,pre,w,nya){return pre+"<mark title=\"Kata kabur\">"+w+(nya||"")+"</mark>";});
+}
+
+/* ================= RENDER: HOME ================= */
+function renderHome(){
+  state.view="home";
+  $("#meter").hidden=true;$("#dock").hidden=true;
+  var h='<section class="hero"><span class="eyebrow">Langkah 1 dari 2 · Pilih kebutuhan</span>'+
+    '<h1>Mau minta AI membuat apa hari ini?</h1>'+
+    '<p>Pilih jenis pekerjaan. Setiap pilihan membawa pertanyaan pemandu dan contoh yang sesuai, lalu Anda mengisi lima bagian berikut.</p>'+
+    '<div class="formula" aria-label="Rumus prompt">'+KEYS.map(function(k){return '<span style="background:'+COLOR[k]+'">'+SEC[k].label+'</span>';}).join("")+'</div></section>';
+  h+='<div class="types">';
+  if(draft&&draft.type&&TYPES[draft.type]){
+    var T=TYPES[draft.type];
+    h+='<button class="type resume" type="button" data-resume style="--c:'+T.c+'"><span class="ico">'+icon(draft.type)+'</span><span><b>Lanjutkan draf: '+esc(T.nama)+'</b><br><small>'+esc(clean(draft.f.tugas)||"Draf belum berisi tugas")+'</small></span></button>';
+  }
+  TYPE_ORDER.forEach(function(k){var T=TYPES[k];
+    h+='<button class="type" type="button" data-type="'+k+'" style="--c:'+T.c+'"><span class="ico">'+icon(k)+'</span><b>'+esc(T.nama)+'</b><small>'+esc(T.ket)+'</small></button>';});
+  h+='</div>';
+  h+='<section class="home-foot"><h2>Atau mulai dari contoh siap pakai</h2><div class="contoh-row">'+CONTOH.map(function(it,i){return itemHTML(it,"contoh",i);}).join("")+'</div></section>';
+  $("#app").innerHTML=h;
+}
+
+/* ================= RENDER: WIZARD ================= */
+function renderWizard(){
+  state.view="wizard";
+  $("#meter").hidden=false;$("#dock").hidden=false;
+  var T=TYPES[state.type];
+  var h='<div class="bar">'+
+    '<button class="pill-btn" type="button" data-act="home" style="--c:'+T.c+'" aria-label="Ganti kebutuhan"><span class="dot">'+icon(state.type)+'</span>'+esc(T.nama)+' <span style="color:var(--muted);font-weight:500">· ganti</span></button>'+
+    '<div class="seg" role="group" aria-label="Mode prompt"><button type="button" data-mode="singkat" aria-pressed="'+(state.mode==="singkat")+'">Singkat</button><button type="button" data-mode="lengkap" aria-pressed="'+(state.mode==="lengkap")+'">Lengkap</button></div></div>';
+  h+='<div class="layout"><div class="wiz-col"><div class="steps" id="steps" role="tablist"></div><div id="sec"></div></div>'+
+     '<div class="preview-col"><section class="preview" aria-label="Pratinjau prompt"><div class="pv-head"><h3>Pratinjau prompt</h3><div class="pv-meta" id="pv-meta"></div></div>'+
+     '<div class="pv-body" id="pv-body"></div>'+
+     '<div class="legend">'+KEYS.map(function(k){return '<span><i style="background:'+COLOR[k]+'"></i>'+SEC[k].label+'</span>';}).join("")+'<span><i style="background:var(--warn)"></i>Kata kabur</span></div>'+
+     '<div class="pv-actions"><button class="btn btn-ask" type="button" data-act="ask">Tanyai saya</button><button class="btn btn-ghost" type="button" data-act="save">Simpan</button><button class="btn btn-copy" type="button" data-act="copy">Salin</button></div>'+
+     '</section></div></div>';
+  $("#app").innerHTML=h;
+  renderSection();renderLive();
+}
+function renderSteps(){
+  $("#steps").innerHTML=KEYS.map(function(k,i){
+    return '<button class="step'+(filled(k)?" done":"")+'" type="button" role="tab" data-step="'+i+'" style="--c:'+COLOR[k]+'"'+(i===state.step?' aria-current="step" aria-selected="true"':' aria-selected="false"')+'><span class="n">'+(filled(k)?"✓":(i+1))+'</span><span>'+SEC[k].label+'</span></button>';
+  }).join("");
+}
+function chipBtn(label,pressed,attr){return '<button class="chip" type="button" '+attr+(pressed===null?"":' aria-pressed="'+pressed+'"')+'>'+esc(label)+'</button>';}
+function renderSection(){
+  var k=KEYS[state.step],S=SEC[k],T=TYPES[state.type][k],full=state.mode==="lengkap";
+  var h='<section class="sec" style="--c:'+COLOR[k]+'"><div class="sec-head"><span class="lab">Bagian '+(state.step+1)+' dari 5</span><h2>'+S.label+'</h2><p>'+esc(S.tip)+'</p></div>';
+  h+='<div class="field"><label for="f-main">'+esc(T.q)+'</label><textarea id="f-main" data-f="'+k+'" rows="3" placeholder="'+esc(T.ph)+'">'+esc(state.f[k])+'</textarea></div>';
+  // chips
+  var chips="";
+  if(k==="peran")chips=T.chips.map(function(c){return chipBtn(c,null,'data-fill="'+esc(c)+'"');}).join("");
+  else if(k==="tugas")chips=VERBS.map(function(v){return chipBtn(v+"…",null,'data-verb="'+v+'"');}).join("");
+  else if(k==="konteks")chips=KONTEKS_CHIPS.map(function(c){return chipBtn(c[1],null,'data-add="'+esc(c[0])+'"');}).join("");
+  else{var list=k==="batasan"?T.chips.concat(BATASAN_UMUM):T.chips;
+    chips=list.map(function(c){return chipBtn(c,state.chips[k].indexOf(c)>=0,'data-tog="'+k+'" data-v="'+esc(c)+'"');}).join("");}
+  h+='<div class="field"><span class="chips-lab">'+S.chipLab+'</span><div class="chips">'+chips+'</div></div>';
+  if(full){h+='<div class="field"><label class="sub" for="f-x">'+esc(S.x.label)+' <span style="color:var(--faint)">(mode lengkap)</span></label><input type="text" id="f-x" data-f="'+k+'2" placeholder="'+esc(S.x.ph)+'" value="'+esc(state.f[k+"2"])+'"></div>';}
+  h+='<div class="warns" id="warns" aria-live="polite"></div>';
+  var prev=state.step>0?KEYS[state.step-1]:null,next=state.step<4?KEYS[state.step+1]:null;
+  h+='<div class="nav"><button class="btn btn-ghost" type="button" data-nav="-1"'+(prev?"":" disabled")+'>← '+(prev?SEC[prev].label:"Awal")+'</button>'+
+     (next?'<button class="btn btn-fill" type="button" data-nav="1" style="--c:'+COLOR[next]+'">'+SEC[next].label+' →</button>':'<button class="btn btn-fill" type="button" data-act="copy" style="--c:var(--c-plus)">Selesai · Salin prompt</button>')+'</div>';
+  h+='</section>';
+  $("#sec").innerHTML=h;
+  renderSteps();renderWarns();
+}
+function renderWarns(){
+  var k=KEYS[state.step],words=vagueIn(state.f[k]+" "+(state.mode==="lengkap"?state.f[k+"2"]:""));
+  var el=$("#warns");if(!el)return;
+  el.innerHTML=words.map(function(w){return '<div class="warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/></svg><span><b>“'+esc(w)+'” terlalu kabur.</b> '+esc(VAGUE[w])+'</span></div>';}).join("");
+}
+function renderLive(){
+  // meter
+  var n=KEYS.filter(filled).length;
+  $("#meter-bars").innerHTML=KEYS.map(function(k){return '<i style="'+(filled(k)?"background:"+COLOR[k]:"")+'" title="'+SEC[k].label+'"></i>';}).join("");
+  $("#meter-num").textContent=n+"/5";
+  if($("#steps"))renderSteps();
+  var body=$("#pv-body");if(!body)return;
+  var full=state.mode==="lengkap",parts=buildParts();
+  body.innerHTML=parts.map(function(p){
+    var cls="p p-"+p.k;
+    if(!p.text)return '<span class="ghost">['+SEC[p.k].label+' belum diisi]</span>';
+    var head=full&&p.k!=="plus"?'<span class="h">'+SEC[p.k].label.toUpperCase()+'</span>\n':"";
+    return '<span class="'+cls+'">'+head+hiVague(p.text)+'</span>';
+  }).join(full?"\n\n":" ");
+  var all=KEYS.map(function(k){return state.f[k]+" "+(full?state.f[k+"2"]:"");}).join(" ");
+  var vw=vagueIn(all).length,words=promptText().split(/\s+/).filter(Boolean).length;
+  $("#pv-meta").innerHTML='<span class="tag">'+words+' kata</span><span class="tag">'+(full?"Lengkap":"Singkat")+'</span>'+(vw?'<span class="tag w">'+vw+' kata kabur</span>':"");
+  saveDraft();
+}
+
+/* ================= EVENTS ================= */
+document.addEventListener("input",function(e){
+  var t=e.target,f=t.getAttribute&&t.getAttribute("data-f");
+  if(f&&state.view==="wizard"){state.f[f]=t.value;renderWarns();renderLive();}
+});
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  if(b.hasAttribute("data-type")){startType(b.getAttribute("data-type"));return;}
+  if(b.hasAttribute("data-resume")){loadInto(draft);return;}
+  if(b.hasAttribute("data-mode")){state.mode=b.getAttribute("data-mode");renderWizard();return;}
+  if(b.hasAttribute("data-step")){state.step=+b.getAttribute("data-step");renderSection();focusMain();return;}
+  if(b.hasAttribute("data-nav")){state.step=Math.max(0,Math.min(4,state.step+(+b.getAttribute("data-nav"))));renderSection();window.scrollTo({top:0,behavior:"smooth"});return;}
+  if(b.hasAttribute("data-fill")){state.f.peran=b.getAttribute("data-fill");$("#f-main").value=state.f.peran;renderWarns();renderLive();return;}
+  if(b.hasAttribute("data-verb")){var v=b.getAttribute("data-verb"),cur=state.f.tugas.replace(/^\s*(tuliskan|susun|buatkan|buat|ringkas|analisis|perbaiki|rancang)\b\s*/i,"");
+    state.f.tugas=v+" "+cur;var ta=$("#f-main");ta.value=state.f.tugas;ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);renderLive();return;}
+  if(b.hasAttribute("data-add")){var a=b.getAttribute("data-add"),cur2=state.f.konteks.replace(/[\s;.]+$/,"");
+    state.f.konteks=(cur2?cur2+"; ":"")+a+" ";var tb=$("#f-main");tb.value=state.f.konteks;tb.focus();tb.setSelectionRange(tb.value.length,tb.value.length);renderLive();return;}
+  if(b.hasAttribute("data-tog")){var k=b.getAttribute("data-tog"),val=b.getAttribute("data-v"),arr=state.chips[k],i=arr.indexOf(val);
+    if(i>=0)arr.splice(i,1);else arr.push(val);b.setAttribute("aria-pressed",String(i<0));renderLive();return;}
+  var act=b.getAttribute("data-act");
+  if(act==="home"){renderHome();window.scrollTo(0,0);return;}
+  if(act==="copy"){copyText(promptText(),b);return;}
+  if(act==="save"){openLibrary("mine",true);return;}
+  if(act==="ask"){openAsk();return;}
+  if(b.hasAttribute("data-item")){itemAction(b);return;}
+});
+$("#btn-home").addEventListener("click",function(){renderHome();window.scrollTo(0,0);});
+$("#btn-lib").addEventListener("click",function(){openLibrary("mine",false);});
+function focusMain(){var m=$("#f-main");if(m&&window.innerWidth>=920)m.focus();}
+
+function startType(k){
+  state.type=k;state.step=0;
+  if(!(draft&&draft.type)){state.f=blankF();state.chips={batasan:[],hasil:[]};}
+  else{ // jenis baru: mulai bersih
+    state.f=blankF();state.chips={batasan:[],hasil:[]};}
+  renderWizard();window.scrollTo(0,0);
+}
+function loadInto(it){
+  state.type=it.type||it.kebutuhan;state.mode=it.mode||"singkat";state.step=it.step||0;
+  state.f=Object.assign(blankF(),it.f||{});
+  state.chips={batasan:(it.chips&&it.chips.batasan||[]).slice(),hasil:(it.chips&&it.chips.hasil||[]).slice()};
+  renderWizard();window.scrollTo(0,0);
+}
+
+/* ================= COPY ================= */
+function copyText(text,btn,okMsg){okMsg=okMsg||"Prompt disalin";
+  if(!clean(text)){toast("Prompt masih kosong. Isi bagian Tugas dulu.");return;}
+  function fallback(){
+    var ta=document.createElement("textarea");ta.value=text;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();
+    var ok=false;try{ok=document.execCommand("copy");}catch(e){}
+    document.body.removeChild(ta);
+    if(ok)toast(okMsg);
+    else{var pv=$("#pv-body");if(pv){var r=document.createRange();r.selectNodeContents(pv);var s=getSelection();s.removeAllRanges();s.addRange(r);}toast("Teks sudah diblok. Tekan lama lalu pilih Salin.");}
+  }
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){toast(okMsg);},fallback);}
+    else fallback();
+  }catch(e){fallback();}
+}
+
+/* ================= SHEET ================= */
+var sheetMode=null;
+function openSheet(title){ $("#sheet-title").textContent=title;$("#scrim").hidden=false;document.body.style.overflow="hidden"; }
+function closeSheet(){ $("#scrim").hidden=true;document.body.style.overflow="";sheetMode=null;if(askCtl){try{askCtl.abort();}catch(e){}askCtl=null;} }
+$("#sheet-x").addEventListener("click",closeSheet);
+$("#scrim").addEventListener("click",function(e){if(e.target===this)closeSheet();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("#scrim").hidden)closeSheet();});
+
+/* ================= LIBRARY ================= */
+var lib={mine:[]};
+var libTab="mine",showSave=false;
+function saveLib(){lsSet(LS_LIB,lib.mine.map(function(x){var y=Object.assign({},x);delete y._id;return y;}));}
+
+function itemHTML(it,src,idx){
+  var T=TYPES[it.kebutuhan]||TYPES.surat;
+  var teks=it.teks||promptText(it);
+  var btns='<button class="go" type="button" data-item="use" data-src="'+src+'" data-i="'+idx+'">Pakai</button>'+
+    '<button type="button" data-item="copy" data-src="'+src+'" data-i="'+idx+'">Salin</button>'+
+    '<button type="button" data-item="code" data-src="'+src+'" data-i="'+idx+'">Kode bagikan</button>';
+  if(src==="mine")btns+='<button class="del" type="button" data-item="del" data-src="mine" data-i="'+idx+'">Hapus</button>';
+  return '<article class="item" style="--c:'+T.c+'"><div class="item-top"><span class="badge">'+esc(T.nama)+'</span>'+
+    (src==="contoh"?'<span class="tag">Contoh</span>':'')+
+    (it.waktu?'<time>'+fmtTime(it.waktu)+'</time>':'')+'</div><b>'+esc(it.judul||"Tanpa judul")+'</b><p>'+esc(teks)+'</p><div class="row">'+btns+'</div></article>';
+}
+function openLibrary(tab,withSave){
+  libTab=tab;showSave=!!withSave&&state.view==="wizard";sheetMode="lib";
+  openSheet("Pustaka prompt");renderLibrary();
+  if(showSave){var i=$("#save-title");if(i){i.focus();i.select();}}
+}
+function renderLibrary(){
+  if(sheetMode!=="lib")return;
+  var tabs=[["mine","Milik saya ("+lib.mine.length+")"],["impor","Impor"],["contoh","Contoh"]];
+  $("#sheet-tabs").innerHTML='<div class="tabs" role="tablist">'+tabs.map(function(t){return '<button type="button" role="tab" data-libtab="'+t[0]+'" aria-selected="'+(libTab===t[0])+'">'+t[1]+'</button>';}).join("")+'</div>';
+  var h="";
+  if(libTab==="mine"){
+    if(showSave){
+      var def=clean(state.f.tugas).slice(0,60)||(TYPES[state.type].nama+" baru");
+      h+='<div class="save-row"><label for="save-title" style="font-weight:700">Simpan prompt ini sebagai</label><input type="text" id="save-title" value="'+esc(def)+'"><div class="btns"><button class="btn btn-fill" type="button" id="save-go" style="--c:var(--c-plus)">Simpan ke pustaka</button><button class="btn btn-ghost" type="button" id="save-cancel">Batal</button></div></div>';
+    }
+    h+=lib.mine.length?lib.mine.map(function(it,i){return itemHTML(it,"mine",i);}).join(""):'<div class="empty">Belum ada prompt tersimpan. Isi wizard, lalu ketuk <b>Simpan</b>.</div>';
+    h+='<div class="nav"><p class="note" style="align-self:center">Tersimpan di Chrome perangkat ini.</p>'+(lib.mine.length?'<button class="btn btn-ghost" type="button" id="lib-export">Ekspor semua</button>':'')+'</div>';
+  }else if(libTab==="impor"){
+    h+='<div class="save-row"><label for="imp-code" style="font-weight:700">Tempel kode bagikan dari teman</label>'+
+       '<textarea id="imp-code" rows="4" placeholder="PP1.eyJqdWR1bCI6…"></textarea>'+
+       '<div class="btns"><button class="btn btn-fill" type="button" id="imp-go" style="--c:var(--c-plus)">Tambahkan ke pustaka</button></div></div>'+
+       '<div class="save-row"><label for="imp-file" style="font-weight:700">Atau pilih file ekspor (.json)</label><input type="file" id="imp-file" accept=".json,application/json"></div>'+
+       '<p class="note">Untuk membagikan: buka tab <b>Milik saya</b>, ketuk <b>Kode bagikan</b> pada sebuah prompt, lalu kirim kodenya lewat WhatsApp atau surel. Untuk memindahkan seluruh pustaka, pakai <b>Ekspor semua</b>.</p>';
+  }else{
+    h+=CONTOH.map(function(it,i){return itemHTML(it,"contoh",i);}).join("");
+  }
+  $("#sheet-body").innerHTML=h;
+  var sg=$("#save-go");if(sg)sg.addEventListener("click",doSave);
+  var sc=$("#save-cancel");if(sc)sc.addEventListener("click",function(){showSave=false;renderLibrary();});
+  var st=$("#save-title");if(st)st.addEventListener("keydown",function(e){if(e.key==="Enter")doSave();});
+  var ex=$("#lib-export");if(ex)ex.addEventListener("click",exportAll);
+  var ig=$("#imp-go");if(ig)ig.addEventListener("click",function(){importText($("#imp-code").value);});
+  var fi=$("#imp-file");if(fi)fi.addEventListener("change",function(){var f=fi.files&&fi.files[0];if(!f)return;var r=new FileReader();r.onload=function(){importText(String(r.result));};r.readAsText(f);});
+}
+document.addEventListener("click",function(e){var b=e.target.closest("[data-libtab]");if(b){libTab=b.getAttribute("data-libtab");showSave=false;renderLibrary();}});
+
+function snapshotItem(judul){
+  return {judul:clean(judul)||"Tanpa judul",kebutuhan:state.type,mode:state.mode,f:JSON.parse(JSON.stringify(state.f)),chips:JSON.parse(JSON.stringify(state.chips)),teks:promptText(),waktu:Date.now()};
+}
+function doSave(){
+  if(!clean(promptText())){toast("Prompt masih kosong");return;}
+  lib.mine.unshift(snapshotItem($("#save-title").value));saveLib();
+  showSave=false;renderLibrary();toast("Tersimpan di pustaka");
+}
+function srcList(src){return src==="mine"?lib.mine:CONTOH;}
+
+/* Kode bagikan: "PP1." + base64(JSON) */
+function b64e(s){return btoa(unescape(encodeURIComponent(s)));}
+function b64d(s){return decodeURIComponent(escape(atob(s)));}
+function shareCode(it){return "PP1."+b64e(JSON.stringify({judul:it.judul,kebutuhan:it.kebutuhan,mode:it.mode,f:it.f,chips:it.chips}));}
+function validItem(x){
+  if(!x||typeof x!=="object"||!TYPES[x.kebutuhan]||typeof x.f!=="object")return null;
+  var f=blankF();Object.keys(f).forEach(function(k){if(typeof x.f[k]==="string")f[k]=x.f[k].slice(0,4000);});
+  var ch={batasan:[],hasil:[]};["batasan","hasil"].forEach(function(k){if(x.chips&&Array.isArray(x.chips[k]))ch[k]=x.chips[k].filter(function(v){return typeof v==="string";}).slice(0,20);});
+  var it={judul:String(x.judul||"Prompt impor").slice(0,120),kebutuhan:x.kebutuhan,mode:x.mode==="lengkap"?"lengkap":"singkat",f:f,chips:ch,waktu:Date.now()};
+  it.teks=promptText(it);return it;
+}
+function importText(raw){
+  raw=String(raw||"").trim();if(!raw){toast("Belum ada kode yang ditempel");return;}
+  var found=[];
+  try{
+    var codes=raw.match(/PP1\.[A-Za-z0-9+/=]+/g);
+    if(codes)codes.forEach(function(c){found.push(JSON.parse(b64d(c.slice(4))));});
+    else{var j=JSON.parse(raw);found=Array.isArray(j)?j:(j&&Array.isArray(j.items)?j.items:[j]);}
+  }catch(e){toast("Kode tidak terbaca. Pastikan disalin utuh, diawali PP1.");return;}
+  var have={};lib.mine.forEach(function(x){have[x.judul+"|"+x.teks]=1;});
+  var n=0;found.map(validItem).forEach(function(it){if(it&&!have[it.judul+"|"+it.teks]){lib.mine.unshift(it);have[it.judul+"|"+it.teks]=1;n++;}});
+  if(!n){toast("Tidak ada prompt baru untuk ditambahkan");return;}
+  saveLib();libTab="mine";renderLibrary();toast(n+" prompt ditambahkan");
+}
+function exportAll(){
+  var data=JSON.stringify({app:"Pembuat Prompt",versi:1,items:lib.mine.map(function(x){return {judul:x.judul,kebutuhan:x.kebutuhan,mode:x.mode,f:x.f,chips:x.chips,waktu:x.waktu};})},null,2);
+  var url=URL.createObjectURL(new Blob([data],{type:"application/json"}));
+  var a=document.createElement("a");a.href=url;a.download="pustaka-prompt-"+new Date().toISOString().slice(0,10)+".json";
+  document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},2000);
+  toast("File ekspor diunduh");
+}
+function itemAction(b){
+  var src=b.getAttribute("data-src"),i=+b.getAttribute("data-i"),act=b.getAttribute("data-item"),it=srcList(src)[i];if(!it)return;
+  if(act==="use"){closeSheet();loadInto(it);toast("Prompt dimuat ke wizard");}
+  else if(act==="copy"){copyText(it.teks||promptText(it),b);}
+  else if(act==="code"){copyText(shareCode(it),b,"Kode bagikan disalin. Kirim ke teman, lalu mereka tempel di tab Impor.");}
+  else if(act==="del"){
+    if(b.getAttribute("data-confirm")!=="1"){b.setAttribute("data-confirm","1");b.textContent="Yakin hapus?";return;}
+    lib.mine.splice(i,1);saveLib();renderLibrary();toast("Dihapus");
+  }
+}
+
+/* ================= PENGATURAN AI ================= */
+var DEFAULT_MODEL="claude-haiku-5-5";
+function settings(){return Object.assign({apiKey:"",model:DEFAULT_MODEL},lsGet(LS_SET)||{});}
+function openSettings(){
+  sheetMode="set";openSheet("Pengaturan AI");$("#sheet-tabs").innerHTML="";
+  var s=settings();
+  $("#sheet-body").innerHTML=
+    '<p class="note">Tombol <b>Tanyai saya</b> memakai Claude lewat kunci API Anda sendiri. Tanpa kunci, aplikasi tetap memberi pertanyaan pemandu bawaan.</p>'+
+    '<div class="field"><label for="set-key">Kunci API Claude</label><input type="password" id="set-key" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" value="'+esc(s.apiKey)+'">'+
+    '<span class="note">Buat kunci di <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener" style="color:var(--c-hasil)">console.anthropic.com</a>. Kunci hanya disimpan di Chrome perangkat ini dan hanya dikirim ke api.anthropic.com. Pemakaian dikenai biaya sesuai akun Anda.</span></div>'+
+    '<div class="field"><label for="set-model">Model</label><input type="text" id="set-model" spellcheck="false" value="'+esc(s.model)+'"><span class="note">Bawaan: '+DEFAULT_MODEL+' (cepat dan hemat).</span></div>'+
+    '<div class="nav"><button class="btn btn-ghost" type="button" id="set-clear">Hapus kunci</button><button class="btn btn-fill" type="button" id="set-save" style="--c:var(--c-plus)">Simpan</button></div>';
+  $("#set-save").addEventListener("click",function(){
+    lsSet(LS_SET,{apiKey:$("#set-key").value.trim(),model:$("#set-model").value.trim()||DEFAULT_MODEL});closeSheet();toast("Pengaturan disimpan");});
+  $("#set-clear").addEventListener("click",function(){lsSet(LS_SET,{apiKey:"",model:settings().model});closeSheet();toast("Kunci API dihapus");});
+}
+$("#btn-set").addEventListener("click",openSettings);
+
+function callClaude(input,signal){
+  var s=settings();
+  if(!s.apiKey&&SAMPLE){return SAMPLE(input,{signal:signal,cache:false}).then(function(r){var t=(r&&r.text)||"";var m=t.match(/\{[\s\S]*\}/);if(!m)throw new Error("Jawaban AI tidak berbentuk JSON");return JSON.parse(m[0]);},function(e){var er=new Error((e&&e.message)||"AI belum bisa dihubungi");er.status=e&&e.code==="rate_limited"?429:0;throw er;});}
+  return fetch("https://api.anthropic.com/v1/messages",{method:"POST",signal:signal,
+    headers:{"x-api-key":s.apiKey,"anthropic-version":"2023-06-01","content-type":"application/json","anthropic-dangerous-direct-browser-access":"true"},
+    body:JSON.stringify({model:s.model||DEFAULT_MODEL,max_tokens:900,messages:[{role:"user",content:input}]})
+  }).then(function(r){return r.json().catch(function(){return {};}).then(function(j){
+    if(!r.ok){var e=new Error((j.error&&j.error.message)||("HTTP "+r.status));e.status=r.status;throw e;}
+    var t=(j.content||[]).filter(function(c){return c.type==="text";}).map(function(c){return c.text;}).join("");
+    var m=t.match(/\{[\s\S]*\}/);if(!m)throw new Error("Jawaban AI tidak berbentuk JSON");
+    return JSON.parse(m[0]);
+  });});
+}
+
+/* ================= TANYAI SAYA ================= */
+var askCtl=null,askQs=[];
+var SAMPLE=null;
+(function(){var n=0;(function tryUse(){if(window.claude&&window.claude.use){window.claude.use("sample").then(function(s){SAMPLE=s||null;}).catch(function(){});return;}if(++n<20)setTimeout(tryUse,250);})();})();
+function fallbackQuestions(){
+  var T=TYPES[state.type],qs=[];
+  KEYS.forEach(function(k){if(qs.length<3&&!filled(k))qs.push({bagian:k,tanya:T[k].q,contoh:T[k].ph});});
+  KEYS.forEach(function(k){
+    if(qs.length>=3)return;
+    var w=vagueIn(state.f[k]+" "+state.f[k+"2"]);
+    if(w.length&&!qs.some(function(q){return q.bagian===k;}))qs.push({bagian:k,tanya:"Di bagian "+SEC[k].label+" Anda menulis “"+w[0]+"”. Apa ukurannya yang konkret?",contoh:VAGUE[w[0]]});
+  });
+  if(qs.length<2){
+    if(!clean(state.f.konteks2))qs.push({bagian:"konteks",tanya:"Siapa persisnya yang akan membaca atau memakai hasilnya?",contoh:"mis. kepala dinas yang hanya sempat membaca 2 menit"});
+    if(qs.length<2)qs.push({bagian:"hasil",tanya:"Berapa panjang atau jumlah hasil yang Anda harapkan?",contoh:"mis. maks. 300 kata atau 5 poin"});
+  }
+  return qs.slice(0,3);
+}
+function openAsk(){
+  sheetMode="ask";openSheet("Tanyai saya");$("#sheet-tabs").innerHTML="";
+  if(!settings().apiKey&&!SAMPLE){renderAsk(fallbackQuestions(),"pemandu","Ini pertanyaan pemandu bawaan. Pasang kunci API Claude di Pengaturan agar pertanyaan disusun AI dari draf Anda.");return;}
+  $("#sheet-body").innerHTML='<div class="loading"><span class="spin"></span>AI sedang membaca draf Anda dan menyiapkan pertanyaan…</div>';
+  askCtl=new AbortController();
+  var draftObj={};KEYS.forEach(function(k){draftObj[k]=state.f[k];if(state.mode==="lengkap")draftObj[k+"_tambahan"]=state.f[k+"2"];});
+  draftObj.batasan_terpilih=state.chips.batasan;draftObj.hasil_terpilih=state.chips.hasil;
+  var input="Anda membantu pengguna Indonesia menyempurnakan prompt AI dengan rumus Peran–Tugas–Konteks–Batasan–Hasil.\n"+
+    "Jenis kebutuhan: "+TYPES[state.type].nama+".\nIsian saat ini (JSON): "+JSON.stringify(draftObj)+"\n"+
+    "Prompt sementara:\n"+(promptText()||"(kosong)")+"\n\n"+
+    "Ajukan 2 sampai 3 pertanyaan klarifikasi paling penting yang jawabannya akan paling memperbaiki prompt ini. Utamakan bagian yang kosong, kabur (kata seperti bagus, menarik, lengkap), atau kurang spesifik. Pertanyaan singkat, dalam Bahasa Indonesia sehari-hari yang sopan, satu hal per pertanyaan. Sertakan contoh jawaban singkat yang realistis.\n"+
+    "Balas HANYA JSON tanpa teks lain, dengan bentuk: {\"pertanyaan\":[{\"bagian\":\"peran|tugas|konteks|batasan|hasil\",\"tanya\":\"...\",\"contoh\":\"mis. ...\"}]}";
+  callClaude(input,askCtl.signal).then(function(res){
+    if(sheetMode!=="ask")return;
+    var qs=(res&&res.pertanyaan||[]).filter(function(q){return q&&q.tanya&&KEYS.indexOf(q.bagian)>=0;}).slice(0,3);
+    renderAsk(qs.length?qs:fallbackQuestions(),qs.length?"ai":"pemandu");
+  }).catch(function(err){
+    if(sheetMode!=="ask"||(err&&err.name==="AbortError"))return;
+    var st=err&&err.status,msg=st===401?"Kunci API ditolak. Periksa kunci di Pengaturan.":st===404?"Nama model tidak dikenal. Periksa di Pengaturan.":st===429||st===529?"AI sedang sibuk. Coba lagi sebentar.":"AI belum bisa dihubungi.";
+    renderAsk(fallbackQuestions(),"pemandu",msg+" Sementara ini, pertanyaan pemandu bawaan:");
+  });
+}
+function renderAsk(qs,src,note){
+  askQs=qs;
+  var h='<p class="note">'+esc(note||(src==="ai"?"Pertanyaan berikut disusun AI dari draf Anda. Jawab yang Anda tahu; yang kosong dilewati.":"Pertanyaan pemandu untuk bagian yang masih kosong atau kabur."))+'</p>';
+  h+=qs.map(function(q,i){return '<div class="q-card" style="--c:'+COLOR[q.bagian]+'"><span class="badge">'+SEC[q.bagian].label+'</span><label for="ans-'+i+'">'+esc(q.tanya)+'</label><textarea id="ans-'+i+'" rows="2" placeholder="'+esc(q.contoh||"")+'"></textarea></div>';}).join("");
+  h+='<div class="nav"><button class="btn btn-ghost" type="button" id="ask-cancel">Batal</button><button class="btn btn-fill" type="button" id="ask-go" style="--c:var(--c-plus)">Masukkan ke prompt</button></div>';
+  $("#sheet-body").innerHTML=h;
+  $("#ask-cancel").addEventListener("click",closeSheet);
+  $("#ask-go").addEventListener("click",applyAnswers);
+  var a0=$("#ans-0");if(a0)a0.focus();
+}
+function applyAnswers(){
+  var n=0;
+  askQs.forEach(function(q,i){
+    var a=clean($("#ans-"+i).value);if(!a)return;n++;
+    var k=q.bagian,cur=clean(state.f[k]);
+    state.f[k]=cur?cur+". "+uf(a):(k==="tugas"||k==="konteks"?a:a);
+  });
+  closeSheet();
+  if(n){renderSection();renderLive();toast(n+" jawaban dimasukkan ke prompt");}
+  else toast("Tidak ada jawaban yang diisi");
+}
+
+/* ================= BOOT ================= */
+storageLoad([LS_DRAFT,LS_LIB,LS_SET]).then(function(){
+  draft=lsGet(LS_DRAFT);lib.mine=lsGet(LS_LIB)||[];
+  renderHome();
+});
+})();
+
+</script>
+</body>
+</html>
