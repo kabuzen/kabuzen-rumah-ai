@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KABUZEN Ship Manoeuvring</title>
+<link rel="icon" href="data:image/webp;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Konsol anjungan malam: indigo gelap KABUZEN, aksen kuning; plot taktis di kiri, panel kerja di kanan */
+  --bg: #0a0533;
+  --panel: #140a52;
+  --panel-2: #1d0b78;
+  --line: #3b2bc4;
+  --ink: #eef0ff;
+  --muted: #a9a6d8;
+  --accent: #ffd60a;
+  --cyan: #4fd8ff;
+  --good: #3ddc84;
+  --warn: #ffb020;
+  --bad: #ff5c6c;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--font); }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.app { display: grid; grid-template-rows: auto 1fr; height: 100%; }
+
+/* header */
+header.top { display: flex; align-items: center; gap: 16px; padding: 8px 14px; background: var(--panel-2); border-bottom: 3px solid var(--accent); }
+.brand { display: flex; flex-direction: column; min-width: 0; }
+.brand b { font-weight: 900; letter-spacing: .06em; font-size: 17px; white-space: nowrap; }
+.brand span { color: var(--muted); font-size: 11.5px; letter-spacing: .04em; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; background: rgba(255,255,255,.08); font-size: 12px; white-space: nowrap; }
+.chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.chip .dot.on { background: var(--good); } .chip .dot.off { background: var(--bad); }
+.chip.mono { font-family: var(--mono); }
+.logo { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--accent); flex: none; background: var(--bg); object-fit: cover; }
+.iconbtn { background: rgba(255,255,255,.08); border: 1px solid transparent; border-radius: 8px; padding: 4px 8px; font-size: 12px; }
+.iconbtn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+
+/* main */
+main { display: grid; grid-template-columns: minmax(0,1fr) 420px; min-height: 0; }
+.plotwrap { position: relative; min-height: 0; border-right: 1px solid var(--line); }
+#plot { width: 100%; height: 100%; display: block; background: radial-gradient(circle at 50% 50%, #12075a 0%, #0a0533 70%); }
+.plotbar { position: absolute; left: 10px; top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+.plotbar button { background: rgba(10,5,51,.85); border: 1px solid var(--line); border-radius: 8px; padding: 4px 9px; font-size: 12px; }
+.plotbar button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.plotinfo { position: absolute; left: 10px; bottom: 10px; background: rgba(10,5,51,.85); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 12px; max-width: min(460px, 90%); }
+.plotinfo .sig { font-family: var(--mono); color: var(--accent); font-weight: 700; font-size: 15px; }
+
+aside.side { display: flex; flex-direction: column; min-height: 0; background: var(--panel); }
+.tabs { display: flex; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tabs button { flex: 1; background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 8px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.pane { padding: 14px; overflow-y: auto; display: none; flex: 1; min-height: 0; }
+.pane.active { display: flex; flex-direction: column; gap: 14px; }
+h3 { margin: 0; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.card.hi { border-color: var(--accent); }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.grow { flex: 1; }
+label.f { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+input[type=text], input[type=number], input[type=password], select, textarea { background: #0b0640; border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; width: 100%; }
+input[type=number] { font-family: var(--mono); }
+.btn { border: 1px solid var(--line); background: #241a8f; border-radius: 9px; padding: 8px 12px; font-weight: 600; }
+.btn:hover { filter: brightness(1.15); }
+.btn.pri { background: var(--accent); color: #1d0b78; border-color: var(--accent); }
+.btn.exec { background: #c8102e; border-color: #ff5c6c; color: #fff; letter-spacing: .05em; }
+.btn.ghost { background: transparent; }
+.btn:disabled { opacity: .45; cursor: not-allowed; filter: none; }
+.seg { display: flex; flex-wrap: wrap; gap: 4px; }
+.seg button { background: #0b0640; border: 1px solid var(--line); border-radius: 7px; padding: 5px 9px; font-size: 12.5px; font-weight: 600; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #1d0b78; border-color: var(--accent); }
+.formgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 6px; }
+.formgrid button { background: #0b0640; border: 1px solid var(--line); border-radius: 9px; padding: 4px; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; color: var(--muted); }
+.formgrid button b { color: var(--ink); font-family: var(--mono); font-size: 13px; }
+.formgrid button[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.formgrid canvas { width: 70px; height: 54px; }
+.big { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--accent); }
+.kv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.kv div { background: #0b0640; border-radius: 9px; padding: 7px 9px; }
+.kv small { display: block; color: var(--muted); font-size: 11px; }
+.kv strong { font-family: var(--mono); font-size: 17px; }
+.note { font-size: 12.5px; color: var(--muted); }
+.warn { color: var(--warn); } .bad { color: var(--bad); } .good { color: var(--good); }
+table.t { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+table.t th { text-align: left; font-weight: 600; color: var(--muted); font-size: 11px; border-bottom: 1px solid var(--line); padding: 4px; }
+table.t td { padding: 5px 4px; border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: middle; }
+.tag { display: inline-block; padding: 1px 6px; border-radius: 6px; font-size: 10.5px; font-weight: 700; background: rgba(255,255,255,.1); }
+.tag.g { background: var(--cyan); color: #04223a; } .tag.y { background: var(--accent); color: #1d0b78; }
+.tag.ok { background: var(--good); color: #062; } .tag.w { background: var(--warn); color: #3a2400; } .tag.b { background: var(--bad); color: #fff; }
+.acks { display: flex; gap: 4px; flex-wrap: wrap; }
+.acks span { font-family: var(--mono); font-size: 11px; padding: 2px 6px; border-radius: 6px; background: rgba(255,255,255,.08); }
+.acks span.ok { background: var(--good); color: #062; }
+.log { font-family: var(--mono); font-size: 12px; display: flex; flex-direction: column; gap: 4px; }
+.log div { border-left: 3px solid var(--line); padding-left: 8px; }
+.log div.exec { border-color: #ff5c6c; }
+canvas#pog { width: 100%; aspect-ratio: 1; background: #f7f5ea; border-radius: 10px; }
+.mic { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: #0b0640; flex: none; }
+.mic.live { background: var(--bad); border-color: var(--bad); animation: pulse 1s infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(255,92,108,.25); } }
+@media (prefers-reduced-motion: reduce) { .mic.live { animation: none; } }
+
+/* login */
+.login { overflow-y: auto; padding: 24px 16px; }
+.login .wrap { max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; }
+.hero { background: var(--panel-2); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 12px; position: relative; }
+.hero h1 { margin: 0; font-size: 34px; line-height: 1.05; font-weight: 900; letter-spacing: .01em; text-wrap: balance; }
+.hero .bars { display: flex; gap: 8px; } .hero .bars i { width: 40px; height: 4px; border-radius: 2px; }
+.hero p { margin: 0; color: var(--muted); max-width: 52ch; }
+.seats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.seats button { background: #0b0640; border: 1px solid var(--line); border-radius: 10px; padding: 10px 6px; text-align: left; display: flex; flex-direction: column; gap: 2px; }
+.seats button b { font-size: 13px; }
+.seats button small { color: var(--muted); font-size: 11px; }
+.seats button[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.seats button.taken small { color: var(--warn); }
+.teamlist { display: flex; flex-direction: column; gap: 6px; max-height: 220px; overflow-y: auto; }
+.teamlist button { text-align: left; background: #0b0640; border: 1px solid var(--line); border-radius: 10px; padding: 9px 10px; display: flex; justify-content: space-between; gap: 8px; }
+.teamlist button[aria-pressed="true"] { border-color: var(--accent); }
+.err { color: var(--bad); font-size: 12.5px; min-height: 1em; }
+.banner { background: rgba(255,176,32,.12); border: 1px solid var(--warn); border-radius: 10px; padding: 8px 10px; font-size: 12.5px; }
+.toast { position: fixed; right: 16px; bottom: 16px; background: var(--panel-2); border: 1px solid var(--accent); border-radius: 12px; padding: 10px 14px; max-width: 360px; z-index: 50; display: none; }
+.toast.show { display: block; }
+.hidden { display: none !important; }
+
+@media (max-width: 900px) {
+  main { grid-template-columns: 1fr; grid-template-rows: 46vh auto; }
+  .plotwrap { border-right: 0; border-bottom: 1px solid var(--line); }
+  aside.side { min-height: 60vh; }
+  .login .wrap { grid-template-columns: 1fr; }
+  .brand span { display: none; }
+  .chips .opt { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><b>KABUZEN SHIP MANOEUVRING</b><span>Olah gerak formasi kapal perang dalam konvoi · latihan 8 kapal real-time</span></div>
+    <div class="chips">
+      <span class="chip opt" id="chTeam" hidden><span class="dot" id="dotConn"></span><span id="txtTeam">—</span></span>
+      <span class="chip" id="chRole" hidden>—</span>
+      <span class="chip mono" id="chClock" hidden>00:00:00</span>
+      <button class="iconbtn" id="btnVoice" aria-pressed="true" title="Bacakan isyarat dengan suara">Suara ON</button>
+      <button class="iconbtn" id="btnLogout" hidden>Keluar</button>
+    </div>
+    <img class="logo" src="data:image/webp;base64,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" alt="Logo KABUZEN">
+  </header>
+
+  <!-- ================= LOGIN ================= -->
+  <section class="login" id="vLogin">
+    <div class="wrap">
+      <div class="hero">
+        <h1>Latihan olah gerak formasi untuk delapan kapal</h1>
+        <div class="bars"><i style="background:#ffd60a"></i><i style="background:#ff5c6c"></i><i style="background:#3ddc84"></i><i style="background:#fff"></i><i style="background:#4fd8ff"></i></div>
+        <p>Koordinator (OTC) memberi isyarat FORM, CORPEN, TURN, SPEED, dan STATION secara tertulis atau lisan. Tiap kapal menghitung haluan dan kecepatan dengan Papan Olah Gerak (POG) untuk menempati stasiunnya, lalu melapor ketika sudah di stasiun.</p>
+        <canvas id="heroAnim" style="width:100%;height:220px;border-radius:12px;background:#0a0533"></canvas>
+        <p class="note">Rujukan: ATP 1(D) Vol. II, Bab 1 (Pasal 121–141) dan Bab 4–7. Diagram digambar ulang untuk latihan.</p>
+      </div>
+      <div class="card" style="gap:14px">
+        <div id="loginBanner" class="banner hidden"></div>
+        <div>
+          <h3>1 · Pilih tim</h3>
+          <div class="teamlist" id="teamList" style="margin-top:8px"><span class="note">Memuat daftar tim…</span></div>
+        </div>
+        <details id="newTeamBox">
+          <summary class="note" style="cursor:pointer">+ Buat tim latihan baru (oleh Koordinator)</summary>
+          <div class="card" style="margin-top:8px">
+            <label class="f" for="ntName">Nama tim<input type="text" id="ntName" placeholder="mis. Tim Alfa – Kelas Perwira 2026"></label>
+            <div class="row">
+              <label class="f grow" for="ntKoor">PIN Koordinator<input type="password" id="ntKoor" placeholder="min. 4 karakter"></label>
+              <label class="f grow" for="ntCrew">Kata sandi anggota<input type="password" id="ntCrew" placeholder="dibagikan ke 8 kapal"></label>
+            </div>
+            <button class="btn pri" id="ntCreate">Buat tim</button>
+            <div class="err" id="ntErr"></div>
+          </div>
+        </details>
+        <div>
+          <h3>2 · Pilih peran</h3>
+          <div class="seats" id="seatGrid" style="margin-top:8px"></div>
+        </div>
+        <div class="row">
+          <label class="f grow" for="lgPass">Kata sandi / PIN<input type="password" id="lgPass" autocomplete="off"></label>
+          <label class="f grow" for="lgName">Nama perwira (opsional)<input type="text" id="lgName" placeholder="mis. Lettu Laut (P) Andi"></label>
+        </div>
+        <button class="btn pri" id="lgGo">Masuk</button>
+        <div class="err" id="lgErr"></div>
+        <button class="btn ghost" id="lgLocal">Mode Mandiri (satu perangkat, tanpa jaringan)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAIN ================= -->
+  <main id="vMain" class="hidden">
+    <div class="plotwrap">
+      <canvas id="plot"></canvas>
+      <div class="plotbar">
+        <button id="vwTrue" aria-pressed="true">Sejati (U di atas)</button>
+        <button id="vwRel" aria-pressed="false">Relatif sumbu formasi</button>
+        <button id="zIn">＋</button><button id="zOut">－</button>
+        <button id="vwStations" aria-pressed="true">Stasiun</button>
+        <button id="vwTrails" aria-pressed="true">Jejak</button>
+      </div>
+      <div class="plotinfo" id="plotInfo"></div>
+    </div>
+    <aside class="side">
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <!-- Koordinator -->
+      <div class="pane" id="pOrder"></div>
+      <div class="pane" id="pShips"></div>
+      <div class="pane" id="pDrill"></div>
+      <div class="pane" id="pLog"></div>
+      <!-- Kapal -->
+      <div class="pane" id="pMyOrder"></div>
+      <div class="pane" id="pPog"></div>
+      <div class="pane" id="pHelm"></div>
+    </aside>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* KABUZEN SHIP MANOEUVRING — mesin inti (dipakai bersama aplikasi & LMS)
+ * Koordinat: x = timur (nm), y = utara (nm). Baringan sejati 000 = utara, searah jarum jam.
+ * Bingkai sumbu formasi: x' = kanan/STBD, y' = depan (haluan sumbu formasi).
+ */
+const KBZ = (() => {
+  const RAD = Math.PI / 180;
+  const norm360 = a => ((a % 360) + 360) % 360;
+  const norm180 = a => { a = norm360(a); return a > 180 ? a - 360 : a; };
+  const vec = (brg, d) => ({ x: d * Math.sin(brg * RAD), y: d * Math.cos(brg * RAD) });
+  const brgOf = (dx, dy) => norm360(Math.atan2(dx, dy) / RAD);
+  const len = (dx, dy) => Math.hypot(dx, dy);
+  const fmt3 = a => String(Math.round(norm360(a)) % 360).padStart(3, '0');
+  const YD_PER_NM = 2000;
+
+  // ---------------------------------------------------------------- formasi
+  const SHIPS = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'];
+
+  /** Katalog isyarat FORM (ringkas dari ATP 1(D) Vol II Bab 4, diparafrasekan). */
+  const FORMS = {
+    '1': { name: 'Kolom (urutan nomor)', en: 'Column in order', group: 'Garis tunggal', desc: 'Kapal membentuk satu kolom berurutan menurut nomor urut; nomor 1 di depan.' },
+    '2': { name: 'Kolom urutan terbalik', en: 'Column in reverse order', group: 'Garis tunggal', desc: 'Satu kolom dengan urutan terbalik; nomor terbesar di depan.' },
+    '3': { name: 'Bersaf ke kanan (STBD)', en: 'Line abreast to stbd', group: 'Garis tunggal', desc: 'Satu saf (line abreast); kapal berikutnya di lambung kanan kapal sebelumnya.' },
+    '4': { name: 'Bersaf ke kiri (PORT)', en: 'Line abreast to port', group: 'Garis tunggal', desc: 'Satu saf; kapal berikutnya di lambung kiri kapal sebelumnya.' },
+    '5': { name: 'Divisi berkolom ke kanan', en: 'Divisions in column to stbd', group: 'Garis ganda', desc: 'Dua divisi masing-masing berkolom; guide divisi 2 di lambung kanan (abeam) guide divisi 1 pada interval manuver.' },
+    '6': { name: 'Divisi berkolom ke kiri', en: 'Divisions in column to port', group: 'Garis ganda', desc: 'Dua divisi berkolom; divisi 2 di lambung kiri divisi 1.' },
+    '7': { name: 'Subdivisi berkolom ke kanan', en: 'Subdivisions in column to stbd', group: 'Garis ganda', desc: 'Empat subdivisi (dua kapal) berkolom; guide subdivisi berjajar abeam ke kanan.' },
+    '8': { name: 'Subdivisi berkolom ke kiri', en: 'Subdivisions in column to port', group: 'Garis ganda', desc: 'Empat subdivisi berkolom; guide subdivisi berjajar abeam ke kiri.' },
+    '9': { name: 'Divisi bersaf ke kanan', en: 'Divisions in line abreast to stbd', group: 'Garis ganda', desc: 'Tiap divisi bersaf ke kanan; guide divisi 2 tepat di buritan guide divisi 1.' },
+    '10': { name: 'Divisi bersaf ke kiri', en: 'Divisions in line abreast to port', group: 'Garis ganda', desc: 'Tiap divisi bersaf ke kiri; guide divisi 2 di buritan guide divisi 1.' },
+    '11': { name: 'Subdivisi bersaf ke kanan', en: 'Subdivisions in line abreast to stbd', group: 'Garis ganda', desc: 'Tiap subdivisi bersaf ke kanan; guide subdivisi berderet ke buritan.' },
+    '12': { name: 'Subdivisi bersaf ke kiri', en: 'Subdivisions in line abreast to port', group: 'Garis ganda', desc: 'Tiap subdivisi bersaf ke kiri; guide subdivisi berderet ke buritan.' },
+    'A': { name: 'Kolom urutan tercepat', en: 'Column, quickest sequence', group: 'Urutan tercepat', desc: 'Kolom pada kapal paling depan (atau kapal ditunjuk); kapal lain di belakangnya menurut posisi masing-masing. Kapal yang dibentuki menjadi Guide.' },
+    'B': { name: 'Bersaf urutan tercepat', en: 'Line abreast, quickest sequence', group: 'Urutan tercepat', desc: 'Saf pada Guide; tiap kapal ke lambung Guide yang terdekat, urutan menurut posisi masing-masing.' },
+    'C': { name: 'Kolom longgar', en: 'Loose line of column', group: 'Turunan', desc: 'Hanya dari kolom. Kapal di perempat buritan sisi yang ditunjuk, garis baringan dalam 15° dari kolom. Kapal terdepan menjadi Guide.' },
+    'D': { name: 'Formasi belah ketupat (Diamond)', en: 'Diamond', group: 'Turunan', desc: 'Hanya dari kolom. Kapal 2 di perempat kiri Guide, 3 di perempat kanan, 4 di buritan (3D); belah ketupat kedua pada kapal 4. Kapal terdepan menjadi Guide.' },
+    'E': { name: 'Kolom terbuka (Open order)', en: 'Column open order', group: 'Turunan', desc: 'Kapal genap 4° di perempat kiri, kapal ganjil 2° di perempat kanan, jarak sama seperti kolom. Kapal terdepan menjadi Guide.' },
+    'F': { name: 'Membalik urutan kolom', en: 'Reverse order in column', group: 'Turunan', desc: 'Kapal paling belakang menjadi Guide, mendahului dari sisi yang ditunjuk; kapal lain berturut-turut mengambil tempat di belakangnya.' },
+    'LB': { name: 'Garis baringan sejati', en: 'Line of bearing (true)', group: 'Garis baringan', desc: 'FORM ttt — kapal membentuk garis pada baringan sejati yang ditunjuk dari guide garisnya.' },
+    'LR': { name: 'Garis baringan relatif', en: 'Line of bearing (relative)', group: 'Garis baringan', desc: 'FORM PORT/STBD n — kapal membentuk garis pada baringan relatif n×10° dari guide garisnya.' },
+    'O': { name: 'Garis baringan longgar (OSCAR)', en: 'Loose line of bearing', group: 'Garis baringan', desc: 'Garis baringan longgar urutan tercepat; toleransi ±15° dari baringan.' },
+    'Y': { name: 'Bersaf longgar (YANKEE)', en: 'Loose line abreast', group: 'Garis baringan', desc: 'Saf longgar urutan tercepat; toleransi ±15° dari lambung terdekat Guide.' },
+  };
+
+  const div = s => (s <= 4 ? 0 : 1);          // seq 1..8 -> divisi 0/1
+  const jdiv = s => (s - 1) % 4;              // posisi dalam divisi
+  const sub = s => Math.floor((s - 1) / 2);   // subdivisi 0..3
+  const jsub = s => (s - 1) % 2;
+  const DIAMOND_A = Math.SQRT2; // sisi 2D pada 45°
+
+  /** Slot dalam satuan D pada bingkai sumbu, seq 1 di (0,0). */
+  function templateSlot(code, s, p = {}) {
+    const k = s - 1;
+    switch (String(code)) {
+      case '1': return { x: 0, y: -k };
+      case '2': return { x: 0, y: -(8 - s) };
+      case '3': return { x: k, y: 0 };
+      case '4': return { x: -k, y: 0 };
+      case '5': return { x: div(s) * 4, y: -jdiv(s) };
+      case '6': return { x: -div(s) * 4, y: -jdiv(s) };
+      case '7': return { x: sub(s) * 2, y: -jsub(s) };
+      case '8': return { x: -sub(s) * 2, y: -jsub(s) };
+      case '9': return { x: jdiv(s), y: -div(s) * 4 };
+      case '10': return { x: -jdiv(s), y: -div(s) * 4 };
+      case '11': return { x: jsub(s), y: -sub(s) * 2 };
+      case '12': return { x: -jsub(s), y: -sub(s) * 2 };
+      case 'D': {
+        const a = DIAMOND_A;
+        const t = [[0, 0], [-a, -a], [a, -a], [0, -3], [a, -3 - a], [-a, -3 - a], [0, -6], [-a, -6 - a]];
+        return { x: t[k][0], y: t[k][1] };
+      }
+      case 'E': {
+        if (k === 0) return { x: 0, y: 0 };
+        const rel = (s % 2 === 0) ? 184 : 178; // genap kiri 4°, ganjil kanan 2°
+        const v = vec(rel, k); return { x: v.x, y: v.y };
+      }
+      case 'C': {
+        const rel = p.side === 'PORT' ? 190 : 170;
+        const v = vec(rel, k); return { x: v.x, y: v.y };
+      }
+      case 'LR': {
+        const rel = (p.side === 'PORT' ? -1 : 1) * (p.tens || 0) * 10;
+        const v = vec(rel, k); return { x: v.x, y: v.y };
+      }
+      default: return { x: 0, y: -k };
+    }
+  }
+
+  /** Kerangka sumbu -> sejati (dx,dy) */
+  function axisToTrue(pt, axis) {
+    const c = Math.cos(axis * RAD), s = Math.sin(axis * RAD);
+    return { x: pt.x * c + pt.y * s, y: -pt.x * s + pt.y * c };
+  }
+  function trueToAxis(pt, axis) {
+    const c = Math.cos(axis * RAD), s = Math.sin(axis * RAD);
+    return { x: pt.x * c - pt.y * s, y: pt.x * s + pt.y * c };
+  }
+
+  /**
+   * Hitung formasi sasaran.
+   * opts: {code, side, tens, brg (FORM ttt / O), axis (haluan sumbu), D (yard),
+   *        guide: 'S1', seq: {S1:1..}, states: {S1:{x,y,h,v}} posisi saat eksekusi,
+   *        stationShip, stationBrg, stationDist, stationRel}
+   * Hasil: {code, axis, guide, Dnm, offsets: {Sx:{x,y}} (bingkai sumbu, nm, relatif Guide), order:[...] , tol (nm)}
+   */
+  function computeFormation(o) {
+    const Dnm = (o.D || 500) / YD_PER_NM;
+    const axis = norm360(o.axis || 0);
+    const seq = o.seq || Object.fromEntries(SHIPS.map((s, i) => [s, i + 1]));
+    const ships = SHIPS.slice().sort((a, b) => seq[a] - seq[b]);
+    let guide = o.guide || ships[0];
+    const code = String(o.code);
+    let order = ships.slice(); // urutan slot -> kapal
+    let slots = {};
+    let tol = 0.05; // 100 yd
+    const st = o.states || {};
+    const rel = (sid) => { // posisi sumbu relatif guide
+      const g = st[guide], s = st[sid];
+      if (!g || !s) return { x: 0, y: 0 };
+      return trueToAxis({ x: s.x - g.x, y: s.y - g.y }, axis);
+    };
+
+    if (code === 'A') {
+      // kolom pada kapal paling depan (sepanjang sumbu)
+      const along = sid => { const s = st[sid]; if (!s) return 0; return trueToAxis({ x: s.x, y: s.y }, axis).y; };
+      order = ships.slice().sort((a, b) => along(b) - along(a));
+      if (o.formOn) { // kapal ditunjuk: di depan/belakang dia menurut posisi
+        const ref = along(o.formOn);
+        const ahead = ships.filter(s => s !== o.formOn && along(s) > ref).sort((a, b) => along(a) - along(b));
+        const astern = ships.filter(s => s !== o.formOn && along(s) <= ref).sort((a, b) => along(b) - along(a));
+        order = [...ahead.reverse(), o.formOn, ...astern];
+        guide = o.formOn;
+      } else guide = order[0];
+      order.forEach((sid, i) => slots[sid] = { x: 0, y: -i });
+    } else if (code === 'B' || code === 'Y') {
+      const xs = sid => rel(sid).x;
+      const others = ships.filter(s => s !== guide);
+      const stb = others.filter(s => xs(s) >= 0).sort((a, b) => xs(a) - xs(b));
+      const prt = others.filter(s => xs(s) < 0).sort((a, b) => xs(b) - xs(a));
+      slots[guide] = { x: 0, y: 0 };
+      stb.forEach((sid, i) => slots[sid] = { x: i + 1, y: 0 });
+      prt.forEach((sid, i) => slots[sid] = { x: -(i + 1), y: 0 });
+      order = [...prt.slice().reverse(), guide, ...stb];
+      if (code === 'Y') tol = 0.12;
+    } else if (code === 'LB' || code === 'O') {
+      // garis baringan sejati (atau longgar) dari guide; urut port->stbd / menurut proyeksi
+      const brg = norm360(o.brg || 0);
+      const relB = norm180(brg - axis);
+      if (code === 'O') {
+        const u = vec(relB, 1);
+        const proj = sid => { const r = rel(sid); return r.x * u.x + r.y * u.y; };
+        const others = ships.filter(s => s !== guide);
+        const fwd = others.filter(s => proj(s) >= 0).sort((a, b) => proj(a) - proj(b));
+        const back = others.filter(s => proj(s) < 0).sort((a, b) => proj(b) - proj(a));
+        slots[guide] = { x: 0, y: 0 };
+        fwd.forEach((sid, i) => { const v = vec(relB, i + 1); slots[sid] = v; });
+        back.forEach((sid, i) => { const v = vec(relB + 180, i + 1); slots[sid] = v; });
+        order = [...back.reverse(), guide, ...fwd];
+        tol = 0.12;
+      } else {
+        // urutan nomor dari guide garis (seq terkecil) pada baringan ditunjuk
+        ships.forEach((sid, i) => { slots[sid] = vec(relB, i); });
+      }
+    } else if (code === 'F') {
+      // membalik urutan kolom: urutan kolom saat ini dibalik, kapal paling belakang jadi Guide
+      const along = sid => { const s = st[sid]; if (!s) return 0; return trueToAxis({ x: s.x, y: s.y }, axis).y; };
+      order = ships.slice().sort((a, b) => along(a) - along(b)); // paling belakang dulu
+      guide = order[0];
+      order.forEach((sid, i) => slots[sid] = { x: 0, y: -i });
+    } else if (code === 'STATION') {
+      // satu kapal mengambil stasiun; formasi lain dipertahankan (ditangani pemanggil)
+      const prev = o.prev;
+      slots = {};
+      if (prev) Object.entries(prev.offsets).forEach(([k, v]) => slots[k] = { x: v.x / Dnm, y: v.y / Dnm });
+      const sb = o.stationRel ? norm360(axis + o.stationBrg) : norm360(o.stationBrg);
+      const v = trueToAxis(vec(sb, o.stationDist || 1), axis);
+      slots[o.stationShip] = { x: v.x / Dnm, y: v.y / Dnm };
+      if (prev && prev.guide) guide = prev.guide;
+      slots[guide] = slots[guide] || { x: 0, y: 0 };
+      // normalisasi relatif guide (prev sudah relatif guide)
+      const offsets = {};
+      Object.entries(slots).forEach(([k, v]) => offsets[k] = { x: v.x * Dnm, y: v.y * Dnm });
+      return { code, axis, guide, Dnm, offsets, order: SHIPS.slice(), tol: 0.05, D: o.D || 500 };
+    } else {
+      ships.forEach(sid => slots[sid] = templateSlot(code, seq[sid], o));
+      // kapal terdepan jadi Guide untuk C/D/E (dari kolom)
+      if (['C', 'D', 'E'].includes(code)) {
+        guide = ships[0];
+        if (code === 'C') tol = 0.1;
+      }
+    }
+    // relatif terhadap guide
+    const g = slots[guide] || { x: 0, y: 0 };
+    const offsets = {};
+    SHIPS.forEach(sid => {
+      const s = slots[sid];
+      if (!s) return;
+      offsets[sid] = { x: (s.x - g.x) * Dnm, y: (s.y - g.y) * Dnm };
+    });
+    return { code, axis, guide, Dnm, offsets, order, tol, D: o.D || 500, side: o.side || null, brg: o.brg ?? null, tens: o.tens ?? null };
+  }
+
+  /** Stasiun sejati (baringan & jarak dari Guide) untuk kapal sid */
+  function stationOf(form, sid) {
+    const off = form.offsets[sid];
+    if (!off) return null;
+    const t = axisToTrue(off, form.axis);
+    return { dx: t.x, dy: t.y, brg: brgOf(t.x, t.y), dist: len(t.x, t.y) };
+  }
+
+  // ------------------------------------------------------------- POG solver
+  /**
+   * Papan Olah Gerak — menempati stasiun relatif terhadap Guide yang bergerak.
+   * in: {gc, gs (haluan & kecepatan Guide), m1:{brg,dist} posisi sendiri dari Guide,
+   *      m2:{brg,dist} stasiun dari Guide, mode:'speed'|'time'|'course', speed, time (menit), course}
+   * out: {ok, course, speed, drm, mrm, srm, minutes, cpa:{dist,brg,minutes}, msg, vg, vo, u}
+   */
+  function solvePOG(p) {
+    const M1 = vec(p.m1.brg, p.m1.dist), M2 = vec(p.m2.brg, p.m2.dist);
+    const rx = M2.x - M1.x, ry = M2.y - M1.y;
+    const mrm = len(rx, ry);
+    const drm = brgOf(rx, ry);
+    const vg = vec(p.gc, p.gs);
+    const out = { ok: false, drm, mrm, vg, M1, M2 };
+    if (mrm < 1e-6) { return Object.assign(out, { ok: true, course: p.gc, speed: p.gs, srm: 0, minutes: 0, msg: 'Sudah di stasiun — samakan haluan & kecepatan Guide.' }); }
+    const u = { x: rx / mrm, y: ry / mrm };
+    out.u = u;
+    let s = null, vo = null;
+    if (p.mode === 'time') {
+      const T = (p.time || 0) / 60; if (T <= 0) return Object.assign(out, { msg: 'Waktu harus > 0.' });
+      s = mrm / T; vo = { x: vg.x + s * u.x, y: vg.y + s * u.y };
+    } else if (p.mode === 'course') {
+      const c = vec(p.course, 1);
+      const cross = (a, b) => a.x * b.y - a.y * b.x;
+      const den = cross(c, u);
+      if (Math.abs(den) < 1e-9) return Object.assign(out, { msg: 'Haluan sejajar garis gerak relatif — tidak ada penyelesaian.' });
+      const V = cross(vg, u) / den;
+      vo = { x: V * c.x, y: V * c.y };
+      s = (vo.x - vg.x) * u.x + (vo.y - vg.y) * u.y;
+      if (V <= 0 || s <= 0) return Object.assign(out, { msg: 'Dengan haluan itu kapal tidak dapat mencapai stasiun. Pilih haluan lain.' });
+    } else {
+      const Vo = p.speed;
+      const b = vg.x * u.x + vg.y * u.y;
+      const disc = b * b - (p.gs * p.gs) + Vo * Vo;
+      if (disc < 0) return Object.assign(out, { msg: `Kecepatan ${Vo} kn tidak cukup untuk mencapai stasiun. Naikkan kecepatan.` });
+      const r1 = -b + Math.sqrt(disc), r2 = -b - Math.sqrt(disc);
+      s = Math.max(r1, r2);
+      if (s <= 0) return Object.assign(out, { msg: `Kecepatan ${Vo} kn tidak cukup untuk mencapai stasiun. Naikkan kecepatan.` });
+      vo = { x: vg.x + s * u.x, y: vg.y + s * u.y };
+      out.alt = (Math.min(r1, r2) > 0) ? { srm: Math.min(r1, r2) } : null;
+      if (out.alt) { const v2 = { x: vg.x + out.alt.srm * u.x, y: vg.y + out.alt.srm * u.y }; out.alt.course = brgOf(v2.x, v2.y); out.alt.minutes = mrm / out.alt.srm * 60; }
+    }
+    const speed = len(vo.x, vo.y);
+    const course = brgOf(vo.x, vo.y);
+    const minutes = mrm / s * 60;
+    // CPA terhadap Guide (titik asal) sepanjang lintasan relatif M1->M2
+    const tStar = Math.max(0, Math.min(mrm, -(M1.x * u.x + M1.y * u.y)));
+    const cp = { x: M1.x + u.x * tStar, y: M1.y + u.y * tStar };
+    const cpa = { dist: len(cp.x, cp.y), brg: brgOf(cp.x, cp.y), minutes: tStar / s * 60 };
+    return Object.assign(out, { ok: true, course, speed, srm: s, minutes, cpa, vo, msg: '' });
+  }
+
+  // ------------------------------------------------------------ kinematika
+  const SHIP_PERF = { maxSpeed: 30, accel: 0.06, decel: 0.1, radius: 0.2 }; // kn/s, kn/s, nm (diameter taktis 800 yd)
+
+  /** Integrasi posisi kapal dari status tersimpan sampai waktu sim t (detik). */
+  function propagate(sd, t, perf = SHIP_PERF) {
+    const nx = sd.next;
+    if (nx && nx.t > sd.t && t > nx.t) {
+      const mid = propagateSeg(sd, nx.t, perf);
+      return propagateSeg(Object.assign({}, mid, { cc: nx.cc, cv: nx.cv, td: 0, next: null }), t, perf);
+    }
+    const r = propagateSeg(sd, t, perf);
+    if (nx && nx.t > sd.t && t <= nx.t) r.next = nx;
+    return r;
+  }
+  function propagateSeg(sd, t, perf = SHIP_PERF) {
+    let x = sd.x, y = sd.y, h = sd.h, v = sd.v, tt = sd.t;
+    const cc = sd.cc ?? h, cv = sd.cv ?? v;
+    let turnDir = sd.td || 0; // +1 kanan, -1 kiri, 0 terpendek
+    let guard = 0;
+    while (tt < t && guard < 20000) {
+      guard++;
+      const dh = norm180(cc - h);
+      const dv = cv - v;
+      if (Math.abs(dh) < 0.01 && Math.abs(dv) < 0.001) {
+        // lurus: lompat langsung
+        const dt = t - tt; const d = v * dt / 3600; const w = vec(h, d);
+        x += w.x; y += w.y; tt = t; h = cc; v = cv; break;
+      }
+      const dt = Math.min(1, t - tt);
+      // kecepatan
+      if (dv > 0) v = Math.min(cv, v + perf.accel * dt); else if (dv < 0) v = Math.max(cv, v - perf.decel * dt);
+      // belok
+      const rate = Math.max(0.6, (Math.max(v, 4) / 3600) / perf.radius / RAD); // deg/s
+      if (Math.abs(dh) >= 0.01) {
+        let dir = turnDir || Math.sign(dh);
+        if (turnDir && Math.abs(dh) < rate * dt + 0.01) dir = Math.sign(dh); // selesai belok
+        const step = Math.min(Math.abs(dir === Math.sign(dh) ? dh : 360 - Math.abs(dh)), rate * dt);
+        h = norm360(h + dir * step);
+        if (Math.abs(norm180(cc - h)) < 0.01) { h = norm360(cc); turnDir = 0; }
+      }
+      const w = vec(h, v * dt / 3600); x += w.x; y += w.y; tt += dt;
+    }
+    return { x, y, h: norm360(h), v, t, cc, cv, td: turnDir, next: null };
+  }
+
+  /** Jam simulasi bersama */
+  function simNow(clock, nowMs = Date.now()) {
+    if (!clock) return 0;
+    if (clock.paused) return clock.simAt;
+    return clock.simAt + (nowMs - clock.wallAt) / 1000 * (clock.rate || 1);
+  }
+
+  /** Penjaga stasiun otomatis — perintah haluan/kecepatan untuk kapal sid */
+  function autoCommand(ownState, guideState, form, sid, stationingSpeed = 18) {
+    const stn = stationOf(form, sid);
+    if (!stn) return null;
+    const gpos = { x: guideState.x, y: guideState.y };
+    const rx = ownState.x - gpos.x, ry = ownState.y - gpos.y;
+    const m1 = { brg: brgOf(rx, ry), dist: len(rx, ry) };
+    const err = len(stn.dx - rx, stn.dy - ry);
+    const gc = guideState.cc ?? guideState.h, gs = guideState.cv ?? guideState.v;
+    if (err <= form.tol * 0.6) {
+      // jaga stasiun: koreksi halus
+      const corr = solvePOG({ gc, gs, m1, m2: { brg: stn.brg, dist: stn.dist }, mode: 'time', time: 3 });
+      if (corr.ok) {
+        const spd = Math.max(0, Math.min(SHIP_PERF.maxSpeed, corr.speed));
+        const crs = Math.abs(norm180(corr.course - gc)) > 30 ? gc : corr.course;
+        return { cc: Math.round(crs * 2) / 2, cv: Math.round(spd * 10) / 10, inStation: true, err };
+      }
+      return { cc: Math.round(gc), cv: gs, inStation: true, err };
+    }
+    // menuju stasiun dengan kecepatan stationing; jika sudah dekat pakai mode waktu agar halus
+    const sp = Math.max(stationingSpeed, gs + 2);
+    let sol = solvePOG({ gc, gs, m1, m2: { brg: stn.brg, dist: stn.dist }, mode: 'speed', speed: Math.min(sp, SHIP_PERF.maxSpeed) });
+    if (sol.ok && err < 0.4) {
+      const tmin = Math.max(3, sol.minutes);
+      const s2 = solvePOG({ gc, gs, m1, m2: { brg: stn.brg, dist: stn.dist }, mode: 'time', time: tmin });
+      if (s2.ok && s2.speed <= SHIP_PERF.maxSpeed) sol = s2;
+    }
+    if (!sol.ok) return { cc: Math.round(gc), cv: SHIP_PERF.maxSpeed, inStation: false, err };
+    const cc = Math.round(sol.course * 2) / 2, cv = Math.round(sol.speed * 2) / 2;
+    // rencana tiba: beralih ke haluan/kecepatan Guide sedikit sebelum tiba (memperhitungkan perlambatan & belok)
+    const dec = Math.abs(cv - gs) / SHIP_PERF.decel / 2;
+    const turn = Math.abs(norm180(gc - cc)) / Math.max(0.6, (Math.max(cv, 4) / 3600) / SHIP_PERF.radius / RAD) / 2;
+    const rateNow = Math.max(0.6, (Math.max(ownState.v || cv, 4) / 3600) / SHIP_PERF.radius / RAD);
+    const firstTurn = Math.abs(norm180(cc - (ownState.h ?? cc))) / rateNow;
+    const tArr = sol.minutes * 60;
+    const arriveIn = (tArr >= 240 && firstTurn < 60) ? Math.max(0, tArr + firstTurn * 0.5 - dec - turn) : null;
+    return { cc, cv, inStation: false, err, arriveIn, gc: Math.round(gc * 2) / 2, gs };
+  }
+
+  // ------------------------------------------------------------ isyarat teks
+  const SIDE_ID = { PORT: 'kiri', STBD: 'kanan' };
+  /** Ubah objek perintah menjadi teks isyarat + teks lisan */
+  function signalText(o) {
+    switch (o.type) {
+      case 'FORM': {
+        let sig = 'FORM ' + o.code, say = 'Formasi ' + o.code;
+        if (o.code === 'LB') { sig = 'FORM ' + fmt3(o.brg); say = 'Formasi garis baringan ' + spellNum(fmt3(o.brg)); }
+        else if (o.code === 'LR') { sig = `FORM ${o.side} ${o.tens}`; say = `Formasi garis baringan relatif ${SIDE_ID[o.side]} ${o.tens * 10} derajat`; }
+        else if (o.code === 'O') { sig = 'FORM O ' + fmt3(o.brg); say = 'Formasi Oscar baringan ' + spellNum(fmt3(o.brg)); }
+        else if (['C', 'F', 'Y'].includes(o.code) && o.side) { sig += ' ' + o.side; say = `Formasi ${PHON[o.code]} ${SIDE_ID[o.side]}`; }
+        else if (/^[A-Z]$/.test(o.code)) say = 'Formasi ' + PHON[o.code];
+        else say = 'Formasi ' + o.code;
+        if (o.D && o.Dchanged) { sig += ` — D ${o.D} yd`; say += `, jarak ${o.D} yard`; }
+        const nm = FORMS[o.code] ? FORMS[o.code].name : '';
+        return { sig, say: say + (nm ? ', ' + nm : ''), meaning: nm };
+      }
+      case 'CORPEN': return { sig: 'CORPEN A ' + fmt3(o.course), say: 'Corpen Alfa ' + spellNum(fmt3(o.course)), meaning: 'Ubah haluan formasi (wheel) ke ' + fmt3(o.course) + '° — sumbu formasi ikut berputar' };
+      case 'TURN': return o.course != null
+        ? { sig: `TURN ${o.side} ${fmt3(o.course)}`, say: `Turn ${SIDE_ID[o.side]} ${spellNum(fmt3(o.course))}`, meaning: `Belok bersama ke ${SIDE_ID[o.side]} sampai haluan ${fmt3(o.course)}° — baringan sejati dipertahankan` }
+        : { sig: `TURN ${o.side} ${o.tens}`, say: `Turn ${SIDE_ID[o.side]} ${o.tens * 10} derajat`, meaning: `Belok bersama ${o.tens * 10}° ke ${SIDE_ID[o.side]}` };
+      case 'SPEED': return { sig: 'SPEED ' + o.speed, say: 'Speed ' + o.speed + ' knot', meaning: 'Kecepatan Guide ' + o.speed + ' knot' };
+      case 'GUIDE': return { sig: 'DESIG GUIDE ' + o.ship, say: 'Guide adalah kapal ' + o.ship.slice(1), meaning: 'Kapal ' + o.ship.slice(1) + ' ditunjuk sebagai The Guide' };
+      case 'STATION': return { sig: `STATION ${o.rel ? (o.stationBrg >= 0 ? 'STBD ' + Math.round(o.stationBrg / 10) : 'PORT ' + Math.round(-o.stationBrg / 10)) : fmt3(o.stationBrg)}—${o.ship}—${o.stationDist}`, say: `Kapal ${o.ship.slice(1)} ambil stasiun ${o.rel ? 'relatif ' : ''}baringan ${spellNum(fmt3(o.stationBrg))} jarak ${o.stationDist} mil`, meaning: `Kapal ${o.ship.slice(1)} mengambil stasiun baringan ${o.rel ? 'relatif ' : ''}${fmt3(o.stationBrg)}° dari Guide, jarak ${o.stationDist} nm` };
+      case 'DIVGUIDE': return { sig: `DIV ${o.div} GUIDE ${o.ship}`, say: `Guide divisi ${o.div} adalah kapal ${o.ship.slice(1)}`, meaning: `Kapal ${o.ship.slice(1)} menjadi guide divisi ${o.div}` };
+      default: return { sig: '?', say: '', meaning: '' };
+    }
+  }
+  const PHON = { A: 'Alfa', B: 'Bravo', C: 'Charlie', D: 'Delta', E: 'Echo', F: 'Foxtrot', O: 'Oscar', Y: 'Yankee' };
+  const DIGITS = ['nol', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan'];
+  function spellNum(str) { return String(str).split('').map(c => DIGITS[+c] ?? c).join(' '); }
+
+  // ------------------------------------------------------- pengurai suara/teks
+  const WORDNUM = { nol: 0, zero: 0, kosong: 0, satu: 1, one: 1, wan: 1, dua: 2, two: 2, tiga: 3, three: 3, tree: 3, empat: 4, four: 4, fower: 4, lima: 5, five: 5, fife: 5, enam: 6, six: 6, tujuh: 7, seven: 7, delapan: 8, eight: 8, sembilan: 9, nine: 9, niner: 9, sepuluh: 10, ten: 10, sebelas: 11, eleven: 11, 'dua belas': 12, twelve: 12 };
+  const LETTERS = { alfa: 'A', alpha: 'A', bravo: 'B', charlie: 'C', delta: 'D', echo: 'E', foxtrot: 'F', oscar: 'O', yankee: 'Y' };
+  /** Normalisasi ucapan: kata bilangan -> digit (digit berurutan digabung) */
+  function normalizeSpeech(t) {
+    let s = ' ' + String(t).toLowerCase().replace(/[.,;:!?]/g, ' ').replace(/-/g, ' ') + ' ';
+    s = s.replace(/dua belas/g, '12');
+    Object.entries(WORDNUM).forEach(([w, n]) => { s = s.replace(new RegExp(' ' + w + '(?= )', 'g'), ' ' + n); });
+    s = s.replace(/ (\d) belas(?= )/g, (_, d) => ' ' + (10 + +d));
+    s = s.replace(/ (\d) puluh (\d)(?= )/g, (_, a, b) => ' ' + (a * 10 + +b) + 'X');
+    s = s.replace(/ (\d) puluh(?= )/g, (_, a) => ' ' + (a * 10) + 'X');
+    s = s.replace(/ (\d+)X/g, ' $1 ').replace(/(\d)X/g, '$1');
+    // gabungkan digit tunggal berurutan "0 9 0" -> "090"
+    s = s.replace(/\b(\d)\s+(?=\d\b)/g, '$1');
+    s = s.replace(/\b(\d)\s+(\d)\b/g, '$1$2');
+    return s.replace(/\s+/g, ' ').trim();
+  }
+  /** Urai perintah dari teks/ucapan. Kembali objek perintah atau null. */
+  function parseCommand(text) {
+    const s = normalizeSpeech(text);
+    let m;
+    const side = /(stbd|starboard|kanan)/.test(s) ? 'STBD' : /(port|kiri)/.test(s) ? 'PORT' : null;
+    if (/(guide|pemandu)/.test(s) && (m = s.match(/(?:kapal|ship|s)\s*([1-8])\b/))) {
+      if ((m2 = s.match(/divisi\s*([12])|div\s*([12])/))) return { type: 'DIVGUIDE', div: +(m2[1] || m2[2]), ship: 'S' + m[1] };
+      return { type: 'GUIDE', ship: 'S' + m[1] };
+    }
+    var m2;
+    if (/(corpen|haluan formasi|haluan)/.test(s) && (m = s.match(/\b(\d{3})\b/))) return { type: 'CORPEN', course: +m[1] % 360 };
+    if (/(speed|kecepatan|laju)/.test(s) && (m = s.match(/\b(\d{1,2})\b/))) return { type: 'SPEED', speed: +m[1] };
+    if (/(turn|belok)/.test(s) && side) {
+      if ((m = s.match(/\b(\d{3})\b/))) return { type: 'TURN', side, course: +m[1] % 360 };
+      if ((m = s.match(/\b(\d{1,3})\s*(derajat|degrees?)/))) return { type: 'TURN', side, tens: Math.round(+m[1] / 10) };
+      if ((m = s.match(/\b(\d{1,2})\b/))) return { type: 'TURN', side, tens: +m[1] };
+    }
+    if (/(station|stasiun)/.test(s) && (m = s.match(/(?:kapal|ship|s)\s*([1-8])\b/))) {
+      const rest = s.replace(m[0], ' ');
+      const b = rest.match(/\b(\d{3})\b/); const d = rest.match(/(?:jarak|distance)\s*(\d+(?:[.,]\d+)?)/);
+      if (b) return { type: 'STATION', ship: 'S' + m[1], stationBrg: +b[1] % 360, stationDist: d ? parseFloat(d[1].replace(',', '.')) : 1, rel: /relatif|relative/.test(s) };
+    }
+    if (/(form|formasi|formation)/.test(s)) {
+      for (const [w, L] of Object.entries(LETTERS)) if (new RegExp('\\b' + w + '\\b').test(s) || new RegExp('\\bform(asi)? ' + L.toLowerCase() + '\\b').test(s)) {
+        const o = { type: 'FORM', code: L };
+        if (L === 'O') { const b = s.match(/\b(\d{3})\b/); o.brg = b ? +b[1] : 0; }
+        if (['C', 'F', 'Y'].includes(L)) o.side = side || 'STBD';
+        return o;
+      }
+      if ((m = s.match(/\b(\d{3})\b/))) return { type: 'FORM', code: 'LB', brg: +m[1] % 360 };
+      if (side && (m = s.match(/\b(\d{1,2})\b/)) && /(baringan|bearing|relatif)/.test(s)) return { type: 'FORM', code: 'LR', side, tens: +m[1] };
+      if ((m = s.match(/\b(\d{1,2})\b/)) && +m[1] >= 1 && +m[1] <= 12) return { type: 'FORM', code: String(+m[1]) };
+    }
+    return null;
+  }
+
+  return {
+    RAD, norm360, norm180, vec, brgOf, len, fmt3, YD_PER_NM, SHIPS, FORMS, SHIP_PERF,
+    templateSlot, axisToTrue, trueToAxis, computeFormation, stationOf, solvePOG,
+    propagate, simNow, autoCommand, signalText, parseCommand, normalizeSpeech, spellNum,
+  };
+})();
+if (typeof module !== 'undefined') module.exports = KBZ;
+
+</script>
+<script>
+"use strict";
+const K = KBZ;
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clone = o => JSON.parse(JSON.stringify(o ?? null));
+const f3 = K.fmt3;
+const yd = nm => Math.round(nm * 2000);
+const SHIPS = K.SHIPS;
+const SHIP_COLORS = ['#ffffff', '#ff9f9f', '#9fe7ff', '#c7ff9f', '#ffd59f', '#d6b3ff', '#9fffe0', '#ffb3e6'];
+const LS = { get(k) { try { return JSON.parse(localStorage.getItem('kbzsm.' + k)); } catch { return null; } }, set(k, v) { try { localStorage.setItem('kbzsm.' + k, JSON.stringify(v)); } catch {} } };
+
+function toast(msg, ms = 3500) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), ms); }
+
+/* ------------------------------------------------------------ penyimpanan */
+const parentOf = p => p.split('/').slice(0, -1).join('/');
+class LocalStore {
+  constructor() { this.docs = new Map(); this.subs = new Set(); this.local = true; }
+  _col(cp) { const o = {}; for (const [p, v] of this.docs) if (parentOf(p) === cp) o[p.split('/').pop()] = v; return o; }
+  _emit(path) { for (const s of this.subs) { if (s.kind === 'doc' && s.path === path) s.cb(clone(this.docs.get(path))); if (s.kind === 'col' && parentOf(path) === s.path) s.cb(clone(this._col(s.path))); } }
+  sub(path, cb) { const s = { kind: 'doc', path, cb }; this.subs.add(s); setTimeout(() => cb(clone(this.docs.get(path)))); return () => this.subs.delete(s); }
+  subCol(path, cb) { const s = { kind: 'col', path, cb }; this.subs.add(s); setTimeout(() => cb(clone(this._col(path)))); return () => this.subs.delete(s); }
+  async get(path) { return clone(this.docs.get(path)); }
+  async set(path, d) { this.docs.set(path, clone(d)); this._emit(path); }
+  async update(path, d) { const cur = this.docs.get(path) || {}; this.docs.set(path, merge(clone(cur), clone(d))); this._emit(path); }
+}
+function merge(a, b) { for (const k of Object.keys(b)) { if (b[k] && typeof b[k] === 'object' && !Array.isArray(b[k]) && a[k] && typeof a[k] === 'object' && !Array.isArray(a[k])) merge(a[k], b[k]); else a[k] = b[k]; } return a; }
+class RemoteStore {
+  constructor(db) { this.db = db; this.q = new Map(); this.local = false; }
+  sub(path, cb, err) { return this.db.doc(path).onSnapshot(s => cb(s.exists ? clone(s.data()) : null), e => { console.warn(path, e); err && err(e); }); }
+  subCol(path, cb, err) { return this.db.collection(path).onSnapshot(qs => { const o = {}; qs.docs.forEach(d => o[d.id] = clone(d.data())); cb(o, qs.metadata); }, e => { console.warn(path, e); err && err(e); }); }
+  async get(path) { const s = await this.db.doc(path).get(); return s.exists ? clone(s.data()) : null; }
+  _q(path, fn) { const prev = this.q.get(path) || Promise.resolve(); const p = prev.catch(() => {}).then(fn); this.q.set(path, p); return p; }
+  set(path, d) { return this._q(path, () => this.db.doc(path).set(d)); }
+  update(path, d) { return this._q(path, () => this.db.doc(path).update(d)); }
+}
+
+/* ------------------------------------------------------------ status global */
+const S = {
+  store: null, room: null, user: null, tts: null, dict: null, uid: null,
+  teams: {}, teamId: null, team: null, seat: null, seats: {},
+  ex: null, ships: {}, P: {}, cache: {}, unsub: [], peers: [],
+  view: 'true', range: 2, showStations: true, showTrails: true, trails: {},
+  voice: LS.get('voice') ?? true, lastSpokenKey: null, myApplied: LS.get('applied') || null,
+  draft: { type: 'FORM', code: '1', side: 'STBD', tens: 3, brg: 45, course: 90, speed: 15, ship: 'S2', stationBrg: 45, stationDist: 2, rel: false, div: 1 },
+  pogManual: false, pog: { mode: 'speed', speed: 18, time: 20, course: 0 }, lastScoreWrite: {}, aiLast: {},
+};
+const isKoor = () => S.seat === 'KOOR';
+const APP_URL = 'https://claude.ai/artifact/A7WHGxE1pfKAgabehqrkUf';
+
+/* ------------------------------------------------------------ kapabilitas */
+async function initCaps() {
+  const use = n => (window.claude && window.claude.use) ? window.claude.use(n).catch(() => null) : Promise.resolve(null);
+  const [db, user, room, tts, dict] = await Promise.all([use('db'), use('user'), use('room'), use('tts'), use('dictation')]);
+  S.user = user; S.room = room; S.tts = tts; S.dict = dict;
+  if (user) { try { S.uid = await user.id(); } catch {} }
+  if (db) { S.store = new RemoteStore(db); return true; }
+  return false;
+}
+
+/* ------------------------------------------------------------ jam simulasi */
+const simNow = () => K.simNow(S.ex && S.ex.clock);
+const hms = t => { t = Math.max(0, Math.floor(t)); const h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60; return [h, m, s].map(v => String(v).padStart(2, '0')).join(':'); };
+
+/* posisi semua kapal pada waktu sim t (dengan cache inkremental) */
+function positions(t) {
+  const P = {};
+  for (const sid of SHIPS) {
+    const d = S.ships[sid]; if (!d) continue;
+    const c = S.cache[sid];
+    let base = d;
+    if (c && c.doc === d && c.st.t <= t) base = Object.assign({}, d, c.st);
+    const st = K.propagate(base, t);
+    S.cache[sid] = { doc: d, st: Object.assign({}, st, { t }) };
+    P[sid] = st;
+  }
+  return P;
+}
+const guideId = () => (S.ex && S.ex.guide) || 'S1';
+function stationErr(sid, P = S.P) {
+  const f = S.ex && S.ex.form; const g = P[guideId()], o = P[sid];
+  if (!f || !g || !o) return null;
+  const st = K.stationOf(f, sid); if (!st) return null;
+  return K.len(o.x - g.x - st.dx, o.y - g.y - st.dy);
+}
+
+/* ------------------------------------------------------------ data awal tim */
+function initialShips(D = 500, course = 0, speed = 12, ai = false) {
+  const out = {};
+  SHIPS.forEach((sid, i) => {
+    const v = K.vec(course + 180, i * D / 2000);
+    out[sid] = { x: v.x, y: v.y, h: course, v: speed, t: 0, cc: course, cv: speed, td: 0, name: 'Kapal ' + (i + 1), ai, follow: true, autoKeep: false, ack: null, report: null };
+  });
+  return out;
+}
+function initialEx(D = 500) {
+  const form = K.computeFormation({ code: '1', axis: 0, D, guide: 'S1' });
+  form.id = 'f0'; form.at = 0; form.label = 'FORM 1';
+  return {
+    clock: { simAt: 0, wallAt: Date.now(), rate: 5, paused: false },
+    guide: 'S1', divGuides: { 1: 'S1', 2: 'S5' }, D, stationingSpeed: 18, baseCourse: 0, baseSpeed: 12,
+    form, order: null, log: [], score: {}, seq: Object.fromEntries(SHIPS.map((s, i) => [s, i + 1])),
+  };
+}
+async function writeTeamData(tid, ex, ships) {
+  await S.store.set(`teams/${tid}/live/ex`, ex);
+  for (const sid of SHIPS) await S.store.set(`teams/${tid}/ships/${sid}`, ships[sid]);
+}
+
+async function hashPin(tid, pin) {
+  const txt = 'kbzsm:' + tid + ':' + pin;
+  try { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt)); return Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2, '0')).join(''); }
+  catch { let h = 0; for (const c of txt) h = (h * 31 + c.charCodeAt(0)) | 0; return 'x' + h; }
+}
+
+/* ============================================================== LOGIN ==== */
+let selTeam = null, selSeat = null;
+function renderSeatGrid() {
+  const g = $('#seatGrid');
+  const roles = [['KOOR', 'Koordinator', 'OTC / instruktur'], ...SHIPS.map((s, i) => [s, 'Kapal ' + (i + 1), ''])];
+  g.innerHTML = roles.map(([id, nm, sub]) => {
+    const st = S.seats[id];
+    const taken = st && st.uid && st.uid !== S.uid;
+    const mine = st && st.uid && st.uid === S.uid;
+    const label = sub || (S.loginShips && S.loginShips[id] && S.loginShips[id].name !== nm ? esc(S.loginShips[id].name) : '');
+    const info = mine ? 'kursi Anda' : taken ? 'dipakai: ' + esc(st.officer || 'anggota lain') : (label || 'kosong');
+    return `<button data-seat="${id}" aria-pressed="${selSeat === id}" class="${taken ? 'taken' : ''}"><b>${nm}</b><small>${info}</small></button>`;
+  }).join('');
+  g.querySelectorAll('button').forEach(b => b.onclick = () => { selSeat = b.dataset.seat; renderSeatGrid(); $('#lgPass').placeholder = selSeat === 'KOOR' ? 'PIN Koordinator' : 'Kata sandi anggota'; });
+}
+function renderTeamList() {
+  const el = $('#teamList');
+  const ids = Object.keys(S.teams).sort((a, b) => (S.teams[b].createdAt || 0) - (S.teams[a].createdAt || 0));
+  if (!ids.length) { el.innerHTML = '<span class="note">Belum ada tim. Koordinator membuat tim baru di bawah.</span>'; $('#newTeamBox').open = true; return; }
+  el.innerHTML = ids.map(id => `<button data-t="${esc(id)}" aria-pressed="${selTeam === id}"><span>${esc(S.teams[id].name)}</span><small class="note">${new Date(S.teams[id].createdAt || 0).toLocaleDateString('id-ID')}</small></button>`).join('');
+  el.querySelectorAll('button').forEach(b => b.onclick = () => selectTeam(b.dataset.t));
+}
+let seatUnsub = null, shipNameUnsub = null;
+function selectTeam(id) {
+  selTeam = id; renderTeamList();
+  seatUnsub && seatUnsub(); shipNameUnsub && shipNameUnsub();
+  S.seats = {}; S.loginShips = {};
+  seatUnsub = S.store.subCol(`teams/${id}/seats`, o => { S.seats = o || {}; renderSeatGrid(); });
+  shipNameUnsub = S.store.subCol(`teams/${id}/ships`, o => { S.loginShips = o || {}; renderSeatGrid(); });
+  renderSeatGrid();
+}
+async function createTeam() {
+  const name = $('#ntName').value.trim(), kp = $('#ntKoor').value, cp = $('#ntCrew').value;
+  const err = $('#ntErr'); err.textContent = '';
+  if (name.length < 3) return err.textContent = 'Isi nama tim (min. 3 huruf).';
+  if (kp.length < 4 || cp.length < 4) return err.textContent = 'PIN Koordinator dan kata sandi anggota min. 4 karakter.';
+  if (kp === cp) return err.textContent = 'PIN Koordinator harus berbeda dari kata sandi anggota.';
+  const tid = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 30) + '-' + Math.random().toString(36).slice(2, 6);
+  try {
+    await S.store.set(`teams/${tid}`, { name, koorHash: await hashPin(tid, kp), crewHash: await hashPin(tid, cp), createdAt: Date.now(), createdBy: S.uid || null });
+    await writeTeamData(tid, initialEx(), initialShips());
+    $('#ntName').value = $('#ntKoor').value = $('#ntCrew').value = '';
+    $('#newTeamBox').open = false;
+    selectTeam(tid); selSeat = 'KOOR'; renderSeatGrid();
+    toast('Tim dibuat. Masuk sebagai Koordinator dengan PIN Anda.');
+  } catch (e) { err.textContent = 'Gagal menyimpan tim: ' + (e.code === 'invalid_argument' ? 'akun Anda belum punya hak tulis pada aplikasi ini (minta pemilik membagikan sebagai Editor/Contributor).' : (e.message || e.code)); }
+}
+async function doLogin() {
+  const err = $('#lgErr'); err.textContent = '';
+  if (!selTeam) return err.textContent = 'Pilih tim lebih dulu.';
+  if (!selSeat) return err.textContent = 'Pilih peran: Koordinator atau salah satu kapal.';
+  const team = S.teams[selTeam];
+  const h = await hashPin(selTeam, $('#lgPass').value);
+  const ok = selSeat === 'KOOR' ? h === team.koorHash : (h === team.crewHash || h === team.koorHash);
+  if (!ok) return err.textContent = selSeat === 'KOOR' ? 'PIN Koordinator salah.' : 'Kata sandi anggota salah.';
+  const st = S.seats[selSeat];
+  if (st && st.uid && st.uid !== S.uid) toast('Kursi ini sebelumnya dipakai ' + (st.officer || 'anggota lain') + '; Anda mengambil alih.');
+  try {
+    await S.store.set(`teams/${selTeam}/seats/${selSeat}`, { uid: S.uid || 'local', officer: $('#lgName').value.trim().slice(0, 60), at: Date.now() });
+  } catch (e) { return err.textContent = 'Tidak dapat menyimpan login: ' + (e.code === 'invalid_argument' ? 'akun Anda hanya punya akses lihat. Minta Koordinator/pemilik membagikan aplikasi dengan akses Contributor/Editor.' : e.message); }
+  LS.set('login', { team: selTeam, seat: selSeat });
+  enterTeam(selTeam, selSeat);
+}
+
+async function startLocal() {
+  S.store = new LocalStore(); S.uid = 'local';
+  const tid = 'mandiri';
+  await S.store.set(`teams/${tid}`, { name: 'Mode Mandiri', createdAt: Date.now() });
+  await writeTeamData(tid, initialEx(), initialShips(500, 0, 12, true));
+  S.teams = { [tid]: { name: 'Mode Mandiri' } };
+  enterTeam(tid, 'KOOR');
+}
+
+/* ============================================================== MASUK TIM */
+function enterTeam(tid, seat) {
+  S.unsub.forEach(u => u && u()); S.unsub = [];
+  S.teamId = tid; S.seat = seat; S.team = S.teams[tid];
+  S.ex = null; S.ships = {}; S.cache = {}; S.trails = {};
+  $('#vLogin').classList.add('hidden'); $('#vMain').classList.remove('hidden');
+  $('#chTeam').hidden = $('#chRole').hidden = $('#chClock').hidden = $('#btnLogout').hidden = false;
+  $('#txtTeam').textContent = (S.team && S.team.name) || tid;
+  let timer = setTimeout(() => toast('Data latihan belum terjangkau. Periksa koneksi.'), 10000);
+  S.unsub.push(S.store.sub(`teams/${tid}/live/ex`, d => { clearTimeout(timer); S.ex = d; onEx(); }));
+  S.unsub.push(S.store.subCol(`teams/${tid}/ships`, o => { S.ships = o || {}; onShips(); }));
+  S.unsub.push(S.store.subCol(`teams/${tid}/seats`, o => { S.seats = o || {}; }));
+  if (S.room) S.room.presence({ team: tid, seat }).catch(() => {});
+  buildTabs();
+  setTimeout(resizePlot, 30);
+}
+function logout() {
+  if (S.store && !S.store.local && S.teamId && S.seat) S.store.set(`teams/${S.teamId}/seats/${S.seat}`, { uid: null, officer: '', at: Date.now() }).catch(() => {});
+  S.unsub.forEach(u => u && u()); S.unsub = [];
+  if (S.room) S.room.presence({ team: null, seat: null }).catch(() => {});
+  LS.set('login', null);
+  $('#vMain').classList.add('hidden'); $('#vLogin').classList.remove('hidden');
+  $('#chTeam').hidden = $('#chRole').hidden = $('#chClock').hidden = $('#btnLogout').hidden = true;
+  S.seat = null;
+  if (S.store.local) location.reload();
+}
+
+/* ============================================================== TAB */
+function buildTabs() {
+  let tabs = isKoor()
+    ? [['pOrder', 'Perintah'], ['pShips', 'Kapal'], ['pDrill', 'Latihan'], ['pLog', 'Log & Nilai']]
+    : [['pMyOrder', 'Isyarat'], ['pPog', 'POG'], ['pHelm', 'Kemudi']];
+  if (S.store.local && isKoor()) tabs.push(['pHelm', 'Kemudi']);
+  $('#tabs').innerHTML = tabs.map(([id, nm], i) => `<button role="tab" data-p="${id}" aria-selected="${i === 0}">${nm}</button>`).join('');
+  $$('#tabs button').forEach(b => b.onclick = () => showTab(b.dataset.p));
+  if (S.store.local) $('#chRole').innerHTML = `<select id="localSeat" aria-label="Ganti peran" style="background:transparent;border:0;padding:0;width:auto">${['KOOR', ...SHIPS].map(s => `<option value="${s}" ${s === S.seat ? 'selected' : ''} style="color:#000">${s === 'KOOR' ? 'Koordinator' : shipLabel(s)}</option>`).join('')}</select>`;
+  else $('#chRole').textContent = isKoor() ? 'Koordinator (OTC)' : shipLabel(S.seat);
+  const ls = $('#localSeat'); if (ls) ls.onchange = () => { S.seat = ls.value; S.pogManual = false; S.pogIn = null; buildTabs(); };
+  showTab(tabs[0][0]);
+}
+function showTab(id) { $$('#tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.p === id)); $$('.pane').forEach(p => p.classList.toggle('active', p.id === id)); renderAll(); }
+const shipLabel = sid => { const d = S.ships[sid]; return d && d.name ? d.name : 'Kapal ' + sid.slice(1); };
+const activePane = () => { const a = $('.pane.active'); return a && a.id; };
+
+/* ============================================================== EVENT DATA */
+function onEx() {
+  if (!S.ex) return;
+  // suara: isyarat baru / eksekusi
+  const o = S.ex.order;
+  if (o) {
+    const key = o.id + ':' + o.status;
+    if (key !== S.lastSpokenKey) {
+      const first = S.lastSpokenKey === null;
+      S.lastSpokenKey = key;
+      if (!first) {
+        speak(voiceFor(o));
+      }
+      if (o.status === 'exec' && !isKoor()) applyOwnFollow(o);
+    }
+  }
+  renderAll();
+}
+function onShips() { renderAll(); }
+
+/* Prosedur lisan ATP 1(D): Execute to follow / Immediate execute */
+const VOICE = {
+  etf: o => `Pelaksanaan menyusul. ${o.say}. Ganti.`,
+  exec: o => `Awas… Laksanakan! Ganti.`,
+  ie: o => `Pelaksanaan segera. ${o.say}. Saya ulangi, ${o.say}. Awas… Laksanakan! Ganti.`,
+};
+const voiceFor = o => o.status === 'prep' ? VOICE.etf(o) : (o.method === 'ie' ? VOICE.ie(o) : VOICE.exec(o));
+const methodLabel = o => o.method === 'ie' ? 'PELAKSANAAN SEGERA (Immediate Execute)' : 'PELAKSANAAN MENYUSUL (Execute to Follow)';
+function speak(text) {
+  if (!S.voice) return;
+  if (S.tts) { S.tts.speak(text, { language: 'id' }).catch(() => fallbackSpeak(text)); return; }
+  fallbackSpeak(text);
+}
+function fallbackSpeak(text) { try { const u = new SpeechSynthesisUtterance(text); u.lang = 'id-ID'; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch {} }
+
+/* ============================================================== TULIS KAPAL */
+async function commandShip(sid, cc, cv, td = 0, extra = {}) {
+  const d = S.ships[sid]; if (!d) return;
+  const t = simNow();
+  const st = K.propagate(S.cache[sid] && S.cache[sid].doc === d && S.cache[sid].st.t <= t ? Object.assign({}, d, S.cache[sid].st) : d, t);
+  const nd = Object.assign({}, d, { x: st.x, y: st.y, h: st.h, v: st.v, t, cc: K.norm360(cc), cv: Math.max(0, Math.min(K.SHIP_PERF.maxSpeed, cv)), td, next: null }, extra);
+  S.ships[sid] = nd; // optimistis
+  try { await S.store.set(`teams/${S.teamId}/ships/${sid}`, nd); } catch (e) { toast('Gagal menulis perintah kemudi: ' + (e.message || e.code)); }
+}
+async function patchShip(sid, patch) { try { await S.store.update(`teams/${S.teamId}/ships/${sid}`, patch); } catch (e) { toast('Gagal menyimpan: ' + (e.message || e.code)); } }
+async function patchEx(patch) { try { await S.store.update(`teams/${S.teamId}/live/ex`, patch); } catch (e) { toast('Gagal menyimpan: ' + (e.message || e.code)); } }
+
+/* kapal sendiri mengikuti perintah eksekusi (TURN/CORPEN/SPEED) bila "follow" aktif */
+function applyOwnFollow(o) {
+  const sid = S.seat; const d = S.ships[sid];
+  if (!d || !d.follow || S.myApplied === o.id) return;
+  S.myApplied = o.id; LS.set('applied', o.id);
+  const isG = sid === guideId();
+  if (o.type === 'TURN') { if (!d.autoKeep || isG) commandShip(sid, o.newCourse, d.cv, o.side === 'STBD' ? 1 : -1); }
+  else if (o.type === 'CORPEN' && isG) commandShip(sid, o.course, d.cv);
+  else if (o.type === 'SPEED' && isG) commandShip(sid, d.cc, o.speed);
+}
+
+/* ============================================================== KOORDINATOR: EKSEKUSI */
+function newOrderFromDraft() {
+  const d = S.draft;
+  const o = { type: d.type };
+  if (d.type === 'FORM') { o.code = d.code; if (['C', 'F', 'Y'].includes(d.code)) o.side = d.side; if (d.code === 'LR') { o.side = d.side; o.tens = d.tens; } if (['LB', 'O'].includes(d.code)) o.brg = d.brg; }
+  if (d.type === 'CORPEN') o.course = d.course;
+  if (d.type === 'TURN') { o.side = d.side; if (d.turnMode === 'course') o.course = d.course; else o.tens = d.tens; }
+  if (d.type === 'SPEED') o.speed = d.speed;
+  if (d.type === 'GUIDE') o.ship = d.ship;
+  if (d.type === 'DIVGUIDE') { o.ship = d.ship; o.div = d.div; }
+  if (d.type === 'STATION') { o.ship = d.ship; o.stationBrg = d.stationBrg; o.stationDist = d.stationDist; o.rel = d.rel; }
+  const t = K.signalText(o);
+  return Object.assign(o, { id: 'o' + Date.now().toString(36), sig: t.sig, say: t.say, meaning: t.meaning });
+}
+async function sendPrep() {
+  const o = newOrderFromDraft(); o.status = 'prep'; o.method = 'etf'; o.at = Date.now(); o.simAt = simNow();
+  const log = (S.ex.log || []).slice(-39); log.push({ t: o.simAt, sig: o.sig, st: 'prep', m: 'etf' });
+  await S.store.set(`teams/${S.teamId}/live/ex`, Object.assign(clone(S.ex), { order: o, log }));
+  if (S.voice) speak(voiceFor(o));
+  S.lastSpokenKey = o.id + ':prep';
+}
+async function execute(direct = false) {
+  let o = S.ex.order;
+  if (direct || !o || o.status !== 'prep') { o = newOrderFromDraft(); o.method = 'ie'; }
+  o = clone(o); o.status = 'exec'; o.execAt = simNow();
+  const ex = clone(S.ex); const t = simNow(); const P = positions(t);
+  const shipWrites = [];
+  switch (o.type) {
+    case 'FORM': {
+      const f = K.computeFormation({ code: o.code, side: o.side, tens: o.tens, brg: o.brg, axis: ex.baseCourse, D: ex.D, guide: ex.guide, seq: ex.seq, states: P });
+      f.id = 'f' + Date.now().toString(36); f.at = t; f.label = o.sig;
+      ex.form = f;
+      if (f.guide !== ex.guide) { ex.guide = f.guide; o.say += `. Guide sekarang kapal ${f.guide.slice(1)}`; }
+      if (['5', '6', '9', '10'].includes(o.code)) ex.divGuides = { 1: f.order[0], 2: f.order[4] };
+      if (['7', '8', '11', '12'].includes(o.code)) ex.divGuides = { 1: f.order[0], 2: f.order[4], s1: f.order[0], s2: f.order[2], s3: f.order[4], s4: f.order[6] };
+      ex.score = ex.score || {}; ex.score[f.id] = { label: f.label, at: t, ships: {} };
+      const keys = Object.keys(ex.score); if (keys.length > 8) delete ex.score[keys[0]];
+      break;
+    }
+    case 'CORPEN': ex.baseCourse = o.course; if (ex.form) { ex.form.axis = o.course; } break;
+    case 'TURN': {
+      const nc = o.course != null ? o.course : K.norm360(ex.baseCourse + (o.side === 'STBD' ? 1 : -1) * o.tens * 10);
+      o.newCourse = nc; ex.baseCourse = nc;
+      // belok bersama: sumbu formasi tetap (baringan sejati dipertahankan)
+      break;
+    }
+    case 'SPEED': ex.baseSpeed = o.speed; break;
+    case 'GUIDE': case 'DIVGUIDE': {
+      if (o.type === 'DIVGUIDE') { ex.divGuides = Object.assign({}, ex.divGuides, { [o.div]: o.ship }); break; }
+      if (ex.form) { const base = ex.form.offsets[o.ship] || { x: 0, y: 0 }; const off = {}; Object.entries(ex.form.offsets).forEach(([k, v]) => off[k] = { x: v.x - base.x, y: v.y - base.y }); ex.form.offsets = off; ex.form.guide = o.ship; }
+      ex.guide = o.ship; break;
+    }
+    case 'STATION': {
+      const f = K.computeFormation({ code: 'STATION', axis: ex.baseCourse, D: ex.D, prev: ex.form, stationShip: o.ship, stationBrg: o.rel ? K.norm180(o.stationBrg) : o.stationBrg, stationDist: o.stationDist, stationRel: o.rel });
+      f.id = 'f' + Date.now().toString(36); f.at = t; f.label = o.sig; ex.form = f;
+      ex.score = ex.score || {}; ex.score[f.id] = { label: f.label, at: t, ships: {} };
+      break;
+    }
+  }
+  ex.order = o;
+  const log = (ex.log || []).slice(-39); log.push({ t, sig: o.sig, st: 'exec', m: o.method }); ex.log = log;
+  await S.store.set(`teams/${S.teamId}/live/ex`, ex);
+  S.lastSpokenKey = o.id + ':exec';
+  if (S.voice) speak(voiceFor(o));
+  // kapal AI / follow ditangani loop; terapkan TURN untuk kapal AI segera
+  for (const sid of SHIPS) {
+    const d = S.ships[sid]; if (!d) continue;
+    const ai = isAI(sid);
+    if (!ai) continue;
+    if (o.type === 'TURN') await commandShip(sid, o.newCourse, sid === ex.guide ? ex.baseSpeed : d.cv, o.side === 'STBD' ? 1 : -1);
+    else if (sid === ex.guide && (o.type === 'CORPEN' || o.type === 'SPEED')) await commandShip(sid, ex.baseCourse, ex.baseSpeed);
+  }
+}
+
+/* kapal dianggap AI bila ditandai ai atau kursinya kosong */
+function isAI(sid) {
+  const d = S.ships[sid]; if (!d) return false;
+  if (S.store.local) return d.ai && sid !== S.seat;
+  const seat = S.seats[sid];
+  return !!d.ai || !seat || !seat.uid;
+}
+
+/* ============================================================== LOOP AI & PENILAIAN */
+function aiLoop() {
+  if (!S.ex || !S.ex.form || !S.teamId) return;
+  const t = simNow(); const P = positions(t); const g = guideId();
+  const nowMs = Date.now();
+  const minGap = Math.max(800, 20000 / Math.max(1, S.ex.clock.rate || 1));
+  const handle = (sid) => {
+    const d = S.ships[sid]; if (!d) return;
+    if (nowMs - (S.aiLast[sid] || 0) < minGap) return;
+    const cur = P[sid]; let cc, cv, extra = {};
+    if (sid === g) { cc = S.ex.baseCourse; cv = S.ex.baseSpeed; if (Math.abs(K.norm180(cc - cur.cc)) < 0.5 && Math.abs(cv - cur.cv) < 0.1) return; }
+    else {
+      const gs = Object.assign({}, P[g], { cc: P[g].cc, cv: P[g].cv });
+      const c = K.autoCommand(cur, gs, S.ex.form, sid, S.ex.stationingSpeed || 18);
+      if (!c) return; cc = c.cc; cv = c.cv;
+      if (Math.abs(K.norm180(cc - cur.cc)) < 1 && Math.abs(cv - cur.cv) < 0.4) return;
+      if (c.arriveIn != null) extra.next = { t: t + c.arriveIn, cc: c.gc, cv: c.gs };
+    }
+    S.aiLast[sid] = nowMs;
+    commandShip(sid, cc, cv, 0, extra);
+  };
+  if (isKoor() || S.store.local) for (const sid of SHIPS) if (isAI(sid)) handle(sid);
+  if (!isKoor() && S.ships[S.seat] && S.ships[S.seat].autoKeep) handle(S.seat);
+  // penilaian (Koordinator): catat waktu tiba di stasiun
+  if (isKoor() && S.ex.score && S.ex.form && S.ex.score[S.ex.form.id]) {
+    const sc = S.ex.score[S.ex.form.id]; const patch = {};
+    for (const sid of SHIPS) {
+      if (sid === g || (sc.ships && sc.ships[sid] && sc.ships[sid].t != null)) continue;
+      const e = stationErr(sid, P);
+      if (e != null && e <= S.ex.form.tol) {
+        const key = S.ex.form.id + sid;
+        if (!S.lastScoreWrite[key]) { S.lastScoreWrite[key] = true; patch[sid] = { t: Math.round((t - S.ex.form.at) / 6) / 10, err: yd(e) }; }
+      }
+    }
+    if (Object.keys(patch).length) patchEx({ score: { [S.ex.form.id]: { ships: patch } } });
+  }
+}
+setInterval(aiLoop, 1000);
+
+/* ============================================================== RENDER PANEL */
+let lastPanel = 0;
+function renderAll() {
+  if (!S.ex || $('#vMain').classList.contains('hidden')) return;
+  const p = activePane();
+  const ae = document.activeElement;
+  if (ae && p && ae.closest && ae.closest('#' + p) && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) { renderPlotInfo(); return; }
+  if (p === 'pOrder') renderOrderPane();
+  if (p === 'pShips') renderShipsPane();
+  if (p === 'pDrill') renderDrillPane();
+  if (p === 'pLog') renderLogPane();
+  if (p === 'pMyOrder') renderMyOrder();
+  if (p === 'pPog') renderPog();
+  if (p === 'pHelm') renderHelm();
+  renderPlotInfo();
+}
+setInterval(() => { if (!S.ex) return; const p = activePane(); if (p === 'pShips' || p === 'pMyOrder' || p === 'pHelm' || p === 'pLog') liveUpdate(); if (p === 'pPog' && !S.pogManual) renderPogResult(); renderPlotInfo(); }, 700);
+function liveUpdate() { const p = activePane(); if (p === 'pShips') renderShipsPane(); if (p === 'pMyOrder') renderMyOrderLive(); if (p === 'pHelm') renderHelmLive(); if (p === 'pLog') renderLogPane(); }
+
+function orderCard(o, withAck) {
+  if (!o) return '<div class="card"><span class="note">Belum ada isyarat. Formasi awal: kolom (FORM 1).</span></div>';
+  const st = o.status === 'exec' ? '<span class="tag b">LAKSANAKAN</span>' : '<span class="tag y">AWAS — tunggu "Laksanakan"</span>';
+  let acks = '';
+  if (withAck) acks = '<div class="acks">' + SHIPS.map(s => { const d = S.ships[s]; const ok = d && d.ack === o.id; return `<span class="${ok || isAI(s) ? 'ok' : ''}" title="${esc(shipLabel(s))}">${s}${isAI(s) ? '·AI' : ok ? ' ✓' : ''}</span>`; }).join('') + '</div>';
+  return `<div class="card hi"><div class="note" style="color:var(--accent);font-weight:700;letter-spacing:.04em">${methodLabel(o)}</div><div class="row"><span class="big">${esc(o.sig)}</span><span class="grow"></span>${st}</div><div>${esc(o.meaning || '')}</div>${acks}</div>`;
+}
+
+/* ---------- Koordinator: Perintah ---------- */
+const TYPES = [['FORM', 'FORM'], ['CORPEN', 'CORPEN'], ['TURN', 'TURN'], ['SPEED', 'SPEED'], ['STATION', 'STATION'], ['GUIDE', 'GUIDE'], ['DIVGUIDE', 'GUIDE DIV']];
+const FORM_CODES = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'A', 'B', 'C', 'D', 'E', 'F', 'LB', 'LR', 'O', 'Y'];
+function renderOrderPane() {
+  const d = S.draft; const pane = $('#pOrder');
+  const shipOpts = sel => SHIPS.map(s => `<option value="${s}" ${s === sel ? 'selected' : ''}>${s} · ${esc(shipLabel(s))}</option>`).join('');
+  const sideSeg = `<div class="seg" data-k="side"><button data-v="PORT" aria-pressed="${d.side === 'PORT'}">PORT (kiri)</button><button data-v="STBD" aria-pressed="${d.side === 'STBD'}">STBD (kanan)</button></div>`;
+  let params = '';
+  if (d.type === 'FORM') {
+    params = `<div class="formgrid" id="fgrid">${FORM_CODES.map(c => `<button data-code="${c}" aria-pressed="${d.code === c}" title="${esc(K.FORMS[c].name)}"><canvas width="140" height="108" data-thumb="${c}"></canvas><b>${c === 'LB' ? 'ttt' : c === 'LR' ? 'P/S n' : c}</b></button>`).join('')}</div>
+      <div class="note"><b style="color:var(--ink)">${esc(K.FORMS[d.code].name)}</b> — ${esc(K.FORMS[d.code].desc)}</div>`;
+    if (['C', 'F', 'Y', 'LR'].includes(d.code)) params += sideSeg;
+    if (d.code === 'LR') params += `<label class="f">Baringan relatif (puluhan derajat, 0–18)<input type="number" min="0" max="18" id="dTens" value="${d.tens}"></label>`;
+    if (['LB', 'O'].includes(d.code)) params += `<label class="f">Baringan sejati dari guide (°)<input type="number" min="0" max="359" id="dBrg" value="${d.brg}"></label>`;
+  } else if (d.type === 'CORPEN') params = `<label class="f">Haluan baru formasi (wheel) °<input type="number" min="0" max="359" id="dCourse" value="${d.course}"></label><div class="note">Sumbu formasi ikut berputar; kapal mempertahankan baringan relatif.</div>`;
+  else if (d.type === 'TURN') params = sideSeg + `<div class="seg" data-k="turnMode"><button data-v="tens" aria-pressed="${d.turnMode !== 'course'}">Sejumlah derajat</button><button data-v="course" aria-pressed="${d.turnMode === 'course'}">Ke haluan</button></div>` + (d.turnMode === 'course' ? `<label class="f">Haluan baru °<input type="number" min="0" max="359" id="dCourse" value="${d.course}"></label>` : `<label class="f">Puluhan derajat (1–36)<input type="number" min="1" max="36" id="dTens" value="${d.tens}"></label>`) + '<div class="note">Belok bersama: semua kapal berbelok serentak, baringan sejati antarkapal tetap.</div>';
+  else if (d.type === 'SPEED') params = `<label class="f">Kecepatan Guide (knot)<input type="number" min="0" max="30" id="dSpeed" value="${d.speed}"></label>`;
+  else if (d.type === 'GUIDE') params = `<label class="f">Kapal yang menjadi The Guide<select id="dShip">${shipOpts(d.ship)}</select></label><div class="note">Kapal lain tetap di posisinya dan menjaga stasiun pada Guide baru.</div>`;
+  else if (d.type === 'DIVGUIDE') params = `<div class="row"><label class="f grow">Divisi<select id="dDiv"><option value="1" ${d.div == 1 ? 'selected' : ''}>Divisi 1</option><option value="2" ${d.div == 2 ? 'selected' : ''}>Divisi 2</option></select></label><label class="f grow">Guide divisi<select id="dShip">${shipOpts(d.ship)}</select></label></div>`;
+  else if (d.type === 'STATION') params = `<label class="f">Kapal<select id="dShip">${shipOpts(d.ship)}</select></label><div class="row"><label class="f grow">Baringan ${d.rel ? 'relatif (+kanan/−kiri)' : 'sejati'} °<input type="number" id="dSBrg" value="${d.stationBrg}"></label><label class="f grow">Jarak (nm)<input type="number" step="0.1" min="0.1" id="dSDist" value="${d.stationDist}"></label></div><div class="seg" data-k="rel"><button data-v="false" aria-pressed="${!d.rel}">Sejati</button><button data-v="true" aria-pressed="${!!d.rel}">Relatif</button></div>`;
+  const preview = K.signalText(newOrderFromDraftNoId());
+  const o = S.ex.order;
+  pane.innerHTML = `
+    ${orderCard(o, true)}
+    <div class="card">
+      <h3>Perintah lisan / tulis</h3>
+      <div class="row"><input type="text" id="cmdText" class="grow" placeholder="mis. pelaksanaan menyusul formasi lima · pelaksanaan segera corpen alfa 090" style="flex:1">
+      <button class="mic ${S.dictLive ? 'live' : ''}" id="btnMic" title="Ucapkan perintah" ${S.dict ? '' : 'hidden'}>🎙</button></div>
+      <div class="note" id="cmdNote">${S.dict ? 'Tekan mikrofon lalu ucapkan, mis. "Pelaksanaan menyusul, formasi lima" atau "Pelaksanaan segera, corpen alfa nol sembilan nol". Untuk isyarat yang menunggu, ucapkan "Laksanakan".' : 'Ketik isyarat lalu Enter. (Dikte suara tersedia di Chrome/aplikasi desktop Claude.)'}</div>
+    </div>
+    <div class="card">
+      <h3>Pembuat isyarat</h3>
+      <div class="seg" data-k="type">${TYPES.map(([v, n]) => `<button data-v="${v}" aria-pressed="${d.type === v}">${n}</button>`).join('')}</div>
+      ${params}
+      <div class="row"><span class="big" style="font-size:18px">${esc(preview.sig)}</span></div>
+      <div class="note">${esc(preview.meaning)}</div>
+      ${d.type === 'FORM' || d.type === 'STATION' ? '<canvas id="previewAnim" style="width:100%;height:220px;background:#0a0533;border-radius:10px"></canvas><button class="btn ghost" id="btnAnim">▶ Putar animasi pembentukan dari posisi saat ini</button>' : ''}
+      <div class="row">
+        <button class="btn pri grow" id="btnPrep" title="Execute to Follow: isyarat dikirim, kapal menjawab ROGER, pelaksanaan diberikan kemudian">Pelaksanaan menyusul</button>
+        ${o && o.status === 'prep' ? `<button class="btn exec grow" id="btnExec" title="Executive signal untuk isyarat yang menunggu">AWAS… LAKSANAKAN<br><small>${esc(o.sig)}</small></button>` : ''}
+        <button class="btn exec grow" id="btnIE" title="Immediate Execute: isyarat, diulang, lalu Awas… Laksanakan">Pelaksanaan segera</button>
+      </div>
+      <div class="note">Pelaksanaan menyusul = <i>Execute to Follow</i>: isyarat dikirim, kapal menjawab ROGER, lalu Koordinator memberi "Awas… Laksanakan". Pelaksanaan segera = <i>Immediate Execute</i>: "Pelaksanaan segera — isyarat — saya ulangi — Awas… Laksanakan" dalam satu siaran.</div>
+      <div class="row" style="display:none">
+      </div>
+    </div>`;
+  pane.querySelectorAll('.seg').forEach(seg => seg.querySelectorAll('button').forEach(b => b.onclick = () => { const k = seg.dataset.k; let v = b.dataset.v; if (v === 'true') v = true; if (v === 'false') v = false; d[k] = v; renderOrderPane(); }));
+  pane.querySelectorAll('#fgrid button').forEach(b => b.onclick = () => { d.code = b.dataset.code; renderOrderPane(); });
+  pane.querySelectorAll('canvas[data-thumb]').forEach(c => drawThumb(c, c.dataset.thumb));
+  const num = (id, k, fl) => { const el = $('#' + id); if (el) el.onchange = () => { d[k] = fl ? parseFloat(el.value) : parseInt(el.value, 10); renderOrderPane(); }; };
+  num('dTens', 'tens'); num('dBrg', 'brg'); num('dCourse', 'course'); num('dSpeed', 'speed', true); num('dSBrg', 'stationBrg'); num('dSDist', 'stationDist', true);
+  const sh = $('#dShip'); if (sh) sh.onchange = () => { d.ship = sh.value; renderOrderPane(); };
+  const dv = $('#dDiv'); if (dv) dv.onchange = () => { d.div = +dv.value; renderOrderPane(); };
+  $('#btnPrep').onclick = sendPrep;
+  const be = $('#btnExec'); if (be) be.onclick = () => execute(false);
+  $('#btnIE').onclick = () => execute(true);
+  const ct = $('#cmdText');
+  ct.onkeydown = e => { if (e.key === 'Enter') { const v = ct.value; ct.blur(); applyCommandText(v); } };
+  const mic = $('#btnMic'); if (mic) mic.onclick = toggleDictation;
+  const ba = $('#btnAnim'); if (ba) ba.onclick = () => playPreview($('#previewAnim'), true);
+  const pa = $('#previewAnim'); if (pa) playPreview(pa, false);
+}
+function newOrderFromDraftNoId() { const o = newOrderFromDraft(); delete o.id; return o; }
+function applyCommandText(txt) {
+  const words = String(txt).toLowerCase();
+  const immediate = /(pelaksanaan segera|immediate execute)/.test(words);
+  const toFollow = /(pelaksanaan menyusul|execute to follow)/.test(words);
+  if (/\b(laksanakan|execute|eksekusi)\b/.test(words) && !immediate && !toFollow && !K.parseCommand(txt)) { if (S.ex.order && S.ex.order.status === 'prep') execute(false); return; }
+  const c = K.parseCommand(txt);
+  if (!c) { $('#cmdNote').innerHTML = '<span class="bad">Isyarat tidak dikenali.</span> Contoh: "formasi 5", "form delta", "corpen alfa 090", "turn kanan 3", "speed 15", "guide kapal 3", "kapal 4 ambil stasiun 045 jarak 2".'; return; }
+  Object.assign(S.draft, c);
+  if (c.type === 'TURN') S.draft.turnMode = c.course != null ? 'course' : 'tens';
+  renderOrderPane();
+  $('#cmdText').value = txt;
+  if (immediate) execute(true);
+  else if (toFollow) sendPrep();
+  else toast('Isyarat terbaca: ' + K.signalText(c).sig + '. Pilih Pelaksanaan menyusul atau Pelaksanaan segera.');
+}
+async function toggleDictation() {
+  const d = S.dict; if (!d) return;
+  if (S.dictLive) { try { await d.stop(); } catch {} return; }
+  let finalTxt = '';
+  if (!S.dictHooked) {
+    S.dictHooked = true;
+    d.onPartial(({ text }) => { const el = $('#cmdText'); if (el) el.value = (S.dictFinal || '') + ' ' + text; });
+    d.onFinal(({ text }) => { S.dictFinal = ((S.dictFinal || '') + ' ' + text).trim(); const el = $('#cmdText'); if (el) el.value = S.dictFinal; });
+    d.onState(({ state }) => {
+      S.dictLive = state === 'listening';
+      const m = $('#btnMic'); if (m) m.classList.toggle('live', S.dictLive);
+      if (!S.dictLive && S.dictFinal) { const t = S.dictFinal; S.dictFinal = ''; applyCommandText(t); }
+    });
+  }
+  S.dictFinal = '';
+  d.start().catch(e => toast(e && e.code === 'not_granted' ? 'Izin mikrofon ditolak. Ketik isyarat saja.' : 'Dikte tidak tersedia saat ini.'));
+}
+
+/* ---------- Koordinator: Kapal ---------- */
+function renderShipsPane() {
+  const t = simNow(); const P = S.P; const g = guideId(); const f = S.ex.form;
+  const rows = SHIPS.map(sid => {
+    const d = S.ships[sid] || {}; const p = P[sid] || {};
+    const seat = S.seats[sid]; const on = seat && seat.uid && S.peers.some(x => x.by === seat.uid && x.presence && x.presence.team === S.teamId && x.presence.seat === sid);
+    const e = stationErr(sid);
+    const tags = (sid === g ? '<span class="tag g">GUIDE</span> ' : '') + (Object.entries(S.ex.divGuides || {}).filter(([k, v]) => v === sid && (k === '1' || k === '2')).map(([k]) => `<span class="tag">G-DIV${k}</span>`).join(' '));
+    const st = sid === g ? '<span class="tag g">pemandu</span>' : e == null ? '' : e <= f.tol ? '<span class="tag ok">di stasiun</span>' : e < 0.25 ? '<span class="tag w">mendekat</span>' : '<span class="tag">menuju</span>';
+    const rep = d.report && d.report.formId === f.id ? `<span class="tag y" title="Melapor di stasiun">LAPOR ${d.report.err}yd</span>` : '';
+    return `<tr><td><b>${sid}</b> ${tags}<br><small class="note">${esc(d.name || '')}${seat && seat.officer ? ' · ' + esc(seat.officer) : ''}</small></td>
+      <td>${S.store.local ? '' : `<span class="dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${on ? 'var(--good)' : 'var(--muted)'}"></span>`}</td>
+      <td class="mono">${f3(p.h || 0)}° / ${(p.v || 0).toFixed(1)}</td><td>${e == null ? '—' : sid === g ? '—' : yd(e) + ' yd'}<br>${st} ${rep}</td>
+      <td><label class="note" style="display:flex;gap:4px;align-items:center"><input type="checkbox" data-ai="${sid}" ${d.ai ? 'checked' : ''}> AI</label></td></tr>`;
+  }).join('');
+  $('#pShips').innerHTML = `<div class="card"><h3>Status 8 kapal</h3><div style="overflow-x:auto"><table class="t"><tr><th>Kapal</th><th></th><th>Hlu/Kec</th><th>Galat stasiun</th><th></th></tr>${rows}</table></div>
+    <div class="note">Centang AI untuk memaksa kapal dikemudikan otomatis. Kapal yang kursinya kosong selalu dijalankan AI oleh perangkat Koordinator.</div></div>
+    <div class="card"><h3>Nama kapal</h3>${SHIPS.map(s => `<div class="row"><b style="width:28px">${s}</b><input type="text" data-nm="${s}" value="${esc((S.ships[s] || {}).name || '')}" style="flex:1"></div>`).join('')}</div>`;
+  $$('#pShips input[data-ai]').forEach(c => c.onchange = () => patchShip(c.dataset.ai, { ai: c.checked }));
+  $$('#pShips input[data-nm]').forEach(c => c.onchange = () => patchShip(c.dataset.nm, { name: c.value.slice(0, 40) }));
+}
+
+/* ---------- Koordinator: Latihan ---------- */
+function renderDrillPane() {
+  const ex = S.ex; const c = ex.clock; const keepPw = $('#invPass') ? $('#invPass').value : '';
+  $('#pDrill').innerHTML = `
+    <div class="card"><h3>Jam simulasi</h3>
+      <div class="row"><span class="big">${hms(simNow())}</span><span class="grow"></span><button class="btn" id="btnPause">${c.paused ? '▶ Lanjutkan' : '❚❚ Jeda'}</button></div>
+      <div class="seg" id="rateSeg">${[1, 2, 5, 10, 20, 30].map(r => `<button data-r="${r}" aria-pressed="${c.rate === r}">×${r}</button>`).join('')}</div>
+      <div class="note">Percepatan waktu berlaku untuk semua peserta. ×1 = waktu nyata.</div></div>
+    <div class="card"><h3>Parameter formasi</h3>
+      <div class="row"><label class="f grow">Jarak standar D (yard)<select id="selD">${[500, 1000, 1500, 2000].map(v => `<option ${ex.D === v ? 'selected' : ''} value="${v}">${v} yd${v === 500 ? ' (kapal kecil)' : v === 1000 ? ' (kapal besar)' : ''}</option>`).join('')}</select></label>
+      <label class="f grow">Kecepatan stationing (kn)<input type="number" id="inStSpd" min="5" max="30" value="${ex.stationingSpeed}"></label></div>
+      <div class="note">Interval manuver otomatis: garis 4 kapal = 4D, subdivisi 2 kapal = 2D (Pasal 121).</div></div>
+    <div class="card"><h3>Haluan & kecepatan dasar Guide</h3>
+      <div class="row"><label class="f grow">Haluan (°)<input type="number" id="inBC" value="${ex.baseCourse}"></label><label class="f grow">Kecepatan (kn)<input type="number" id="inBS" value="${ex.baseSpeed}"></label><button class="btn" id="btnBase" style="align-self:flex-end">Terapkan</button></div>
+      <div class="note">Mengubah langsung tanpa isyarat. Untuk latihan, gunakan CORPEN / SPEED di tab Perintah.</div></div>
+    <div class="card"><h3>Posisi awal</h3>
+      <div class="row"><button class="btn" id="btnScatter">Sebar acak (bentuk dari tak beraturan)</button><button class="btn" id="btnColumn">Reset ke kolom</button></div>
+      <div class="note">Mengatur ulang posisi semua kapal dan jam formasi. Gunakan sebelum sesi latihan.</div></div>
+    <div class="card"><h3>Undang anggota</h3>
+      <div class="note">1) Pemilik aplikasi membagikan aplikasi lewat tombol <b>Share</b> di claude.ai ke email anggota (Editor pada paket pribadi; Contributor pada paket Team/Enterprise). 2) Kirim teks di bawah ke anggota.</div>
+      <label class="f" for="invPass">Kata sandi anggota yang dicantumkan (tidak disimpan; ketik ulang)<input type="text" id="invPass" placeholder="kata sandi anggota tim ini"></label>
+      <textarea id="invText" rows="9" readonly style="font-family:var(--mono);font-size:12px"></textarea>
+      <div class="row"><button class="btn pri" id="invCopy">Salin teks undangan</button></div>
+      <details><summary class="note" style="cursor:pointer">Ganti kata sandi anggota</summary>
+        <div class="row" style="margin-top:8px"><input type="password" id="newCrew" placeholder="kata sandi baru (min. 4)" style="flex:1"><button class="btn" id="setCrew">Simpan</button></div>
+        <div class="note">Anggota yang sudah masuk tidak terputus; kata sandi baru berlaku untuk login berikutnya.</div></details>
+    </div>
+    <div class="card"><h3>Kursi peserta</h3>${['KOOR', ...SHIPS].map(s => { const st = S.seats[s]; return `<div class="row"><b style="width:46px">${s === 'KOOR' ? 'OTC' : s}</b><span class="grow note">${st && st.uid ? esc(st.officer || 'terisi') : 'kosong'}</span>${st && st.uid && s !== 'KOOR' ? `<button class="btn ghost" data-rel="${s}">Lepas</button>` : ''}</div>`; }).join('')}</div>`;
+  $('#btnPause').onclick = () => setClock({ paused: !c.paused });
+  $$('#rateSeg button').forEach(b => b.onclick = () => setClock({ rate: +b.dataset.r }));
+  $('#selD').onchange = e => patchEx({ D: +e.target.value });
+  $('#inStSpd').onchange = e => patchEx({ stationingSpeed: +e.target.value });
+  $('#btnBase').onclick = async () => { const bc = K.norm360(+$('#inBC').value), bs = +$('#inBS').value; await patchEx({ baseCourse: bc, baseSpeed: bs }); const g = guideId(); if (isAI(g) || (S.ships[g] && S.ships[g].follow)) commandShip(g, bc, bs); };
+  $('#btnScatter').onclick = () => resetPositions(true);
+  $('#btnColumn').onclick = () => resetPositions(false);
+  const invUpd = () => {
+    const pw = $('#invPass').value.trim() || '(minta ke Koordinator)';
+    const tName = (S.team && S.team.name) || S.teamId;
+    const seatLines = SHIPS.map(sid => `  ${sid.replace('S', 'Kapal ')}: ${shipLabel(sid)}${S.seats[sid] && S.seats[sid].officer ? ' (' + S.seats[sid].officer + ')' : ''}`).join('\n');
+    $('#invText').value = `UNDANGAN LATIHAN OLAH GERAK FORMASI — KABUZEN SHIP MANOEUVRING\n\nAplikasi : ${APP_URL}\nTim      : ${tName}\nSandi    : ${pw}\n\nKursi kapal:\n${seatLines}\n\nCara masuk:\n1. Buka tautan di atas (masuk dengan akun claude.ai yang emailnya diundang).\n2. Pilih tim "${tName}".\n3. Pilih kursi kapal Anda, ketik sandi, isi nama perwira, tekan Masuk.\n4. Pelaksanaan menyusul: tekan ROGER, hitung POG, bergerak saat "Awas… Laksanakan". Pelaksanaan segera: langsung laksanakan.`;
+  };
+  $('#invPass').value = keepPw; $('#invPass').oninput = invUpd; invUpd();
+  $('#invCopy').onclick = () => { const ta = $('#invText'); const done = () => toast('Teks undangan disalin.'); try { navigator.clipboard.writeText(ta.value).then(done, () => { ta.select(); document.execCommand('copy'); done(); }); } catch { ta.select(); try { document.execCommand('copy'); done(); } catch { toast('Pilih teks lalu salin manual.'); } } };
+  $('#setCrew').onclick = async () => { const p = $('#newCrew').value; if (p.length < 4) return toast('Kata sandi minimal 4 karakter.'); try { await S.store.update(`teams/${S.teamId}`, { crewHash: await hashPin(S.teamId, p) }); $('#newCrew').value = ''; $('#invPass').value = p; invUpd(); toast('Kata sandi anggota diganti.'); } catch (e) { toast('Gagal mengganti: ' + (e.message || e.code)); } };
+  $$('#pDrill [data-rel]').forEach(b => b.onclick = () => S.store.set(`teams/${S.teamId}/seats/${b.dataset.rel}`, { uid: null, officer: '', at: Date.now() }));
+}
+async function setClock(patch) {
+  const c = S.ex.clock; const now = Date.now();
+  const nc = Object.assign({}, c, { simAt: K.simNow(c, now), wallAt: now }, patch);
+  await patchEx({ clock: nc });
+}
+async function resetPositions(scatter) {
+  const ex = clone(S.ex); const t = simNow(); const D = ex.D;
+  const ships = clone(S.ships);
+  const g = ex.guide; const gp = S.P[g] || { x: 0, y: 0 };
+  SHIPS.forEach((sid, i) => {
+    let x, y, h = ex.baseCourse;
+    if (scatter && sid !== g) { const a = Math.random() * 360, r = 0.6 + Math.random() * 2.2; const v = K.vec(a, r); x = gp.x + v.x; y = gp.y + v.y; h = K.norm360(ex.baseCourse + (Math.random() * 60 - 30)); }
+    else if (scatter) { x = gp.x; y = gp.y; }
+    else { const v = K.vec(ex.baseCourse + 180, (ex.seq[sid] - ex.seq[g]) * D / 2000); x = gp.x + v.x; y = gp.y + v.y; }
+    Object.assign(ships[sid], { x, y, h, v: ex.baseSpeed, t, cc: h, cv: ex.baseSpeed, td: 0, report: null });
+  });
+  for (const sid of SHIPS) await S.store.set(`teams/${S.teamId}/ships/${sid}`, ships[sid]);
+  S.trails = {};
+  if (!scatter) { const f = K.computeFormation({ code: '1', axis: ex.baseCourse, D, guide: g, seq: ex.seq }); f.id = 'f' + Date.now().toString(36); f.at = t; f.label = 'FORM 1'; await patchEx({ form: f }); }
+  toast(scatter ? 'Kapal disebar acak. Beri isyarat FORM untuk latihan pembentukan.' : 'Semua kapal kembali ke kolom.');
+}
+
+/* ---------- Koordinator: Log & Nilai ---------- */
+function renderLogPane() {
+  const ex = S.ex; const f = ex.form;
+  const scoreRows = (sc, fid) => SHIPS.filter(s => s !== guideId()).map(s => {
+    const r = sc.ships && sc.ships[s]; const d = S.ships[s] || {};
+    const rep = d.report && d.report.formId === fid ? d.report : null;
+    const pts = r ? Math.max(0, Math.round(100 - Math.max(0, r.t - 10) * 2 - (rep ? Math.max(0, rep.err - 100) / 10 : 15))) : null;
+    return `<tr><td>${s}</td><td>${r ? r.t + ' mnt' : '<span class="note">belum</span>'}</td><td>${rep ? rep.err + ' yd' : '—'}</td><td>${pts == null ? '—' : '<b>' + pts + '</b>'}</td></tr>`;
+  }).join('');
+  const sc = ex.score || {};
+  const ids = Object.keys(sc).reverse();
+  $('#pLog').innerHTML = `
+    <div class="card"><h3>Nilai formasi</h3>${ids.length ? ids.map(id => `<div><b class="mono">${esc(sc[id].label)}</b> <small class="note">pukul sim ${hms(sc[id].at)}${f && f.id === id ? ' · berjalan' : ''}</small>
+      <table class="t"><tr><th>Kapal</th><th>Tiba di stasiun</th><th>Galat saat lapor</th><th>Nilai</th></tr>${scoreRows(sc[id], id)}</table></div>`).join('') : '<span class="note">Nilai muncul setelah isyarat FORM/STATION dilaksanakan.</span>'}
+      <div class="note">Nilai = 100 − 2/menit setelah menit ke-10 − (galat lapor di atas 100 yd)/10; −15 bila tidak melapor.</div></div>
+    <div class="card"><h3>Log isyarat</h3><div class="log">${(ex.log || []).slice().reverse().map(l => `<div class="${l.st}">${hms(l.t)} · ${l.st === 'exec' ? (l.m === 'ie' ? 'PELAKSANAAN SEGERA' : 'LAKSANAKAN') : 'PELAKSANAAN MENYUSUL'} · ${esc(l.sig)}</div>`).join('') || '<span class="note">Kosong</span>'}</div></div>`;
+}
+
+/* ---------- Kapal: Isyarat ---------- */
+function renderMyOrder() {
+  const sid = S.seat; const o = S.ex.order; const d = S.ships[sid] || {};
+  const isG = sid === guideId();
+  $('#pMyOrder').innerHTML = `
+    ${isG ? '<div class="card hi"><b>Anda adalah THE GUIDE.</b><span class="note">Kapal lain menjaga stasiun terhadap Anda. Kemudikan haluan & kecepatan sesuai CORPEN / SPEED dari Koordinator (atau aktifkan "Ikuti perintah otomatis" di tab Kemudi).</span></div>' : ''}
+    ${orderCard(o, false)}
+    <div class="row">
+      <button class="btn pri grow" id="btnAck" ${!o || d.ack === o.id ? 'disabled' : ''}>${o && d.ack === o.id ? 'ROGER terkirim ✓' : 'ROGER (diterima)'}</button>
+      <button class="btn" id="btnReplay" ${o ? '' : 'disabled'}>🔊 Ulangi</button>
+    </div>
+    <div class="card"><h3>Stasiun Anda</h3><div class="kv" id="myStn"></div>
+      <div class="row"><button class="btn grow" id="btnReport">Lapor: SAYA DI STASIUN</button></div>
+      <div class="note" id="repNote"></div></div>
+    <div class="card"><h3>Bentuk formasi yang diminta</h3>
+      <canvas id="myAnim" style="width:100%;height:240px;background:#0a0533;border-radius:10px"></canvas>
+      <div class="row"><button class="btn ghost grow" id="btnMyAnim">▶ Putar animasi pembentukan</button></div>
+      <div class="note">${S.ex.form ? esc(K.FORMS[S.ex.form.code] ? K.FORMS[S.ex.form.code].desc : 'Stasiun tunggal ditetapkan Koordinator.') : ''}</div></div>`;
+  $('#btnAck').onclick = () => o && patchShip(sid, { ack: o.id });
+  $('#btnReplay').onclick = () => o && speak(o.status === 'exec' && o.method !== 'ie' ? o.say + '. ' + VOICE.exec(o) : voiceFor(o));
+  $('#btnReport').onclick = () => { const e = stationErr(sid); if (e == null) return; patchShip(sid, { report: { formId: S.ex.form.id, at: simNow(), err: yd(e) } }); toast(`Laporan terkirim. Galat aktual ${yd(e)} yd.`); };
+  $('#btnMyAnim').onclick = () => playPreview($('#myAnim'), true, sid);
+  playPreview($('#myAnim'), false, sid);
+  renderMyOrderLive();
+}
+function renderMyOrderLive() {
+  const sid = S.seat; const f = S.ex.form; const el = $('#myStn'); if (!el || !f) return;
+  const stn = K.stationOf(f, sid); const e = stationErr(sid);
+  const isG = sid === guideId();
+  el.innerHTML = isG ? `<div><small>Peran</small><strong>GUIDE</strong></div><div><small>Haluan dasar</small><strong>${f3(S.ex.baseCourse)}°</strong></div><div><small>Kecepatan</small><strong>${S.ex.baseSpeed} kn</strong></div>`
+    : `<div><small>Baringan dari Guide</small><strong>${f3(stn.brg)}°</strong></div><div><small>Jarak</small><strong>${yd(stn.dist)} yd</strong></div><div><small>Galat kini</small><strong class="${e <= f.tol ? 'good' : e < 0.25 ? 'warn' : ''}">${yd(e)} yd</strong></div>`;
+  const d = S.ships[sid]; const rn = $('#repNote');
+  if (rn) rn.innerHTML = d && d.report && d.report.formId === f.id ? `<span class="good">Sudah melapor (galat ${d.report.err} yd).</span>` : 'Lapor setelah posisi stabil di stasiun (toleransi ' + yd(f.tol) + ' yd).';
+}
+
+/* ---------- Kapal: POG ---------- */
+function pogInputs() {
+  const sid = S.seat; const g = guideId(); const f = S.ex.form; const P = S.P;
+  if (S.pogManual && S.pogIn) return S.pogIn;
+  const gd = S.ships[g] || {}; const gp = P[g], op = P[sid];
+  if (!gp || !op || !f) return null;
+  const rx = op.x - gp.x, ry = op.y - gp.y; const stn = K.stationOf(f, sid);
+  return { gc: Math.round(gd.cc ?? gp.h), gs: +(gd.cv ?? gp.v).toFixed(1), m1b: Math.round(K.brgOf(rx, ry)), m1d: +(K.len(rx, ry)).toFixed(2), m2b: Math.round(stn.brg), m2d: +stn.dist.toFixed(2) };
+}
+function renderPog() {
+  const inp = pogInputs() || { gc: 0, gs: 12, m1b: 180, m1d: 1, m2b: 90, m2d: 1 };
+  const m = S.pog;
+  $('#pPog').innerHTML = `
+    <div class="card"><h3>Kalkulator Papan Olah Gerak</h3>
+      <div class="row"><label class="note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="pogAuto" ${S.pogManual ? '' : 'checked'}> Isi otomatis dari plot (langsung)</label></div>
+      <div class="row"><label class="f grow">Haluan Guide °<input type="number" id="pgGc" value="${inp.gc}"></label><label class="f grow">Kec. Guide kn<input type="number" step="0.5" id="pgGs" value="${inp.gs}"></label></div>
+      <div class="row"><label class="f grow">Posisi saya: baringan dari Guide °<input type="number" id="pgM1b" value="${inp.m1b}"></label><label class="f grow">jarak nm<input type="number" step="0.01" id="pgM1d" value="${inp.m1d}"></label></div>
+      <div class="row"><label class="f grow">Stasiun: baringan dari Guide °<input type="number" id="pgM2b" value="${inp.m2b}"></label><label class="f grow">jarak nm<input type="number" step="0.01" id="pgM2d" value="${inp.m2d}"></label></div>
+      <div class="seg" id="pogMode"><button data-v="speed" aria-pressed="${m.mode === 'speed'}">Kecepatan diketahui</button><button data-v="time" aria-pressed="${m.mode === 'time'}">Waktu diketahui</button><button data-v="course" aria-pressed="${m.mode === 'course'}">Haluan diketahui</button></div>
+      <label class="f">${m.mode === 'speed' ? 'Kecepatan pindah (kn)' : m.mode === 'time' ? 'Waktu tiba (menit)' : 'Haluan yang dipilih (°)'}<input type="number" id="pgPar" value="${m.mode === 'speed' ? m.speed : m.mode === 'time' ? m.time : m.course}"></label>
+    </div>
+    <div class="card"><div class="kv" id="pogKv"></div><div class="note" id="pogMsg"></div>
+      <canvas id="pog" width="720" height="720"></canvas>
+      <div class="note">Biru e→r: vektor Guide · Kuning e→m: vektor kapal sendiri · Hijau r→m: gerak relatif (SRM, DRM) · M1→M2: lintasan relatif di papan (skala jarak).</div>
+      <label class="note" style="display:flex;gap:8px"><input type="checkbox" id="pgPlan" checked> Saat waktu tiba, otomatis kembali ke haluan & kecepatan Guide</label>
+      <button class="btn pri" id="pgApply">Terapkan haluan & kecepatan ke kemudi</button></div>`;
+  const rd = () => { S.pogIn = { gc: +$('#pgGc').value, gs: +$('#pgGs').value, m1b: +$('#pgM1b').value, m1d: +$('#pgM1d').value, m2b: +$('#pgM2b').value, m2d: +$('#pgM2d').value }; };
+  $$('#pPog input[type=number]').forEach(i => i.oninput = () => { if (i.id !== 'pgPar') { S.pogManual = true; $('#pogAuto').checked = false; rd(); } else { const v = +i.value; if (m.mode === 'speed') m.speed = v; else if (m.mode === 'time') m.time = v; else m.course = v; } renderPogResult(); });
+  $('#pogAuto').onchange = e => { S.pogManual = !e.target.checked; if (!S.pogManual) S.pogIn = null; else rd(); renderPog(); };
+  $$('#pogMode button').forEach(b => b.onclick = () => { m.mode = b.dataset.v; renderPog(); });
+  $('#pgApply').onclick = () => { const r = S.pogLast; if (!r || !r.ok) return toast('Belum ada penyelesaian yang sah.'); const inp = pogInputs(); const plan = $('#pgPlan').checked && inp ? { next: { t: simNow() + r.minutes * 60, cc: inp.gc, cv: inp.gs } } : {}; commandShip(S.seat, Math.round(r.course), Math.round(r.speed * 2) / 2, 0, Object.assign({ autoKeep: false }, plan)); toast(`Kemudi: haluan ${f3(r.course)}°, kecepatan ${(Math.round(r.speed * 2) / 2)} kn` + (plan.next ? `; pukul sim ${hms(plan.next.t)} kembali ke ${f3(inp.gc)}° / ${inp.gs} kn.` : '.')); };
+  renderPogResult();
+}
+function renderPogResult() {
+  if (activePane() !== 'pPog') return;
+  let inp = pogInputs(); if (!inp) return;
+  if (!S.pogManual) { const set = (id, v) => { const el = $('#' + id); if (el && document.activeElement !== el) el.value = v; }; set('pgGc', inp.gc); set('pgGs', inp.gs); set('pgM1b', inp.m1b); set('pgM1d', inp.m1d); set('pgM2b', inp.m2b); set('pgM2d', inp.m2d); }
+  const m = S.pog;
+  const r = K.solvePOG({ gc: inp.gc, gs: inp.gs, m1: { brg: inp.m1b, dist: inp.m1d }, m2: { brg: inp.m2b, dist: inp.m2d }, mode: m.mode, speed: m.speed, time: m.time, course: m.course });
+  S.pogLast = r;
+  $('#pogKv').innerHTML = r.ok ? `<div><small>Haluan</small><strong>${f3(r.course)}°</strong></div><div><small>Kecepatan</small><strong>${r.speed.toFixed(1)} kn</strong></div><div><small>Waktu</small><strong>${r.minutes.toFixed(1)} mnt</strong></div>
+    <div><small>DRM</small><strong>${f3(r.drm)}°</strong></div><div><small>MRM</small><strong>${r.mrm.toFixed(2)} nm</strong></div><div><small>SRM</small><strong>${r.srm.toFixed(1)} kn</strong></div>`
+    : `<div><small>DRM</small><strong>${f3(r.drm)}°</strong></div><div><small>MRM</small><strong>${r.mrm.toFixed(2)} nm</strong></div><div><small>Status</small><strong class="bad">—</strong></div>`;
+  $('#pogMsg').innerHTML = r.ok ? (r.cpa && r.cpa.dist < 0.25 && r.mrm > 0.3 ? `<span class="warn">Perhatian: lintasan relatif lewat ${yd(r.cpa.dist)} yd dari Guide (CPA, ${r.cpa.minutes.toFixed(1)} mnt). Pertimbangkan lewat di belakang Guide.</span>` : `CPA ke Guide ${yd(r.cpa.dist)} yd pada baringan ${f3(r.cpa.brg)}°.`) + (r.alt ? ` Penyelesaian kedua: ${f3(r.alt.course)}° (${r.alt.minutes.toFixed(0)} mnt, lebih lambat).` : '') : `<span class="bad">${esc(r.msg)}</span>`;
+  drawPOG($('#pog'), inp, r);
+}
+
+/* ---------- Kapal: Kemudi ---------- */
+function renderHelm() {
+  const sid = S.seat === 'KOOR' ? (S.helmShip || guideId()) : S.seat; const d = S.ships[sid] || {};
+  const isG = sid === guideId();
+  $('#pHelm').innerHTML = `
+    ${S.seat === 'KOOR' ? `<div class="card"><label class="f">Kemudikan kapal (mode mandiri)<select id="helmShip">${SHIPS.map(s => `<option value="${s}" ${s === sid ? 'selected' : ''}>${s} · ${esc(shipLabel(s))}</option>`).join('')}</select></label></div>` : ''}
+    <div class="card"><h3>Kemudi ${esc(shipLabel(sid))}${isG ? ' · THE GUIDE' : ''}</h3>
+      <div class="kv" id="helmKv"></div>
+      <div class="row"><label class="f grow">Haluan perintah °<input type="number" id="hC" value="${Math.round(d.cc || 0)}"></label><label class="f grow">Kecepatan perintah kn<input type="number" step="0.5" id="hS" value="${d.cv || 0}"></label></div>
+      <div class="seg" id="hTd"><button data-v="0" aria-pressed="${!d.td}">Belok terpendek</button><button data-v="-1" aria-pressed="${d.td === -1}">Kiri</button><button data-v="1" aria-pressed="${d.td === 1}">Kanan</button></div>
+      <div class="row"><button class="btn" data-dc="-10">−10°</button><button class="btn" data-dc="-5">−5°</button><button class="btn" data-dc="5">+5°</button><button class="btn" data-dc="10">+10°</button><button class="btn" data-ds="-1">−1 kn</button><button class="btn" data-ds="1">+1 kn</button></div>
+      <div class="row"><button class="btn pri grow" id="hApply">Kemudi: laksanakan</button><button class="btn grow" id="hMatch">Samakan dengan ${isG ? 'perintah dasar' : 'Guide'}</button></div>
+    </div>
+    <div class="card"><h3>Otomasi</h3>
+      <label class="note" style="display:flex;gap:8px"><input type="checkbox" id="hFollow" ${d.follow ? 'checked' : ''}> Ikuti perintah TURN${isG ? ', CORPEN, SPEED' : ''} otomatis saat dilaksanakan</label>
+      ${isG ? '' : `<label class="note" style="display:flex;gap:8px"><input type="checkbox" id="hKeep" ${d.autoKeep ? 'checked' : ''}> Jaga stasiun otomatis (setelah Anda tiba dan melapor)</label>`}
+      <div class="note">Untuk latihan penuh, matikan otomasi: hitung di POG lalu kemudikan sendiri.</div></div>`;
+  const hs = $('#helmShip'); if (hs) hs.onchange = () => { S.helmShip = hs.value; renderHelm(); };
+  let td = d.td || 0;
+  $$('#hTd button').forEach(b => b.onclick = () => { td = +b.dataset.v; $$('#hTd button').forEach(x => x.setAttribute('aria-pressed', x === b)); });
+  $$('#pHelm [data-dc]').forEach(b => b.onclick = () => { $('#hC').value = K.norm360(+$('#hC').value + +b.dataset.dc); });
+  $$('#pHelm [data-ds]').forEach(b => b.onclick = () => { $('#hS').value = Math.max(0, +$('#hS').value + +b.dataset.ds); });
+  $('#hApply').onclick = () => commandShip(sid, +$('#hC').value, +$('#hS').value, td);
+  $('#hMatch').onclick = () => { const g = S.ships[guideId()] || {}; isG ? commandShip(sid, S.ex.baseCourse, S.ex.baseSpeed) : commandShip(sid, g.cc, g.cv); };
+  $('#hFollow').onchange = e => patchShip(sid, { follow: e.target.checked });
+  const hk = $('#hKeep'); if (hk) hk.onchange = e => patchShip(sid, { autoKeep: e.target.checked });
+  renderHelmLive();
+}
+function renderHelmLive() {
+  const sid = S.seat === 'KOOR' ? (S.helmShip || guideId()) : S.seat; const p = S.P[sid]; const el = $('#helmKv'); if (!el || !p) return;
+  const e = stationErr(sid);
+  el.innerHTML = `<div><small>Haluan</small><strong>${f3(p.h)}°</strong></div><div><small>Kecepatan</small><strong>${p.v.toFixed(1)} kn</strong></div><div><small>Galat stasiun</small><strong>${sid === guideId() || e == null ? '—' : yd(e) + ' yd'}</strong></div>`;
+}
+
+function renderPlotInfo() {
+  const el = $('#plotInfo'); if (!el || !S.ex) return;
+  const o = S.ex.order; const f = S.ex.form;
+  el.innerHTML = `<div class="sig">${o ? esc(o.sig) + (o.status === 'prep' ? ' · PELAKSANAAN MENYUSUL' : '') : esc(f ? f.label : '')}</div>
+    <div>Formasi: <b>${f ? esc(f.label) : '—'}</b> · Guide: <b>${guideId()}</b> · Haluan/kec dasar ${f3(S.ex.baseCourse)}° / ${S.ex.baseSpeed} kn · D ${S.ex.D} yd</div>
+    <div class="note">Skala lingkar: ${(S.range / 4).toFixed(2)} nm per cincin · ${S.view === 'true' ? 'utara di atas, berpusat pada Guide' : 'sumbu formasi di atas'}</div>`;
+}
+
+/* ============================================================== GAMBAR */
+const plot = $('#plot'); const pctx = plot.getContext('2d');
+function resizePlot() { const r = plot.getBoundingClientRect(); const dpr = window.devicePixelRatio || 1; plot.width = Math.max(10, r.width * dpr); plot.height = Math.max(10, r.height * dpr); }
+window.addEventListener('resize', resizePlot);
+function hullPath(ctx, x, y, hdg, L, W) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(hdg * K.RAD);
+  ctx.beginPath(); ctx.moveTo(0, -L); ctx.quadraticCurveTo(W, -L * 0.2, W * 0.8, L * 0.7); ctx.lineTo(-W * 0.8, L * 0.7); ctx.quadraticCurveTo(-W, -L * 0.2, 0, -L); ctx.closePath();
+  ctx.restore();
+}
+function drawScene(ctx, Wd, Ht, opt) {
+  // opt: {P, form, guide, axisUp, rangeNm, own, showStations, trails, labels, lineFor}
+  const { P, form, guide } = opt;
+  const g = P[guide]; if (!g) return;
+  const rot = opt.axisUp ? -(form ? form.axis : 0) : 0;
+  const scale = Math.min(Wd, Ht) / 2 / opt.rangeNm;
+  const cx = Wd / 2, cy = Ht / 2;
+  const toS = (x, y) => { const dx = x - g.x, dy = y - g.y; const c = Math.cos(rot * K.RAD), s = Math.sin(rot * K.RAD); const rx = dx * c + dy * s, ry = -dx * s + dy * c; return [cx + rx * scale, cy - ry * scale]; };
+  ctx.clearRect(0, 0, Wd, Ht);
+  // cincin
+  ctx.strokeStyle = 'rgba(169,166,216,.18)'; ctx.lineWidth = 1;
+  const ring = opt.rangeNm / 4;
+  for (let i = 1; i <= 6; i++) { ctx.beginPath(); ctx.arc(cx, cy, ring * i * scale, 0, Math.PI * 2); ctx.stroke(); }
+  // garis baringan
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot * K.RAD);
+  for (let a = 0; a < 360; a += 30) { ctx.save(); ctx.rotate(a * K.RAD); ctx.beginPath(); ctx.moveTo(0, -ring * 0.5 * scale); ctx.lineTo(0, -Math.max(Wd, Ht)); ctx.stroke(); ctx.restore(); }
+  ctx.fillStyle = 'rgba(169,166,216,.6)'; ctx.font = `${Math.round(11 * (opt.dpr || 1))}px Inter`; ctx.textAlign = 'center';
+  for (let a = 0; a < 360; a += 30) { const r = ring * 3.6 * scale; ctx.save(); ctx.rotate(a * K.RAD); ctx.fillText(f3(a), 0, -r); ctx.restore(); }
+  ctx.restore();
+  const dpr = opt.dpr || 1;
+  // sumbu formasi
+  if (form) { const v = K.vec(form.axis, opt.rangeNm * 1.4); const [x2, y2] = toS(g.x + v.x, g.y + v.y); ctx.strokeStyle = 'rgba(255,214,10,.35)'; ctx.setLineDash([6 * dpr, 6 * dpr]); ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x2, y2); ctx.stroke(); ctx.setLineDash([]); }
+  // jejak
+  if (opt.trails) for (const sid of SHIPS) { const tr = opt.trails[sid]; if (!tr || tr.length < 2) continue; ctx.strokeStyle = 'rgba(79,216,255,.25)'; ctx.lineWidth = 1.5 * dpr; ctx.beginPath(); tr.forEach((p, i) => { const [x, y] = toS(p.x, p.y); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); const [lx, ly] = toS(P[sid].x, P[sid].y); ctx.lineTo(lx, ly); ctx.stroke(); }
+  // stasiun
+  if (form && opt.showStations) for (const sid of SHIPS) {
+    const st = K.stationOf(form, sid); if (!st || sid === guide) continue;
+    const [x, y] = toS(g.x + st.dx, g.y + st.dy);
+    const tolPx = Math.max(6 * dpr, form.tol * scale);
+    ctx.strokeStyle = sid === opt.own ? 'rgba(255,214,10,.95)' : 'rgba(255,255,255,.35)'; ctx.lineWidth = (sid === opt.own ? 2 : 1) * dpr; ctx.setLineDash([4 * dpr, 4 * dpr]);
+    ctx.beginPath(); ctx.arc(x, y, tolPx, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = sid === opt.own ? 'rgba(255,214,10,.95)' : 'rgba(255,255,255,.5)'; ctx.font = `${Math.round(10 * dpr)}px JetBrains Mono`; ctx.textAlign = 'center'; ctx.fillText(sid.slice(1), x, y + 3.5 * dpr);
+    if (opt.lineFor === sid || opt.lineFor === '*') { const [ox, oy] = toS(P[sid].x, P[sid].y); ctx.strokeStyle = sid === opt.own ? 'rgba(255,214,10,.6)' : 'rgba(255,255,255,.18)'; ctx.setLineDash([2 * dpr, 5 * dpr]); ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(x, y); ctx.stroke(); ctx.setLineDash([]); }
+  }
+  // kapal
+  const L = Math.max(9 * dpr, Math.min(16 * dpr, 0.06 * scale)), W = L * 0.42;
+  for (const sid of SHIPS) {
+    const p = P[sid]; if (!p) continue;
+    const [x, y] = toS(p.x, p.y);
+    const isG = sid === guide, own = sid === opt.own;
+    hullPath(ctx, x, y, p.h + rot, L, W);
+    ctx.fillStyle = own ? '#ffd60a' : isG ? '#4fd8ff' : '#eef0ff'; ctx.fill();
+    ctx.lineWidth = 1.2 * dpr; ctx.strokeStyle = '#0a0533'; ctx.stroke();
+    if (isG) { // bendera guide
+      ctx.save(); ctx.translate(x, y); ctx.rotate((p.h + rot) * K.RAD); ctx.strokeStyle = '#4fd8ff'; ctx.beginPath(); ctx.moveTo(0, -L * 0.2); ctx.lineTo(0, -L * 1.6); ctx.stroke(); ctx.fillStyle = '#4fd8ff'; ctx.beginPath(); ctx.moveTo(0, -L * 1.6); ctx.lineTo(L * 0.9, -L * 1.35); ctx.lineTo(0, -L * 1.1); ctx.fill(); ctx.restore();
+    }
+    if (opt.labels !== false) { ctx.fillStyle = own ? '#ffd60a' : isG ? '#4fd8ff' : '#eef0ff'; ctx.font = `700 ${Math.round(11 * dpr)}px Inter`; ctx.textAlign = 'left'; ctx.fillText(sid.slice(1), x + L * 0.7, y - L * 0.5); }
+  }
+  // skala
+  if (opt.scaleBar) { const nm = ring; const px = nm * scale; ctx.strokeStyle = '#ffd60a'; ctx.lineWidth = 2 * dpr; ctx.beginPath(); ctx.moveTo(Wd - 20 * dpr - px, Ht - 18 * dpr); ctx.lineTo(Wd - 20 * dpr, Ht - 18 * dpr); ctx.stroke(); ctx.fillStyle = '#ffd60a'; ctx.font = `${Math.round(11 * dpr)}px Inter`; ctx.textAlign = 'right'; ctx.fillText(`${(nm).toFixed(2)} nm = ${yd(nm)} yd`, Wd - 20 * dpr, Ht - 26 * dpr); }
+}
+let trailTick = 0;
+function frame() {
+  requestAnimationFrame(frame);
+  if (!S.ex || $('#vMain').classList.contains('hidden')) { return; }
+  const t = simNow(); S.P = positions(t);
+  $('#chClock').textContent = hms(t) + ' ×' + (S.ex.clock.paused ? '0' : S.ex.clock.rate);
+  if (++trailTick % 15 === 0) for (const sid of SHIPS) { const p = S.P[sid]; if (!p) continue; const tr = S.trails[sid] || (S.trails[sid] = []); const last = tr[tr.length - 1]; if (!last || K.len(last.x - p.x, last.y - p.y) > 0.02) { tr.push({ x: p.x, y: p.y }); if (tr.length > 120) tr.shift(); } }
+  const dpr = window.devicePixelRatio || 1;
+  drawScene(pctx, plot.width, plot.height, { P: S.P, form: S.ex.form, guide: guideId(), axisUp: S.view === 'rel', rangeNm: S.range, own: isKoor() ? null : S.seat, showStations: S.showStations, trails: S.showTrails ? S.trails : null, lineFor: isKoor() ? '*' : S.seat, dpr, scaleBar: true });
+  $('#dotConn').className = 'dot ' + (S.store && S.store.local ? 'on' : (S.room && S.room.connected && S.room.connected() ? 'on' : 'off'));
+}
+requestAnimationFrame(frame);
+
+/* thumbnail formasi */
+function drawThumb(c, code) {
+  const ctx = c.getContext('2d'); const W = c.width, H = c.height; ctx.clearRect(0, 0, W, H);
+  const f = K.computeFormation({ code, axis: 0, D: 500, guide: 'S1', side: S.draft.side, tens: S.draft.tens || 3, brg: S.draft.brg || 45, states: thumbStates(code) });
+  const pts = SHIPS.map(s => ({ s, ...K.stationOf(f, s) }));
+  const xs = pts.map(p => p.dx), ys = pts.map(p => p.dy);
+  const minx = Math.min(...xs), maxx = Math.max(...xs), miny = Math.min(...ys), maxy = Math.max(...ys);
+  const sc = Math.min((W - 24) / Math.max(0.05, maxx - minx), (H - 24) / Math.max(0.05, maxy - miny));
+  const ox = W / 2 - (minx + maxx) / 2 * sc, oy = H / 2 + (miny + maxy) / 2 * sc;
+  pts.forEach(p => { const x = ox + p.dx * sc, y = oy - p.dy * sc; hullPath(ctx, x, y, 0, 8, 3.6); ctx.fillStyle = p.s === f.guide ? '#4fd8ff' : '#eef0ff'; ctx.fill(); });
+}
+function thumbStates(code) {
+  // posisi contoh untuk formasi urutan tercepat
+  const st = {}; SHIPS.forEach((s, i) => { const a = [10, 200, 80, 300, 150, 40, 250, 120][i]; const v = K.vec(a, 0.3 + (i % 3) * 0.25); st[s] = { x: i === 0 ? 0 : v.x, y: i === 0 ? 0 : v.y, h: 0, v: 12 }; });
+  return st;
+}
+
+/* animasi pratinjau pembentukan formasi */
+function playPreview(canvas, run, own) {
+  if (!canvas) return;
+  const r = canvas.getBoundingClientRect(); const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.max(10, r.width * dpr); canvas.height = Math.max(10, r.height * dpr);
+  const ctx = canvas.getContext('2d');
+  let form, start = {};
+  const t0 = simNow();
+  for (const s of SHIPS) { const p = S.P[s]; if (p) start[s] = Object.assign({}, p, { t: 0, cc: p.h, cv: p.v }); }
+  if (!Object.keys(start).length) return;
+  if (isKoor() && activePane() === 'pOrder') {
+    const d = S.draft;
+    if (d.type === 'STATION') form = K.computeFormation({ code: 'STATION', axis: S.ex.baseCourse, D: S.ex.D, prev: S.ex.form, stationShip: d.ship, stationBrg: d.stationBrg, stationDist: d.stationDist, stationRel: d.rel });
+    else form = K.computeFormation({ code: d.code, side: d.side, tens: d.tens, brg: d.brg, axis: S.ex.baseCourse, D: S.ex.D, guide: S.ex.guide, seq: S.ex.seq, states: S.P });
+  } else form = S.ex.form;
+  if (!form) return;
+  const g = form.guide;
+  const frames = [];
+  let st = clone(start);
+  const gc = S.ex.baseCourse, gs = S.ex.baseSpeed;
+  st[g].cc = gc; st[g].cv = gs;
+  const maxR = () => { let m = 0.3; for (const s of SHIPS) { const a = st[s], b = st[g]; m = Math.max(m, K.len(a.x - b.x, a.y - b.y)); const sn = K.stationOf(form, s); if (sn) m = Math.max(m, sn.dist); } return m * 1.25; };
+  const range = maxR();
+  if (run) {
+    for (let t = 0; t <= 2400; t += 10) {
+      const P = {}; for (const s of SHIPS) P[s] = K.propagate(st[s], t);
+      frames.push(P);
+      if (t % 30 === 0) for (const s of SHIPS) { if (s === g) continue; const c = K.autoCommand(P[s], Object.assign({}, P[g], { cc: gc, cv: gs }), form, s, S.ex.stationingSpeed || 18); if (Math.abs(K.norm180(c.cc - P[s].cc)) < 1 && Math.abs(c.cv - P[s].cv) < 0.4) continue; st[s] = Object.assign({}, P[s], { t, cc: c.cc, cv: c.cv, td: 0, next: c.arriveIn != null ? { t: t + c.arriveIn, cc: c.gc, cv: c.gs } : null }); }
+      if (t > 120 && SHIPS.every(s => s === g || K.len(P[s].x - P[g].x - K.stationOf(form, s).dx, P[s].y - P[g].y - K.stationOf(form, s).dy) < form.tol)) { for (let k = 0; k < 20; k++) frames.push(P); break; }
+    }
+  }
+  const drawF = (P, i, n) => {
+    drawScene(ctx, canvas.width, canvas.height, { P, form, guide: g, axisUp: true, rangeNm: range, own, showStations: true, dpr, lineFor: run ? null : '*' });
+    ctx.fillStyle = '#ffd60a'; ctx.font = `700 ${12 * dpr}px Inter`; ctx.textAlign = 'left';
+    ctx.fillText((form.label || ('FORM ' + form.code)) + (run ? `  ·  menit ${Math.round(i * 10 / 60)}` : '  ·  stasiun sasaran (sumbu ke atas)'), 10 * dpr, 18 * dpr);
+  };
+  cancelAnimationFrame(canvas._raf);
+  if (!run) { drawF(Object.fromEntries(SHIPS.map(s => [s, start[s]])), 0, 0); return; }
+  let i = 0; const step = Math.max(1, Math.round(frames.length / 360));
+  const loop = () => { drawF(frames[i], i, frames.length); i += step; if (i < frames.length) canvas._raf = requestAnimationFrame(loop); };
+  loop();
+}
+
+/* papan olah gerak */
+function drawPOG(c, inp, r) {
+  const ctx = c.getContext('2d'); const W = c.width, H = c.height, cx = W / 2, cy = H / 2, R = W * 0.44;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#f7f5ea'; ctx.fillRect(0, 0, W, H);
+  // cincin dan garis
+  ctx.strokeStyle = '#9fb6c8'; ctx.lineWidth = 1;
+  for (let i = 1; i <= 10; i++) { ctx.beginPath(); ctx.arc(cx, cy, R * i / 10, 0, Math.PI * 2); ctx.lineWidth = i % 5 === 0 ? 1.6 : 0.8; ctx.stroke(); }
+  for (let a = 0; a < 360; a += 10) { const v = K.vec(a, 1); ctx.beginPath(); ctx.moveTo(cx + v.x * R * 0.1, cy - v.y * R * 0.1); ctx.lineTo(cx + v.x * R, cy - v.y * R); ctx.lineWidth = a % 30 === 0 ? 1.1 : 0.5; ctx.stroke(); }
+  for (let a = 0; a < 360; a += 1) { const v = K.vec(a, 1); const l = a % 5 === 0 ? 0.03 : 0.015; ctx.beginPath(); ctx.moveTo(cx + v.x * R, cy - v.y * R); ctx.lineTo(cx + v.x * R * (1 + l), cy - v.y * R * (1 + l)); ctx.stroke(); }
+  ctx.fillStyle = '#2a4a63'; ctx.font = '600 15px Inter'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (let a = 0; a < 360; a += 30) { const v = K.vec(a, R * 1.08); ctx.fillText(f3(a), cx + v.x, cy - v.y); }
+  if (!r) return;
+  // skala
+  const maxSp = Math.max(inp.gs, r.ok ? r.speed : 0, 5);
+  const spStep = [1, 2, 3, 4, 5].find(s => s * 10 >= maxSp * 1.1) || 6;
+  const maxD = Math.max(inp.m1d, inp.m2d, 0.1);
+  const dStep = [0.05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 1, 2].find(s => s * 10 >= maxD * 1.1) || 3;
+  const sp = (v) => [cx + v.x / spStep / 10 * R, cy - v.y / spStep / 10 * R];
+  const ds = (v) => [cx + v.x / dStep / 10 * R, cy - v.y / dStep / 10 * R];
+  const arrow = (a, b, col, w, lab) => { ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = w; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); const ang = Math.atan2(b[1] - a[1], b[0] - a[0]); ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(b[0] - 16 * Math.cos(ang - 0.35), b[1] - 16 * Math.sin(ang - 0.35)); ctx.lineTo(b[0] - 16 * Math.cos(ang + 0.35), b[1] - 16 * Math.sin(ang + 0.35)); ctx.fill(); if (lab) { ctx.font = '700 17px Inter'; ctx.fillText(lab, b[0] + 14, b[1] - 12); } };
+  // posisi relatif M1 -> M2 (skala jarak)
+  const M1 = ds(r.M1), M2 = ds(r.M2);
+  ctx.setLineDash([10, 6]); arrow(M1, M2, '#7a3fb0', 2.5); ctx.setLineDash([]);
+  ctx.fillStyle = '#7a3fb0'; ctx.font = '700 17px Inter';
+  [[M1, 'M1'], [M2, 'M2']].forEach(([p, l]) => { ctx.beginPath(); ctx.arc(p[0], p[1], 6, 0, Math.PI * 2); ctx.fill(); ctx.fillText(l, p[0] - 18, p[1] + 18); });
+  ctx.beginPath(); ctx.arc(cx, cy, 6, 0, Math.PI * 2); ctx.fillStyle = '#0c7bb3'; ctx.fill(); ctx.fillText('G', cx - 16, cy + 16);
+  // segitiga kecepatan
+  const e = [cx, cy]; const rr = sp(r.vg);
+  arrow(e, rr, '#0c7bb3', 3.5, 'r');
+  if (r.ok) { const m = sp(r.vo); arrow(e, m, '#c99a00', 3.5, 'm'); arrow(rr, m, '#178a3a', 3.5); }
+  ctx.fillStyle = '#1d0b78'; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; ctx.font = '600 15px Inter';
+  ctx.fillText(`Skala kecepatan: 1 cincin = ${spStep} kn`, 14, H - 34);
+  ctx.fillText(`Skala jarak: 1 cincin = ${dStep} nm (${yd(dStep)} yd)`, 14, H - 14);
+  ctx.textAlign = 'right'; ctx.fillText('KABUZEN POG', W - 14, 24);
+}
+
+/* animasi hero di layar masuk */
+(function hero() {
+  const c = $('#heroAnim'); if (!c) return; const ctx = c.getContext('2d');
+  let st = {}; const g = 'S1'; const form = K.computeFormation({ code: 'D', axis: 0, D: 500, guide: g });
+  SHIPS.forEach((s, i) => { const v = K.vec(i * 47 + 20, i === 0 ? 0 : 0.5 + (i % 3) * 0.3); st[s] = { x: v.x, y: v.y, h: (i * 40) % 360, v: 12, t: 0, cc: 0, cv: 12 }; });
+  st[g].cc = 0; st[g].h = 0;
+  let t = 0; const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tick = () => {
+    if ($('#vLogin').classList.contains('hidden')) { requestAnimationFrame(tick); return; }
+    const r = c.getBoundingClientRect(); const dpr = devicePixelRatio || 1; if (c.width !== Math.round(r.width * dpr)) { c.width = r.width * dpr; c.height = r.height * dpr; }
+    t += reduce ? 0 : 6;
+    const P = {}; SHIPS.forEach(s => P[s] = K.propagate(st[s], t));
+    if (t % 30 === 0) SHIPS.forEach(s => { if (s === g) return; const cm = K.autoCommand(P[s], Object.assign({}, P[g], { cc: 0, cv: 12 }), form, s, 20); if (Math.abs(K.norm180(cm.cc - P[s].cc)) < 1 && Math.abs(cm.cv - P[s].cv) < 0.4) return; st[s] = Object.assign({}, P[s], { t, cc: cm.cc, cv: cm.cv, td: 0, next: cm.arriveIn != null ? { t: t + cm.arriveIn, cc: cm.gc, cv: cm.gs } : null }); });
+    if (t > 2400) { t = 0; SHIPS.forEach((s, i) => { const v = K.vec(Math.random() * 360, s === g ? 0 : 0.5 + Math.random() * 0.8); st[s] = { x: v.x, y: v.y, h: Math.random() * 360, v: 12, t: 0, cc: 0, cv: 12 }; }); st[g].h = 0; }
+    drawScene(ctx, c.width, c.height, { P, form, guide: g, axisUp: true, rangeNm: 1.3, showStations: true, dpr });
+    ctx.fillStyle = '#ffd60a'; ctx.font = `700 ${12 * dpr}px Inter`; ctx.textAlign = 'left'; ctx.fillText('FORM D · formasi belah ketupat', 10 * dpr, 18 * dpr);
+    requestAnimationFrame(tick);
+  };
+  tick();
+})();
+
+/* ============================================================== KONTROL UMUM */
+$('#vwTrue').onclick = () => { S.view = 'true'; $('#vwTrue').setAttribute('aria-pressed', true); $('#vwRel').setAttribute('aria-pressed', false); };
+$('#vwRel').onclick = () => { S.view = 'rel'; $('#vwTrue').setAttribute('aria-pressed', false); $('#vwRel').setAttribute('aria-pressed', true); };
+$('#zIn').onclick = () => { S.range = Math.max(0.25, S.range / 1.5); };
+$('#zOut').onclick = () => { S.range = Math.min(12, S.range * 1.5); };
+$('#vwStations').onclick = e => { S.showStations = !S.showStations; e.target.setAttribute('aria-pressed', S.showStations); };
+$('#vwTrails').onclick = e => { S.showTrails = !S.showTrails; e.target.setAttribute('aria-pressed', S.showTrails); };
+const vb = $('#btnVoice'); vb.setAttribute('aria-pressed', S.voice); vb.textContent = S.voice ? 'Suara ON' : 'Suara OFF';
+vb.onclick = () => { S.voice = !S.voice; LS.set('voice', S.voice); vb.setAttribute('aria-pressed', S.voice); vb.textContent = S.voice ? 'Suara ON' : 'Suara OFF'; if (S.voice) speak('Suara aktif.'); else { try { S.tts && S.tts.stop(); speechSynthesis.cancel(); } catch {} } };
+$('#btnLogout').onclick = logout;
+$('#ntCreate').onclick = createTeam;
+$('#lgGo').onclick = doLogin;
+$('#lgPass').onkeydown = e => { if (e.key === 'Enter') doLogin(); };
+$('#lgLocal').onclick = startLocal;
+
+/* ============================================================== MULAI */
+(async function boot() {
+  renderSeatGrid();
+  const online = await initCaps();
+  if (!online) {
+    $('#loginBanner').classList.remove('hidden');
+    $('#loginBanner').textContent = 'Penyimpanan bersama tidak tersedia di tampilan ini (masuk ke claude.ai dan buka dari tautan aplikasi). Anda tetap bisa memakai Mode Mandiri.';
+    $('#teamList').innerHTML = '<span class="note">Daftar tim membutuhkan koneksi.</span>';
+    $('#newTeamBox').classList.add('hidden'); $('#lgGo').disabled = true;
+    return;
+  }
+  if (S.room) {
+    S.room.onPeers(ch => { S.peers = ch.peers || []; }, () => {});
+  }
+  let t = setTimeout(() => { $('#teamList').innerHTML = '<span class="note warn">Daftar tim belum terjangkau. Coba muat ulang halaman.</span>'; }, 10000);
+  S.store.subCol('teams', o => { clearTimeout(t); S.teams = o || {}; renderTeamList(); const lg = LS.get('login'); if (lg && S.teams[lg.team] && !S.teamId) { selectTeam(lg.team); selSeat = lg.seat; renderSeatGrid(); $('#loginBanner').classList.remove('hidden'); $('#loginBanner').textContent = `Terakhir masuk: ${S.teams[lg.team].name} · ${lg.seat === 'KOOR' ? 'Koordinator' : 'Kapal ' + lg.seat.slice(1)}. Masukkan kata sandi untuk melanjutkan.`; } });
+})();
+</script>
+</body>
+</html>

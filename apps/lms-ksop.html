@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LMS Keselamatan &amp; Keamanan Pelayaran — Wilayah KSOP Tanjungpinang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0d2a44; --navy-2:#173d5f; --teal:#0f7c86; --teal-soft:#e3f2f3;
+    --ink:#14212e; --muted:#5b6b7a; --line:#dfe5ea; --bg:#f5f7f9; --card:#fff;
+    --good:#1f8a4c; --good-soft:#e5f4ea; --bad:#b4372f; --bad-soft:#fbeaea; --warn:#b26b00; --warn-soft:#fdf2e0;
+    --r:10px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.55}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;padding:22px 24px 0}
+  .wrap{max-width:1080px;margin:0 auto}
+  .brand{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .logo{width:46px;height:46px;border-radius:10px;background:rgba(255,255,255,.12);display:grid;place-items:center}
+  h1{font-family:"Source Serif 4",Georgia,serif;font-size:22px;margin:0;line-height:1.25}
+  .sub{opacity:.8;font-size:13px;margin-top:2px}
+  nav{display:flex;gap:4px;margin-top:18px;overflow-x:auto}
+  nav button{background:none;border:0;color:#cfe0ee;font:inherit;font-weight:500;padding:10px 14px;border-radius:8px 8px 0 0;cursor:pointer;white-space:nowrap}
+  nav button.on{background:var(--bg);color:var(--navy)}
+  main{padding:24px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+  .card h3{margin:0 0 6px;font-size:16px}
+  h2{font-family:"Source Serif 4",Georgia,serif;font-size:20px;margin:4px 0 12px}
+  .muted{color:var(--muted)} .small{font-size:13px}
+  .pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--teal-soft);color:var(--teal)}
+  .pill.good{background:var(--good-soft);color:var(--good)} .pill.bad{background:var(--bad-soft);color:var(--bad)} .pill.warn{background:var(--warn-soft);color:var(--warn)}
+  .btn{font:inherit;font-weight:600;border-radius:8px;padding:9px 16px;cursor:pointer;border:1px solid var(--teal);background:var(--teal);color:#fff}
+  .btn.ghost{background:#fff;color:var(--teal)} .btn.sm{padding:6px 12px;font-size:13px}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .between{justify-content:space-between}
+  label.f{display:block;font-size:13px;font-weight:600;margin:10px 0 4px}
+  input[type=text],input[type=date],select,textarea{width:100%;font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fff}
+  textarea{min-height:60px;resize:vertical}
+  .bar{height:8px;background:#e8edf1;border-radius:99px;overflow:hidden}
+  .bar>i{display:block;height:100%;background:var(--teal);border-radius:99px}
+  .stat{font-size:28px;font-weight:700;color:var(--navy)}
+  .lesson{border-left:3px solid var(--teal);padding:4px 0 4px 14px;margin:14px 0}
+  .lesson h4{margin:0 0 4px;font-size:15px}
+  .lesson ul{margin:6px 0 0;padding-left:20px}
+  .q{border:1px solid var(--line);border-radius:8px;padding:14px;margin:12px 0;background:#fff}
+  .q p{margin:0 0 8px;font-weight:600}
+  .opt{display:flex;gap:8px;align-items:flex-start;padding:7px 9px;border-radius:6px;cursor:pointer}
+  .opt:hover{background:#f2f6f8}
+  .opt.right{background:var(--good-soft)} .opt.wrong{background:var(--bad-soft)}
+  .expl{font-size:13px;color:var(--muted);margin-top:6px;display:none}
+  .done .expl{display:block}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600}
+  .ck{display:grid;grid-template-columns:1fr auto;gap:8px 16px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .ck .seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .ck .seg button{font:inherit;font-size:13px;border:0;background:#fff;padding:6px 11px;cursor:pointer;border-right:1px solid var(--line)}
+  .ck .seg button:last-child{border-right:0}
+  .ck .seg button.s-ok{background:var(--good);color:#fff} .ck .seg button.s-no{background:var(--bad);color:#fff} .ck .seg button.s-na{background:#8a97a3;color:#fff}
+  .ck .note{grid-column:1/-1;display:none} .ck.no .note{display:block}
+  .ref{font-size:12px;color:var(--muted)}
+  .cert{border:6px double var(--navy);border-radius:6px;padding:40px 32px;text-align:center;background:#fff}
+  .cert .t{font-family:"Source Serif 4",Georgia,serif;font-size:30px;color:var(--navy);margin:6px 0}
+  .cert .n{font-family:"Source Serif 4",Georgia,serif;font-size:26px;margin:14px 0 4px;border-bottom:1px solid var(--line);display:inline-block;padding:0 24px 6px}
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;display:none;z-index:9}
+  .hidden{display:none!important}
+  .notice{background:var(--warn-soft);border:1px solid #f0d9a8;color:#6d4a00;border-radius:8px;padding:10px 12px;font-size:13px}
+  footer{max-width:1080px;margin:0 auto;padding:8px 24px 32px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#fff" stroke-width="1.6"><path d="M5 17h18l-3 5H8z"/><rect x="10" y="12" width="8" height="5" rx="1"/><path d="M14 5v7M14 6l5 2.5-5 2"/><path d="M3 24c3-1.5 5 1.5 8 0s5 1.5 8 0 4 1.5 6 .5" stroke-opacity=".7"/></svg></div>
+      <div>
+        <h1>LMS Keselamatan &amp; Keamanan Pelayaran</h1>
+        <div class="sub">Pelatihan &amp; Pemeriksaan Internal · Wilayah Kerja KSOP Tanjungpinang · Program oleh Dr. Arif Badrudin M. Mgt. Stud.</div>
+      </div>
+    </div>
+    <nav id="nav">
+      <button data-v="beranda" class="on">Beranda</button>
+      <button data-v="modul">Modul Pelatihan</button>
+      <button data-v="audit">Pemeriksaan Internal</button>
+      <button data-v="riwayat">Riwayat Audit</button>
+      <button data-v="sertifikat">Sertifikat</button>
+      <button data-v="rekap" id="navRekap" class="hidden">Rekap Peserta</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="app"></main>
+<footer class="wrap">Materi mengacu pada SOLAS Bab XI-2 (ISPS Code), PM 134/2016, ISM Code, STCW, MLC 2006, ISO 31000, dan maklumat pelayaran Ditjen Hubla. LMS ini adalah alat bantu pelatihan internal dan tidak menggantikan sertifikasi resmi atau pemeriksaan oleh pejabat berwenang.</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== CONTENT ===================== */
+const MODULES = [
+ { id:"isps", title:"Penerapan ISPS Code", icon:"🛡", lessons:[
+   {h:"Apa itu ISPS Code", p:"Ketentuan internasional keamanan kapal dan fasilitas pelabuhan, bagian dari SOLAS Bab XI-2, berlaku sejak 1 Juli 2004. Di Indonesia, pedoman implementasinya diatur dalam PM 134 Tahun 2016.", li:["Bagian A wajib; Bagian B pedoman.","Berlaku bagi kapal & fasilitas pelabuhan yang melayani pelayaran internasional, termasuk terminal penumpang internasional seperti Sri Bintan Pura."]},
+   {h:"Siapa melakukan apa", p:"Empat peran kunci saling terhubung:", li:["Designated Authority (Ditjen Hubla/KSOP): menetapkan security level, menyetujui PFSP, verifikasi.","PFSO: menyusun & menjalankan Port Facility Security Plan, drill, kontrol akses.","CSO: petugas keamanan perusahaan pelayaran, menyusun Ship Security Plan.","SSO: perwira keamanan di kapal, pelaksanaan harian SSP."]},
+   {h:"Tiga tingkat keamanan", p:"Langkah keamanan disesuaikan dengan tingkat ancaman yang ditetapkan otoritas.", li:["Level 1 (normal): identitas, tiket, X-ray bagasi, patroli rutin.","Level 2 (meningkat): pemeriksaan lebih ketat, akses kendaraan dibatasi, Declaration of Security dengan kapal.","Level 3 (luar biasa): ancaman spesifik — operasi dapat dihentikan/dialihkan sesuai instruksi otoritas."]},
+   {h:"Siklus kepatuhan", p:"PFSA → PFSP → pelatihan → drill (minimal tiap 3 bulan) & exercise (minimal setahun sekali, jarak antar-exercise ≤ 18 bulan) → audit internal & verifikasi → perbaikan.", li:["Kesalahan umum di terminal padat: pintu samping/ponton terbuka saat jam sibuk, petugas keamanan merangkap atur antrean, drill hanya di atas kertas."]}
+ ], quiz:[
+   {q:"ISPS Code merupakan bagian dari konvensi internasional…", o:["SOLAS Bab XI-2","MARPOL Annex VI","STCW Bab V","COLREG 1972"], a:0, e:"ISPS Code diberlakukan melalui SOLAS Bab XI-2 tentang langkah khusus peningkatan keamanan maritim."},
+   {q:"ISPS Code mulai berlaku efektif sejak…", o:["12 Desember 2002","1 Juli 2004","1 Januari 2008","1 Juli 2010"], a:1, e:"Diadopsi Desember 2002 dan berlaku efektif 1 Juli 2004."},
+   {q:"Peraturan Menteri Perhubungan yang menjadi pedoman implementasi ISPS Code di Indonesia adalah…", o:["PM 71 Tahun 2021","PM 130 Tahun 2015","PM 134 Tahun 2016","PM 135 Tahun 2015"], a:2, e:"PM 134/2016 mengatur Manajemen Keamanan Kapal dan Fasilitas Pelabuhan. PM 71/2021 mengatur organisasi KSOP."},
+   {q:"Petugas yang menyusun dan menjalankan rencana keamanan fasilitas pelabuhan (PFSP) adalah…", o:["Ship Security Officer","Company Security Officer","Port Facility Security Officer","Nakhoda"], a:2, e:"PFSO bertanggung jawab atas PFSP, drill, dan kontrol akses di fasilitas pelabuhan."},
+   {q:"Tingkat keamanan yang berlaku ketika ancaman bersifat spesifik atau segera terjadi adalah…", o:["Level 1","Level 2","Level 3","Level 0"], a:2, e:"Level 3 = luar biasa; langkah keamanan tambahan diberlakukan dalam waktu terbatas."},
+   {q:"Menurut pedoman ISPS Bagian B, drill keamanan di fasilitas pelabuhan dilakukan minimal…", o:["Setiap minggu","Setiap 3 bulan","Setiap 2 tahun","Hanya menjelang audit"], a:1, e:"Drill minimal tiap 3 bulan; exercise minimal sekali setahun dengan jarak tidak lebih dari 18 bulan."},
+   {q:"Dokumen kesepakatan langkah keamanan antara kapal dan fasilitas pelabuhan disebut…", o:["International Ship Security Certificate","Surat Persetujuan Berlayar","Declaration of Security","Crew List"], a:2, e:"Declaration of Security (DoS) memuat pembagian tanggung jawab keamanan kapal–fasilitas."},
+   {q:"Saat jam sibuk Nataru, pintu samping menuju ponton dibiarkan terbuka agar antrean lancar. Tindakan PFSO yang tepat…", o:["Membiarkannya sampai puncak arus selesai","Menutup/menjaga pintu, mencatat sebagai ketidaksesuaian, dan menindaklanjuti","Meminta penumpang ikut mengawasi","Melaporkannya pada evaluasi tahunan saja"], a:1, e:"Kontrol akses adalah inti PFSP; penyimpangan harus segera diperbaiki dan dicatat."}
+ ]},
+ { id:"risiko", title:"Manajemen Risiko", icon:"📊", lessons:[
+   {h:"Kerangka ISO 31000", p:"Enam langkah: tetapkan konteks → identifikasi → analisis → evaluasi → perlakuan → pantau & tinjau.", li:["Sumber identifikasi: laporan insiden, near-miss, hasil uji petik, keluhan publik, prakiraan BMKG."]},
+   {h:"Menilai risiko", p:"Nilai risiko = Kemungkinan (1–5) × Dampak (1–5).", li:["1–4 rendah · 5–9 sedang · 10–16 tinggi · 20–25 ekstrem.","Risiko ekstrem wajib ditangani sebelum operasi berlanjut."]},
+   {h:"Empat pilihan perlakuan", p:"Hindari, kurangi, alihkan, atau terima dengan pengendalian.", li:["Kurangi: audit perawatan mesin terencana untuk risiko mati mesin.","Alihkan: asuransi — tidak menurunkan kemungkinan kejadian.","Setiap risiko punya pemilik: pihak yang berwenang & punya sumber daya mengendalikannya."]},
+   {h:"Indikator risiko utama (KRI)", p:"Ukur sebelum kejadian:", li:["SPB ditunda karena cuaca per minggu.","Gangguan teknis per 100 keberangkatan.","Rasio penumpang/kapasitas di jam puncak.","Persentase drill terlaksana sesuai jadwal.","Waktu respons pengaduan publik."]}
+ ], quiz:[
+   {q:"Standar internasional yang menjadi acuan umum proses manajemen risiko adalah…", o:["ISO 9001","ISO 14001","ISO 31000","ISO 22000"], a:2, e:"ISO 31000 memberi prinsip dan proses manajemen risiko."},
+   {q:"Risiko dengan Kemungkinan 3 dan Dampak 5 bernilai…", o:["8 — sedang","15 — tinggi","15 — rendah","20 — ekstrem"], a:1, e:"3 × 5 = 15, masuk kategori tinggi (10–16)."},
+   {q:"Langkah pertama dalam proses manajemen risiko ISO 31000 adalah…", o:["Membeli asuransi","Menetapkan konteks","Menyusun laporan tahunan","Melakukan drill"], a:1, e:"Konteks menentukan ruang lingkup, pemangku kepentingan, dan kriteria risiko."},
+   {q:"Near-miss sebaiknya…", o:["Diabaikan karena tidak ada korban","Dilaporkan dan dianalisis sebagai bahan pembelajaran","Dirahasiakan agar tidak viral","Hanya dicatat bila ada kerusakan"], a:1, e:"Near-miss adalah sinyal dini; analisisnya mencegah kecelakaan sebenarnya."},
+   {q:"Contoh perlakuan ‘mengurangi’ untuk risiko kapal mati mesin di tengah rute…", o:["Membeli asuransi saja","Program perawatan mesin terencana & audit teknis","Menutup rute selamanya","Menerima risiko tanpa tindakan"], a:1, e:"Perawatan terencana menurunkan kemungkinan kejadian; asuransi hanya mengalihkan dampak finansial."},
+   {q:"KRI paling tepat untuk risiko kelebihan muatan penumpang adalah…", o:["Jumlah pegawai KSOP","Rasio penumpang/kapasitas di jam puncak","Harga tiket rata-rata","Jumlah posko"], a:1, e:"Rasio okupansi menunjukkan seberapa dekat operasi dengan batas aman."},
+   {q:"Risiko berkategori ekstrem (20–25) harus…", o:["Dipantau tahunan","Ditangani sebelum operasi berlanjut","Diterima jika biayanya mahal","Dilaporkan setelah kejadian"], a:1, e:"Risiko ekstrem tidak dapat diterima tanpa pengendalian segera."},
+   {q:"‘Pemilik risiko’ adalah…", o:["Siapa pun yang pertama melihat bahaya","Pihak yang berwenang dan punya sumber daya untuk mengendalikan risiko","Selalu Kepala KSOP","Konsultan eksternal"], a:1, e:"Pemilik risiko memastikan pengendalian dijalankan dan dipantau."}
+ ]},
+ { id:"k3", title:"Keselamatan Kerja Awak & Penumpang", icon:"🦺", lessons:[
+   {h:"Kerangka acuan", p:"ISM Code (SOLAS Bab IX) untuk sistem manajemen keselamatan, STCW untuk kompetensi awak, MLC 2006 untuk jam kerja/istirahat dan kesejahteraan awak.", li:[]},
+   {h:"Bahaya bagi awak", p:"Kenali dan kendalikan:", li:["Kelelahan saat rotasi trip padat → jadwal istirahat & cek kebugaran.","Kebakaran ruang mesin → inspeksi harian, APAR teruji, drill.","Terpeleset/jatuh → alas anti-selip, pegangan, APD.","Tali tambat → briefing, hindari zona snap-back."]},
+   {h:"Keselamatan penumpang", p:"Lima titik kritis:", li:["Sebelum naik: manifest sesuai kapasitas; tidak memaksakan naik bila penuh.","Naik/turun: gangway stabil, pendampingan lansia, anak, difabel.","Sebelum berangkat: briefing life jacket & pintu darurat.","Selama pelayaran: life jacket mudah dijangkau, jalur evakuasi bebas.","Darurat: komando nakhoda, muster list, lapor ke SROP/syahbandar."]},
+   {h:"Drill minimum", p:"Kapal penumpang: abandon ship & kebakaran mingguan (SOLAS III/19), MOB bulanan, drill keamanan tiap 3 bulan. Semua dicatat di log book.", li:[]}
+ ], quiz:[
+   {q:"Kode internasional untuk sistem manajemen keselamatan perusahaan pelayaran adalah…", o:["ISPS Code","ISM Code","IMDG Code","LSA Code"], a:1, e:"ISM Code (SOLAS Bab IX) mengatur Safety Management System."},
+   {q:"Untuk kapal penumpang, drill abandon ship dan kebakaran dilaksanakan…", o:["Mingguan","Tahunan","Hanya saat uji petik","Lima tahun sekali"], a:0, e:"SOLAS III/19 mensyaratkan drill mingguan bagi kapal penumpang."},
+   {q:"Ketentuan life jacket yang benar di kapal penumpang…", o:["Disimpan terkunci agar tidak hilang","Jumlahnya ≥ penumpang + cadangan, termasuk ukuran anak, mudah dijangkau","Cukup untuk awak saja","Hanya untuk pelayaran malam"], a:1, e:"Life jacket harus cukup, sesuai ukuran, dan siap pakai."},
+   {q:"Pengendalian yang tepat untuk bahaya kelelahan awak saat puncak arus mudik…", o:["Menambah trip tanpa batas","Jadwal jam istirahat & cek kebugaran sebelum berangkat","Memberi minuman berenergi","Mengurangi jumlah awak"], a:1, e:"Jam kerja/istirahat diatur MLC 2006; kebugaran dicek sebelum berlayar."},
+   {q:"Briefing keselamatan penumpang dilakukan…", o:["Setelah kapal tiba","Sebelum kapal berangkat","Hanya bila diminta penumpang","Sekali sebulan"], a:1, e:"Penumpang perlu tahu letak & cara memakai life jacket sebelum keadaan darurat."},
+   {q:"Kapal sudah penuh sesuai manifest, tetapi beberapa penumpang memaksa naik. Tindakan yang benar…", o:["Izinkan berdiri di dek","Tolak dengan sopan dan arahkan ke keberangkatan berikutnya","Izinkan bila mereka menandatangani pernyataan","Naikkan dan kurangi life jacket awak"], a:1, e:"Kapasitas angkut adalah batas keselamatan; KSOP juga mengimbau masyarakat tidak memaksakan naik kapal penuh."},
+   {q:"Konvensi yang mengatur jam kerja/istirahat dan kesejahteraan awak kapal…", o:["MARPOL","MLC 2006","COLREG","SAR 1979"], a:1, e:"Maritime Labour Convention 2006."},
+   {q:"‘Zona snap-back’ adalah…", o:["Area merokok di kapal","Area berbahaya bila tali tambat putus dan memantul","Ruang istirahat awak","Jalur evakuasi"], a:1, e:"Awak harus menjauhi zona ini saat operasi tambat."}
+ ]},
+ { id:"utara", title:"Kesiapan Musim Utara", icon:"🌊", lessons:[
+   {h:"Mengenal musim utara", p:"Angin muson utara–timur laut di Kepulauan Riau umumnya November hingga Februari/Maret: angin kencang, gelombang tinggi, terutama di Laut Natuna Utara dan perairan terbuka. Puncaknya bersamaan dengan angkutan Nataru.", li:["Contoh: Januari 2026 KM Sabuk Nusantara di Tanjungpinang ditunda karena gelombang samping 2,5 m."]},
+   {h:"Batas waspada BMKG", p:"Ambang kewaspadaan yang lazim dipakai dalam peringatan dini gelombang:", li:["Perahu nelayan/pompong: angin > 15 knot, gelombang > 1,25 m.","Tongkang: > 16 knot, > 1,5 m.","Feri: > 21 knot, > 2,5 m.","Kapal besar: > 27 knot, > 4,0 m."]},
+   {h:"Maklumat pelayaran", p:"Praktik yang berulang kali diinstruksikan Ditjen Hubla saat cuaca ekstrem:", li:["Syahbandar tidak menerbitkan SPB sampai cuaca di rute aman.","Pelayaran > 4 jam: nakhoda melampirkan berita cuaca saat mengajukan SPB.","Pantau cuaca tiap 6 jam, lapor ke SROP terdekat, catat di log book.","Cuaca memburuk: berlindung di tempat aman, kapal tetap siap digerakkan, lapor posisi."]},
+   {h:"Kontinjensi", p:"Siapkan sebelum puncak:", li:["Daftar tempat berlindung di rute utama.","Kontak siaga 24 jam: syahbandar, SROP, Basarnas, Polairud, operator.","Kapal cadangan & patroli siaga.","Layanan penumpang tertahan: informasi berkala, air minum, jadwal ulang tiket."]}
+ ], quiz:[
+   {q:"Musim utara di Kepulauan Riau umumnya berlangsung…", o:["Mei–Agustus","November–Februari/Maret","Juli–September","Sepanjang tahun"], a:1, e:"Muson utara–timur laut dominan pada akhir hingga awal tahun."},
+   {q:"Bila cuaca membahayakan keselamatan pelayaran, syahbandar…", o:["Tetap menerbitkan SPB bila kapal besar","Tidak menerbitkan SPB sampai cuaca di rute aman","Menyerahkan keputusan ke penumpang","Menerbitkan SPB dengan biaya tambahan"], a:1, e:"Sesuai maklumat pelayaran Ditjen Hubla."},
+   {q:"Untuk pelayaran lebih dari 4 jam di masa cuaca ekstrem, nakhoda wajib…", o:["Melampirkan berita cuaca saat mengajukan SPB","Mengurangi awak","Berlayar malam hari","Mematikan radio"], a:0, e:"Berita cuaca terkini dilampirkan dalam permohonan SPB."},
+   {q:"Selama pelayaran di masa cuaca ekstrem, pemantauan cuaca dilakukan…", o:["Sekali sebelum berangkat saja","Setiap 6 jam dan dilaporkan ke SROP","Setiap 24 jam","Hanya saat hujan"], a:1, e:"Laporan tiap 6 jam ke Stasiun Radio Pantai dan dicatat di log book."},
+   {q:"Batas waspada BMKG untuk perahu nelayan/pompong adalah…", o:["Angin > 15 knot dan gelombang > 1,25 m","Angin > 27 knot dan gelombang > 4 m","Angin > 21 knot dan gelombang > 2,5 m","Tidak ada batas"], a:0, e:"Kapal kecil paling rentan; ambang ini yang terendah."},
+   {q:"Kapal mendapat cuaca buruk di tengah pelayaran. Tindakan yang tepat…", o:["Mempercepat laju agar cepat tiba","Berlindung di tempat aman, kapal tetap siap digerakkan, lapor posisi ke syahbandar/SROP","Mematikan mesin dan menunggu","Kembali tanpa melapor"], a:1, e:"Prosedur standar dalam maklumat pelayaran."},
+   {q:"Batas waspada BMKG untuk kapal feri adalah…", o:["> 15 knot / > 1,25 m","> 16 knot / > 1,5 m","> 21 knot / > 2,5 m","> 27 knot / > 4 m"], a:2, e:"Ambang tetap perlu disesuaikan dengan desain dan stabilitas tiap kapal."},
+   {q:"Keberangkatan ditunda karena cuaca dan penumpang tertahan di terminal. Prioritas layanan…", o:["Menutup terminal","Informasi berkala, kebutuhan dasar, jadwal ulang tiket","Memaksa kapal berangkat","Menghapus tiket"], a:1, e:"Keselamatan dulu, lalu komunikasi dan layanan yang baik mencegah keluhan viral."}
+ ]}
+];
+
+const AUDITS = [
+ { id:"isps", title:"Fasilitas Pelabuhan — ISPS Code", obj:"Fasilitas pelabuhan / terminal", items:[
+   ["PFSA/PFSP dan SoCPF masih berlaku","PM 134/2016; ISPS A/16"],
+   ["PFSO dan wakilnya ditunjuk tertulis dan bersertifikat","ISPS A/17"],
+   ["Kontrol akses berfungsi: pagar, gerbang, kartu identitas, daftar tamu","ISPS A/14.2"],
+   ["Area terbatas ditandai dan diawasi; CCTV merekam dan rekaman disimpan","ISPS A/14.2"],
+   ["Pemeriksaan penumpang & bagasi berjalan di semua pintu ruang tunggu internasional","ISPS A/14.2"],
+   ["Prosedur Declaration of Security tersedia dan dipahami petugas","ISPS A/5"],
+   ["Log drill 3 bulanan lengkap; temuan ditindaklanjuti","ISPS B/18.5"],
+   ["Exercise tahunan terlaksana (jarak ≤ 18 bulan)","ISPS B/18.6"],
+   ["Jalur komunikasi darurat ke KSOP, aparat, dan kapal diuji","PFSP"],
+   ["Kapal yang sandar memiliki ISSC dan SSO yang dapat dihubungi","SOLAS XI-2/9"]
+ ]},
+ { id:"kapal", title:"Kapal Penumpang — Keselamatan Harian", obj:"Kapal", items:[
+   ["Life jacket dewasa & anak ≥ jumlah penumpang + cadangan, tidak terkunci","SOLAS III; uji petik"],
+   ["Ring buoy dengan lampu/tali siap pakai","SOLAS III"],
+   ["Rakit penolong/ILR dalam masa servis","SOLAS III"],
+   ["APAR terisi; label pemeriksaan berlaku","SOLAS II-2"],
+   ["Radio VHF & alat komunikasi darurat berfungsi","SOLAS IV"],
+   ["Manifest sesuai jumlah penumpang di kapal; tidak melebihi kapasitas","Dokumen kapal"],
+   ["Nakhoda & awak sehat, tidak lelah, memiliki sertifikat sesuai","STCW; MLC 2006"],
+   ["Briefing keselamatan disampaikan sebelum berangkat","ISM Code"],
+   ["Jalur evakuasi dan pintu darurat bebas barang","SOLAS II-2"],
+   ["Gangway/akses naik-turun aman dan didampingi petugas","K3 operasional"]
+ ]},
+ { id:"k3", title:"K3 Awak & Sistem Manajemen Keselamatan", obj:"Perusahaan / kapal", items:[
+   ["Safety Management System (ISM) tersedia dan dipahami awak","ISM Code 1–7"],
+   ["Drill abandon ship & kebakaran mingguan tercatat di log book","SOLAS III/19"],
+   ["Drill MOB bulanan tercatat","SMS perusahaan"],
+   ["Catatan jam kerja/istirahat awak dipelihara","MLC 2006"],
+   ["APD tersedia: sepatu keselamatan, pelampung kerja, pelindung telinga","K3"],
+   ["Program perawatan terencana mesin berjalan; kerusakan berulang dianalisis","ISM Code 10"],
+   ["Laporan ketidaksesuaian & near-miss ada dan ditindaklanjuti","ISM Code 9"],
+   ["Muster list terpasang dan sesuai jumlah awak saat ini","SOLAS III/8"]
+ ]},
+ { id:"utara", title:"Kesiapan Musim Utara", obj:"Operator / pelabuhan", items:[
+   ["Ambang operasional cuaca tiap kapal ditetapkan tertulis","SOP perusahaan"],
+   ["Prakiraan maritim BMKG diambil pagi & menjelang keberangkatan","Maklumat pelayaran"],
+   ["Berita cuaca dilampirkan pada permohonan SPB (pelayaran > 4 jam)","Maklumat pelayaran"],
+   ["Prosedur pemantauan cuaca tiap 6 jam & lapor SROP dipahami nakhoda","Maklumat pelayaran"],
+   ["Daftar tempat berlindung di sepanjang rute tersedia di anjungan","Rencana kontinjensi"],
+   ["Daftar kontak siaga 24 jam (syahbandar, SROP, Basarnas, Polairud) mutakhir","Rencana kontinjensi"],
+   ["Kapal cadangan siaga untuk periode puncak","Rencana operasi"],
+   ["Prosedur informasi & jadwal ulang tiket saat penundaan siap","Layanan publik"],
+   ["Awak telah mendapat briefing musim utara","Pelatihan"],
+   ["Uji petik kelaiklautan sebelum puncak telah dilaksanakan","Ditjen Hubla"]
+ ]},
+ { id:"risiko", title:"Tinjauan Manajemen Risiko", obj:"Unit / perusahaan", items:[
+   ["Register risiko tersedia dan ditinjau dalam 3 bulan terakhir","ISO 31000"],
+   ["Setiap risiko tinggi/ekstrem memiliki pemilik & rencana pengendalian","ISO 31000"],
+   ["KRI dipantau dan dilaporkan berkala","ISO 31000"],
+   ["Insiden & near-miss 3 bulan terakhir dimasukkan ke register","ISO 31000"],
+   ["Hasil uji petik & keluhan publik dipakai sebagai sumber identifikasi risiko","Praktik baik"],
+   ["Kanal pengaduan publik dipublikasikan dan ada target waktu respons","Ombudsman Kepri"]
+ ]}
+];
+
+/* ===================== STATE ===================== */
+const LS_KEY = "lms-ksop-tpi-v1";
+let state = { profile:{nama:"",peran:"",unit:"",objek:""}, quiz:{}, audits:[] };
+let db=null, user=null, uid=null, canWriteDb=true, isAdmin=false, allResults=[];
+let view = "beranda", openModule=null, quizOpen=false, auditDraft=null;
+
+function loadLocal(){ try{ const s=localStorage.getItem(LS_KEY); if(s){ const d=JSON.parse(s); state=Object.assign(state,d);} }catch(e){} }
+function saveLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
+let writing=false, pendingWrite=false;
+async function save(){
+  saveLocal();
+  if(!db||!uid||!canWriteDb) return;
+  if(writing){ pendingWrite=true; return; }
+  writing=true;
+  try{ await db.doc("results/"+uid).set(JSON.parse(JSON.stringify({...state, updatedAt:new Date().toISOString()}))); setSync("Tersimpan di server"); }
+  catch(e){ if(e&&e.code==="invalid_argument"){ canWriteDb=false; setSync("Tersimpan di perangkat ini saja (akses Anda hanya-lihat)"); } else setSync("Gagal sinkron, tersimpan di perangkat"); }
+  writing=false;
+  if(pendingWrite){ pendingWrite=false; save(); }
+}
+let syncMsg="Tersimpan di perangkat ini";
+function setSync(m){ syncMsg=m; const el=document.getElementById("sync"); if(el) el.textContent=m; }
+
+function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.style.display="block"; clearTimeout(t._h); t._h=setTimeout(()=>t.style.display="none",2600); }
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtDate = iso => { try{ return new Date(iso).toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});}catch(e){return iso;} };
+const PASS=80;
+function shuffle(a){ const r=a.slice(); for(let i=r.length-1;i>0;i--){ const k=Math.floor(Math.random()*(i+1)); [r[i],r[k]]=[r[k],r[i]]; } return r; }
+function modStatus(m){ const r=state.quiz[m.id]; if(!r) return {txt:"Belum mulai",cls:""}; if(r.best>=PASS) return {txt:"Lulus · "+r.best+"%",cls:"good"}; return {txt:"Belum lulus · "+r.best+"%",cls:"warn"}; }
+const passedCount = st => MODULES.filter(m=>(st.quiz?.[m.id]?.best||0)>=PASS).length;
+
+/* ===================== RENDER ===================== */
+const app = document.getElementById("app");
+function render(){
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===view));
+  document.getElementById("navRekap").classList.toggle("hidden",!isAdmin);
+  ({beranda:rBeranda, modul:rModul, audit:rAudit, riwayat:rRiwayat, sertifikat:rSert, rekap:rRekap}[view]||rBeranda)();
+  window.scrollTo(0,0);
+}
+function go(v){ view=v; if(v!=="modul"){openModule=null;quizOpen=false;} render(); try{ history.replaceState(null,"","#"+v);}catch(e){} }
+document.getElementById("nav").addEventListener("click",e=>{ const b=e.target.closest("button"); if(b) go(b.dataset.v); });
+
+function rBeranda(){
+  const p=state.profile, n=passedCount(state), pct=Math.round(n/MODULES.length*100);
+  const last=state.audits[0];
+  app.innerHTML = `
+  <div class="grid g2">
+    <div class="card">
+      <h2 style="margin-top:0">Profil Peserta</h2>
+      <form id="pf">
+        <label class="f">Nama lengkap</label><input type="text" name="nama" value="${esc(p.nama)}" required>
+        <label class="f">Peran</label>
+        <select name="peran">${["","Nakhoda / Perwira kapal","Awak kapal (ABK)","PFSO / Petugas keamanan pelabuhan","CSO / Manajemen perusahaan pelayaran","Petugas KSOP / Syahbandar","Petugas operator terminal","Lainnya"].map(o=>`<option ${o===p.peran?"selected":""} value="${esc(o)}">${o||"— pilih —"}</option>`).join("")}</select>
+        <label class="f">Perusahaan / Unit kerja</label><input type="text" name="unit" value="${esc(p.unit)}">
+        <label class="f">Nama kapal / fasilitas (opsional)</label><input type="text" name="objek" value="${esc(p.objek)}">
+        <div class="row between" style="margin-top:14px"><span class="small muted" id="sync">${esc(syncMsg)}</span><button class="btn" type="submit">Simpan profil</button></div>
+      </form>
+    </div>
+    <div class="card">
+      <h2 style="margin-top:0">Kemajuan Anda</h2>
+      <div class="row between"><span>Modul lulus</span><b>${n} / ${MODULES.length}</b></div>
+      <div class="bar" style="margin:8px 0 16px"><i style="width:${pct}%"></i></div>
+      ${MODULES.map(m=>{const s=modStatus(m);return `<div class="row between" style="padding:6px 0;border-bottom:1px solid var(--line)"><span>${m.icon} ${m.title}</span><span class="pill ${s.cls}">${s.txt}</span></div>`}).join("")}
+      <div class="row between" style="margin-top:14px"><span>Pemeriksaan internal tersimpan</span><b>${state.audits.length}</b></div>
+      ${last?`<div class="small muted">Terakhir: ${esc(last.title)} — skor ${last.score}% (${fmtDate(last.tanggal)})</div>`:""}
+      <div class="row" style="margin-top:16px"><button class="btn" data-go="modul">Lanjut belajar</button><button class="btn ghost" data-go="audit">Mulai pemeriksaan</button></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>Cara memakai LMS ini</h3>
+    <ol class="small" style="margin:6px 0 0;padding-left:20px">
+      <li>Isi profil, lalu pelajari keempat modul. Setiap modul ditutup kuis 8 soal; nilai lulus ${PASS}%. Kuis dapat diulang.</li>
+      <li>Gunakan <b>Pemeriksaan Internal</b> untuk audit kapal, fasilitas, K3, kesiapan musim utara, dan manajemen risiko. Setiap butir “Tidak sesuai” wajib diberi tindakan perbaikan dan target tanggal.</li>
+      <li>Sertifikat penyelesaian terbit setelah keempat modul lulus.</li>
+      <li>Pengelola program dapat melihat rekap seluruh peserta di tab <b>Rekap Peserta</b>.</li>
+    </ol>
+  </div>`;
+  document.getElementById("pf").onsubmit=e=>{ e.preventDefault(); const f=new FormData(e.target); state.profile={nama:f.get("nama").trim(),peran:f.get("peran"),unit:f.get("unit").trim(),objek:f.get("objek").trim()}; save(); toast("Profil disimpan"); };
+  app.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.go));
+}
+
+function rModul(){
+  if(!openModule){
+    app.innerHTML = `<h2>Modul Pelatihan</h2><div class="grid g4">${MODULES.map((m,i)=>{const s=modStatus(m);return `
+      <div class="card"><div style="font-size:26px">${m.icon}</div><h3>Modul ${i+1}. ${m.title}</h3>
+      <div class="small muted">${m.lessons.length} materi · ${m.quiz.length} soal</div>
+      <div style="margin:10px 0"><span class="pill ${s.cls}">${s.txt}</span></div>
+      <button class="btn sm" data-m="${m.id}">${state.quiz[m.id]?"Buka kembali":"Mulai"}</button></div>`}).join("")}</div>`;
+    app.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{openModule=b.dataset.m;quizOpen=false;render();});
+    return;
+  }
+  const m=MODULES.find(x=>x.id===openModule), r=state.quiz[m.id];
+  if(!quizOpen){
+    app.innerHTML = `<button class="btn ghost sm" id="back">← Semua modul</button>
+    <div class="card" style="margin-top:12px"><h2 style="margin-top:0">${m.icon} ${m.title}</h2>
+    ${m.lessons.map((l,i)=>`<div class="lesson"><h4>${i+1}. ${esc(l.h)}</h4><div>${esc(l.p)}</div>${l.li.length?`<ul>${l.li.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}</div>`).join("")}
+    <div class="row between" style="margin-top:18px"><span class="small muted">${r?`Percobaan: ${r.attempts} · nilai terbaik ${r.best}%`:"Belum ada percobaan kuis"}</span><button class="btn" id="startQ">Kerjakan kuis</button></div></div>`;
+    document.getElementById("back").onclick=()=>{openModule=null;render();};
+    document.getElementById("startQ").onclick=()=>{quizOpen=true;render();};
+    return;
+  }
+  app.innerHTML = `<button class="btn ghost sm" id="back">← Kembali ke materi</button>
+   <h2 style="margin-top:14px">Kuis: ${m.title}</h2><p class="small muted">Pilih satu jawaban untuk setiap soal. Nilai lulus ${PASS}%.</p>
+   <form id="qf">${m.quiz.map((q,i)=>`<div class="q" id="q${i}"><p>${i+1}. ${esc(q.q)}</p>${shuffle(q.o.map((o,j)=>[o,j])).map(([o,j])=>`<label class="opt"><input type="radio" name="q${i}" value="${j}"> <span>${esc(o)}</span></label>`).join("")}<div class="expl">${esc(q.e)}</div></div>`).join("")}
+   <div class="row between"><span id="qmsg" class="small muted"></span><button class="btn" type="submit">Kumpulkan jawaban</button></div></form>`;
+  document.getElementById("back").onclick=()=>{quizOpen=false;render();};
+  document.getElementById("qf").onsubmit=e=>{
+    e.preventDefault(); const f=new FormData(e.target);
+    if(m.quiz.some((_,i)=>f.get("q"+i)===null)){ document.getElementById("qmsg").textContent="Masih ada soal yang belum dijawab."; return; }
+    let ok=0;
+    m.quiz.forEach((q,i)=>{ const v=+f.get("q"+i), box=document.getElementById("q"+i); box.classList.add("done");
+      box.querySelectorAll(".opt").forEach(lab=>{ const inp=lab.querySelector("input"), j=+inp.value; if(j===q.a) lab.classList.add("right"); else if(j===v) lab.classList.add("wrong"); inp.disabled=true; });
+      if(v===q.a) ok++; });
+    const score=Math.round(ok/m.quiz.length*100), prev=state.quiz[m.id]||{best:0,attempts:0};
+    state.quiz[m.id]={best:Math.max(prev.best,score),last:score,attempts:prev.attempts+1,lastAt:new Date().toISOString(),passedAt:prev.passedAt||(score>=PASS?new Date().toISOString():null)};
+    save();
+    const btn=e.target.querySelector("button[type=submit]"); btn.textContent="Ulangi kuis"; btn.type="button"; btn.onclick=()=>render();
+    document.getElementById("qmsg").innerHTML = `<b style="color:${score>=PASS?"var(--good)":"var(--bad)"}">Nilai ${score}% (${ok}/${m.quiz.length}) — ${score>=PASS?"LULUS":"belum lulus, pelajari kembali materi"}</b>`;
+    toast(score>=PASS?"Selamat, modul lulus!":"Nilai belum mencapai "+PASS+"%");
+  };
+}
+
+function rAudit(){
+  if(!auditDraft){
+    app.innerHTML = `<h2>Pemeriksaan Internal</h2><p class="muted small">Pilih jenis checklist. Hasil disimpan ke riwayat dan dapat diunduh atau disalin sebagai laporan.</p>
+    <div class="grid g4">${AUDITS.map(a=>`<div class="card"><h3>${esc(a.title)}</h3><div class="small muted">${a.items.length} butir · objek: ${esc(a.obj)}</div><button class="btn sm" style="margin-top:12px" data-a="${a.id}">Mulai</button></div>`).join("")}</div>`;
+    app.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{ const a=AUDITS.find(x=>x.id===b.dataset.a);
+      auditDraft={id:a.id,title:a.title,tanggal:new Date().toISOString().slice(0,10),auditor:state.profile.nama||"",objek:state.profile.objek||"",lokasi:"",ans:a.items.map(()=>({s:"",note:"",due:""}))}; render(); });
+    return;
+  }
+  const a=AUDITS.find(x=>x.id===auditDraft.id), d=auditDraft;
+  app.innerHTML = `<button class="btn ghost sm" id="back">← Batal</button>
+  <div class="card" style="margin-top:12px"><h2 style="margin-top:0">${esc(a.title)}</h2>
+   <div class="grid g4">
+    <div><label class="f">Tanggal</label><input type="date" id="aTgl" value="${esc(d.tanggal)}"></div>
+    <div><label class="f">Pemeriksa</label><input type="text" id="aAud" value="${esc(d.auditor)}"></div>
+    <div><label class="f">${esc(a.obj)}</label><input type="text" id="aObj" value="${esc(d.objek)}"></div>
+    <div><label class="f">Lokasi / rute</label><input type="text" id="aLok" value="${esc(d.lokasi)}" placeholder="mis. SBP Tanjungpinang"></div>
+   </div>
+   <div id="items" style="margin-top:10px">${a.items.map((it,i)=>{const x=d.ans[i];return `
+     <div class="ck ${x.s==="no"?"no":""}" data-i="${i}"><div><div>${i+1}. ${esc(it[0])}</div><div class="ref">Acuan: ${esc(it[1])}</div></div>
+      <div class="seg">${[["ok","Sesuai"],["no","Tidak"],["na","N/A"]].map(([k,t])=>`<button type="button" data-s="${k}" class="${x.s===k?"s-"+k:""}">${t}</button>`).join("")}</div>
+      <div class="note grid g2"><div><label class="f">Temuan & tindakan perbaikan</label><textarea data-n="note">${esc(x.note)}</textarea></div><div><label class="f">Target selesai</label><input type="date" data-n="due" value="${esc(x.due)}"></div></div>
+     </div>`}).join("")}</div>
+   <div class="row between" style="margin-top:16px"><span id="aSum" class="small"></span><button class="btn" id="aSave">Simpan hasil pemeriksaan</button></div>
+  </div>`;
+  const sum=()=>{ const ok=d.ans.filter(x=>x.s==="ok").length, no=d.ans.filter(x=>x.s==="no").length, na=d.ans.filter(x=>x.s==="na").length, blank=d.ans.length-ok-no-na;
+    const sc=ok+no?Math.round(ok/(ok+no)*100):0; document.getElementById("aSum").innerHTML=`Sesuai ${ok} · Tidak ${no} · N/A ${na} · <b>Skor ${sc}%</b>${blank?` · <span style="color:var(--warn)">${blank} butir belum dinilai</span>`:""}`; return {ok,no,na,blank,sc}; };
+  sum();
+  document.getElementById("back").onclick=()=>{auditDraft=null;render();};
+  document.getElementById("items").addEventListener("click",e=>{ const b=e.target.closest("button[data-s]"); if(!b) return; const row=b.closest(".ck"), i=+row.dataset.i;
+    d.ans[i].s=b.dataset.s; row.classList.toggle("no",b.dataset.s==="no"); row.querySelectorAll(".seg button").forEach(x=>x.className=x===b?"s-"+b.dataset.s:""); sum(); });
+  document.getElementById("items").addEventListener("input",e=>{ const n=e.target.dataset.n; if(!n) return; d.ans[+e.target.closest(".ck").dataset.i][n]=e.target.value; });
+  ["aTgl:tanggal","aAud:auditor","aObj:objek","aLok:lokasi"].forEach(p=>{const[id,k]=p.split(":");document.getElementById(id).oninput=e=>d[k]=e.target.value;});
+  document.getElementById("aSave").onclick=()=>{ const s=sum();
+    if(s.blank){ toast("Nilai semua butir terlebih dahulu"); return; }
+    if(d.ans.some(x=>x.s==="no"&&!x.note.trim())){ toast("Isi tindakan perbaikan untuk setiap butir ‘Tidak’"); return; }
+    const rec={rid:Date.now().toString(36),id:a.id,title:a.title,tanggal:d.tanggal,auditor:d.auditor,objek:d.objek,lokasi:d.lokasi,score:s.sc,ok:s.ok,no:s.no,na:s.na,
+      temuan:d.ans.map((x,i)=>x.s==="no"?{butir:a.items[i][0],acuan:a.items[i][1],tindakan:x.note,target:x.due,status:"Terbuka"}:null).filter(Boolean)};
+    state.audits.unshift(rec); state.audits=state.audits.slice(0,50); auditDraft=null; save(); toast("Hasil pemeriksaan disimpan"); go("riwayat"); };
+}
+
+function reportText(r){
+  return `LAPORAN PEMERIKSAAN INTERNAL\n${r.title}\nTanggal: ${fmtDate(r.tanggal)}\nPemeriksa: ${r.auditor||"-"}\nObjek: ${r.objek||"-"}  |  Lokasi: ${r.lokasi||"-"}\nSkor kepatuhan: ${r.score}% (Sesuai ${r.ok}, Tidak ${r.no}, N/A ${r.na})\n\nTEMUAN & TINDAKAN PERBAIKAN\n`+
+   (r.temuan.length? r.temuan.map((t,i)=>`${i+1}. ${t.butir} [${t.acuan}]\n   Tindakan: ${t.tindakan}\n   Target: ${t.target?fmtDate(t.target):"-"}  |  Status: ${t.status}`).join("\n") : "Tidak ada temuan.")+
+   `\n\nDisusun dengan LMS Keselamatan & Keamanan Pelayaran — Wilayah KSOP Tanjungpinang (program Dr. Arif Badrudin M. Mgt. Stud.)`;
+}
+async function offerDownload(filename,data){
+  try{ const dl=await claude.use("downloads"); if(dl){ await dl.save({filename,data}); return true; } }catch(e){}
+  return false;
+}
+async function copy(text){ try{ await navigator.clipboard.writeText(text); toast("Disalin ke clipboard"); }catch(e){ toast("Tidak dapat menyalin otomatis"); } }
+
+function rRiwayat(){
+  const A=state.audits;
+  app.innerHTML = `<h2>Riwayat Pemeriksaan Internal</h2>${!A.length?`<div class="card muted">Belum ada pemeriksaan tersimpan.</div>`:
+  `<div class="card" style="overflow-x:auto"><table><thead><tr><th>Tanggal</th><th>Checklist</th><th>Objek</th><th>Skor</th><th>Temuan terbuka</th><th></th></tr></thead><tbody>
+   ${A.map((r,i)=>{const open=r.temuan.filter(t=>t.status!=="Selesai").length;return `<tr><td>${fmtDate(r.tanggal)}</td><td>${esc(r.title)}</td><td>${esc(r.objek||"-")}</td>
+   <td><span class="pill ${r.score>=90?"good":r.score>=75?"warn":"bad"}">${r.score}%</span></td><td>${open} / ${r.temuan.length}</td>
+   <td class="row"><button class="btn ghost sm" data-d="${i}">Detail</button></td></tr>`}).join("")}</tbody></table></div><div id="det"></div>`}`;
+  app.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{ const r=A[+b.dataset.d]; const det=document.getElementById("det");
+    det.innerHTML=`<div class="card" style="margin-top:16px"><div class="row between"><h3>${esc(r.title)} — ${fmtDate(r.tanggal)}</h3><div class="row"><button class="btn ghost sm" id="cp">Salin laporan</button><button class="btn sm" id="dl">Unduh .txt</button></div></div>
+     <div class="small muted">Pemeriksa: ${esc(r.auditor||"-")} · Objek: ${esc(r.objek||"-")} · Lokasi: ${esc(r.lokasi||"-")} · Skor ${r.score}%</div>
+     ${r.temuan.length?`<table style="margin-top:10px"><thead><tr><th>Temuan</th><th>Tindakan</th><th>Target</th><th>Status</th></tr></thead><tbody>${r.temuan.map((t,j)=>`<tr><td>${esc(t.butir)}<div class="ref">${esc(t.acuan)}</div></td><td>${esc(t.tindakan)}</td><td>${t.target?fmtDate(t.target):"-"}</td>
+     <td><select data-t="${j}">${["Terbuka","Dalam proses","Selesai"].map(s=>`<option ${s===t.status?"selected":""}>${s}</option>`).join("")}</select></td></tr>`).join("")}</tbody></table>`:`<p class="muted">Tidak ada temuan — semua butir sesuai.</p>`}</div>`;
+    det.querySelectorAll("[data-t]").forEach(s=>s.onchange=()=>{ r.temuan[+s.dataset.t].status=s.value; save(); toast("Status diperbarui"); });
+    document.getElementById("cp").onclick=()=>copy(reportText(r));
+    document.getElementById("dl").onclick=async()=>{ if(!(await offerDownload(`Laporan-${r.id}-${r.tanggal}.txt`,reportText(r)))) copy(reportText(r)); };
+    det.scrollIntoView({behavior:"smooth"});
+  });
+}
+
+function certHTML(p,date){
+  return `<div class="cert"><div class="small muted" style="letter-spacing:.2em">SERTIFIKAT PENYELESAIAN</div><div class="t">Program Pelatihan Keselamatan &amp; Keamanan Pelayaran</div>
+  <div class="muted">Wilayah Kerja KSOP Tanjungpinang</div><div style="margin-top:22px">Diberikan kepada</div><div class="n">${esc(p.nama||"(isi nama di profil)")}</div>
+  <div class="muted">${esc([p.peran,p.unit].filter(Boolean).join(" · "))}</div>
+  <p style="max-width:560px;margin:18px auto">telah menyelesaikan dan lulus evaluasi modul: Penerapan ISPS Code, Manajemen Risiko, Keselamatan Kerja Awak &amp; Penumpang, serta Kesiapan Musim Utara.</p>
+  <div class="row" style="justify-content:space-around;margin-top:30px"><div><div style="border-top:1px solid var(--ink);padding-top:6px;min-width:200px">${fmtDate(date)}</div><div class="small muted">Tanggal</div></div>
+  <div><div style="border-top:1px solid var(--ink);padding-top:6px;min-width:240px"><b>Dr. Arif Badrudin M. Mgt. Stud.</b></div><div class="small muted">Penyusun Program</div></div></div>
+  <div class="small muted" style="margin-top:24px">Sertifikat pelatihan internal; bukan sertifikat kompetensi resmi.</div></div>`;
+}
+function rSert(){
+  const n=passedCount(state);
+  if(n<MODULES.length){ app.innerHTML=`<h2>Sertifikat</h2><div class="card"><p>Sertifikat terbit setelah keempat modul lulus. Saat ini: <b>${n} / ${MODULES.length}</b> modul lulus.</p><button class="btn" id="g">Ke modul</button></div>`; document.getElementById("g").onclick=()=>go("modul"); return; }
+  const date=MODULES.map(m=>state.quiz[m.id].passedAt).filter(Boolean).sort().pop()||new Date().toISOString();
+  app.innerHTML=`<div class="row between"><h2>Sertifikat</h2><button class="btn sm" id="dl">Unduh sertifikat (.html)</button></div>${certHTML(state.profile,date)}`;
+  document.getElementById("dl").onclick=async()=>{ const css=document.querySelector("style").outerHTML;
+    const html=`<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><title>Sertifikat ${esc(state.profile.nama)}</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Source+Serif+4:wght@600&display=swap" rel="stylesheet">${css}</head><body style="padding:40px;background:#fff">${certHTML(state.profile,date)}</body></html>`;
+    if(!(await offerDownload(`Sertifikat-${(state.profile.nama||"peserta").replace(/\s+/g,"_")}.html`,html))) toast("Unduhan tidak tersedia di tampilan ini"); };
+}
+
+function rRekap(){
+  if(!isAdmin){ go("beranda"); return; }
+  const rows=allResults;
+  const tot=rows.length, lulus=rows.filter(r=>passedCount(r)===MODULES.length).length;
+  const aud=rows.flatMap(r=>r.audits||[]), avg=aud.length?Math.round(aud.reduce((s,a)=>s+a.score,0)/aud.length):0;
+  const openF=aud.reduce((s,a)=>s+(a.temuan||[]).filter(t=>t.status!=="Selesai").length,0);
+  app.innerHTML=`<h2>Rekap Peserta</h2>
+  <div class="grid g4"><div class="card"><div class="small muted">Peserta</div><div class="stat">${tot}</div></div><div class="card"><div class="small muted">Lulus semua modul</div><div class="stat">${lulus}</div></div>
+  <div class="card"><div class="small muted">Rata-rata skor audit</div><div class="stat">${aud.length?avg+"%":"–"}</div></div><div class="card"><div class="small muted">Temuan terbuka</div><div class="stat">${openF}</div></div></div>
+  <div class="card" style="margin-top:16px;overflow-x:auto">${!rows.length?`<p class="muted">Belum ada data peserta. Bagikan LMS ini kepada peserta dengan akses <b>Contributor</b> agar hasil mereka tersimpan di sini.</p>`:
+  `<table><thead><tr><th>Nama</th><th>Peran / Unit</th>${MODULES.map(m=>`<th>${esc(m.title.split(" ")[0])}</th>`).join("")}<th>Audit</th><th>Skor audit terakhir</th><th>Diperbarui</th></tr></thead><tbody>
+  ${rows.map(r=>{const a=(r.audits||[])[0];return `<tr><td>${esc(r.profile?.nama||"(tanpa nama)")}</td><td class="small">${esc([r.profile?.peran,r.profile?.unit].filter(Boolean).join(" · "))}</td>
+   ${MODULES.map(m=>{const b=r.quiz?.[m.id]?.best;return `<td>${b==null?'<span class="muted">–</span>':`<span class="pill ${b>=PASS?"good":"warn"}">${b}%</span>`}</td>`}).join("")}
+   <td>${(r.audits||[]).length}</td><td>${a?a.score+"% · "+esc(a.title):"–"}</td><td class="small">${r.updatedAt?fmtDate(r.updatedAt):"–"}</td></tr>`}).join("")}</tbody></table>`}</div>
+  <div class="row" style="margin-top:12px"><button class="btn ghost sm" id="csv">Salin rekap (CSV)</button></div>`;
+  const b=document.getElementById("csv"); if(b) b.onclick=()=>{ const head=["Nama","Peran","Unit",...MODULES.map(m=>m.title),"Jumlah audit","Skor audit terakhir"];
+    const lines=[head,...rows.map(r=>[r.profile?.nama||"",r.profile?.peran||"",r.profile?.unit||"",...MODULES.map(m=>r.quiz?.[m.id]?.best??""),(r.audits||[]).length,(r.audits||[])[0]?.score??""])].map(l=>l.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(","));
+    copy(lines.join("\n")); };
+}
+
+/* ===================== INIT ===================== */
+loadLocal();
+const h=(location.hash||"").slice(1); if(["beranda","modul","audit","riwayat","sertifikat"].includes(h)) view=h;
+render();
+
+(async()=>{
+  try{ user = await claude.use("user"); }catch(e){ user=null; }
+  try{ db = await claude.use("db"); }catch(e){ db=null; }
+  try{ uid = user ? await user.id() : null; }catch(e){ uid=null; }
+  try{ isAdmin = !!(user && (user.isOwner() || user.canEdit())); }catch(e){ isAdmin=false; }
+  try{ const c = user ? await user.can("data.write") : null; if(c===false) canWriteDb=false; }catch(e){}
+  if(db && uid){
+    try{
+      const snap = await db.doc("results/"+uid).get();
+      if(snap.exists){ const d=snap.data(); const local=JSON.parse(JSON.stringify(state));
+        state = { profile: (d.profile&&d.profile.nama)?d.profile:local.profile, quiz:Object.assign({},local.quiz,d.quiz||{}), audits: mergeAudits(d.audits||[], local.audits) };
+        // keep best of both
+        for(const k in local.quiz){ if(d.quiz&&d.quiz[k]&&local.quiz[k].best>d.quiz[k].best) state.quiz[k]=local.quiz[k]; }
+        saveLocal();
+      }
+      setSync(canWriteDb?"Tersinkron dengan server":"Akses hanya-lihat: hasil tersimpan di perangkat ini");
+      if(canWriteDb && (state.profile.nama || Object.keys(state.quiz).length || state.audits.length)) save();
+    }catch(e){ setSync("Server tidak terjangkau, tersimpan di perangkat"); }
+    if(isAdmin){
+      const t=setTimeout(()=>{ if(view==="rekap") toast("Data rekap belum dapat dimuat"); },10000);
+      db.collection("results").onSnapshot(s=>{ clearTimeout(t); allResults=s.docs.map(d=>d.data()).filter(Boolean); if(view==="rekap") rRekap(); },
+        e=>{ clearTimeout(t); });
+    }
+  } else {
+    setSync("Tersimpan di perangkat ini");
+  }
+  render();
+})();
+function mergeAudits(a,b){ const m=new Map(); [...a,...b].forEach(x=>{ if(x&&x.rid&&!m.has(x.rid)) m.set(x.rid,x); }); return [...m.values()].sort((x,y)=>(y.tanggal||"").localeCompare(x.tanggal||"")||(y.rid>x.rid?1:-1)).slice(0,50); }
+</script>
+</body>
+</html>
