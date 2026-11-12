@@ -136,6 +136,9 @@ section.block{padding-block:88px}
 .app-foot{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .app-foot a{font-weight:700;color:var(--bolt);text-decoration:none}
 .app-foot a:hover{text-decoration:underline}
+.app-buy{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:-2px}
+.app-buy .price{font-weight:700;font-size:14px;color:var(--bolt)}
+.app-buy .btn{padding:9px 14px;font-size:13.5px}
 .app-foot a[aria-disabled="true"]{color:var(--muted);pointer-events:none}
 .empty{grid-column:1/-1;text-align:center;padding:48px 16px;color:var(--muted);border:1px dashed var(--line);border-radius:var(--r)}
 .note{margin-top:22px;font-size:13px;color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:10px 14px}
@@ -793,7 +796,9 @@ function renderApps(){
     const ini = (a.name||"?").split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase();
     const h = hashHue(a.name||"x");
     const url = safeUrl(a.url);
-    const link = a.status==="soon" ? `<a aria-disabled="true">Segera hadir</a>` : url ? `<a href="${esc(url)}" target="_blank" rel="noopener">Buka aplikasi →</a>` : "";
+    const link = a.status==="soon" ? `<a aria-disabled="true">Segera hadir</a>` : url ? `<a href="${esc(url)}" target="_blank" rel="noopener">Coba aplikasi →</a>` : "";
+    const wa = (DATA.config.whatsapp||"").replace(/\D/g,"");
+    const buyHref = wa ? "https://wa.me/"+wa+"?text="+encodeURIComponent("Halo Kabuzen, saya ingin membeli aplikasi \u201c"+a.name+"\u201d"+(a.price?" ("+a.price+")":"")+". Mohon info harga, cara pembayaran, dan pemasangannya.") : "#kontak";
     return `<article class="app">${a.shot?`<div class="shot"><img src="${esc(a.shot)}" alt="Tampilan ${esc(a.name)}" loading="lazy"></div>`:""}
       <div class="app-top">
         ${a.shot&&!a.image?"":`<div class="mono" style="background:linear-gradient(135deg,hsl(${h} 90% 55%),hsl(${(h+40)%360} 80% 36%))">${a.image?`<img src="${esc(a.image)}" alt="">`:esc(ini)}</div>`}
@@ -803,6 +808,7 @@ function renderApps(){
       <p>${esc(a.desc)}</p>
       <div class="tags">${(a.tags||[]).map(t=>`<span>${esc(t)}</span>`).join("")}</div>
       <div class="app-foot"><span>${a.year?"Rilis "+esc(a.year):""}</span>${link}</div>
+      <div class="app-buy"><span class="price">${a.price?esc(a.price):"Harga via WhatsApp"}</span><a class="btn btn-bolt" href="${esc(buyHref)}"${wa?' target="_blank" rel="noopener"':""}>Beli via WhatsApp</a></div>
     </article>`;
   }).join("") : `<div class="empty">${DATA.apps.length?`Belum ada aplikasi yang cocok dengan “${esc(q)}”. Coba kata lain atau pilih kategori Semua.`:"Katalog aplikasi akan segera diisi."}</div>`;
 }
@@ -944,6 +950,7 @@ const FIELDS = {
     {k:"tags", l:"Tag", ph:"Chatbot, Web, Android", hint:"Pisahkan dengan koma."},
     {k:"url", l:"Link aplikasi", ph:"https://…", hint:"Link web, Play Store, App Store, atau Google Drive (untuk file APK)."},
     {k:"year", l:"Tahun rilis", type:"number", ph:"2026"},
+    {k:"price", l:"Harga", ph:"Rp 150.000", hint:"Kosongkan bila harga diinformasikan lewat WhatsApp. Tampil di kartu dan ikut masuk ke pesan pembelian."},
     {k:"image", l:"Ikon aplikasi", type:"image", max:400},
     {k:"shot", l:"Tangkapan layar", type:"image", max:1200, hint:"Tampil di bagian atas kartu aplikasi."}
   ],
@@ -1091,7 +1098,7 @@ function renderDrawerBody(){
   wireForm();
 }
 function blankItem(t){
-  if(t==="apps") return {name:"",cat:"",status:"live",desc:"",tags:[],url:"",year:new Date().getFullYear(),image:"",shot:""};
+  if(t==="apps") return {name:"",cat:"",status:"live",desc:"",tags:[],url:"",year:new Date().getFullYear(),price:"",image:"",shot:""};
   if(t==="posts") return {title:"",cat:"",date:today(),excerpt:"",cover:"",body:""};
   if(t==="books") return {title:"",subtitle:"",author:"Dr. Arif Badrudin, M. Mgt. Stud.",cat:"",kind:"",year:new Date().getFullYear(),pages:"",desc:"",price:"",cover:"",pdf:""};
   if(t==="gallery") return {image:"",caption:""};
