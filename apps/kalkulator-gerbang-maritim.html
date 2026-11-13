@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<!-- KABUZEN-DEMO -->
+<script id="kzd-script">(function(){
+var NAME="Kalkulator Gerbang Maritim",WA="https://wa.me/628118102019?text="+encodeURIComponent("Halo Kabuzen, saya sudah mencoba versi demo “"+NAME+"” dan ingin membeli versi lengkapnya. Mohon info harga dan cara pembayarannya.");
+var css="#kzd-rib{position:fixed;right:-44px;bottom:20px;transform:rotate(-45deg);z-index:2147483600;background:#ffd60a;color:#1d0b78;font:800 11px/1 system-ui,-apple-system,sans-serif;letter-spacing:.16em;padding:7px 50px;box-shadow:0 4px 14px rgba(0,0,0,.35);pointer-events:none;opacity:.94}"+
+"#kzd-bar{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:2147483601;width:min(560px,calc(100% - 24px));display:flex;gap:10px;align-items:center;background:#1d0b78;color:#fff;border:2px solid #ffd60a;border-radius:14px;padding:10px 12px;font:14px/1.4 system-ui,-apple-system,sans-serif;box-shadow:0 14px 40px rgba(0,0,0,.4)}"+
+"#kzd-bar b{color:#ffd60a}#kzd-bar span{flex:1}#kzd-bar a,#kzd-mod a{background:#ffd60a;color:#1d0b78;font-weight:800;text-decoration:none;border-radius:999px;padding:8px 12px;white-space:nowrap;font-size:13px}"+
+"#kzd-bar button{background:none;border:0;color:#cfc8ff;font-size:20px;cursor:pointer;padding:0 4px;line-height:1}"+
+"#kzd-mod{position:fixed;inset:0;z-index:2147483602;background:rgba(6,4,30,.66);display:grid;place-items:center;padding:16px;font:15px/1.5 system-ui,-apple-system,sans-serif}"+
+"#kzd-mod>div{background:#fff;color:#1a1640;border-radius:18px;max-width:420px;width:100%;padding:22px;box-shadow:0 30px 70px rgba(0,0,0,.45);border-top:6px solid #ffd60a}"+
+"#kzd-mod h3{margin:0 0 6px;font-size:19px;color:#1d0b78}#kzd-mod p{margin:0 0 16px;color:#4a4670}#kzd-mod .r{display:flex;gap:10px;flex-wrap:wrap}"+
+"#kzd-mod a{font-size:14px;padding:11px 16px}#kzd-mod button{background:#eeecf9;border:0;border-radius:999px;padding:11px 16px;font:700 14px system-ui,sans-serif;color:#1d0b78;cursor:pointer}"+
+"@media print{body>*{display:none!important}body::after{content:'Versi demo: fitur cetak tersedia di versi lengkap. Hubungi Kabuzen Rumah AI.';display:block;padding:40px;font:18px system-ui,sans-serif}}";
+function el(t,h){var e=document.createElement(t);if(h)e.innerHTML=h;return e;}
+function modal(what){
+  if(document.getElementById("kzd-mod"))return;
+  var m=el("div",'<div role="dialog" aria-modal="true"><h3>Fitur ini ada di versi lengkap</h3><p>'+(what||"Ekspor, unduh, cetak, dan cadangan data")+' tidak tersedia di versi demo <b></b>. Beli versi lengkap untuk memakai semua fitur dan menyimpan data Anda.</p><div class="r"><a target="_blank" rel="noopener">Beli via WhatsApp</a><button type="button">Tutup</button></div></div>');
+  m.id="kzd-mod";m.querySelector("b").textContent=NAME;m.querySelector("a").href=WA;
+  m.onclick=function(e){if(e.target===m||e.target.tagName==="BUTTON")m.remove();};
+  (document.body||document.documentElement).appendChild(m);
+}
+window.KZDemo={modal:modal};
+function isExp(a){var h=a.getAttribute&&a.getAttribute("href")||"";return a.hasAttribute&&a.hasAttribute("download")||/^(blob:|data:)/i.test(h);}
+var oc=HTMLAnchorElement.prototype.click;
+HTMLAnchorElement.prototype.click=function(){if(isExp(this)){modal("Unduhan file");return;}return oc.apply(this,arguments);};
+var od=EventTarget.prototype.dispatchEvent;
+EventTarget.prototype.dispatchEvent=function(ev){if(this instanceof HTMLAnchorElement&&ev&&ev.type==="click"&&isExp(this)){modal("Unduhan file");return false;}return od.apply(this,arguments);};
+document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a");if(a&&isExp(a)){e.preventDefault();e.stopImmediatePropagation();modal("Unduhan file");}},true);
+window.print=function(){modal("Cetak");};
+var ow=window.open;window.open=function(u){if(typeof u==="string"&&/^(blob:|data:)/i.test(u)){modal("Unduhan file");return null;}return ow.apply(window,arguments);};
+try{if(navigator.share){var os=navigator.share.bind(navigator);navigator.share=function(d){if(d&&d.files&&d.files.length){modal("Berbagi file laporan");return Promise.reject(new DOMException("Versi demo","AbortError"));}return os(d);};}}catch(e){}
+try{if(window.showSaveFilePicker)window.showSaveFilePicker=function(){modal("Simpan file");return Promise.reject(new DOMException("Versi demo","AbortError"));};}catch(e){}
+function ui(){
+  var st=el("style");st.textContent=css;document.head?document.head.appendChild(st):document.body.appendChild(st);
+  var r=el("div","VERSI DEMO");r.id="kzd-rib";r.setAttribute("aria-hidden","true");document.body.appendChild(r);
+  var seen=false;try{seen=sessionStorage.getItem("kzd-seen")==="1";}catch(e){}
+  if(!seen){var b=el("div",'<span><b>Versi demo.</b> Silakan dicoba. Ekspor, unduh, cetak, dan cadangan data dimatikan.</span><a target="_blank" rel="noopener">Beli versi lengkap</a><button type="button" aria-label="Tutup">×</button>');
+    b.id="kzd-bar";b.setAttribute("role","status");b.querySelector("a").href=WA;
+    var close=function(){b.remove();try{sessionStorage.setItem("kzd-seen","1");}catch(e){}};
+    b.querySelector("button").onclick=close;setTimeout(function(){if(b.isConnected)close();},12000);document.body.appendChild(b);}
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",ui);else ui();
+})();</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalkulator Gerbang Maritim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caladea:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+:root{
+  /* KABUZEN: indigo untuk struktur, kuning untuk aksen; satu tema terang. Tata letak: header, strip hasil, tab, panel dua kolom (masukan | langkah hitung) */
+  --indigo:#1d0b78; --indigo-2:#2a1696; --yellow:#ffd60a; --ground:#F6F5FB; --ink:#1B1840; --muted:#55527a; --line:#DCD8F3; --card:#ffffff;
+  --good:#0f7a5c; --warn:#9a6a00; --bad:#b42318;
+  --display:'Inter', Arial, sans-serif; --body:'Inter', Arial, sans-serif; --serif:'Caladea', Georgia, serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+.num,td.r,.tile b{font-variant-numeric:tabular-nums}
+header{background:var(--indigo);color:#F3F1FF;padding:28px 24px 22px;position:relative}
+header .wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.logo{position:absolute;top:18px;right:24px;width:64px;height:64px;border-radius:50%;border:3px solid var(--yellow);object-fit:cover}
+.eyebrow{font-size:13px;letter-spacing:3px;font-weight:700;color:var(--yellow);margin:0}
+header h1{font-size:34px;font-weight:800;letter-spacing:-.5px;padding-right:80px}
+header p.sub{font-family:var(--serif);font-style:italic;font-size:18px;color:#DDD8FF;margin:0;max-width:760px}
+.bars{display:flex;gap:6px}.bars i{display:block;width:36px;height:5px;border-radius:3px}
+.strip{max-width:1180px;margin:-1px auto 0;padding:16px 24px 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.tile{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--indigo);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.tile span{font-size:12px;color:var(--muted);line-height:1.35}
+.tile b{font-size:22px;color:var(--indigo)}
+nav{max-width:1180px;margin:18px auto 0;padding:0 24px;display:flex;flex-wrap:wrap;gap:6px}
+nav a{font-size:14px;font-weight:600;text-decoration:none;color:var(--indigo);background:var(--card);border:1px solid var(--line);padding:8px 12px;border-radius:6px}
+nav a[aria-current="page"]{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+nav a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+main{max-width:1180px;margin:0 auto;padding:18px 24px 48px}
+section.view{display:none}
+section.view.on{display:block}
+.head{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.head h2{font-size:26px;color:var(--indigo)}
+.head p{margin:0;max-width:820px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:18px;align-items:start}
+.panel{background:var(--card);border:1px solid var(--line);padding:18px;display:flex;flex-direction:column;gap:14px}
+.panel h3{font-size:16px;color:var(--indigo)}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:14px;font-weight:600;display:flex;justify-content:space-between;gap:8px}
+.field label .tag{font-size:11px;font-weight:700;letter-spacing:.5px;padding:1px 6px;border-radius:3px}
+.tag.data{background:#E3F1EC;color:var(--good)} .tag.asumsi{background:#FFF3C4;color:var(--warn)}
+.field .row{display:flex;gap:8px;align-items:center}
+.field input[type=range]{flex:1;accent-color:var(--indigo)}
+.field input[type=number]{width:120px;padding:6px 8px;border:1px solid var(--line);border-radius:4px;font:inherit;font-size:14px}
+.field small{color:var(--muted);font-size:12px}
+.formula{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:18px;background:#F1EFFB;border-left:4px solid var(--yellow);padding:10px 14px}
+ol.steps{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+ol.steps li{font-size:15px}
+ol.steps code{font-family:inherit;background:#F1EFFB;padding:0 4px;border-radius:3px}
+.result{background:var(--indigo);color:#fff;padding:14px 16px;display:flex;flex-wrap:wrap;gap:18px;align-items:baseline}
+.result b{font-size:28px;color:var(--yellow)}
+.result span{font-size:14px;color:#DDD8FF}
+.check{font-size:13px;font-weight:600;padding:6px 10px;border-radius:4px;display:inline-block}
+.check.ok{background:#E3F1EC;color:var(--good)} .check.diff{background:#FFF3C4;color:var(--warn)}
+.chart{width:100%;height:auto;display:block}
+button{font:inherit;font-weight:600;font-size:14px;border:1px solid var(--indigo);background:var(--indigo);color:#fff;padding:8px 14px;border-radius:6px;cursor:pointer}
+button.ghost{background:#fff;color:var(--indigo)}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{background:var(--indigo);color:#fff;text-align:left;padding:8px 10px;font-weight:600}
+td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+td.r,th.r{text-align:right}
+.note{font-size:13px;color:var(--muted)}
+.quiz{display:flex;flex-direction:column;gap:12px}
+.q{background:var(--card);border:1px solid var(--line);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.q .ans{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.q input{width:160px;padding:6px 8px;border:1px solid var(--line);border-radius:4px;font:inherit}
+.q .fb{font-size:14px}
+.q .fb.ok{color:var(--good)} .q .fb.no{color:var(--bad)}
+.q details{font-size:14px;color:var(--muted)}
+.callout{background:#FFF8D6;border-left:4px solid var(--warn);padding:10px 14px;font-size:14px}
+.cards3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cards3 .panel{gap:6px}
+footer{max-width:1180px;margin:0 auto;padding:0 24px 32px;font-size:12px;color:var(--muted)}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}.strip{grid-template-columns:repeat(2,minmax(0,1fr))}.cards3{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<style>
+.kzc{position:fixed;inset:0;z-index:2147483000;overflow:auto;display:flex;flex-direction:column;font-family:Inter,"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;line-height:1.5;transition:opacity .55s ease,transform .55s ease;-webkit-font-smoothing:antialiased}
+.kzc *{box-sizing:border-box}
+.kzc h1,.kzc h2,.kzc p{margin:0;color:inherit;font-family:inherit;text-transform:none}
+.kzc.kzc-out{opacity:0;transform:scale(1.03);pointer-events:none}
+.kzc-logo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none;background:#1d0b78;box-shadow:0 0 0 3px #ffd60a,0 8px 24px rgba(0,0,0,.35)}
+.kzc-btn{font:700 16px/1 Inter,system-ui,sans-serif;padding:15px 26px;border-radius:999px;border:0;cursor:pointer;background:#ffd60a;color:#1d0b78;box-shadow:0 10px 30px rgba(255,214,10,.3);transition:transform .15s}
+.kzc-btn:hover{transform:translateY(-2px)}
+.kzc-btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.kzc,.kzc *{animation:none!important;transition:none!important}}
+@media print{.kzc{display:none!important}}
+
+.kzc.kg{color:#1d0b78;background:radial-gradient(70vmax 50vmax at 100% 0%,rgba(255,214,10,.28),transparent 60%),radial-gradient(60vmax 50vmax at 0% 100%,rgba(37,99,235,.14),transparent 60%),#fbfaf4}
+.kg::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(29,11,120,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(29,11,120,.06) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.kg .top{position:relative;display:flex;justify-content:space-between;align-items:center;padding:22px max(5vw,20px) 0}
+.kg .top b{font:800 12px/1.4 Inter,system-ui;letter-spacing:.22em;color:#2563eb}.kg .top b small{display:block;color:#5b6175;letter-spacing:.12em;font-weight:600}
+.kg .main{position:relative;flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center;max-width:1200px;width:100%;margin:0 auto;padding:22px max(5vw,20px)}
+.kg .tag{display:inline-block;font:800 11.5px Inter,system-ui;letter-spacing:.16em;background:#1d0b78;color:#ffd60a;padding:7px 12px;border-radius:6px}
+.kg h1{font-size:clamp(36px,5.6vw,66px);line-height:1;font-weight:800;letter-spacing:-.02em;margin-top:16px;color:#1d0b78}
+.kg h1 span{display:block;color:#2563eb}
+.kg .stripe{display:flex;gap:6px;margin:18px 0}.kg .stripe i{width:40px;height:5px;border-radius:3px}
+.kg .lead{font-size:clamp(15px,1.5vw,18px);color:#3d4257;max-width:52ch}
+.kg .chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:20px}
+.kg .chain span{font:700 12.5px Inter,system-ui;padding:7px 10px;border-radius:9px;background:#fff;border:1.5px solid #d9dce8;box-shadow:0 2px 6px rgba(29,11,120,.06)}
+.kg .chain span b{color:#2563eb;margin-right:4px}
+.kg .chain i{font-style:normal;color:#9aa0b5;font-weight:700}
+.kg .cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:24px}
+.kg .cta small{color:#5b6175;font-size:13px}
+.kg .art{position:relative;display:grid;gap:14px}
+.kg .card{background:#fff;border:1px solid #e3e5ef;border-radius:16px;box-shadow:0 18px 40px rgba(29,11,120,.12);padding:14px 16px}
+.kg .card h3{margin:0 0 6px;font:800 11px Inter,system-ui;letter-spacing:.14em;color:#5b6175}
+.kg .strait svg,.kg .hist svg{width:100%;height:auto;display:block}
+.kg .ship{animation:kgship 7s linear infinite}
+.kg .hist rect{transform-origin:bottom;transform-box:fill-box;animation:kggrow .8s ease-out both}
+.kg .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.kg .f{font:600 14px "JetBrains Mono",ui-monospace,monospace;color:#1d0b78}
+.kg .f small{display:block;font:600 11px Inter,system-ui;color:#5b6175;margin-bottom:4px;letter-spacing:.06em}
+.kg .kpi{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.kg .kpi span{font:700 12px Inter,system-ui;background:#eef3ff;color:#1d0b78;border-radius:7px;padding:5px 8px}
+@keyframes kgship{from{transform:translateX(-40px)}to{transform:translateX(330px)}}
+@keyframes kggrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media(max-width:900px){.kg .main{grid-template-columns:1fr}.kg .art{order:2}.kg .row{grid-template-columns:1fr}}
+</style>
+<section class="kzc kg" id="kzc" aria-label="Sampul Kalkulator Gerbang Maritim">
+<div class="top"><b>KABUZEN &#183; GERBANG MARITIM<small>APLIKASI PENDAMPING BUKU</small></b><img class="kzc-logo" src="data:image/webp;base64,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" alt="Logo KABUZEN"></div>
+<div class="main"><div>
+<span class="tag">LEMBAR HITUNG INTERAKTIF &#183; BAB VI</span>
+<h1>Kalkulator <span>Gerbang Maritim</span></h1>
+<div class="stripe"><i style="background:#2563eb"></i><i style="background:#059669"></i><i style="background:#d97706"></i><i style="background:#dc2626"></i><i style="background:#ffd60a"></i></div>
+<p class="lead">Uji sendiri lima model di balik gagasan satu pengajuan per perjalanan kapal. Ubah satu angka, lihat langkah hitungnya, lalu bandingkan dengan angka di buku.</p>
+<div class="chain"><span><b>M1</b>Waktu proses</span><i>&#8594;</i><span><b>M2</b>Biaya umum</span><i>&#8594;</i><span><b>M3</b>Pilihan kapal</span><i>&#8594;</i><span><b>M4</b>Penerimaan</span><span style="border-color:#dc2626"><b style="color:#dc2626">M5</b>Pemeriksaan</span></div>
+<div class="cta"><button class="kzc-btn" type="button" data-kzc-go style="background:#1d0b78;color:#fff;box-shadow:0 0 0 3px #ffd60a">Mulai menghitung &#8594;</button><small>Pendamping buku <i>Gerbang Maritim Nusantara</i></small></div>
+</div>
+<div class="art" aria-hidden="true">
+<div class="card strait"><h3>SKEMA SELAT &#183; SATU PENGAJUAN, SEMUA INSTANSI</h3>
+<svg viewBox="0 0 320 120"><path d="M0 0H320V26Q240 40 160 30T0 34Z" fill="#dbe7d3"/><path d="M0 120H320V92Q240 80 160 90T0 86Z" fill="#dbe7d3"/>
+<path d="M0 52H320" stroke="#93b4f5" stroke-dasharray="6 6"/><path d="M0 70H320" stroke="#93b4f5" stroke-dasharray="6 6"/>
+<g class="ship"><path d="M0 49l14 3-14 3z" fill="#1d0b78"/></g><g class="ship" style="animation-delay:-3.5s"><path d="M0 67l14 3-14 3z" fill="#2563eb"/></g>
+<rect x="150" y="92" width="34" height="18" rx="4" fill="#ffd60a"/><text x="167" y="105" text-anchor="middle" font-family="Inter" font-size="9" font-weight="800" fill="#1d0b78">1 ID</text>
+<g font-family="Inter" font-size="7.5" font-weight="700" fill="#5b6175"><text x="30" y="16">KSOP</text><text x="76" y="14">Bea Cukai</text><text x="136" y="14">Imigrasi</text><text x="186" y="16">Karantina</text><text x="240" y="18">BUP &#183; Pemda</text></g></svg></div>
+<div class="row"><div class="card hist"><h3>MONTE CARLO &#183; 100.000 SIMULASI</h3><svg viewBox="0 0 300 124"><rect x="12" y="116.0" width="10" height="4.0" rx="2" fill="#5b8def" style="animation-delay:0.00s"/><rect x="25" y="116.8" width="10" height="3.2" rx="2" fill="#5b8def" style="animation-delay:0.04s"/><rect x="38" y="113.7" width="10" height="6.3" rx="2" fill="#5b8def" style="animation-delay:0.08s"/><rect x="51" y="113.9" width="10" height="6.1" rx="2" fill="#5b8def" style="animation-delay:0.12s"/><rect x="64" y="111.1" width="10" height="8.9" rx="2" fill="#5b8def" style="animation-delay:0.16s"/><rect x="77" y="101.9" width="10" height="18.1" rx="2" fill="#5b8def" style="animation-delay:0.20s"/><rect x="90" y="87.4" width="10" height="32.6" rx="2" fill="#5b8def" style="animation-delay:0.24s"/><rect x="103" y="73.7" width="10" height="46.3" rx="2" fill="#5b8def" style="animation-delay:0.28s"/><rect x="116" y="56.6" width="10" height="63.4" rx="2" fill="#5b8def" style="animation-delay:0.32s"/><rect x="129" y="43.7" width="10" height="76.3" rx="2" fill="#ffb703" style="animation-delay:0.36s"/><rect x="142" y="28.4" width="10" height="91.6" rx="2" fill="#ffb703" style="animation-delay:0.40s"/><rect x="155" y="25.8" width="10" height="94.2" rx="2" fill="#ffb703" style="animation-delay:0.44s"/><rect x="168" y="31.4" width="10" height="88.6" rx="2" fill="#ffb703" style="animation-delay:0.48s"/><rect x="181" y="44.7" width="10" height="75.3" rx="2" fill="#ffb703" style="animation-delay:0.52s"/><rect x="194" y="61.0" width="10" height="59.0" rx="2" fill="#5b8def" style="animation-delay:0.56s"/><rect x="207" y="72.7" width="10" height="47.3" rx="2" fill="#5b8def" style="animation-delay:0.60s"/><rect x="220" y="88.1" width="10" height="31.9" rx="2" fill="#5b8def" style="animation-delay:0.64s"/><rect x="233" y="98.7" width="10" height="21.3" rx="2" fill="#5b8def" style="animation-delay:0.68s"/><rect x="246" y="105.2" width="10" height="14.8" rx="2" fill="#5b8def" style="animation-delay:0.72s"/><rect x="259" y="113.6" width="10" height="6.4" rx="2" fill="#5b8def" style="animation-delay:0.76s"/><rect x="272" y="114.4" width="10" height="5.6" rx="2" fill="#5b8def" style="animation-delay:0.80s"/><rect x="285" y="112.6" width="10" height="7.4" rx="2" fill="#5b8def" style="animation-delay:0.84s"/><line x1="8" y1="121" x2="296" y2="121" stroke="#c9ccd8"/></svg></div>
+<div class="card"><h3>RUMUS INTI</h3><div class="f"><small>M1 &#183; fork-join</small>E[T] = &#964; &#183; H<sub>n</sub></div><div class="f" style="margin-top:10px"><small>M3 &#183; logit biner</small>P = 1 / (1 + e<sup>&#8722;&#916;U</sup>)</div>
+<div class="kpi"><span>DATA</span><span style="background:#fff6d1">ASUMSI</span></div></div></div>
+</div></div></section>
+
+<header>
+<div class="wrap">
+<img class="logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABgAGADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6foornPHnjDSvBOgS6rrMpCA7IoUx5k744RB6+/QDk1UYubUYq7YGzqV/aaXYzXuo3MNraQrukmmcIij3Jrwbx1+0dY2byW3g6w+3yDj7Zd5SL6qgwzfjtrw74kfETW/Hup+dqcvlWMbE29jEx8qEev8AtN6sefTA4rjq+iwmTxiuavq+xaj3O58Q/FjxvrzP9q8QXcETf8sbMi3QD0+TBP4k1xlzdXN05e6uJpnPUySFifzNRqpYgKCWJwABkk+ld/Z/DHUHtUluLy1inIDG3YMQP9kuOh+gNexCjTp6Qjb0RyYvMMNgUvby5b7HCW11cWrh7W4mhcdGjkKkflXZeH/iz410FkFr4iupol/5Y3jCdCPT58kfgRXIX9tLaXtzbTxGGaF2R4yclCD09/6169p+q+F7CytrWO70wRtEOoXDYGCW44J9+acqFOqrTS+ZzZjmn1SEJU6bnzdu3rZndeBv2jrK7eO28Y2H2F2wPttpl4vqyHLKPoWr3rTb+01SxhvdNuYbq0mXdHNC4dGHsRXxX448I20tl/bHh2JPLC75oIeVZf76Y/UD6+tZnwz+IOseBb97jTLkPZuQ01hKSYrj1/3Wx0Yc/UcV4+MyaLXNR0fboaYDH0sfS9pT0a3XVM+8aK5zwH4w0rxtoEWq6NKShOyaF8eZA/dGHr79CORXR185KLg3GSs0dpV1O+ttL065vr+ZYLS2jaWWRuiqoyTXwr8VfHV5498US6hPvjsYsx2VsTxDFnv/ALR6k+vHQCvcf2svFzWelWHha0k2yXv+lXeD/wAslOEU/VgT/wAAFfL5KsqBUwwzk5zur6LJ8Iox9vLd7ehcV1EAz0BPfpU1pI8VwskahnTkKRn9K3PB2hy6lrPk3Blgt0jLzEcFlzjaD2ye/sa9T/szRLC3+yy2mn2ts+EfzdiZB9WY5zjnOc178Ytq54eZ59SwVT2PLzPyPG9ElUeIdOlnxs+1xM3YY3ivoc3MKxyK8bNJzht2APwr53hs47zULi3sXklHmMkA6u43EKTjgcYJPSvbYbkMgSSMykYBdWwc1rRhz6nz/FUYVp0prtt9zPKviKvmeM9UljRvLZoznGefLTOT61zPTnpXpthozaje3l/qtwssM77litCY43IAGQ33iuAAORkgnpjN2DwzpFrfTTwWQm3Y2LLmVU4GcBs8k55OfalTpTktFoejh8+o4ShHDuLbjFLTa6SXUn8ATmDwnpjg5X959OJGyK4r4maFDo+tpPZqEtL1TIqDorZ5A9uh/GvQbTTXjDpZWawo5ywRdik+uOmffFc18W7m0fTtLtluIpb2FjuWNg20YHXHTkVpUp8sEnujxstxUlminS2m3deTu1f0fUxfhZ45vPAXiiHUbcvJZSYjvbYHiaLP/oQ6g+vHQmvurTL+21TTrW/sJlntLmNZYpF6MrDINfnLX1B+yb4ua70y/wDC13Juez/0q0yf+WTHDqPoxB/4Ga+ZznCKUfbx3W/ofokl1PF/jfrR134peILkPuihuDaRegSIbOPxBP41xEbFHVx1UgipL6drq9uLiQ5eaRpCfUkk/wBahHSvWoQUIRguiLtpY9P8CPu0y5v5V2+bKqYB/hUH+u6sXXfDl1qnjHXJZGhht/tkh85zy6k5AQAZJwRzwB61reAoru/8PCOziDrC5STJAGc7gfyate9hFgXudcure1iyWbdICzn2A5P0FepCjSlCLlK1unU/PKuLnhsdWdNrmd1bd7q1l8hLWWPT4Ft7SNIoUGAmwEfjnrUOoSXmqhbWJmWFmCTvGuNqkbiigdCVwSewZf71Up9Vi1A2t1FEY4ZUyqtwzKGYAn3IX8Pwrq/AOoWd3BYw6roOnyWel29xf6hd3EjSsS7DO1AAmXcKqg7uI/avO4kzKplmChiaNFzi371rKy6JX3cnaKSu9dEa5bl8cRVftXyy6X11/wCBqyrbyIs0USqoRSFCDoB0AxU3iHXYdBhtGkglnlut6xRREAkqR1J6Dnr7GrGli3u7yS9lsooJbuTeUgCxrEvRVAAxhVwM9+T3rz7VdSPiDxFPfgbbG2zb2adgoJ+b6nqfc+1djrVJU4OpHllbVXvZ9r9bd/I8ujhIYnFyhvThu9r9uvV6+iKvizxXrN8Psz7LG1kGTHC+5mHozd/oOK4/aB0HNbHiFhJfxxhgNqgEntk1m3MXkzNHvV9v8S9DWe+5+gZbhqOHoxVOKV9SEKWztBOBk4Fdv8EtaOg/FLw/dF9sUtwLWX0KS/Jz+JB/CuNhnlty/lNtLLtb6UlpO1rdwXEZw8MiyKfQgg/0rmrw9pCUH1R6GrC+t2tb24t5Bh4ZWjI9CCR/SoR0rufjfop0L4peILYJtimuDdxehSUb+PxLD8K42Ly3gEKQyPdvIAhXnOf4QPWpo1FOmp90DkkrsiBO1lBIVuoBOD9R3oVFByqqD6gV0z+E/srmLWNe0bTbwY320speSP2baMA+1W9O8M6NIZVuvGnh2EY4d0mbn2Cir9vTirs4Y46hJ+7d368rt99rfiXPBtzLfeGr+xyA9oQYmA52vklc+m5T/wB9GuntJVh8MWVhCcSatP8AbJyOot4yY4E+h2vJ9WB71j6Lo2i6R9q+z/ETw0wuI/LYNb3HHoRgdRk/nVyzt9JtpIZP+Fg+GJDFGsS7oLnAVVCjt6CsatejiJUYVW+SnJztZ6tL3emyb5vWKPFq4SpCdedBfHt81733tfizoL14LTw3qlz5rwvb2zFWC5AB+Xgdc88ds4ry2CdNN0mESYMm3cqA+vI/n1r0G8utLudKvrF/HPhMJdReUzCC53AZzxx7V59/wjunEj/ir9C7DJMh/pXQ8XTqTbTfzVjiynAvBqSxV9XfROWiXknbW5kXltL5ZuZXDM5yw+tQzW4VoVhlWVpAOF7E9q6y+8M6PHbKIfiDoNyQQBGI5lwPXJFZ48NWDuqp4u0DcxABZpFA+pxxUrEwkrpn0/1unTfLJv5RbX4I5uRSjlGGGU4Ip9pA11eW9vGMvLIsYHuSB/WtDxJoN94d1L7HqSR72QSxSwuJIp4z0dHH3lP/AOuui+CWinXvil4ftim6GK4F1L6BIvnOfxAH41FStFU3UT0SO2M1KPNF3R7V+1l4Ra80qw8U2ke6Sy/0W7wOfKY5Rj9GJH/AxXhXwpijl8eaaZVB8vfIuezAcH9a+7tTsbbU9OubG/hWe0uY2iljbo6sMEV8SeN/DGo/Cj4gRfK89mrmazmPAuITwVJ7MOhHrg9CK8bKcWpQ9jLdben/AADjx1KVfC1KUN2mkdh8DtIsfE3hTxrZ6tMyRT38PmykZO0MWb5uxOMZ96ltNPu739ofVZL6xZ7bQ7WSe0tYY/laJY8QKo9WLg/XNcDo2pyW3h7xFoujapoq6drDpK738rQXEWDkADpkd8ZFdNqvjfXr6O8ddU8JWuo3dnHZSX9tfOk2xGLAg5wGJJycd6+bxWWY6WLr1YKLVS61e3MoJy36pNO2ui7nVTxdFQim7Nf8E7yz0a3sv2gJ7wwmC21HQmutrxcRyDYrAj2Kgn61etltL/xN8O71pLLVi73qTatY26xwyfunxGFyT2zzxlT64rzfT/HevWs+kXEup+Ebu6060ls1nuL5meZH25MhzyfkHP1qDVvHHiG6vNHuLTVfBunRaTK08FvZzbY2YqVO5ecgqWGBjqe9eZPIMfVkuaMbqHLe/RRlFeeqa/U2WNor7XW/5E8d3LpvgzxDfaXAs2o2/jT/AEZGh3hjyAuO+c9K7TxV4jW11XwL4W1P7JNr91f2t1qZggCJAA4IRR6k/mFz/EK4PUvidrF/qWlzpJ4TtorK6+2+REXCTT7Su+Q4ycbievXntVrXfiPqt00E848DfaI7mK4E0EjNKWjYMAWGTg4APtXRVyTG1akZVKEb6v4ldOyS17K17Le67ErGUknaZ2/jPWYh460XSYta0a6tpNcto5NNistt1bqp3ZZ93PIAPHcU7x1pOjf8I9488QaRgpe6cbadPLx5dzBKUY+2RjP0z3rz7VPihqeoy280kXg2OeG6iuxNGJA7NGwYAt1wcYPtWEvjDVF0zxTYNqWgGz8QSvPOhkkPku5yxjwO/HXPQVOH4cx1NQcYRi42vqtVzJva3ZNX7dRyx1F3vK5ja/qMl34N8J20gDC2ilCOfvYZ3yv0+UV79+yb4Ra00y/8U3ceHvP9FtMj/lkpy7D6sAP+AGvHPh/4Pn+IXibTdE0xpRpGnRD7VfFNuELEswB6EklVB57noa+3dMsLbS9OtbCwhWC0to1iijXoqqMAV9fmmLioexhu7X+5X+9/1qcWFi4U2n1bfybLVc5488H6V420CXStZiJQ/PFMmPMgfHDofX26EcGujorwYycGpRdmjc+C/iT8O9b8Bal5OqRedYyMRb30SnypR6f7Leqnn0yOa43Ffo5qVhaanYzWWo20N1aTLtkhmQOjj3Brwbx1+zhY3jyXXg6/+wSHn7Hd5eL6K4+Zfx3V9DhM3jJctfR9y1LufLv4UcV3PiH4TeN9CZzd+H7ueJf+W1mBcIR6/Jkj8QK4y5tLm1cpdW80LjqskZUj8xXsQrU6ivBpl6MhwPajj0qa2tLm6cJa280znoscZYn8hXZ+HvhN4311k+yeH7uCJv8AlteAW6Aevz4J/AGidanTV5tINEcN+Fdj8N/h3rfj3UvJ0uHyrKNgLi+lU+VCPT/ab0Uc+uBzXuHgX9nCxtHjufGN/wDb5Bz9jtMpF9Gc/Mw+m2vetNsLTS7GGy022htbSFdscMKBEUewFePi83hFctDV9yHLsY3gPwfpXgnQItL0aIhAd80z/wCsnfHLufX26AcCujoor56UnNuUndsg/9k=" alt="Logo KABUZEN">
+<p class="eyebrow">KABUZEN · APLIKASI PENDAMPING BUKU</p>
+<h1>Kalkulator Gerbang Maritim</h1>
+<div class="bars"><i style="background:#3b82f6"></i><i style="background:#10b981"></i><i style="background:#f59e0b"></i><i style="background:#ef4444"></i><i style="background:#ffd60a"></i></div>
+<p class="sub">Pelajari dan uji sendiri setiap perhitungan Bab VI. Ubah satu angka, lihat langkah hitungnya, lalu bandingkan dengan angka di buku.</p>
+</div>
+</header>
+
+<div class="strip" aria-live="polite">
+<div class="tile"><span>Waktu proses dihemat (M1)</span><b id="t-dT">–</b></div>
+<div class="tile"><span>Penurunan biaya umum (M2)</span><b id="t-dGC">–</b></div>
+<div class="tile"><span>Pangsa Indonesia (M3)</span><b id="t-s1">–</b></div>
+<div class="tile"><span>Tambahan PNBP per tahun (M4)</span><b id="t-pnbp">–</b></div>
+<div class="tile"><span>Kenaikan peluang deteksi (M5)</span><b id="t-det">–</b></div>
+</div>
+
+<nav aria-label="Bagian aplikasi">
+<a href="#panduan">Panduan</a>
+<a href="#m1">M1 Waktu proses</a>
+<a href="#m2">M2 Biaya umum</a>
+<a href="#m3">M3 Pilihan kapal</a>
+<a href="#m4">M4 Penerimaan</a>
+<a href="#montecarlo">Monte Carlo</a>
+<a href="#m5">M5 Pemeriksaan</a>
+<a href="#latihan">Latihan</a>
+<a href="#ringkasan">Ringkasan paparan</a>
+</nav>
+
+<main>
+
+<section class="view" id="v-panduan">
+<div class="head"><h2>Cara memakai aplikasi ini</h2><p>Lima model di buku saling bersambung. Waktu yang dihemat (M1) dan risiko yang hilang bernilai uang bagi kapal (M2). Biaya yang lebih rendah menggeser pilihan kapal ke perairan Indonesia (M3). Pergeseran itu menjadi penerimaan (M4). Data bersama membuat pemeriksaan bertarget (M5).</p></div>
+<div class="cards3">
+<div class="panel"><h3>1. Mulai dari angka buku</h3><p class="note">Semua masukan terisi nilai dasar buku. Tanda hijau “sama dengan buku” muncul selama Bapak belum mengubahnya.</p></div>
+<div class="panel"><h3>2. Ubah satu angka</h3><p class="note">Label <span class="check ok" style="padding:1px 6px">DATA</span> berarti angka bersumber; label <span class="check diff" style="padding:1px 6px">ASUMSI</span> berarti pilihan penyusun yang patut diuji. Hasil di strip atas ikut berubah.</p></div>
+<div class="panel"><h3>3. Baca langkah hitungnya</h3><p class="note">Setiap tab menampilkan rumus, angka yang dimasukkan, dan hasil antara. Tab Latihan berisi soal dengan pembahasan.</p></div>
+</div>
+<div class="panel" style="margin-top:14px">
+<h3>Rantai model</h3>
+<svg class="chart" viewBox="0 0 1100 120" role="img" aria-label="Rantai model M1 sampai M5">
+<g font-family="Inter, Arial, sans-serif" font-size="14">
+<rect x="10" y="30" width="190" height="60" rx="8" fill="#1d0b78"/><text x="105" y="56" fill="#fff" text-anchor="middle" font-weight="700">M1 Waktu proses</text><text x="105" y="76" fill="#DDD8FF" text-anchor="middle" font-size="12">fork-join, ΔT</text>
+<rect x="230" y="30" width="190" height="60" rx="8" fill="#1d0b78"/><text x="325" y="56" fill="#fff" text-anchor="middle" font-weight="700">M2 Biaya umum</text><text x="325" y="76" fill="#DDD8FF" text-anchor="middle" font-size="12">VOT·ΔT + p₀·L</text>
+<rect x="450" y="30" width="190" height="60" rx="8" fill="#1d0b78"/><text x="545" y="56" fill="#fff" text-anchor="middle" font-weight="700">M3 Pilihan kapal</text><text x="545" y="76" fill="#DDD8FF" text-anchor="middle" font-size="12">logit biner</text>
+<rect x="670" y="30" width="190" height="60" rx="8" fill="#1d0b78"/><text x="765" y="56" fill="#fff" text-anchor="middle" font-weight="700">M4 Penerimaan</text><text x="765" y="76" fill="#DDD8FF" text-anchor="middle" font-size="12">ΔGT × tarif per GT</text>
+<rect x="890" y="30" width="200" height="60" rx="8" fill="#ffd60a"/><text x="990" y="56" fill="#1d0b78" text-anchor="middle" font-weight="700">M5 Pemeriksaan</text><text x="990" y="76" fill="#1d0b78" text-anchor="middle" font-size="12">bertarget, Becker</text>
+<g stroke="#1d0b78" stroke-width="2"><path d="M202 60H226"/><path d="M422 60H446"/><path d="M642 60H666"/></g>
+<g fill="#1d0b78"><path d="M228 60l-8-5v10z"/><path d="M448 60l-8-5v10z"/><path d="M668 60l-8-5v10z"/></g>
+</g></svg>
+<p class="note">M5 berdiri sendiri: ia tidak memakai hasil M1–M4, melainkan data siapa yang melapor dan siapa yang tidak.</p>
+</div>
+</section>
+
+<section class="view" id="v-m1">
+<div class="head"><h2>M1 · Waktu proses: berurutan atau serentak</h2><p>Bila setiap instansi menunggu instansi sebelumnya, waktunya dijumlahkan. Bila semua menerima data yang sama pada saat yang sama, permohonan selesai ketika instansi terakhir selesai. Teori: antrean fork-join (Nelson &amp; Tantawi, 1988).</p></div>
+<div class="grid2">
+<div class="panel">
+<h3>Masukan</h3>
+<div class="field"><label for="n">Jumlah instansi n <span class="tag asumsi">ASUMSI</span></label><div class="row"><input type="range" id="n-r" min="1" max="12" step="1"><input type="number" id="n" min="1" max="12" step="1"></div><small>Buku: 7 (syahbandar, bea cukai, imigrasi, kes. pelabuhan, karantina, badan usaha pelabuhan, pemda)</small></div>
+<div class="field"><label for="tau">Rata-rata waktu per instansi τ (jam) <span class="tag asumsi">ASUMSI</span></label><div class="row"><input type="range" id="tau-r" min="0.5" max="12" step="0.5"><input type="number" id="tau" min="0.1" max="48" step="0.5"></div><small>Buku: 4 jam, diuji 2–8 jam</small></div>
+</div>
+<div class="panel">
+<div class="formula">E[T<sub>seri</sub>] = n · τ &nbsp;&nbsp;|&nbsp;&nbsp; E[T<sub>fj</sub>] = τ · H<sub>n</sub>, &nbsp;H<sub>n</sub> = 1 + ½ + … + 1/n</div>
+<ol class="steps" id="m1-steps"></ol>
+<div class="result" id="m1-res"></div>
+<span id="m1-check"></span>
+<svg class="chart" id="m1-chart" viewBox="0 0 640 260" role="img" aria-label="Grafik waktu proses seri dan fork-join menurut jumlah instansi"></svg>
+<p class="note">Penghematan relatif 1 − H<sub>n</sub>/n tidak bergantung pada τ. Bila proses sekarang sudah sebagian serentak, penghematan nyata lebih kecil.</p>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-m2">
+<div class="head"><h2>M2 · Biaya umum per singgah</h2><p>Bagi pemilik kapal, waktu adalah uang dan risiko penahanan adalah biaya. Platform menurunkan biaya umum lewat dua jalur: waktu proses (dari M1) dan risiko penahanan bagi kapal yang patuh.</p></div>
+<div class="grid2">
+<div class="panel">
+<h3>Masukan</h3>
+<div class="field"><label for="vot">Nilai waktu kapal (USD/hari) <span class="tag data">DATA</span></label><div class="row"><input type="range" id="vot-r" min="10000" max="80000" step="500"><input type="number" id="vot" min="1000" max="500000" step="100"></div><small>ClarkSea 2025: 26.836; semester I 2026: 38.717</small></div>
+<div class="field"><label for="p0">Peluang kapal patuh ditahan p₀ (%) <span class="tag asumsi">ASUMSI</span></label><div class="row"><input type="range" id="p0-r" min="0" max="5" step="0.1"><input type="number" id="p0" min="0" max="100" step="0.1"></div><small>Buku: 0,5%, diuji 0,1–2%</small></div>
+<div class="field"><label for="pay">Biaya pelepasan bila ditahan (USD) <span class="tag data">DATA</span></label><div class="row"><input type="range" id="pay-r" min="0" max="500000" step="5000"><input type="number" id="pay" min="0" max="5000000" step="1000"></div><small>Reuters 2021: 250.000–300.000 (dibantah TNI AL)</small></div>
+<div class="field"><label for="days">Lama penahanan (hari) <span class="tag asumsi">ASUMSI</span></label><div class="row"><input type="range" id="days-r" min="0" max="60" step="1"><input type="number" id="days" min="0" max="365" step="1"></div><small>Buku: 14 hari, diuji 7–28</small></div>
+</div>
+<div class="panel">
+<div class="formula">ΔGC = VOT<sub>jam</sub> · ΔT + p₀ · L, &nbsp;&nbsp; L = biaya pelepasan + hari ditahan · VOT<sub>hari</sub></div>
+<ol class="steps" id="m2-steps"></ol>
+<div class="result" id="m2-res"></div>
+<span id="m2-check"></span>
+<svg class="chart" id="m2-chart" viewBox="0 0 640 120" role="img" aria-label="Komposisi penurunan biaya umum: waktu dan risiko"></svg>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-m3">
+<div class="head"><h2>M3 · Pilihan lokasi layanan (logit biner)</h2><p>Kapal memilih antara perairan Indonesia dan Singapura untuk layanan yang bisa dipindahkan: labuh menunggu, bunker, alih muat, perbekalan. Teori: utilitas acak (McFadden, 1974; Train, 2009).</p></div>
+<div class="grid2">
+<div class="panel">
+<h3>Masukan</h3>
+<div class="field"><label for="gtsg">Tonase kedatangan Singapura (juta GT) <span class="tag data">DATA</span></label><div class="row"><input type="number" id="gtsg" min="1" step="1" style="width:100%"></div><small>MPA 2025: 3.220</small></div>
+<div class="field"><label for="gtbtm">Tonase Batam per tahun (juta GT) <span class="tag data">DATA</span></label><div class="row"><input type="number" id="gtbtm" min="0.1" step="0.1" style="width:100%"></div><small>BP Batam Jan–Jun 2026 × 2: 80,77</small></div>
+<div class="field"><label for="sigma">σ, sebaran biaya tak teramati (USD) <span class="tag asumsi">ASUMSI</span></label><div class="row"><input type="range" id="sigma-r" min="10000" max="200000" step="1000"><input type="number" id="sigma" min="1000" max="1000000" step="1000"></div><small>Buku: 43.000, diuji 25.000–130.000. Paling menentukan hasil.</small></div>
+</div>
+<div class="panel">
+<div class="formula">μ = π / (√6 · σ) &nbsp;&nbsp;|&nbsp;&nbsp; s₁/(1−s₁) = [s₀/(1−s₀)] · e<sup>μ·ΔGC</sup></div>
+<ol class="steps" id="m3-steps"></ol>
+<div class="result" id="m3-res"></div>
+<span id="m3-check"></span>
+<svg class="chart" id="m3-chart" viewBox="0 0 640 260" role="img" aria-label="Kurva pangsa Indonesia terhadap penurunan biaya umum"></svg>
+<p class="note">σ kecil berarti kapal sangat peka biaya, sehingga pergeseran pangsa besar. σ belum pernah diestimasi untuk pasar ini; buku menyarankan mengukurnya saat pilot.</p>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-m4">
+<div class="head"><h2>M4 · Penerimaan dan nilai transaksi</h2><p>Tambahan tonase yang dilayani dikali tarif efektif Batam memberi tambahan PNBP. Nilai bunker adalah omzet pelaku usaha, bukan penerimaan negara, dan merupakan batas atas.</p></div>
+<div class="grid2">
+<div class="panel">
+<h3>Masukan</h3>
+<div class="field"><label for="rgt">Tarif efektif (Rp per GT) <span class="tag data">DATA</span></label><div class="row"><input type="number" id="rgt" min="1" step="1" style="width:100%"></div><small>Rp231,04 miliar ÷ 40,39 juta GT = 5.721</small></div>
+<div class="field"><label for="bunker">Penjualan bunker Singapura (juta ton) <span class="tag data">DATA</span></label><div class="row"><input type="number" id="bunker" min="0" step="0.01" style="width:100%"></div><small>MPA 2025: 56,77</small></div>
+<div class="field"><label for="vlsfo">Harga VLSFO (USD/ton) <span class="tag data">DATA</span></label><div class="row"><input type="number" id="vlsfo" min="0" step="1" style="width:100%"></div><small>Ship &amp; Bunker, rata-rata 2025: 535</small></div>
+<div class="field"><label for="fx">Kurs (Rp/USD) <span class="tag data">DATA</span></label><div class="row"><input type="number" id="fx" min="1" step="10" style="width:100%"></div><small>Asumsi RAPBN 2027: 17.500</small></div>
+</div>
+<div class="panel">
+<div class="formula">ΔGT = (s₁ − s₀) · (GT<sub>SG</sub> + GT<sub>BTM</sub>) &nbsp;|&nbsp; ΔPNBP = ΔGT · r<sub>GT</sub></div>
+<ol class="steps" id="m4-steps"></ol>
+<div class="result" id="m4-res"></div>
+<span id="m4-check"></span>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-montecarlo">
+<div class="head"><h2>Monte Carlo · Seberapa yakin angkanya?</h2><p>Enam parameter diambil acak dari rentangnya ribuan kali. Hasilnya bukan satu angka, melainkan sebaran. Median dan rentang P5–P95 yang dipakai di paparan.</p></div>
+<div class="grid2">
+<div class="panel">
+<h3>Rentang parameter</h3>
+<table><thead><tr><th>Parameter</th><th>Rentang</th></tr></thead><tbody id="mc-ranges"></tbody></table>
+<div class="field"><label for="mcn">Jumlah simulasi</label><div class="row"><select id="mcn" style="padding:6px 8px;border:1px solid var(--line);border-radius:4px;font:inherit"><option value="10000">10.000</option><option value="50000" selected>50.000</option><option value="100000">100.000</option></select></div></div>
+<div class="btnrow"><button id="mc-run" type="button">Jalankan simulasi</button></div>
+<p class="note">Buku: 100.000 simulasi dengan NumPy. Angka di sini memakai pembangkit acak lain, jadi bisa berbeda tipis (biasanya kurang dari 3%).</p>
+</div>
+<div class="panel">
+<div class="result" id="mc-res"></div>
+<svg class="chart" id="mc-chart" viewBox="0 0 640 260" role="img" aria-label="Histogram tambahan PNBP hasil Monte Carlo"></svg>
+<h3>Parameter paling menentukan</h3>
+<table><thead><tr><th>Parameter</th><th class="r">Korelasi peringkat</th></tr></thead><tbody id="mc-srcc"></tbody></table>
+<p class="note">Korelasi Spearman: makin jauh dari nol, makin besar pengaruhnya. Negatif berarti hasil turun bila parameter naik.</p>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-m5">
+<div class="head"><h2>M5 · Pemeriksaan bertarget dan efek jera</h2><p>Dengan data bersama, kapal yang melapor terlihat dan jelas statusnya, sehingga kapasitas pemeriksaan bisa diarahkan ke kapal yang tidak melapor. Teori: Becker (1968); Avenhaus dkk. (2002).</p></div>
+<div class="grid2">
+<div class="panel">
+<h3>Masukan</h3>
+<div class="field"><label for="N5">Kapal hadir per hari N <span class="tag asumsi">ASUMSI</span></label><div class="row"><input type="range" id="N5-r" min="100" max="5000" step="50"><input type="number" id="N5" min="1" step="10"></div><small>Animasi Nauvia: ±3.300 di Kepri dan Selat Singapura</small></div>
+<div class="field"><label for="d5">Pangsa kapal tidak melapor d (%) <span class="tag data">DATA</span></label><div class="row"><input type="range" id="d5-r" min="1" max="60" step="1"><input type="number" id="d5" min="0.1" max="100" step="0.1"></div><small>Paolo dkk. (2024): 21–30% aktivitas kapal transportasi dan energi</small></div>
+<div class="field"><label for="K5">Kapasitas pemeriksaan per hari K <span class="tag asumsi">ASUMSI</span></label><div class="row"><input type="range" id="K5-r" min="1" max="200" step="1"><input type="number" id="K5" min="1" step="1"></div><small>Contoh; isi dengan kapasitas nyata aparat</small></div>
+<div class="field"><label for="F5">Sanksi bila tertangkap F (juta Rp) <span class="tag asumsi">ASUMSI</span></label><div class="row"><input type="number" id="F5" min="0" step="1" style="width:100%"></div><small>Contoh: denda AIS PM 18/2022 hingga Rp75 juta</small></div>
+<div class="field"><label for="G5">Keuntungan tidak melapor G (juta Rp per singgah) <span class="tag asumsi">ASUMSI</span></label><div class="row"><input type="number" id="G5" min="0" step="0.5" style="width:100%"></div><small>Contoh: pungutan dan biaya yang dihindari</small></div>
+</div>
+<div class="panel">
+<div class="formula">p<sub>acak</sub> = K/N &nbsp;|&nbsp; p<sub>target</sub> = min(1, K/(d·N)) &nbsp;|&nbsp; patuh bila p · F ≥ G</div>
+<ol class="steps" id="m5-steps"></ol>
+<div class="result" id="m5-res"></div>
+<svg class="chart" id="m5-chart" viewBox="0 0 640 220" role="img" aria-label="Perbandingan pemeriksaan acak dan bertarget"></svg>
+<div class="callout" id="m5-becker"></div>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-latihan">
+<div class="head"><h2>Latihan</h2><p>Kerjakan dengan kalkulator biasa, lalu periksa. Toleransi jawaban 1%. Pembahasan tersedia di bawah setiap soal.</p></div>
+<div class="quiz" id="quiz"></div>
+<div class="btnrow" style="margin-top:12px"><button type="button" class="ghost" id="quiz-reset">Kosongkan jawaban</button></div>
+</section>
+
+<section class="view" id="v-ringkasan">
+<div class="head"><h2>Ringkasan untuk paparan</h2><p>Teks di bawah mengikuti angka yang sedang aktif di aplikasi. Salin bila perlu untuk catatan pembicara.</p></div>
+<div class="panel">
+<pre id="sum" style="white-space:pre-wrap;font-family:var(--body);font-size:15px;margin:0"></pre>
+<div class="btnrow"><button type="button" id="copy">Salin ringkasan</button><button type="button" class="ghost" id="reset">Kembalikan semua ke angka buku</button><span id="copied" class="note" role="status"></span></div>
+</div>
+<div class="panel" style="margin-top:14px">
+<h3>Pertanyaan yang mungkin diajukan pimpinan</h3>
+<table><tbody>
+<tr><td><b>Dari mana angka 7 instansi?</b></td><td>Dari animasi konsep: tujuh pihak diurus di setiap singgah. Ini asumsi; bila sebagian proses sudah serentak, penghematan lebih kecil.</td></tr>
+<tr><td><b>Mengapa memakai ClarkSea 2025, bukan 2026?</b></td><td>Lebih konservatif. Angka 2026 lebih tinggi karena gangguan Selat Hormuz dan akan memperbesar hasil.</td></tr>
+<tr><td><b>Apakah σ sudah diukur?</b></td><td>Belum. Karena itu diuji pada rentang lebar dan menjadi prioritas pengukuran saat pilot.</td></tr>
+<tr><td><b>Apakah Rp12,5 triliun bunker itu penerimaan negara?</b></td><td>Bukan. Itu omzet pelaku usaha dan batas atas indikatif.</td></tr>
+<tr><td><b>Mengapa pemeriksaan acak tetap ada pada kapal patuh?</b></td><td>Pemeriksa yang sepenuhnya dapat ditebak dapat dieksploitasi (teori permainan inspeksi). Sampel acak kecil menjaga kejujuran sistem.</td></tr>
+</tbody></table>
+</div>
+</section>
+
+</main>
+<footer>Pendamping buku <i>Gerbang Maritim Nusantara</i> (KABUZEN, November 2026), Bab VI dan Lampiran A–C. Hasil model adalah perkiraan bersyarat, bukan janji penerimaan. Pengajuan kapal dalam konsep ini diterima oleh otoritas maritim; lembaga pemegang kewenangannya belum ditetapkan.</footer>
+
+<script>
+(function(){
+"use strict";
+var BOOK={n:7,tau:4,vot:26836,p0:0.5,pay:275000,days:14,gtsg:3220,gtbtm:80.77393,sigma:43000,rgt:5720.563,bunker:56.77,vlsfo:535,fx:17500,N5:3300,d5:25,K5:30,F5:75,G5:10};
+var S=Object.assign({},BOOK);
+var BOOKRES={dT:17.6286,dGC:22965.2,s0:2.4471,s1:4.7403,dGT:75.693,pnbp:433.0,bunkerT:1.3345,bunkerRp:12.494};
+var $=function(id){return document.getElementById(id);};
+var fmt=function(x,d){if(d===undefined)d=0;return Number(x).toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d});};
+function H(n){var h=0;for(var k=1;k<=n;k++)h+=1/k;return h;}
+
+function model(p){
+  var n=Math.max(1,Math.round(p.n)),tau=p.tau;
+  var seri=n*tau,fj=H(n)*tau,dT=seri-fj;
+  var votH=p.vot/24,L=p.pay+p.days*p.vot,risk=(p.p0/100)*L,time=votH*dT,dGC=time+risk;
+  var gtsg=p.gtsg*1e6,gtbtm=p.gtbtm*1e6,pool=gtsg+gtbtm,s0=gtbtm/pool;
+  var mu=Math.PI/(Math.sqrt(6)*p.sigma);
+  var odds0=s0/(1-s0),odds1=odds0*Math.exp(mu*dGC),s1=odds1/(1+odds1);
+  var dGT=(s1-s0)*pool,pnbp=dGT*p.rgt;
+  var bunkerT=(s1-s0)*p.bunker*1e6/(1-s0),bunkerUsd=bunkerT*p.vlsfo,bunkerRp=bunkerUsd*p.fx;
+  return {n:n,tau:tau,seri:seri,fj:fj,Hn:H(n),dT:dT,votH:votH,L:L,risk:risk,time:time,dGC:dGC,pool:pool,s0:s0,mu:mu,odds0:odds0,odds1:odds1,s1:s1,dGT:dGT,pnbp:pnbp,bunkerT:bunkerT,bunkerUsd:bunkerUsd,bunkerRp:bunkerRp};
+}
+function m5(p){
+  var N=p.N5,d=p.d5/100,K=p.K5;
+  var pa=Math.min(1,K/N),pt=Math.min(1,K/(d*N)),factor=pt/pa;
+  var hitA=d,wasted=K*(1-d),wastedT=Math.max(0,K-d*N);
+  return {N:N,d:d,K:K,pa:pa,pt:pt,factor:factor,hitA:hitA,wasted:wasted,wastedT:wastedT,EA:pa*p.F5,ET:pt*p.F5};
+}
+function near(a,b){return Math.abs(a-b)<=Math.max(1e-9,Math.abs(b)*0.002);}
+function isBook(keys){return keys.every(function(k){return near(S[k],BOOK[k]);});}
+function check(el,keys,okText){
+  el.innerHTML=isBook(keys)?'<span class="check ok">Sama dengan buku: '+okText+'</span>':'<span class="check diff">Masukan berbeda dari buku. Tekan “Kembalikan ke angka buku” di tab Ringkasan untuk membandingkan.</span>';
+}
+
+/* --- inputs --- */
+var IDS=['n','tau','vot','p0','pay','days','gtsg','gtbtm','sigma','rgt','bunker','vlsfo','fx','N5','d5','K5','F5','G5'];
+IDS.forEach(function(id){
+  var num=$(id),rng=$(id+'-r');
+  num.value=S[id]; if(rng)rng.value=S[id];
+  num.addEventListener('input',function(){var v=parseFloat(num.value);if(!isFinite(v))return;S[id]=v;if(rng)rng.value=v;render();});
+  if(rng)rng.addEventListener('input',function(){var v=parseFloat(rng.value);S[id]=v;num.value=v;render();});
+});
+function setAll(){IDS.forEach(function(id){$(id).value=S[id];var r=$(id+'-r');if(r)r.value=S[id];});}
+
+/* --- small svg helpers --- */
+function svgLine(el,W,Hh,series,xs,opts){
+  var pad={l:52,r:16,t:16,b:40},w=W-pad.l-pad.r,h=Hh-pad.t-pad.b;
+  var maxY=0;series.forEach(function(s){s.y.forEach(function(v){if(v>maxY)maxY=v;});});maxY=niceMax(maxY);
+  var minX=xs[0],maxX=xs[xs.length-1];
+  var X=function(x){return pad.l+(x-minX)/(maxX-minX||1)*w;},Y=function(y){return pad.t+h-y/maxY*h;};
+  var g='';
+  for(var i=0;i<=4;i++){var yv=maxY*i/4;g+='<line x1="'+pad.l+'" x2="'+(pad.l+w)+'" y1="'+Y(yv)+'" y2="'+Y(yv)+'" stroke="#ECEAF6"/><text x="'+(pad.l-8)+'" y="'+(Y(yv)+4)+'" font-size="11" text-anchor="end" fill="#55527a">'+fmt(yv,yv<10?1:0)+'</text>';}
+  xs.forEach(function(x){g+='<text x="'+X(x)+'" y="'+(Hh-pad.b+16)+'" font-size="11" text-anchor="middle" fill="#55527a">'+x+'</text>';});
+  g+='<text x="'+(pad.l+w/2)+'" y="'+(Hh-6)+'" font-size="12" text-anchor="middle" fill="#1B1840">'+opts.xlabel+'</text>';
+  series.forEach(function(s){var d='';s.y.forEach(function(v,i){d+=(i?'L':'M')+X(xs[i]).toFixed(1)+' '+Y(v).toFixed(1);});g+='<path d="'+d+'" fill="none" stroke="'+s.color+'" stroke-width="'+(s.w||2.5)+'"/>';
+    g+='<text x="'+(X(xs[xs.length-1])-4)+'" y="'+(Y(s.y[s.y.length-1])-8)+'" font-size="12" font-weight="700" text-anchor="end" fill="'+s.color+'">'+s.name+'</text>';});
+  if(opts.mark){var mx=X(opts.mark.x);g+='<line x1="'+mx+'" x2="'+mx+'" y1="'+pad.t+'" y2="'+(pad.t+h)+'" stroke="#ffd60a" stroke-width="2" stroke-dasharray="4 3"/>';
+    opts.mark.pts.forEach(function(pt){g+='<circle cx="'+mx+'" cy="'+Y(pt.y)+'" r="5" fill="'+pt.color+'" stroke="#fff" stroke-width="1.5"/><text x="'+(mx+8)+'" y="'+(Y(pt.y)+4)+'" font-size="12" font-weight="700" fill="'+pt.color+'">'+pt.label+'</text>';});}
+  el.innerHTML='<g font-family="Inter, Arial, sans-serif">'+g+'</g>';
+}
+function niceMax(v){if(v<=0)return 1;var e=Math.pow(10,Math.floor(Math.log10(v))),m=v/e;var n=m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10;return n*e;}
+
+/* --- render --- */
+function render(){
+  var R=model(S),Q=m5(S);
+  $('t-dT').textContent=fmt(R.dT,1)+' jam';
+  $('t-dGC').textContent='USD '+fmt(R.dGC);
+  $('t-s1').textContent=fmt(R.s0*100,2)+'% → '+fmt(R.s1*100,2)+'%';
+  $('t-pnbp').textContent='Rp'+fmt(R.pnbp/1e9)+' miliar';
+  $('t-det').textContent=fmt(Q.factor,2)+'×';
+
+  // M1
+  $('m1-steps').innerHTML='<li>Seri: <code>'+R.n+' × '+fmt(R.tau,1)+'</code> = <b>'+fmt(R.seri,2)+' jam</b></li>'+
+   '<li>Bilangan harmonik: <code>H<sub>'+R.n+'</sub> = '+harmonicText(R.n)+'</code> = '+fmt(R.Hn,4)+'</li>'+
+   '<li>Fork-join: <code>'+fmt(R.tau,1)+' × '+fmt(R.Hn,4)+'</code> = <b>'+fmt(R.fj,2)+' jam</b></li>'+
+   '<li>Dihemat: <code>'+fmt(R.seri,2)+' − '+fmt(R.fj,2)+'</code> = <b>'+fmt(R.dT,2)+' jam</b>, atau '+fmt(100*(1-R.Hn/R.n),1)+'%</li>';
+  $('m1-res').innerHTML='<div><span>Seri</span><br><b>'+fmt(R.seri,1)+' jam</b></div><div><span>Serentak</span><br><b>'+fmt(R.fj,1)+' jam</b></div><div><span>Penurunan</span><br><b>−'+fmt(100*(1-R.Hn/R.n),0)+'%</b></div>';
+  check($('m1-check'),['n','tau'],'28,0 → 10,4 jam (Tabel 6.1)');
+  var xs=[],ys=[],yf=[];for(var k=1;k<=12;k++){xs.push(k);ys.push(k*R.tau);yf.push(H(k)*R.tau);}
+  svgLine($('m1-chart'),640,260,[{name:'Berurutan',y:ys,color:'#9aa0b4'},{name:'Serentak',y:yf,color:'#1d0b78'}],xs,{xlabel:'Jumlah instansi (n)',mark:{x:R.n,pts:[{y:R.seri,color:'#6b7088',label:fmt(R.seri,1)+' j'},{y:R.fj,color:'#1d0b78',label:fmt(R.fj,1)+' j'}]}});
+
+  // M2
+  $('m2-steps').innerHTML='<li>Nilai waktu per jam: <code>'+fmt(S.vot)+' ÷ 24</code> = USD '+fmt(R.votH,2)+'</li>'+
+   '<li>Nilai waktu dihemat: <code>'+fmt(R.votH,2)+' × '+fmt(R.dT,2)+'</code> = <b>USD '+fmt(R.time)+'</b></li>'+
+   '<li>Kerugian bila ditahan L: <code>'+fmt(S.pay)+' + '+fmt(S.days)+' × '+fmt(S.vot)+'</code> = USD '+fmt(R.L)+'</li>'+
+   '<li>Risiko yang hilang: <code>'+fmt(S.p0,1)+'% × '+fmt(R.L)+'</code> = <b>USD '+fmt(R.risk)+'</b></li>'+
+   '<li>ΔGC = <code>'+fmt(R.time)+' + '+fmt(R.risk)+'</code> = <b>USD '+fmt(R.dGC)+'</b> per singgah</li>';
+  $('m2-res').innerHTML='<div><span>Penurunan biaya umum per singgah</span><br><b>USD '+fmt(R.dGC)+'</b></div><div><span>Setara</span><br><b>Rp'+fmt(R.dGC*S.fx/1e6)+' juta</b></div>';
+  check($('m2-check'),['n','tau','vot','p0','pay','days'],'USD 22.965');
+  var tot=R.dGC||1,wt=560*R.time/tot;
+  $('m2-chart').innerHTML='<g font-family="Inter, Arial, sans-serif"><rect x="40" y="30" width="'+wt.toFixed(1)+'" height="40" fill="#1d0b78"/><rect x="'+(40+wt).toFixed(1)+'" y="30" width="'+(560-wt).toFixed(1)+'" height="40" fill="#ffd60a"/>'+
+   '<text x="40" y="20" font-size="12" fill="#1B1840"><tspan font-weight="700">Waktu</tspan> '+fmt(100*R.time/tot,0)+'% · USD '+fmt(R.time)+'</text>'+
+   '<text x="600" y="92" font-size="12" text-anchor="end" fill="#1B1840"><tspan font-weight="700">Risiko penahanan</tspan> '+fmt(100*R.risk/tot,0)+'% · USD '+fmt(R.risk)+'</text></g>';
+
+  // M3
+  $('m3-steps').innerHTML='<li>Pangsa awal: <code>'+fmt(S.gtbtm,2)+' ÷ ('+fmt(S.gtsg)+' + '+fmt(S.gtbtm,2)+')</code> = <b>'+fmt(R.s0*100,3)+'%</b></li>'+
+   '<li>Skala logit: <code>μ = 3,1416 ÷ (2,4495 × '+fmt(S.sigma)+')</code> = '+fmt(R.mu*1000,5)+' per USD 1.000</li>'+
+   '<li>Rasio peluang awal: <code>s₀/(1−s₀)</code> = '+fmt(R.odds0,5)+'</li>'+
+   '<li>Faktor kenaikan: <code>e^('+fmt(R.mu*1000,5)+' × '+fmt(R.dGC/1000,3)+')</code> = '+fmt(Math.exp(R.mu*R.dGC),4)+'</li>'+
+   '<li>Rasio peluang baru: '+fmt(R.odds1,5)+' → <code>s₁ = odds/(1+odds)</code> = <b>'+fmt(R.s1*100,3)+'%</b></li>';
+  $('m3-res').innerHTML='<div><span>Pangsa awal</span><br><b>'+fmt(R.s0*100,2)+'%</b></div><div><span>Pangsa baru</span><br><b>'+fmt(R.s1*100,2)+'%</b></div><div><span>Kenaikan</span><br><b>×'+fmt(R.s1/R.s0,2)+'</b></div>';
+  check($('m3-check'),['n','tau','vot','p0','pay','days','gtsg','gtbtm','sigma'],'2,45% → 4,74%');
+  var gx=[],gy=[];for(var i=0;i<=8;i++){var dg=i*10000;gx.push(i*10);var o=R.odds0*Math.exp(R.mu*dg);gy.push(100*o/(1+o));}
+  svgLine($('m3-chart'),640,260,[{name:'Pangsa Indonesia (%)',y:gy,color:'#1d0b78'}],gx,{xlabel:'Penurunan biaya umum ΔGC (ribu USD)',mark:{x:Math.min(80,R.dGC/1000),pts:[{y:R.s1*100,color:'#1d0b78',label:fmt(R.s1*100,2)+'%'}]}});
+
+  // M4
+  $('m4-steps').innerHTML='<li>Kumpulan tonase: <code>'+fmt(S.gtsg)+' + '+fmt(S.gtbtm,2)+'</code> = '+fmt(R.pool/1e6,2)+' juta GT</li>'+
+   '<li>Tambahan tonase: <code>('+fmt(R.s1*100,3)+'% − '+fmt(R.s0*100,3)+'%) × '+fmt(R.pool/1e6,2)+'</code> = <b>'+fmt(R.dGT/1e6,2)+' juta GT</b></li>'+
+   '<li>Tambahan PNBP: <code>'+fmt(R.dGT/1e6,2)+' juta × Rp'+fmt(S.rgt)+'</code> = <b>Rp'+fmt(R.pnbp/1e9,1)+' miliar</b> per tahun</li>'+
+   '<li>Bunker (indikatif): <code>('+fmt((R.s1-R.s0)*100,3)+'% ÷ '+fmt((1-R.s0)*100,2)+'%) × '+fmt(S.bunker,2)+' juta ton</code> = '+fmt(R.bunkerT/1e6,3)+' juta ton</li>'+
+   '<li>Nilai bunker: <code>'+fmt(R.bunkerT/1e6,3)+' juta × USD '+fmt(S.vlsfo)+' × Rp'+fmt(S.fx)+'</code> = <b>Rp'+fmt(R.bunkerRp/1e12,2)+' triliun</b> omzet</li>';
+  $('m4-res').innerHTML='<div><span>Tambahan PNBP per tahun</span><br><b>Rp'+fmt(R.pnbp/1e9)+' miliar</b></div><div><span>Omzet bunker, batas atas</span><br><b>Rp'+fmt(R.bunkerRp/1e12,1)+' triliun</b></div>';
+  check($('m4-check'),['n','tau','vot','p0','pay','days','gtsg','gtbtm','sigma','rgt','bunker','vlsfo','fx'],'Rp433 miliar dan Rp12,5 triliun (Tabel 6.2)');
+
+  // M5
+  $('m5-steps').innerHTML='<li>Kapal tidak melapor: <code>'+fmt(Q.d*100,1)+'% × '+fmt(Q.N)+'</code> = '+fmt(Q.d*Q.N)+' kapal</li>'+
+   '<li>Acak: <code>p = '+fmt(Q.K)+' ÷ '+fmt(Q.N)+'</code> = <b>'+fmt(Q.pa*100,2)+'%</b>; '+fmt(Q.wasted,1)+' dari '+fmt(Q.K)+' pemeriksaan mengenai kapal patuh</li>'+
+   '<li>Bertarget: <code>p = min(1, '+fmt(Q.K)+' ÷ '+fmt(Q.d*Q.N)+')</code> = <b>'+fmt(Q.pt*100,2)+'%</b></li>'+
+   '<li>Kenaikan: <code>'+fmt(Q.pt*100,2)+' ÷ '+fmt(Q.pa*100,2)+'</code> = <b>'+fmt(Q.factor,2)+'×</b> (sama dengan 1/d selama K &lt; d·N)</li>';
+  $('m5-res').innerHTML='<div><span>Peluang deteksi acak</span><br><b>'+fmt(Q.pa*100,2)+'%</b></div><div><span>Bertarget</span><br><b>'+fmt(Q.pt*100,2)+'%</b></div><div><span>Kenaikan</span><br><b>'+fmt(Q.factor,2)+'×</b></div>';
+  var bw=220,ha=150*Q.hitA,ht=150*Math.min(1,Q.d*Q.N>0?Math.min(Q.K,Q.d*Q.N)/Q.K:0);
+  $('m5-chart').innerHTML='<g font-family="Inter, Arial, sans-serif"><text x="20" y="18" font-size="13" font-weight="700" fill="#1B1840">% pemeriksaan yang mengenai kapal tidak melapor</text>'+
+   '<rect x="90" y="'+(190-ha)+'" width="'+bw+'" height="'+ha+'" fill="#9aa0b4"/><text x="'+(90+bw/2)+'" y="'+(184-ha)+'" text-anchor="middle" font-size="14" font-weight="700" fill="#1B1840">'+fmt(Q.hitA*100,0)+'%</text><text x="'+(90+bw/2)+'" y="208" text-anchor="middle" font-size="12" fill="#55527a">Acak</text>'+
+   '<rect x="350" y="'+(190-ht)+'" width="'+bw+'" height="'+ht+'" fill="#1d0b78"/><text x="'+(350+bw/2)+'" y="'+(184-ht)+'" text-anchor="middle" font-size="14" font-weight="700" fill="#1B1840">'+fmt(ht/1.5,0)+'%</text><text x="'+(350+bw/2)+'" y="208" text-anchor="middle" font-size="12" fill="#55527a">Bertarget</text>'+
+   '<line x1="70" x2="590" y1="190" y2="190" stroke="#888"/></g>';
+  var okA=Q.EA>=S.G5,okT=Q.ET>=S.G5;
+  $('m5-becker').innerHTML='<b>Uji Becker (p·F ≥ G).</b> Acak: '+fmt(Q.pa*100,2)+'% × Rp'+fmt(S.F5)+' juta = Rp'+fmt(Q.EA,2)+' juta → '+(okA?'cukup membuat jera':'<b>belum</b> membuat jera')+' (G = Rp'+fmt(S.G5,1)+' juta). Bertarget: '+fmt(Q.pt*100,2)+'% × Rp'+fmt(S.F5)+' juta = Rp'+fmt(Q.ET,2)+' juta → '+(okT?'<b>cukup membuat jera</b>':'belum membuat jera')+'. Sanksi minimum agar jera: acak Rp'+fmt(S.G5/Q.pa,0)+' juta, bertarget Rp'+fmt(S.G5/Q.pt,0)+' juta.';
+
+  summary(R,Q);
+  try{localStorage.setItem('kgm-state',JSON.stringify(S));}catch(e){}
+}
+function harmonicText(n){if(n<=5){var t=[];for(var k=1;k<=n;k++)t.push(k===1?'1':'1/'+k);return t.join(' + ');}return '1 + 1/2 + … + 1/'+n;}
+
+/* --- Monte Carlo --- */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+var RANGES=[['τ waktu per instansi','2–8 jam'],['Nilai waktu kapal','USD 26.836–38.717/hari'],['p₀ peluang penahanan','0,1–2% (log-seragam)'],['Biaya pelepasan','USD 250.000–300.000'],['Lama penahanan','7–28 hari'],['σ skala logit','USD 25.000–130.000']];
+$('mc-ranges').innerHTML=RANGES.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>';}).join('');
+function pct(a,p){var i=(a.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return a[lo]+(a[hi]-a[lo])*(i-lo);}
+function ranks(a){var idx=a.map(function(v,i){return i;}).sort(function(x,y){return a[x]-a[y];});var r=new Float64Array(a.length);idx.forEach(function(v,i){r[v]=i;});return r;}
+function corr(x,y){var n=x.length,mx=0,my=0;for(var i=0;i<n;i++){mx+=x[i];my+=y[i];}mx/=n;my/=n;var sxy=0,sx=0,sy=0;for(i=0;i<n;i++){var a=x[i]-mx,b=y[i]-my;sxy+=a*b;sx+=a*a;sy+=b*b;}return sxy/Math.sqrt(sx*sy);}
+function runMC(){
+  var N=parseInt($('mcn').value,10),rnd=mulberry32(20261113),U=function(a,b){return a+(b-a)*rnd();};
+  var out=new Float64Array(N),P={tau:new Float64Array(N),vot:new Float64Array(N),p0:new Float64Array(N),pay:new Float64Array(N),days:new Float64Array(N),sigma:new Float64Array(N)};
+  for(var i=0;i<N;i++){
+    var p=Object.assign({},S,{tau:U(2,8),vot:U(26836,38717),p0:100*Math.exp(U(Math.log(0.001),Math.log(0.02))),pay:U(250000,300000),days:U(7,28),sigma:U(25000,130000),n:7});
+    var r=model(p);out[i]=r.pnbp/1e9;P.tau[i]=p.tau;P.vot[i]=p.vot;P.p0[i]=p.p0;P.pay[i]=p.pay;P.days[i]=p.days;P.sigma[i]=p.sigma;
+  }
+  var sorted=Array.from(out).sort(function(a,b){return a-b;});
+  var p5=pct(sorted,.05),p50=pct(sorted,.5),p95=pct(sorted,.95);
+  $('mc-res').innerHTML='<div><span>P5</span><br><b>Rp'+fmt(p5)+' M</b></div><div><span>Median</span><br><b>Rp'+fmt(p50)+' M</b></div><div><span>P95</span><br><b>Rp'+fmt(p95)+' M</b></div><span style="flex-basis:100%">M = miliar rupiah per tahun. Buku: P5 Rp121 M, median Rp353 M, P95 Rp1.702 M (n = 7 tetap; parameter data lain mengikuti masukan aktif).</span>';
+  // histogram
+  var hi=pct(sorted,.99),bins=24,c=new Array(bins).fill(0);
+  for(i=0;i<N;i++){var b=Math.min(bins-1,Math.floor(out[i]/hi*bins));if(b>=0)c[b]++;}
+  var maxc=Math.max.apply(null,c),W=640,Hh=260,pad={l:40,r:16,t:20,b:40},w=W-pad.l-pad.r,h=Hh-pad.t-pad.b,g='';
+  c.forEach(function(v,i){var bh=h*v/maxc;g+='<rect x="'+(pad.l+i*w/bins+1).toFixed(1)+'" y="'+(pad.t+h-bh).toFixed(1)+'" width="'+(w/bins-2).toFixed(1)+'" height="'+bh.toFixed(1)+'" fill="#8f9cff"/>';});
+  [[p5,'P5'],[p50,'Median'],[p95,'P95']].forEach(function(m,j){var x=pad.l+m[0]/hi*w;g+='<line x1="'+x+'" x2="'+x+'" y1="'+pad.t+'" y2="'+(pad.t+h)+'" stroke="'+(j===1?'#1d0b78':'#55527a')+'" stroke-width="2" '+(j===1?'':'stroke-dasharray="4 3"')+'/><text x="'+(x+4)+'" y="'+(pad.t+12+j*16)+'" font-size="12" font-weight="700" fill="'+(j===1?'#1d0b78':'#55527a')+'">'+m[1]+'</text>';});
+  for(var t=0;t<=4;t++){var xv=hi*t/4;g+='<text x="'+(pad.l+w*t/4)+'" y="'+(Hh-pad.b+16)+'" font-size="11" text-anchor="middle" fill="#55527a">'+fmt(xv)+'</text>';}
+  g+='<line x1="'+pad.l+'" x2="'+(pad.l+w)+'" y1="'+(pad.t+h)+'" y2="'+(pad.t+h)+'" stroke="#888"/><text x="'+(pad.l+w/2)+'" y="'+(Hh-6)+'" font-size="12" text-anchor="middle" fill="#1B1840">Tambahan PNBP (miliar Rp per tahun)</text>';
+  $('mc-chart').innerHTML='<g font-family="Inter, Arial, sans-serif">'+g+'</g>';
+  var ro=ranks(out),names={sigma:'σ skala logit',tau:'τ waktu per instansi',p0:'p₀ peluang penahanan',vot:'Nilai waktu kapal',days:'Lama penahanan',pay:'Biaya pelepasan'};
+  var rows=Object.keys(P).map(function(k){return [names[k],corr(ranks(P[k]),ro)];}).sort(function(a,b){return Math.abs(b[1])-Math.abs(a[1]);});
+  $('mc-srcc').innerHTML=rows.map(function(r){return '<tr><td>'+r[0]+'</td><td class="r">'+(r[1]>=0?'+':'−')+fmt(Math.abs(r[1]),2)+'</td></tr>';}).join('');
+}
+$('mc-run').addEventListener('click',runMC);
+
+/* --- quiz --- */
+var QZ=[
+ {q:'Lima instansi, masing-masing rata-rata 3 jam. Berapa jam waktu proses bila serentak (fork-join)?',a:3*H(5),u:'jam',s:'H₅ = 1 + 1/2 + 1/3 + 1/4 + 1/5 = 2,2833. Waktu = 3 × 2,2833 = 6,85 jam (seri: 15 jam).'},
+ {q:'Dengan n = 7, berapa persen waktu proses turun bila beralih dari seri ke serentak? (berapa pun τ)',a:100*(1-H(7)/7),u:'%',s:'1 − H₇/7 = 1 − 2,5929/7 = 0,6296, atau sekitar 63%.'},
+ {q:'Nilai waktu kapal USD 24.000 per hari. Berapa USD nilai 10 jam yang dihemat?',a:10000,u:'USD',s:'24.000 ÷ 24 = 1.000 per jam; × 10 jam = USD 10.000.'},
+ {q:'Kerugian bila ditahan L = USD 600.000 dan peluang ditahan 1%. Berapa USD biaya risiko yang hilang bila peluang itu menjadi nol?',a:6000,u:'USD',s:'p₀ × L = 0,01 × 600.000 = USD 6.000 per singgah.'},
+ {q:'σ = USD 50.000. Berapa μ per USD 1.000? (π = 3,1416; √6 = 2,4495)',a:1000*Math.PI/(Math.sqrt(6)*50000),u:'per USD 1.000',s:'μ = π / (√6 × σ) = 3,1416 / (2,4495 × 50.000) = 0,0000257 per USD = 0,0257 per USD 1.000.'},
+ {q:'Pangsa awal 2%, μ·ΔGC = 0,7. Berapa persen pangsa baru?',a:(function(){var o=0.02/0.98*Math.exp(0.7);return 100*o/(1+o);})(),u:'%',s:'Rasio awal 0,02/0,98 = 0,02041. Dikali e^0,7 = 2,0138 → 0,04110. Pangsa = 0,04110/1,04110 = 3,95%.'},
+ {q:'Tambahan tonase 50 juta GT dengan tarif Rp5.721 per GT. Berapa miliar rupiah tambahan PNBP?',a:50e6*5721/1e9,u:'miliar Rp',s:'50.000.000 × 5.721 = Rp286.050.000.000 = Rp286 miliar.'},
+ {q:'Ada 2.000 kapal, 20% tidak melapor, aparat mampu memeriksa 40 kapal. Berapa kali peluang deteksi kapal gelap naik dengan pemeriksaan bertarget?',a:5,u:'kali',s:'Acak: 40/2.000 = 2%. Bertarget: 40/(0,2 × 2.000) = 40/400 = 10%. Kenaikan 10%/2% = 5 kali = 1/d.'},
+ {q:'Peluang tertangkap 10% dan keuntungan tidak melapor Rp20 juta. Berapa juta rupiah sanksi minimum agar kapal memilih patuh (Becker)?',a:200,u:'juta Rp',s:'Patuh bila p·F ≥ G → F ≥ G/p = 20/0,10 = Rp200 juta.'}
+];
+$('quiz').innerHTML=QZ.map(function(z,i){return '<div class="q"><b>Soal '+(i+1)+'.</b> '+z.q+'<div class="ans"><label for="qa'+i+'" class="note">Jawaban ('+z.u+')</label><input id="qa'+i+'" type="number" step="any" inputmode="decimal"><button type="button" data-i="'+i+'">Periksa</button><span class="fb" id="qf'+i+'" role="status"></span></div><details><summary>Pembahasan</summary><p>'+z.s+'</p></details></div>';}).join('');
+$('quiz').addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(!b)return;var i=+b.dataset.i,v=parseFloat(String($('qa'+i).value).replace(',','.')),z=QZ[i],fb=$('qf'+i);
+  if(!isFinite(v)){fb.className='fb no';fb.textContent='Isi angka dulu.';return;}
+  var ok=Math.abs(v-z.a)<=Math.abs(z.a)*0.01;fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?'Benar.':'Belum tepat. Jawaban: '+fmt(z.a,z.a<1?4:2)+' '+z.u+'.';});
+$('quiz-reset').addEventListener('click',function(){QZ.forEach(function(z,i){$('qa'+i).value='';$('qf'+i).textContent='';});});
+
+/* --- summary --- */
+function summary(R,Q){
+  $('sum').textContent=
+'RINGKASAN MODEL (angka aktif di aplikasi)\n\n'+
+'M1  Waktu proses: '+R.n+' instansi × '+fmt(R.tau,1)+' jam. Berurutan '+fmt(R.seri,1)+' jam, serentak '+fmt(R.fj,1)+' jam; hemat '+fmt(R.dT,1)+' jam ('+fmt(100*(1-R.Hn/R.n),0)+'%).\n'+
+'M2  Penurunan biaya umum per singgah: USD '+fmt(R.dGC)+' (waktu USD '+fmt(R.time)+', risiko USD '+fmt(R.risk)+').\n'+
+'M3  Pangsa Indonesia naik dari '+fmt(R.s0*100,2)+'% menjadi '+fmt(R.s1*100,2)+'% (σ = USD '+fmt(S.sigma)+').\n'+
+'M4  Tambahan tonase '+fmt(R.dGT/1e6,1)+' juta GT; tambahan PNBP Rp'+fmt(R.pnbp/1e9)+' miliar per tahun. Omzet bunker indikatif Rp'+fmt(R.bunkerRp/1e12,1)+' triliun (bukan PNBP, batas atas).\n'+
+'M5  Dengan '+fmt(Q.d*100,0)+'% kapal tidak melapor, peluang deteksi naik '+fmt(Q.factor,2)+' kali bila pemeriksaan bertarget; dari setiap 100 pemeriksaan acak, '+fmt(100*(1-Q.d),0)+' mengenai kapal patuh.\n\n'+
+'Catatan: hasil bersyarat; σ dan τ adalah asumsi yang paling menentukan dan perlu diukur saat pilot.';
+}
+$('copy').addEventListener('click',function(){var t=$('sum').textContent;var done=function(){$('copied').textContent='Tersalin.';};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){$('copied').textContent='Penyalinan ditolak browser; blok teks lalu salin manual.';});}else{$('copied').textContent='Blok teks lalu salin manual.';}});
+$('reset').addEventListener('click',function(){S=Object.assign({},BOOK);setAll();render();$('copied').textContent='Semua masukan kembali ke angka buku.';});
+
+/* --- routing --- */
+var VIEWS=['panduan','m1','m2','m3','m4','montecarlo','m5','latihan','ringkasan'];
+function route(){var h=(location.hash||'#panduan').slice(1);if(VIEWS.indexOf(h)<0)h='panduan';
+  VIEWS.forEach(function(v){$('v-'+v).classList.toggle('on',v===h);});
+  document.querySelectorAll('nav a').forEach(function(a){if(a.getAttribute('href')==='#'+h)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  if(h==='montecarlo'&&!$('mc-chart').innerHTML)runMC();}
+window.addEventListener('hashchange',route);
+
+try{var saved=JSON.parse(localStorage.getItem('kgm-state')||'null');if(saved&&typeof saved==='object'){IDS.forEach(function(k){if(isFinite(saved[k]))S[k]=saved[k];});}}catch(e){}
+setAll();render();route();
+})();
+</script>
+<script>(function(){var c=document.getElementById('kzc');if(!c)return;var h=document.documentElement,o=h.style.overflow;h.style.overflow='hidden';
+var b=c.querySelector('[data-kzc-go]');try{b.focus({preventScroll:true})}catch(e){}
+b.addEventListener('click',function(){c.classList.add('kzc-out');h.style.overflow=o;setTimeout(function(){c.parentNode&&c.parentNode.removeChild(c)},560);});})();</script>
+</body>
+</html>
