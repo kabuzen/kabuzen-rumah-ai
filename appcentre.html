@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>KABUZEN Digital AppCentre · Tools pilihan · Kabuzen Rumah AI</title>
+<meta name="description" content="KABUZEN Digital AppCentre: aplikasi dan tools digital pilihan Kabuzen untuk belajar, bekerja, dan berbisnis.">
+<link rel="canonical" href="https://kabuzen-rumah-ai-37bk.vercel.app/appcentre">
+<meta property="og:title" content="KABUZEN Digital AppCentre"><meta property="og:description" content="Aplikasi dan tools digital pilihan Kabuzen.">
+<link rel="icon" href="/img/site/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{--ink:#0A0624;--night:#130C3E;--night2:#1B1257;--cyan:#55EEFF;--bolt:#FFD233;--text:#EEEFFF;--muted:#A7A3D4;--line:rgba(150,140,255,.16);--ok:#3EE59A;
+--fd:"Unbounded","Arial Black",system-ui,sans-serif;--fb:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--fm:"JetBrains Mono",ui-monospace,Menlo,monospace;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:radial-gradient(900px 500px at 15% -10%,rgba(255,210,51,.10),transparent 60%),radial-gradient(900px 500px at 90% -10%,rgba(30,155,255,.18),transparent 60%),var(--ink);color:var(--text);font:16px/1.65 var(--fb)}
+a{color:var(--cyan)}img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.bar{position:sticky;top:0;z-index:5;background:rgba(10,6,36,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .in{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font:800 15px/1.1 var(--fd)}
+.brand img{width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 3px var(--bolt)}.brand small{display:block;color:var(--bolt);font:500 10px var(--fm);letter-spacing:.2em}
+.bar nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}.bar nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px;padding:8px 12px;border-radius:999px}.bar nav a:hover{color:var(--text);background:var(--night2)}.bar nav a.cta{color:#1A1040;background:var(--bolt)}
+main{max-width:1120px;margin:0 auto;padding:34px 20px 48px}
+.kick{font:600 12px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--bolt)}
+h1{font:800 clamp(30px,5vw,52px)/1.06 var(--fd);margin:12px 0 14px;letter-spacing:-.01em;text-wrap:balance}
+.lead{color:var(--muted);font-size:17px;max-width:680px;margin:0}
+.disc{margin:22px 0 0;max-width:760px;border:1px solid rgba(255,210,51,.4);background:rgba(255,210,51,.07);border-radius:14px;padding:12px 16px;font-size:14.5px;color:var(--text)}
+.disc b{color:var(--bolt)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:30px 0 18px}
+.tools input{flex:1 1 240px;max-width:360px;background:var(--night);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:11px 16px;font:inherit}
+.tools input::placeholder{color:var(--muted)}
+.cats{display:flex;gap:7px;flex-wrap:wrap}
+.cats button{font:600 13.5px/1 var(--fb);color:var(--text);background:transparent;border:1px solid var(--line);border-radius:999px;padding:10px 14px;cursor:pointer}
+.cats button[aria-pressed=true]{background:var(--bolt);border-color:var(--bolt);color:#1A1040}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+.tool{display:flex;flex-direction:column;background:var(--night);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.tool:hover{border-color:rgba(85,238,255,.5)}
+.tool .im{aspect-ratio:16/9;background:var(--night2);display:grid;place-items:center;font:800 44px var(--fd);color:var(--bolt)}
+.tool .im img{width:100%;height:100%;object-fit:cover}
+.tool .bd{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.tool em{font:600 11px var(--fm);letter-spacing:.12em;text-transform:uppercase;color:var(--bolt);font-style:normal}
+.tool h2{font:800 19px/1.2 var(--fd);margin:0}
+.tool p{margin:0;color:var(--muted);font-size:15px}
+.tool ul{margin:2px 0 0;padding-left:20px;color:var(--text);font-size:14.5px}.tool li{margin:3px 0}
+.tool .go{margin-top:auto;padding-top:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 15px/1 var(--fb);text-decoration:none;padding:13px 20px;border-radius:999px;background:var(--bolt);color:#1A1040}
+.state{border:1px dashed var(--line);border-radius:18px;padding:44px 24px;text-align:center;color:var(--muted)}
+.state b{display:block;color:var(--text);font-size:18px;margin-bottom:6px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center;padding:24px 20px}
+@media(max-width:820px){.bar nav a:not(.cta){display:none}}
+</style></head><body>
+<header class="bar"><div class="in"><a class="brand" href="/"><img src="/img/site/logo.webp" alt="KABUZEN"><span>KABUZEN<small>RUMAH AI</small></span></a>
+<nav><a href="/#aplikasi">Aplikasi</a><a href="/#buku">Buku</a><a href="/majalah">Majalah</a><a href="/#galeri">Video</a><a href="/#layanan">Layanan</a><a class="cta" href="/#kontak">Kontak</a></nav></div></header>
+<main>
+  <div class="kick">KABUZEN Digital AppCentre</div>
+  <h1>Tools digital pilihan untuk belajar, bekerja, dan berbisnis.</h1>
+  <p class="lead">Aplikasi dan layanan dari pihak lain yang kami anggap layak dicoba. Setiap kartu membuka situs resmi penyedianya.</p>
+  <p class="disc"><b>Pernyataan afiliasi.</b> Sebagian tautan di halaman ini adalah tautan afiliasi. KABUZEN dapat menerima komisi bila Anda mendaftar atau membeli melalui tautan tersebut, tanpa biaya tambahan bagi Anda.</p>
+  <div class="tools" id="tools" hidden>
+    <input id="q" type="search" placeholder="Cari tools…" aria-label="Cari tools" autocomplete="off">
+    <div class="cats" id="cats" role="group" aria-label="Filter kategori"></div>
+  </div>
+  <div class="grid" id="grid" aria-live="polite"></div>
+  <div class="state" id="state"><b>Memuat daftar tools…</b></div>
+</main>
+<footer>© <span id="yr"></span> Kabuzen Rumah AI · Batam, Kepulauan Riau · WhatsApp 0811 810 2019</footer>
+<script src="/assets/kz.js"></script>
+<script>
+(function(){
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  var kz = window.__kz, esc = kz.esc, grid = document.getElementById("grid"), state = document.getElementById("state"), q = document.getElementById("q"), cats = document.getElementById("cats");
+  var ALL = [], cat = "Semua";
+  function card(x){
+    var img = kz.okUrl(x.image_url), feats = (x.features || []).slice(0, 4).map(function(f){ return "<li>" + esc(f) + "</li>"; }).join("");
+    return '<article class="tool"><div class="im">' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : esc((x.name || "?").charAt(0))) + '</div><div class="bd"><em>' + esc(x.category || "Lainnya") + "</em><h2>" + esc(x.name) + "</h2>" +
+      (x.summary ? "<p>" + esc(x.summary) + "</p>" : "") + (feats ? "<ul>" + feats + "</ul>" : "") +
+      '<div class="go"><a class="btn" href="' + esc(x.destination_url) + '" target="_blank" rel="sponsored noopener" data-kz-aff="' + esc(x.id) + '" data-kz-name="' + esc(x.name) + '">Kunjungi situs resmi ↗</a></div></div></article>';
+  }
+  function draw(){
+    var t = q.value.trim().toLowerCase();
+    var list = ALL.filter(function(x){ return (cat === "Semua" || (x.category || "Lainnya") === cat) && (!t || [x.name, x.category, x.summary].concat(x.features || []).join(" ").toLowerCase().indexOf(t) >= 0); });
+    grid.innerHTML = list.map(card).join("");
+    state.hidden = list.length > 0;
+    if (!list.length) state.innerHTML = "<b>Tidak ada tools yang cocok.</b>Coba kata kunci atau kategori lain.";
+  }
+  function drawCats(){
+    var names = ["Semua"]; ALL.forEach(function(x){ var c = x.category || "Lainnya"; if (names.indexOf(c) < 0) names.push(c); });
+    cats.innerHTML = names.map(function(c){ return '<button type="button" aria-pressed="' + (c === cat) + '">' + esc(c) + "</button>"; }).join("");
+    Array.prototype.forEach.call(cats.children, function(b){ b.addEventListener("click", function(){ cat = b.textContent; drawCats(); draw(); }); });
+  }
+  kz.loadAff().then(function(rows){
+    ALL = rows;
+    if (!rows.length) { state.innerHTML = '<b>Daftar tools sedang disiapkan.</b>Sementara itu, lihat <a href="/#aplikasi">aplikasi</a> dan <a href="/#buku">buku</a> buatan Kabuzen.'; return; }
+    document.getElementById("tools").hidden = false; drawCats(); draw();
+  });
+  q.addEventListener("input", draw);
+})();
+</script>
+</body></html>

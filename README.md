@@ -14,6 +14,10 @@ Website katalog produk Kabuzen (aplikasi, LMS, buku, video) di Vercel.
 | `video/*.mp4` | Video promosi (720×1280). |
 | `img/` | Gambar: sampul buku, tangkapan layar aplikasi, sampul video, logo. |
 | `tools/build.py` | Pembangun halaman produk, sitemap, dan pemindah gambar. |
+| `assets/kz.js` | Log kunjungan anonim dan asisten katalog (tombol "Cari produk"). Dimuat di beranda, halaman produk, dan AppCentre. |
+| `data/katalog.json` | Data ringkas untuk asisten katalog. **Dibuat otomatis** oleh `tools/build.py`. |
+| `appcentre.html` | Halaman `/appcentre`: tools pihak lain (tautan afiliasi). Isinya dibaca dari tabel `apps` di Supabase proyek `Digital-app-centre`; tautan menu muncul sendiri bila sudah ada isinya. |
+| `log.html` | Halaman `/log`: dasbor log kunjungan untuk admin (masuk dengan akun admin AppCentre). Data di tabel `site_visits` pada proyek Supabase yang sama. |
 
 ## Menambah atau mengubah produk
 

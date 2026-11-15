@@ -116,6 +116,7 @@ def page(title, desc, canon, image, body, data, ld):
 <nav><a href="/#aplikasi">Aplikasi</a><a href="/#buku">Buku</a><a href="/majalah">Majalah</a><a href="/#galeri">Video</a><a href="/#layanan">Layanan</a><a class="cta btn btn-bolt" style="padding:9px 14px" href="/#kontak">Kontak</a></nav></div></header>
 <main>{body}</main>
 <footer>© {date.today().year} Kabuzen Rumah AI · Batam, Kepulauan Riau · WhatsApp {E(data['config'].get('whatsappLabel', ''))}</footer>
+<script src="/assets/kz.js" defer></script>
 </body></html>"""
 
 
@@ -181,6 +182,27 @@ def book_page(b, data):
     return slug, page(b['title'], b.get('desc', ''), f'{SITE}/buku/{slug}', b.get('cover'), body, data, ld)
 
 
+def katalog(data):
+    """Data ringkas untuk asisten katalog (assets/kz.js) -> data/katalog.json."""
+    cut = lambda t, n=170: (t[:n].rsplit(' ', 1)[0] + '…') if len(t or '') > n else (t or '')
+    out = []
+    for a in data['apps']:
+        out.append({'t': 'app', 'id': a['id'].removeprefix('app-'), 'n': a['name'], 'c': a.get('cat', ''), 'd': cut(a.get('desc', '')),
+                    'k': ' '.join(a.get('tags', []) + [a.get('audience', '')]), 'u': '/aplikasi/' + a['id'].removeprefix('app-'),
+                    'i': a.get('shot') or a.get('image') or '', 'p': 'Gratis' if a.get('free') else (a.get('price') or '')})
+    for b in data['books']:
+        out.append({'t': 'buku', 'id': b['id'].removeprefix('b-'), 'n': b['title'], 'c': b.get('cat', ''), 'd': cut(b.get('desc', '')),
+                    'k': ' '.join([b.get('subtitle', ''), b.get('kind', '')]), 'u': '/buku/' + b['id'].removeprefix('b-'),
+                    'i': b.get('cover') or '', 'p': 'Gratis' if (b.get('free') or b.get('pdf')) else (b.get('price') or '')})
+    for v in data.get('videos', []):
+        if v.get('url'): out.append({'t': 'video', 'id': v['id'].removeprefix('v-'), 'n': v['title'], 'c': '', 'd': '', 'k': '', 'u': v['url'], 'i': v.get('cover') or '', 'p': ''})
+    for p in data.get('posts', []):
+        out.append({'t': 'artikel', 'id': p['slug'], 'n': p['title'], 'c': p.get('cat', ''), 'd': cut(p.get('excerpt', '')), 'k': '', 'u': '/#artikel-' + p['slug'], 'i': p.get('cover') or '', 'p': ''})
+    os.makedirs(os.path.join(ROOT, 'data'), exist_ok=True)
+    json.dump(out, open(os.path.join(ROOT, 'data', 'katalog.json'), 'w', encoding='utf8'), ensure_ascii=False, separators=(',', ':'))
+    return len(out)
+
+
 def main():
     s, m, data = load()
     n = extract_images(data)
@@ -203,8 +225,9 @@ def main():
                 urls.append(SITE + '/' + (rel[:-6].rstrip('/') if rel.endswith('index') else rel))
     today = date.today().isoformat()
     open(os.path.join(ROOT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n' for u in urls) + '</urlset>\n')
-    open(os.path.join(ROOT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n')
-    print(f'{n} gambar dipindah ke img/ · index.html {size // 1024} KB · {len(data["apps"])} halaman aplikasi · {len(data["books"])} halaman buku · sitemap {len(urls)} alamat')
+    open(os.path.join(ROOT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nDisallow: /log\nSitemap: {SITE}/sitemap.xml\n')
+    nk = katalog(data)
+    print(f'{n} gambar dipindah ke img/ · index.html {size // 1024} KB · {len(data["apps"])} halaman aplikasi · {len(data["books"])} halaman buku · sitemap {len(urls)} alamat · katalog asisten {nk} entri')
 
 
 if __name__ == '__main__':

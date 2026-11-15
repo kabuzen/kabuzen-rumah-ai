@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /log
 Sitemap: https://kabuzen-rumah-ai-37bk.vercel.app/sitemap.xml

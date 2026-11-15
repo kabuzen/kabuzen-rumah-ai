@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Log Kunjungan · Kabuzen Rumah AI</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/img/site/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{--ink:#0A0624;--night:#130C3E;--night2:#1B1257;--cyan:#55EEFF;--bolt:#FFD233;--text:#EEEFFF;--muted:#A7A3D4;--line:rgba(150,140,255,.18);--ok:#3EE59A;--bad:#FF7A8A;
+--fd:"Unbounded","Arial Black",system-ui,sans-serif;--fb:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--fm:"JetBrains Mono",ui-monospace,Menlo,monospace;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--ink);color:var(--text);font:15px/1.55 var(--fb)}
+a{color:var(--cyan)}:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 20px 60px}
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.top img{width:42px;height:42px;border-radius:50%;box-shadow:0 0 0 3px var(--bolt)}
+.top h1{font:800 20px/1.15 var(--fd);margin:0}.top small{display:block;color:var(--muted);font:500 12px var(--fm);letter-spacing:.08em;margin-top:3px}
+.top .sp{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,select,input{font:inherit}
+.b{font-weight:700;border:0;border-radius:999px;padding:10px 16px;cursor:pointer;background:var(--bolt);color:#1A1040}
+.b.g{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1.5px var(--line)}.b.g:hover{box-shadow:inset 0 0 0 1.5px var(--cyan);color:var(--cyan)}
+.b:disabled{opacity:.6;cursor:default}
+select{background:var(--night);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:9px 14px}
+.login{max-width:400px;margin:8vh auto 0;background:var(--night);border:1px solid var(--line);border-radius:20px;padding:26px}
+.login h2{font:800 20px var(--fd);margin:0 0 6px}.login p{color:var(--muted);margin:0 0 18px;font-size:14.5px}
+.login label{display:block;font-weight:600;font-size:14px;margin:12px 0 5px}
+.login input{width:100%;background:var(--ink);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:16px}
+.login .b{width:100%;margin-top:18px;padding:13px}
+.err{color:var(--bad);font-size:14px;margin-top:12px;min-height:1.4em}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.kpi{background:var(--night);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.kpi span{display:block;color:var(--muted);font-size:13.5px}.kpi b{display:block;font:800 30px/1.15 var(--fd);margin-top:6px;font-variant-numeric:tabular-nums}.kpi i{display:block;font-style:normal;color:var(--muted);font-size:12.5px;margin-top:4px}
+.card{background:var(--night);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-top:16px;min-width:0}
+.card h2{font:800 15px var(--fd);margin:0 0 4px}.card .sub{color:var(--muted);font-size:13px;margin:0 0 12px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px}.cols .card{margin-top:16px}
+.chart{display:flex;align-items:flex-end;gap:3px;height:170px;padding-top:8px;border-bottom:1px solid var(--line)}
+.chart .col{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative}
+.chart .bar{width:100%;max-width:34px;background:var(--cyan);border-radius:4px 4px 0 0;min-height:1px}
+.chart .col:hover .bar{background:var(--bolt)}
+.chart .n{font:500 11px var(--fm);color:var(--muted);margin-bottom:3px}
+.axis{display:flex;gap:3px;margin-top:6px}.axis span{flex:1;min-width:0;text-align:center;font:500 10.5px var(--fm);color:var(--muted);white-space:nowrap;overflow:hidden}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.rows li:last-child{border-bottom:0}
+.rows .nm{min-width:0;overflow-wrap:anywhere}.rows .nm small{color:var(--muted);display:block;font-size:12.5px}
+.rows .ct{font:500 14px var(--fm);font-variant-numeric:tabular-nums;color:var(--bolt)}
+.rows .tr{grid-column:1/-1;height:5px;border-radius:3px;background:var(--night2);overflow:hidden}.rows .tr div{height:100%;background:var(--cyan);border-radius:3px}
+.none{color:var(--muted);font-size:14px;padding:8px 0}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13.5px;white-space:nowrap}
+th{text-align:left;color:var(--muted);font-weight:600;padding:7px 12px 7px 0;border-bottom:1px solid var(--line)}td{padding:7px 12px 7px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+td.w{white-space:normal;min-width:180px;overflow-wrap:anywhere}
+.tag{display:inline-block;font:500 11px var(--fm);border-radius:6px;padding:1px 7px;border:1px solid var(--line);color:var(--muted)}
+.tag.view{color:var(--cyan);border-color:rgba(85,238,255,.4)}.tag.click{color:var(--bolt);border-color:rgba(255,210,51,.45)}.tag.chat{color:var(--ok);border-color:rgba(62,229,154,.4)}
+.note{color:var(--muted);font-size:13px;margin-top:18px}
+.note label{display:inline-flex;gap:8px;align-items:center;cursor:pointer;color:var(--text)}
+</style></head><body>
+<div class="wrap">
+  <div class="top">
+    <img src="/img/site/logo.webp" alt="">
+    <div><h1>Log Kunjungan</h1><small>KABUZEN RUMAH AI</small></div>
+    <div class="sp" id="ctl" hidden>
+      <select id="range" aria-label="Rentang waktu"><option value="1">Hari ini</option><option value="7" selected>7 hari terakhir</option><option value="30">30 hari terakhir</option><option value="90">90 hari terakhir</option></select>
+      <button class="b g" id="reload" type="button">Muat ulang</button>
+      <button class="b g" id="csv" type="button">Unduh CSV</button>
+      <button class="b g" id="out" type="button">Keluar</button>
+    </div>
+  </div>
+
+  <form class="login" id="login" hidden>
+    <h2>Masuk admin</h2>
+    <p>Gunakan akun admin KABUZEN Digital AppCentre Anda.</p>
+    <label for="em">Email</label><input id="em" type="email" autocomplete="username" required>
+    <label for="pw">Kata sandi</label><input id="pw" type="password" autocomplete="current-password" required>
+    <button class="b" type="submit" id="go">Masuk</button>
+    <div class="err" id="err" role="alert"></div>
+  </form>
+
+  <div id="dash" hidden>
+    <div class="kpis" id="kpis"></div>
+    <div class="card"><h2>Kunjungan per hari</h2><p class="sub">Jumlah halaman dibuka, waktu Indonesia Barat (WIB).</p><div class="chart" id="chart"></div><div class="axis" id="axis"></div></div>
+    <div class="cols">
+      <div class="card"><h2>Produk paling banyak diklik</h2><p class="sub">Halaman produk, demo, contoh buku, dan video yang dibuka.</p><ul class="rows" id="tProd"></ul></div>
+      <div class="card"><h2>Halaman terpopuler</h2><p class="sub">Halaman yang paling sering dibuka.</p><ul class="rows" id="tPage"></ul></div>
+      <div class="card"><h2>Tools AppCentre &amp; WhatsApp</h2><p class="sub">Klik tautan afiliasi dan tombol WhatsApp.</p><ul class="rows" id="tAff"></ul></div>
+      <div class="card"><h2>Asisten katalog</h2><p class="sub">Hasil teratas tiap pencarian. Teks ketikan pengunjung tidak disimpan.</p><ul class="rows" id="tChat"></ul></div>
+      <div class="card"><h2>Asal kunjungan</h2><p class="sub">Situs yang mengantar pengunjung ke sini.</p><ul class="rows" id="tRef"></ul></div>
+      <div class="card"><h2>Perangkat</h2><p class="sub">Berdasarkan lebar layar.</p><ul class="rows" id="tDev"></ul></div>
+    </div>
+    <div class="card"><h2>Log terbaru</h2><p class="sub" id="rawSub"></p><div class="tw"><table><thead><tr><th>Waktu (WIB)</th><th>Jenis</th><th>Halaman</th><th>Sasaran</th><th>Keterangan</th><th>Asal</th><th>Perangkat</th><th>Pengunjung</th></tr></thead><tbody id="raw"></tbody></table></div></div>
+    <p class="note"><label><input type="checkbox" id="nolog"> Jangan catat kunjungan saya dari perangkat ini</label><br>Log bersifat anonim: tanpa nama, email, atau alamat IP. “Pengunjung” adalah kode acak yang berganti setiap hari, sehingga pengunjung unik dihitung per hari.</p>
+  </div>
+</div>
+<script>
+(function(){
+  "use strict";
+  var SB = "https://hluropjongrhtzcrnfsm.supabase.co", KEY = "sb_publishable_v1RE604iohY92mZ5AjXJOQ_I78-hDIi", TZ = "Asia/Jakarta", MAX = 30000;
+  var $ = function(id){ return document.getElementById(id); };
+  var esc = function(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); };
+  var ss = { get: function(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } }, set: function(k,v){ try { sessionStorage.setItem(k,v); } catch(e){} }, del: function(k){ try { sessionStorage.removeItem(k); } catch(e){} } };
+  var ls = { get: function(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set: function(k,v){ try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k,v); } catch(e){} } };
+  var token = ss.get("kz-admin"), ROWS = [], NAMES = {};
+  var nf = new Intl.NumberFormat("id-ID");
+  var dayKey = function(d){ return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(d); };
+  var timeFmt = new Intl.DateTimeFormat("id-ID", { timeZone: TZ, day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+
+  function show(logged){ $("login").hidden = logged; $("dash").hidden = !logged; $("ctl").hidden = !logged; }
+  function logout(msg){ token = null; ss.del("kz-admin"); show(false); $("err").textContent = msg || ""; }
+
+  $("login").addEventListener("submit", function(e){
+    e.preventDefault(); var go = $("go"); go.disabled = true; go.textContent = "Memeriksa…"; $("err").textContent = "";
+    fetch(SB + "/auth/v1/token?grant_type=password", { method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: JSON.stringify({ email: $("em").value.trim(), password: $("pw").value }) })
+      .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, j: j }; }); })
+      .then(function(res){
+        if (!res.ok || !res.j.access_token) throw new Error("Email atau kata sandi salah.");
+        token = res.j.access_token; ss.set("kz-admin", token); $("pw").value = "";
+        if (ls.get("kz-nolog-asked") !== "1") { ls.set("kz-nolog", "1"); ls.set("kz-nolog-asked", "1"); }
+        show(true); load();
+      })
+      .catch(function(er){ $("err").textContent = er.message === "Failed to fetch" ? "Tidak bisa terhubung ke server. Periksa koneksi lalu coba lagi." : er.message; })
+      .then(function(){ go.disabled = false; go.textContent = "Masuk"; });
+  });
+
+  function startIso(days){
+    var today = dayKey(new Date()), t = new Date(today + "T00:00:00+07:00"); t.setUTCDate(t.getUTCDate() - (days - 1)); return t.toISOString();
+  }
+  function fetchAll(since){
+    var out = [], step = 1000;
+    function page(from){
+      return fetch(SB + "/rest/v1/site_visits?select=created_at,kind,path,target,label,referrer,device,visitor&created_at=gte." + encodeURIComponent(since) + "&order=created_at.desc", { headers: { apikey: KEY, Authorization: "Bearer " + token, Range: from + "-" + (from + step - 1), "Range-Unit": "items" } })
+        .then(function(r){ if (r.status === 401 || r.status === 403) throw { auth: true }; if (!r.ok && r.status !== 206 && r.status !== 416) throw new Error("Gagal memuat log (kode " + r.status + ")."); return r.status === 416 ? [] : r.json(); })
+        .then(function(rows){ out = out.concat(rows); return rows.length === step && out.length < MAX ? page(from + step) : out; });
+    }
+    return page(0);
+  }
+  function load(){
+    var days = +$("range").value, btn = $("reload"); btn.disabled = true; btn.textContent = "Memuat…";
+    Promise.all([fetchAll(startIso(days)), fetch("/data/katalog.json").then(function(r){ return r.json(); }).catch(function(){ return []; }),
+      fetch(SB + "/rest/v1/apps?select=id,name", { headers: { apikey: KEY, Authorization: "Bearer " + token } }).then(function(r){ return r.ok ? r.json() : []; }).catch(function(){ return []; })])
+      .then(function(res){
+        ROWS = res[0]; NAMES = {};
+        res[1].forEach(function(x){ NAMES[(x.t === "buku" ? "buku:" : x.t === "app" ? "app:" : x.t === "video" ? "video:" : "artikel:") + x.id] = x.n; if (x.t === "app") NAMES["demo:" + x.id] = x.n; if (x.t === "buku") NAMES["contoh:" + x.id] = x.n; });
+        res[2].forEach(function(x){ NAMES["aff:" + x.id] = x.name; });
+        if (!ROWS.length && !res[0].length) { /* bisa jadi bukan admin: RLS mengembalikan kosong */ }
+        render(days);
+      })
+      .catch(function(er){ if (er && er.auth) logout("Sesi berakhir. Silakan masuk lagi."); else alert(er.message || "Gagal memuat log."); })
+      .then(function(){ btn.disabled = false; btn.textContent = "Muat ulang"; });
+  }
+  var KIND = { app: "Aplikasi", demo: "Demo aplikasi", buku: "Buku", contoh: "Contoh buku", video: "Video", artikel: "Artikel", aff: "Tools AppCentre", luar: "Tautan luar", pdf: "PDF" };
+  function nice(t){
+    if (!t) return ["", ""];
+    var i = t.indexOf(":"), k = i > 0 ? t.slice(0, i) : t, rest = i > 0 ? t.slice(i + 1) : "";
+    if (t === "whatsapp") return ["WhatsApp", ""]; if (t === "majalah") return ["Majalah", ""]; if (t === "appcentre") return ["Halaman AppCentre", ""]; if (t === "tanpa-hasil") return ["Tidak ada hasil", "pengunjung mencari sesuatu yang belum ada di katalog"];
+    if (["sapaan","kontak","layanan","harga","terima-kasih"].indexOf(t) >= 0) return [{ sapaan: "Sapaan", kontak: "Tanya kontak", layanan: "Tanya jasa pembuatan aplikasi", harga: "Tanya harga", "terima-kasih": "Ucapan terima kasih" }[t], ""];
+    return [NAMES[t] || rest, KIND[k] || k];
+  }
+  function tally(rows, keyFn){
+    var m = {}; rows.forEach(function(r){ var k = keyFn(r); if (k == null || k === "") return; m[k] = (m[k] || 0) + 1; });
+    return Object.keys(m).map(function(k){ return [k, m[k]]; }).sort(function(a, b){ return b[1] - a[1]; });
+  }
+  function list(id, pairs, fmt, empty){
+    var max = pairs.length ? pairs[0][1] : 1;
+    $(id).innerHTML = pairs.length ? pairs.slice(0, 12).map(function(p){ var n = fmt ? fmt(p[0]) : [p[0], ""];
+      return '<li><span class="nm">' + esc(n[0]) + (n[1] ? "<small>" + esc(n[1]) + "</small>" : "") + '</span><span class="ct">' + nf.format(p[1]) + '</span><span class="tr"><div style="width:' + Math.max(2, Math.round(p[1] / max * 100)) + '%"></div></span></li>'; }).join("")
+      : '<li class="none" style="display:block;border:0">' + esc(empty || "Belum ada data pada rentang ini.") + "</li>";
+  }
+  function render(days){
+    var views = ROWS.filter(function(r){ return r.kind === "view"; }), clicks = ROWS.filter(function(r){ return r.kind === "click"; });
+    var chats = ROWS.filter(function(r){ return r.kind === "chat_query"; }), opens = ROWS.filter(function(r){ return r.kind === "chat_open"; });
+    var uniq = {}; ROWS.forEach(function(r){ if (r.visitor) uniq[dayKey(new Date(r.created_at)) + r.visitor] = 1; });
+    var prod = clicks.filter(function(r){ return /^(app|demo|buku|contoh|video|artikel|pdf):/.test(r.target || "") || r.target === "majalah"; });
+    var aff = clicks.filter(function(r){ return /^aff:/.test(r.target || "") || r.target === "whatsapp" || r.target === "appcentre"; });
+    $("kpis").innerHTML = [["Halaman dibuka", views.length, ""], ["Pengunjung unik", Object.keys(uniq).length, "dihitung per hari"], ["Klik produk", prod.length, ""], ["Klik WhatsApp", clicks.filter(function(r){ return r.target === "whatsapp"; }).length, ""], ["Pencarian di asisten", chats.length, nf.format(opens.length) + " kali asisten dibuka"]]
+      .map(function(k){ return '<div class="kpi"><span>' + k[0] + "</span><b>" + nf.format(k[1]) + "</b>" + (k[2] ? "<i>" + esc(k[2]) + "</i>" : "") + "</div>"; }).join("");
+    /* grafik harian */
+    var per = {}; views.forEach(function(r){ var k = dayKey(new Date(r.created_at)); per[k] = (per[k] || 0) + 1; });
+    var keys = [], d0 = new Date(dayKey(new Date()) + "T12:00:00+07:00");
+    for (var i = days - 1; i >= 0; i--) { var d = new Date(d0); d.setUTCDate(d.getUTCDate() - i); keys.push(dayKey(d)); }
+    var mx = Math.max.apply(null, keys.map(function(k){ return per[k] || 0; }).concat([1]));
+    var lab = function(k){ return +k.slice(8) + "/" + +k.slice(5, 7); };
+    var every = Math.ceil(keys.length / 15);
+    $("chart").innerHTML = keys.map(function(k){ var v = per[k] || 0; return '<div class="col" title="' + lab(k) + ": " + v + ' halaman dibuka">' + (keys.length <= 31 && v ? '<span class="n">' + v + "</span>" : "") + '<div class="bar" style="height:' + (v / mx * 82) + '%"></div></div>'; }).join("");
+    $("axis").innerHTML = keys.map(function(k, i){ return "<span>" + (i % every === 0 ? lab(k) : "") + "</span>"; }).join("");
+    list("tProd", tally(prod, function(r){ return r.target; }), nice, "Belum ada produk yang diklik pada rentang ini.");
+    list("tPage", tally(views, function(r){ return r.path; }), function(p){ return [p === "/" ? "Beranda" : p, ""]; });
+    list("tAff", tally(aff, function(r){ return r.target; }), nice, "Belum ada klik tautan afiliasi atau WhatsApp.");
+    list("tChat", tally(chats, function(r){ return r.target; }), nice, "Asisten belum dipakai pada rentang ini.");
+    list("tRef", tally(views, function(r){ return r.referrer || "Langsung / tidak diketahui"; }));
+    list("tDev", tally(views, function(r){ return { mobile: "Ponsel", tablet: "Tablet", desktop: "Komputer" }[r.device] || "Tidak diketahui"; }));
+    var cls = { view: "view", click: "click", chat_open: "chat", chat_query: "chat" }, nm = { view: "buka", click: "klik", chat_open: "asisten dibuka", chat_query: "pencarian" };
+    $("raw").innerHTML = ROWS.slice(0, 200).map(function(r){ var n = nice(r.target);
+      return "<tr><td>" + esc(timeFmt.format(new Date(r.created_at))) + '</td><td><span class="tag ' + cls[r.kind] + '">' + nm[r.kind] + '</span></td><td class="w">' + esc(r.path) + '</td><td class="w">' + esc(n[0]) + (n[1] && n[0] ? " · " : "") + esc(n[0] ? n[1] : "") + "</td><td>" + esc(r.label || "") + "</td><td>" + esc(r.referrer || "") + "</td><td>" + esc(r.device || "") + "</td><td>" + esc((r.visitor || "").slice(0, 6)) + "</td></tr>"; }).join("")
+      || '<tr><td colspan="8" class="none">Belum ada catatan pada rentang ini.</td></tr>';
+    $("rawSub").textContent = ROWS.length ? "Menampilkan " + nf.format(Math.min(200, ROWS.length)) + " dari " + nf.format(ROWS.length) + " catatan" + (ROWS.length >= MAX ? " (dibatasi " + nf.format(MAX) + "; persempit rentang untuk angka lengkap)" : "") + ". Unduh CSV untuk semuanya." : "";
+  }
+  $("range").addEventListener("change", load); $("reload").addEventListener("click", load); $("out").addEventListener("click", function(){ logout(""); });
+  $("csv").addEventListener("click", function(){
+    var q = function(v){ v = v == null ? "" : String(v); if (/^[=+\-@\t\r]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; };
+    var lines = ["waktu_wib,jenis,halaman,sasaran,keterangan,asal,perangkat,pengunjung"].concat(ROWS.map(function(r){ return [timeFmt.format(new Date(r.created_at)), r.kind, r.path, r.target, r.label, r.referrer, r.device, r.visitor].map(q).join(","); }));
+    var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + lines.join("\r\n")], { type: "text/csv" })); a.download = "log-kunjungan-kabuzen-" + dayKey(new Date()) + ".csv"; a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  });
+  var nl = $("nolog"); nl.checked = ls.get("kz-nolog") === "1" || ls.get("kz-nolog-asked") !== "1";
+  nl.addEventListener("change", function(){ ls.set("kz-nolog", nl.checked ? "1" : null); ls.set("kz-nolog-asked", "1"); });
+  if (token) { show(true); load(); } else show(false);
+})();
+</script>
+</body></html>
