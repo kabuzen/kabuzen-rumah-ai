@@ -113,7 +113,7 @@ def page(title, desc, canon, image, body, data, ld):
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False).replace('<', '\\u003c')}</script>
 </head><body>
 <header class="bar"><div class="in"><a class="brand" href="/"><img src="{E(logo)}" alt="KABUZEN"><span>KABUZEN<small>RUMAH AI</small></span></a>
-<nav><a href="/#aplikasi">Aplikasi</a><a href="/#buku">Buku</a><a href="/#galeri">Video</a><a href="/#layanan">Layanan</a><a class="cta btn btn-bolt" style="padding:9px 14px" href="/#kontak">Kontak</a></nav></div></header>
+<nav><a href="/#aplikasi">Aplikasi</a><a href="/#buku">Buku</a><a href="/majalah">Majalah</a><a href="/#galeri">Video</a><a href="/#layanan">Layanan</a><a class="cta btn btn-bolt" style="padding:9px 14px" href="/#kontak">Kontak</a></nav></div></header>
 <main>{body}</main>
 <footer>© {date.today().year} Kabuzen Rumah AI · Batam, Kepulauan Riau · WhatsApp {E(data['config'].get('whatsappLabel', ''))}</footer>
 </body></html>"""
@@ -196,6 +196,11 @@ def main():
         slug, h = app_page(a, data); open(os.path.join(ROOT, 'aplikasi', slug + '.html'), 'w', encoding='utf8').write(h); urls.append(f'{SITE}/aplikasi/{slug}')
     for b in data['books']:
         slug, h = book_page(b, data); open(os.path.join(ROOT, 'buku', slug + '.html'), 'w', encoding='utf8').write(h); urls.append(f'{SITE}/buku/{slug}')
+    for dp, _, fs in sorted(os.walk(os.path.join(ROOT, 'majalah'))):
+        for f in sorted(fs):
+            if f.endswith('.html'):
+                rel = os.path.relpath(os.path.join(dp, f), ROOT)[:-5]
+                urls.append(SITE + '/' + (rel[:-6].rstrip('/') if rel.endswith('index') else rel))
     today = date.today().isoformat()
     open(os.path.join(ROOT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n' for u in urls) + '</urlset>\n')
     open(os.path.join(ROOT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n')
