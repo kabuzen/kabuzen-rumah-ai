@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KABUZEN SAHAM CERDAS — LMS Investasi Saham BEI</title>
+<link rel="icon" href="data:image/jpeg;base64,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">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ind:#1d0b78;--ind2:#2c1aa0;--yel:#ffd60a;--bg:#f4f5fb;--card:#fff;--tx:#1b1b2b;--mut:#5d6075;--ok:#0f9d58;--bad:#d93025;--line:#e3e5f0;--soft:#eef0fb}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6}
+header{background:var(--ind);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:5;border-bottom:3px solid var(--yel)}
+header h1{font-size:18px;margin:0;font-weight:800;letter-spacing:.5px}
+header small{display:block;font-weight:400;opacity:.8;font-size:12px}
+header .logo{margin-left:auto;width:46px;height:46px;border-radius:50%;border:3px solid var(--yel);object-fit:cover}
+.wrap{display:flex;min-height:calc(100vh - 76px)}
+nav{width:270px;background:#fff;border-right:1px solid var(--line);padding:14px 10px;flex-shrink:0;overflow:auto}
+nav .sec{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--mut);margin:14px 10px 6px;font-weight:700}
+nav button{display:flex;width:100%;text-align:left;border:0;background:none;padding:9px 10px;border-radius:8px;font:inherit;font-size:14px;cursor:pointer;color:var(--tx);gap:8px;align-items:center}
+nav button:hover{background:var(--soft)}
+nav button.on{background:var(--ind);color:#fff}
+nav .chk{margin-left:auto;font-size:12px;color:var(--ok)}
+nav button.on .chk{color:var(--yel)}
+.prog{margin:4px 10px 10px;background:var(--soft);border-radius:99px;height:8px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--yel);width:0}
+.progt{font-size:12px;color:var(--mut);margin:0 10px}
+main{flex:1;padding:26px clamp(16px,4vw,48px);max-width:980px}
+.hero{background:linear-gradient(135deg,var(--ind),var(--ind2));color:#fff;border-radius:16px;padding:28px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-40px;bottom:-40px;width:180px;height:180px;border-radius:50%;border:18px solid rgba(255,214,10,.25)}
+.hero h2{margin:0 0 6px;font-size:26px}
+.tag{display:inline-block;background:var(--yel);color:var(--ind);font-weight:700;font-size:12px;padding:3px 10px;border-radius:99px;margin-bottom:10px}
+h2{font-size:24px;margin:.2em 0 .4em}
+h3{font-size:18px;margin:1.4em 0 .4em;color:var(--ind)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.mini{background:var(--soft);border-radius:12px;padding:14px}
+.mini b{color:var(--ind)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:var(--soft);color:var(--ind)}
+.note{border-left:4px solid var(--yel);background:#fffbe6;padding:10px 14px;border-radius:8px;font-size:14px;margin:12px 0}
+.warn{border-left:4px solid var(--bad);background:#fdecea;padding:10px 14px;border-radius:8px;font-size:14px;margin:12px 0}
+.lvl{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:middle}
+.l1{background:#e6f4ea;color:#0f6b3a}.l2{background:#e8eafd;color:var(--ind)}.l3{background:#fde8e8;color:#9b1c1c}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;position:relative;padding:8px 0 8px 44px}
+.steps li:before{content:counter(s);position:absolute;left:0;top:6px;width:30px;height:30px;border-radius:50%;background:var(--ind);color:var(--yel);font-weight:800;display:flex;align-items:center;justify-content:center}
+.btn{background:var(--yel);color:var(--ind);border:0;padding:10px 18px;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
+.btn.sec{background:var(--soft);color:var(--ind)}
+.quiz .q{margin:16px 0}
+.quiz .opt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;margin:6px 0;padding:10px 14px;border:1.5px solid #c9cce0;border-radius:10px;background:#fff !important;color:#1b1b2b !important;-webkit-text-fill-color:#1b1b2b;-webkit-appearance:none;appearance:none;font:inherit;font-size:15px;line-height:1.4;cursor:pointer;opacity:1;visibility:visible}
+.quiz .opt .lt{flex:0 0 28px;height:28px;border-radius:50%;background:var(--ind);color:#ffd60a;-webkit-text-fill-color:#ffd60a;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+.quiz .opt .tx{flex:1;color:#1b1b2b;-webkit-text-fill-color:#1b1b2b}
+.quiz .key{display:none;margin-top:6px;font-weight:700;color:#0f6b3a;font-size:14px}
+.quiz.showkey .key{display:block}
+.quiz .opt:hover{border-color:var(--ind)}
+.quiz .opt.ok{background:#d4f0dd !important;border-color:var(--ok)}
+.quiz .opt.no{background:#fbdcd8 !important;border-color:var(--bad)}
+.quiz .ex{font-size:14px;color:var(--mut);margin-top:4px;display:none}
+.score{font-weight:700;font-size:18px}
+label{display:block;font-size:13px;font-weight:600;color:var(--mut);margin-top:10px}
+input,select{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:8px;font:inherit;margin-top:4px}
+.out{background:var(--ind);color:#fff;border-radius:12px;padding:16px;margin-top:14px}
+.out b{color:var(--yel)}
+.out .big{font-size:22px;font-weight:800}
+.pager{display:flex;justify-content:space-between;margin-top:26px;gap:10px}
+.menu{display:none}
+@media(max-width:820px){nav{position:fixed;left:-290px;top:76px;bottom:0;z-index:4;transition:.2s}nav.open{left:0;box-shadow:0 0 40px #0004}.menu{display:block;background:none;border:2px solid var(--yel);color:#fff;border-radius:8px;padding:4px 10px;font-size:18px;cursor:pointer}}
+footer{font-size:12px;color:var(--mut);margin-top:40px;border-top:1px solid var(--line);padding-top:12px}
+
+#cover{position:fixed;inset:0;z-index:50;background:radial-gradient(circle at 50% 38%,#3a24c4 0%,#1d0b78 55%,#0e0540 100%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;overflow:hidden;transition:opacity .5s,visibility .5s}
+#cover.hide{opacity:0;visibility:hidden}
+#cover:before,#cover:after{content:"";position:absolute;border-radius:50%;border:2px solid rgba(255,214,10,.18)}
+#cover:before{width:min(130vw,1100px);height:min(130vw,1100px)}
+#cover:after{width:min(95vw,800px);height:min(95vw,800px);border-style:dashed}
+.cv-logo{position:relative;width:min(62vw,52vh,380px);height:min(62vw,52vh,380px);border-radius:50%;border:8px solid var(--yel);box-shadow:0 0 0 10px rgba(255,214,10,.15),0 0 80px rgba(255,214,10,.45);object-fit:cover;animation:pulse 3s ease-in-out infinite;z-index:1}
+@keyframes pulse{50%{box-shadow:0 0 0 18px rgba(255,214,10,.08),0 0 110px rgba(255,214,10,.6)}}
+.cv-brand{font-size:clamp(34px,7vw,64px);font-weight:800;letter-spacing:6px;color:var(--yel);margin:22px 0 0;z-index:1;line-height:1}
+.cv-title{font-size:clamp(18px,3.4vw,30px);font-weight:800;letter-spacing:3px;margin:6px 0 4px;z-index:1}
+.cv-sub{opacity:.85;max-width:560px;font-size:clamp(13px,2vw,16px);z-index:1;margin:0}
+.cv-line{width:180px;height:4px;margin:16px auto;background:linear-gradient(90deg,#ff5e5e,#ffd60a,#3ddc84,#4aa8ff,#b86bff);border-radius:4px;z-index:1}
+.cv-btn{z-index:1;margin-top:10px;background:var(--yel);color:var(--ind);border:0;font:inherit;font-weight:800;font-size:20px;letter-spacing:3px;padding:16px 56px;border-radius:99px;cursor:pointer;box-shadow:0 8px 30px rgba(255,214,10,.4);transition:transform .15s}
+.cv-btn:hover{transform:translateY(-2px) scale(1.04)}
+.cv-badge{z-index:1;margin-top:18px;font-size:12px;letter-spacing:2px;opacity:.7}
+
+.drop{border:2px dashed #b9bde0;border-radius:12px;padding:18px;text-align:center;background:var(--soft);cursor:pointer;margin-top:8px}
+.drop.on{border-color:var(--ind);background:#e3e6ff}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.thumbs div{position:relative}.thumbs img{width:110px;height:80px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.thumbs button{position:absolute;top:-6px;right:-6px;border:0;background:var(--bad);color:#fff;border-radius:50%;width:22px;height:22px;cursor:pointer}
+textarea{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:8px;font:inherit;margin-top:4px;min-height:80px}
+#ai_res{background:#fff;border:1px solid var(--line);border-left:5px solid var(--yel);border-radius:12px;padding:16px 20px;margin-top:16px;display:none}
+#ai_res h4{color:var(--ind);margin:14px 0 4px;font-size:16px}
+.rec{display:inline-block;font-weight:800;padding:2px 10px;border-radius:6px}
+.rec.BELI{background:#d4f0dd;color:#0f6b3a}.rec.JUAL,.rec.KURANGI{background:#fbdcd8;color:#9b1c1c}.rec.TAHAN,.rec.PANTAU{background:#fff3c4;color:#7a5b00}
+.hist button{display:block;width:100%;text-align:left;margin:4px 0;background:var(--soft);border:0;border-radius:8px;padding:8px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--tx)}
+</style>
+</head>
+<body>
+<div id="cover">
+  <img class="cv-logo" id="cvlogo" alt="Logo KABUZEN">
+  <div class="cv-brand">KABUZEN</div>
+  <div class="cv-title">SAHAM CERDAS</div>
+  <div class="cv-line"></div>
+  <p class="cv-sub">LMS Mekanisme, Prosedur &amp; Manajemen Risiko Investasi Saham di Bursa Efek Indonesia</p>
+  <button class="cv-btn" onclick="masuk()">MASUK ➜</button>
+  <div class="cv-badge">9 MODUL • KUIS • KALKULATOR • LAPORAN HARIAN</div>
+</div>
+<header>
+  <button class="menu" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
+  <div><h1>KABUZEN SAHAM CERDAS</h1><small>LMS Mekanisme, Prosedur &amp; Manajemen Risiko Saham di Bursa Efek Indonesia</small></div>
+  <img class="logo" src="data:image/jpeg;base64,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" alt="KABUZEN">
+</header>
+<div class="wrap">
+<nav id="nav"></nav>
+<main id="main"></main>
+</div>
+<script>
+const M = [
+{id:'home',sec:'Mulai',t:'Beranda & Silabus',quiz:null,html:`
+<div class="hero"><span class="tag">9 MODUL • KUIS • KALKULATOR</span><h2>Belajar saham dari nol sampai disiplin risiko</h2>
+<p>Kurikulum ini disusun berlapis <b>Dasar → Menengah → Lanjut</b>. Selesaikan modul berurutan, kerjakan kuisnya (lulus ≥ 70%), lalu pakai kalkulator sebelum setiap transaksi nyata.</p></div>
+<h3>Silabus</h3>
+<table><tr><th>#</th><th>Modul</th><th>Tujuan</th></tr>
+<tr><td>1</td><td>Ekosistem Pasar Modal</td><td>Mengenal OJK, BEI, KPEI, KSEI, sekuritas, RDN, SID</td></tr>
+<tr><td>2</td><td>Prosedur Membuka Rekening</td><td>Langkah membuka akun hingga order pertama</td></tr>
+<tr><td>3</td><td>Mekanisme Perdagangan</td><td>Jam sesi, lot, fraksi, ARA/ARB, order, T+2, biaya</td></tr>
+<tr><td>4</td><td>Analisis Fundamental</td><td>Membaca laporan keuangan dan rasio valuasi</td></tr>
+<tr><td>5</td><td>Analisis Teknikal</td><td>Tren, support/resistance, MA, RSI, volume</td></tr>
+<tr><td>6</td><td>Manajemen Risiko</td><td>Aturan 1–2%, stop loss, ukuran posisi, diversifikasi</td></tr>
+<tr><td>7</td><td>Berita, Makro & Sentimen</td><td>Cara berita ekonomi menggerakkan harga saham</td></tr>
+<tr><td>8</td><td>Psikologi & Rencana Trading</td><td>Disiplin, jurnal, menghindari FOMO</td></tr>
+<tr><td>9</td><td>Waspada Penipuan & Saham Gorengan</td><td>Melindungi modal dari manipulasi</td></tr></table>
+<div class="mini" style="margin-top:12px"><b>🎬 Pemula? Mulai dari animasi.</b> Lihat alur transaksi pertama beserta manajemen risikonya dalam 1,5 menit. <a href="#anim" onclick="go('anim');return false">Tonton →</a></div>
+<div class="mini" style="margin-top:12px"><b>🤖 Baru: Analisis AI.</b> Unggah screenshot grafik/portofolio Anda dan dapatkan rekomendasi beli/jual beserta rencana risikonya. <a href="#ai" onclick="go('ai');return false">Buka →</a></div>
+<div class="note"><b>Penting:</b> Materi ini untuk edukasi, bukan nasihat investasi pribadi. Aturan bursa (terutama ARA/ARB) sering berubah — selalu cek pengumuman resmi di idx.co.id dan aplikasi sekuritas Anda. Data aturan di LMS ini per <b>15 November 2026</b>.</div>`},
+
+{id:'anim',sec:'Mulai',t:'🎬 Animasi Alur Jual Beli',quiz:null,html:`
+<h2>🎬 Animasi: Alur Transaksi Saham Pertama Anda</h2>
+<p>Simulasi 10 adegan (± 1,5 menit): dari membuka rekening, membeli 20 lot saham contoh “XYZ”, sampai dua kemungkinan hasil — untung di target atau rugi kecil di stop loss. Tekan <b>Putar</b>, atau klik titik untuk loncat ke adegan tertentu.</p>
+<div class="card" style="padding:12px">
+<div id="an_stage"></div>
+<div id="an_cap" style="margin:12px 4px 4px;min-height:72px;font-size:15px"></div>
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px">
+<button class="btn sec" onclick="anGo(an_i-1)">⏮</button><button class="btn" id="an_pp" onclick="anToggle()">▶ Putar</button><button class="btn sec" onclick="anGo(an_i+1)">⏭</button>
+<div id="an_dots" style="margin-left:auto"></div></div></div>
+<div class="note">Angka dalam animasi adalah <b>contoh ilustrasi</b> (saham fiktif XYZ, modal Rp10 juta, biaya ±0,15% beli dan ±0,25% jual). Coba hitung dengan angka Anda sendiri di <a href="#m6" onclick="go('m6');return false">Kalkulator Ukuran Posisi</a>.</div>`},
+{id:'m1',sec:'Dasar',t:'1. Ekosistem Pasar Modal',html:`
+<h2>Modul 1 — Ekosistem Pasar Modal Indonesia <span class="lvl l1">DASAR</span></h2>
+<p>Saat Anda membeli saham, Anda membeli <b>kepemilikan sebagian</b> perusahaan. Keuntungan datang dari <b>capital gain</b> (harga naik) dan <b>dividen</b> (pembagian laba). Kerugian datang dari harga turun — bahkan bisa sampai perusahaan bangkrut.</p>
+<h3>Siapa saja yang terlibat?</h3>
+<div class="grid">
+<div class="mini"><b>OJK</b><br>Regulator & pengawas seluruh industri jasa keuangan, termasuk pasar modal.</div>
+<div class="mini"><b>BEI / IDX</b><br>Bursa tempat jual-beli saham terjadi (sistem JATS). Menetapkan aturan perdagangan.</div>
+<div class="mini"><b>KPEI</b><br>Lembaga kliring & penjaminan: memastikan setiap transaksi diselesaikan.</div>
+<div class="mini"><b>KSEI</b><br>Kustodian sentral: menyimpan saham Anda secara elektronik atas nama Anda (SID).</div>
+<div class="mini"><b>Perusahaan Efek / Sekuritas (Anggota Bursa)</b><br>Perantara yang meneruskan order Anda ke bursa.</div>
+<div class="mini"><b>Bank RDN</b><br>Rekening Dana Nasabah — uang untuk transaksi disimpan atas nama Anda, terpisah dari uang sekuritas.</div>
+</div>
+<h3>Identitas investor</h3>
+<ul><li><b>SID</b> (Single Investor Identification) — nomor tunggal investor di seluruh pasar modal.</li>
+<li><b>SRE</b> (Sub Rekening Efek) — tempat saham Anda dicatat di KSEI, per sekuritas.</li>
+<li><b>AKSes KSEI</b> (akses.ksei.co.id) — portal untuk mengecek sendiri saldo saham dan dana Anda. Biasakan mencocokkan isi portofolio di aplikasi sekuritas dengan AKSes.</li></ul>
+<h3>Jenis papan pencatatan</h3>
+<p>Papan Utama (perusahaan besar & mapan), Papan Pengembangan, Papan Akselerasi (perusahaan kecil/menengah), Papan Ekonomi Baru, dan <b>Papan Pemantauan Khusus</b> (saham dengan kondisi tertentu — misalnya ekuitas negatif, tidak likuid, atau suspensi lama — diperdagangkan dengan mekanisme <i>full call auction</i>). Pemula sebaiknya fokus di saham Papan Utama yang likuid.</p>
+<h3>Indeks penting</h3>
+<p><b>IHSG</b> (seluruh saham), <b>LQ45</b> (45 saham paling likuid), <b>IDX30</b>, <b>IDX80</b>, <b>JII / ISSI</b> (saham syariah), <b>IDXHIDIV20</b> (dividen tinggi). Indeks membantu menilai kondisi pasar secara umum.</p>
+<div class="note">Investasi saham syariah: pilih saham yang masuk Daftar Efek Syariah (DES) dan gunakan <b>Sistem Online Trading Syariah (SOTS)</b> dari sekuritas yang menyediakannya.</div>`,
+quiz:[
+['Lembaga yang menyimpan saham investor secara elektronik adalah…',['KPEI','KSEI','OJK','BEI'],1,'KSEI adalah kustodian sentral; KPEI menjamin penyelesaian transaksi.'],
+['Uang investor untuk membeli saham disimpan di…',['Rekening pribadi petugas sekuritas','Rekening operasional sekuritas','Rekening Dana Nasabah (RDN) atas nama investor','KSEI'],2,'RDN atas nama Anda — jangan pernah transfer ke rekening pribadi siapa pun.'],
+['Portal untuk mengecek sendiri kepemilikan saham Anda adalah…',['AKSes KSEI','Website OJK','Google Finance','Grup Telegram'],0,'AKSes KSEI menampilkan data langsung dari kustodian sentral.'],
+['Indeks berisi 45 saham paling likuid adalah…',['IHSG','JII','LQ45','IDX80'],2,'LQ45 dievaluasi berkala oleh BEI.']]},
+
+{id:'m2',sec:'Dasar',t:'2. Prosedur Membuka Rekening',html:`
+<h2>Modul 2 — Prosedur Membuka Rekening hingga Order Pertama <span class="lvl l1">DASAR</span></h2>
+<ol class="steps">
+<li><b>Pilih sekuritas berizin OJK.</b> Cek di website OJK/BEI (daftar Anggota Bursa). Bandingkan biaya (fee), kualitas aplikasi, fitur riset, dan ketersediaan fitur syariah atau <i>auto order</i> (stop loss otomatis).</li>
+<li><b>Siapkan dokumen.</b> KTP, NPWP (opsional untuk sebagian sekuritas), rekening bank atas nama sendiri, swafoto.</li>
+<li><b>Isi formulir online & verifikasi.</b> Termasuk profil risiko. Jawab jujur — ini melindungi Anda.</li>
+<li><b>Terima SID, SRE, dan RDN.</b> Biasanya 1–3 hari kerja. Anda juga mendapat akses login aplikasi.</li>
+<li><b>Daftar AKSes KSEI.</b> Supaya bisa memverifikasi kepemilikan secara independen.</li>
+<li><b>Setor dana ke RDN</b> (bukan ke rekening lain).</li>
+<li><b>Mulai kecil.</b> Beli 1–5 lot saham blue chip, pelajari alurnya: order → match → settlement T+2 → saham masuk portofolio.</li>
+<li><b>Catat setiap transaksi di jurnal</b> (alasan beli, target, stop loss — lihat Modul 6 & 8).</li>
+</ol>
+<div class="note">Gunakan dana <b>dingin</b>: uang yang tidak Anda butuhkan minimal 3–5 tahun ke depan. Siapkan dana darurat (3–6 bulan pengeluaran) <b>sebelum</b> berinvestasi saham.</div>
+<h3>Hak investor</h3>
+<ul><li>Dana di RDN dan saham di KSEI tercatat atas nama Anda (terpisah dari aset sekuritas).</li>
+<li>Ada <b>Securities Investor Protection Fund (SIPF/P3IEI)</b> yang memberi perlindungan terbatas bila aset hilang akibat kesalahan pihak lembaga — bukan perlindungan dari rugi karena harga turun.</li>
+<li>Pengaduan: sekuritas → OJK (kontak 157) → lembaga alternatif penyelesaian sengketa.</li></ul>`,
+quiz:[
+['Dana untuk membeli saham sebaiknya…',['Dana darurat','Pinjaman online','Dana dingin yang tidak dibutuhkan beberapa tahun','Uang sekolah anak'],2,'Saham bisa turun tajam dalam jangka pendek.'],
+['Langkah paling tepat untuk memastikan sekuritas legal adalah…',['Lihat jumlah follower Instagram','Cek daftar berizin di OJK/BEI','Tanya di grup chat','Lihat iklan'],1,'Hanya Anggota Bursa berizin yang sah.'],
+['SIPF melindungi investor dari…',['Rugi karena harga saham turun','Kehilangan aset akibat kesalahan/penyelewengan lembaga, dalam batas tertentu','Inflasi','Pajak'],1,'Risiko pasar tetap ditanggung investor sendiri.']]},
+
+{id:'m3',sec:'Dasar',t:'3. Mekanisme Perdagangan',html:`
+<h2>Modul 3 — Mekanisme Perdagangan di BEI <span class="lvl l1">DASAR</span><span class="lvl l2">MENENGAH</span></h2>
+<h3>Jam perdagangan pasar reguler</h3>
+<table><tr><th>Sesi</th><th>Senin–Kamis</th><th>Jumat</th></tr>
+<tr><td>Pra-pembukaan (pre-opening)</td><td>08.45–08.59</td><td>08.45–08.59</td></tr>
+<tr><td>Sesi I</td><td>09.00–12.00</td><td>09.00–11.30</td></tr>
+<tr><td>Sesi II</td><td>13.30–15.49</td><td>14.00–15.49</td></tr>
+<tr><td>Pra-penutupan (pre-closing)</td><td>15.50–15.59</td><td>15.50–15.59</td></tr>
+<tr><td>Pasca-penutupan (post-closing)</td><td colspan="2">sesudah pre-closing, transaksi di harga penutupan</td></tr></table>
+<p><b>Non-cancellation period:</b> sejak 08.56 (pre-opening) dan 15.56 (pre-closing) order yang sudah masuk tidak bisa diubah/dibatalkan, tapi order baru masih boleh dimasukkan. Jangan memasang order “iseng” di menit-menit akhir sesi itu.</p>
+<h3>Satuan & harga</h3>
+<ul><li><b>1 lot = 100 lembar saham.</b> Harga Rp1.000 × 1 lot = Rp100.000.</li>
+<li><b>Fraksi harga</b> (kelipatan perubahan harga):</li></ul>
+<table><tr><th>Rentang harga</th><th>Fraksi</th></tr><tr><td>&lt; Rp200</td><td>Rp1</td></tr><tr><td>Rp200 – &lt; Rp500</td><td>Rp2</td></tr><tr><td>Rp500 – &lt; Rp2.000</td><td>Rp5</td></tr><tr><td>Rp2.000 – &lt; Rp5.000</td><td>Rp10</td></tr><tr><td>≥ Rp5.000</td><td>Rp25</td></tr></table>
+<h3>Auto Rejection (batas naik/turun harian)</h3>
+<p>Order di luar batas ini ditolak sistem. <b>Ketentuan berlaku 20 Oktober – 31 Desember 2026</b> (Papan Utama, Pengembangan, Ekonomi Baru):</p>
+<table><tr><th>Harga acuan</th><th>ARA (atas)</th><th>ARB (bawah)</th></tr>
+<tr><td>Rp1 – Rp10</td><td>Rp1</td><td>Rp1</td></tr>
+<tr><td>Rp11 – Rp14</td><td>35%</td><td>Rp1</td></tr>
+<tr><td>Rp15 – Rp200</td><td>35%</td><td>7%</td></tr>
+<tr><td>&gt; Rp200 – Rp5.000</td><td>25%</td><td>7%</td></tr>
+<tr><td>&gt; Rp5.000</td><td>20%</td><td>7%</td></tr></table>
+<div class="note">Sejak 28 September 2026 harga terendah saham turun dari Rp50 menjadi <b>Rp1</b>, dan BEI berencana menerapkan ARB <b>simetris</b> mulai 1 Januari 2027. Papan Akselerasi dan Papan Pemantauan Khusus memakai aturan masing-masing. Selalu cek ulang di idx.co.id.</div>
+<h3>Cara order dipertemukan</h3>
+<p>Bursa memakai prinsip <b>prioritas harga, lalu prioritas waktu</b>. Di layar order book Anda melihat <b>Bid</b> (antrean beli) dan <b>Offer</b> (antrean jual). Beli langsung di harga offer terendah = cepat match; pasang di bawahnya = mengantre.</p>
+<ul><li><b>Limit order</b> — harga ditentukan sendiri (paling umum & aman).</li>
+<li><b>Market order</b> — langsung di harga terbaik yang tersedia (hati-hati pada saham tidak likuid).</li>
+<li><b>Fitur sekuritas</b> — auto buy / auto sell, <i>stop loss order</i>, <i>take profit</i>, <i>trailing stop</i>. Gunakan untuk mendisiplinkan diri.</li></ul>
+<h3>Penyelesaian (settlement)</h3>
+<p>Transaksi di pasar reguler diselesaikan <b>T+2</b>: uang dan saham berpindah 2 hari bursa setelah transaksi. Pastikan dana RDN cukup sebelum T+2 — gagal bayar bisa berujung <b>force sell</b> dan denda.</p>
+<h3>Biaya & pajak (kisaran umum)</h3>
+<table><tr><th>Komponen</th><th>Beli</th><th>Jual</th></tr>
+<tr><td>Fee sekuritas + levy bursa + PPN</td><td>± 0,15%</td><td>± 0,15%</td></tr>
+<tr><td>PPh final penjualan saham</td><td>—</td><td>0,1%</td></tr>
+<tr><td><b>Total perkiraan</b></td><td><b>± 0,15%</b></td><td><b>± 0,25%</b></td></tr></table>
+<p>Dividen dikenai PPh final 10% untuk investor orang pribadi dalam negeri, dan dapat dibebaskan bila diinvestasikan kembali di Indonesia sesuai ketentuan UU HPP. Fee berbeda tiap sekuritas — cek tarif Anda.</p>
+<h3>Aksi korporasi yang perlu dipahami</h3>
+<ul><li><b>Dividen</b> — perhatikan <i>cum date</i> (hari terakhir membeli agar berhak) dan <i>ex date</i> (harga biasanya turun sebesar dividen).</li>
+<li><b>Stock split / reverse split</b> — jumlah lembar berubah, nilai total tetap.</li>
+<li><b>Right issue (HMETD)</b> — hak membeli saham baru; bila tidak ditebus, kepemilikan Anda terdilusi.</li>
+<li><b>Suspensi</b> — BEI menghentikan sementara perdagangan saham tertentu (misalnya karena pergerakan tidak wajar). Dana bisa “terkunci”.</li>
+<li><b>UMA</b> (Unusual Market Activity) — peringatan BEI atas pergerakan harga yang tidak biasa. Sinyal untuk lebih berhati-hati.</li></ul>`,
+quiz:[
+['Berapa lembar dalam 1 lot?',['10','100','500','1.000'],1,'1 lot = 100 lembar.'],
+['Saham seharga Rp1.200 naik satu fraksi menjadi…',['Rp1.201','Rp1.202','Rp1.205','Rp1.210'],2,'Rentang Rp500–<Rp2.000 memakai fraksi Rp5.'],
+['Per November 2026, batas ARB saham seharga Rp3.000 adalah…',['7%','15%','25%','35%'],0,'ARB asimetris 7% berlaku hingga 31 Desember 2026.'],
+['Settlement transaksi pasar reguler terjadi…',['Saat itu juga','T+1','T+2','T+5'],2,'Dua hari bursa setelah transaksi.'],
+['Untuk berhak atas dividen, Anda harus memiliki saham paling lambat pada…',['Ex date','Cum date','Tanggal pembayaran','Tanggal RUPS'],1,'Cum date adalah hari terakhir pembelian yang masih berhak dividen.']]},
+
+{id:'m4',sec:'Menengah',t:'4. Analisis Fundamental',html:`
+<h2>Modul 4 — Analisis Fundamental <span class="lvl l2">MENENGAH</span></h2>
+<p>Fundamental menjawab: <b>“Apakah ini bisnis yang bagus, dan apakah harganya wajar?”</b></p>
+<h3>Tiga laporan keuangan</h3>
+<div class="grid"><div class="mini"><b>Laba Rugi</b><br>Pendapatan, laba kotor, laba bersih. Lihat tren 3–5 tahun.</div>
+<div class="mini"><b>Neraca</b><br>Aset, liabilitas (utang), ekuitas. Lihat kekuatan modal.</div>
+<div class="mini"><b>Arus Kas</b><br>Kas operasi harus positif & sejalan dengan laba. Laba tanpa kas = waspada.</div></div>
+<h3>Rasio penting</h3>
+<table><tr><th>Rasio</th><th>Rumus</th><th>Cara membaca</th></tr>
+<tr><td>EPS</td><td>Laba bersih ÷ jumlah saham</td><td>Laba per lembar; idealnya tumbuh</td></tr>
+<tr><td>PER</td><td>Harga ÷ EPS</td><td>Berapa tahun laba untuk “balik modal”. Bandingkan dengan sektor & sejarahnya</td></tr>
+<tr><td>PBV</td><td>Harga ÷ nilai buku per saham</td><td>Penting untuk bank & aset berat</td></tr>
+<tr><td>ROE</td><td>Laba bersih ÷ ekuitas</td><td>Efisiensi modal; &gt;15% konsisten umumnya baik</td></tr>
+<tr><td>DER</td><td>Total utang ÷ ekuitas</td><td>Makin tinggi makin berisiko (kecuali bank, ukurannya beda)</td></tr>
+<tr><td>NPM</td><td>Laba bersih ÷ pendapatan</td><td>Margin; bandingkan dengan pesaing</td></tr>
+<tr><td>Dividend yield</td><td>Dividen per saham ÷ harga</td><td>Pendapatan rutin; cek konsistensinya</td></tr></table>
+<h3>Daftar periksa kualitatif</h3>
+<ul><li>Apakah saya paham cara perusahaan menghasilkan uang?</li><li>Apakah punya keunggulan (merek, jaringan, biaya rendah, lisensi)?</li><li>Manajemen & pemegang saham pengendali dapat dipercaya? Ada transaksi pihak berelasi mencurigakan?</li><li>Sektor sedang tumbuh atau menyusut? Sensitif terhadap suku bunga/komoditas/rupiah?</li><li>Free float memadai dan saham likuid?</li></ul>
+<div class="note">Sumber data resmi: <b>keterbukaan informasi di idx.co.id</b> (laporan keuangan, paparan publik, laporan tahunan). Utamakan sumber primer dibanding rumor.</div>`,
+quiz:[
+['Saham A harga Rp2.000, EPS Rp200. PER-nya…',['5x','10x','20x','200x'],1,'2.000 ÷ 200 = 10.'],
+['Rasio yang mengukur efisiensi perusahaan menghasilkan laba dari modal sendiri…',['DER','ROE','PBV','Dividend yield'],1,'ROE = laba bersih ÷ ekuitas.'],
+['Laba naik tapi arus kas operasi terus negatif. Sikap yang tepat…',['Langsung beli','Waspada, telusuri kualitas laba','Abaikan arus kas','Tambah posisi'],1,'Laba tanpa kas bisa menandakan piutang menumpuk atau akuntansi agresif.']]},
+
+{id:'m5',sec:'Menengah',t:'5. Analisis Teknikal',html:`
+<h2>Modul 5 — Analisis Teknikal Dasar <span class="lvl l2">MENENGAH</span></h2>
+<p>Teknikal menjawab: <b>“Kapan waktu masuk & keluar yang lebih baik?”</b> Gunakan sebagai alat timing dan penentu stop loss, bukan ramalan pasti.</p>
+<h3>Konsep inti</h3>
+<ul><li><b>Tren</b> — naik (higher high, higher low), turun, atau sideways. “The trend is your friend.”</li>
+<li><b>Support</b> — area harga di mana pembeli cenderung masuk. <b>Resistance</b> — area di mana penjual cenderung keluar. Support yang jebol sering berubah menjadi resistance.</li>
+<li><b>Moving Average (MA)</b> — MA20 (jangka pendek), MA50, MA200 (jangka panjang). Harga di atas MA200 → tren besar cenderung naik.</li>
+<li><b>RSI (14)</b> — &gt;70 jenuh beli, &lt;30 jenuh jual. Di tren kuat RSI bisa bertahan ekstrem lama.</li>
+<li><b>Volume</b> — kenaikan harga dengan volume besar lebih meyakinkan. Lonjakan volume tanpa berita pada saham kecil = waspada manipulasi.</li>
+<li><b>Candlestick</b> — satu batang menunjukkan open, high, low, close. Pola penting: hammer, engulfing, doji — konfirmasi dengan volume & lokasi (dekat support/resistance).</li></ul>
+<h3>Menggabungkan fundamental + teknikal</h3>
+<ol class="steps"><li>Saring saham berfundamental baik (Modul 4).</li><li>Tunggu tren naik/harga mendekati support.</li><li>Tentukan stop loss di bawah support (Modul 6).</li><li>Hitung ukuran posisi dengan kalkulator.</li><li>Masuk bertahap, catat di jurnal.</li></ol>`,
+quiz:[
+['Harga berulang kali memantul naik dari Rp4.500. Level ini disebut…',['Resistance','Support','Gap','ARA'],1,'Area permintaan kuat = support.'],
+['RSI 82 umumnya diartikan…',['Jenuh jual','Jenuh beli','Netral','Pasti turun besok'],1,'Jenuh beli, tapi bukan kepastian pembalikan.'],
+['Tempat paling logis untuk stop loss posisi beli di dekat support adalah…',['Jauh di atas resistance','Sedikit di bawah support','Tepat di harga beli','Tidak perlu stop loss'],1,'Jika support jebol, alasan membeli batal.']]},
+
+{id:'m6',sec:'Menengah',t:'6. Manajemen Risiko',html:`
+<h2>Modul 6 — Manajemen Risiko <span class="lvl l2">MENENGAH</span><span class="lvl l3">LANJUT</span></h2>
+<p>Ini modul terpenting. Investor bertahan bukan karena selalu benar, melainkan karena <b>kerugiannya kecil saat salah</b>.</p>
+<h3>Matematika kerugian</h3>
+<table><tr><th>Rugi</th><th>Kenaikan yang dibutuhkan untuk balik modal</th></tr><tr><td>10%</td><td>11%</td></tr><tr><td>25%</td><td>33%</td></tr><tr><td>50%</td><td>100%</td></tr><tr><td>75%</td><td>300%</td></tr></table>
+<h3>Tujuh aturan inti</h3>
+<ol class="steps">
+<li><b>Aturan 1–2%.</b> Risiko maksimal per transaksi = 1–2% dari total modal. Modal Rp50 juta → rugi maksimal per posisi Rp500 ribu–Rp1 juta bila stop loss kena.</li>
+<li><b>Tentukan stop loss sebelum membeli.</b> Berdasarkan level teknikal (di bawah support) atau persentase (misalnya 5–8%). Pasang <i>auto sell</i> bila tersedia.</li>
+<li><b>Ukuran posisi dari stop loss</b>, bukan dari “feeling”: Lot = Risiko Rupiah ÷ (Harga beli − Stop loss) ÷ 100.</li>
+<li><b>Risk–reward minimal 1:2.</b> Potensi untung minimal dua kali potensi rugi. Dengan RR 1:2, Anda tetap untung walau hanya benar 40% kali.</li>
+<li><b>Diversifikasi.</b> 5–10 saham dari beberapa sektor; satu saham maksimal ±20% portofolio; satu sektor maksimal ±30–40%.</li>
+<li><b>Hindari margin & pinjaman</b> sampai benar-benar berpengalaman. Utang memperbesar rugi dan bisa memicu force sell.</li>
+<li><b>Batas rugi portofolio.</b> Bila portofolio turun 10–15% dari puncak, berhenti menambah posisi, evaluasi strategi.</li></ol>
+<h3>Jenis risiko</h3>
+<div class="grid"><div class="mini"><b>Risiko pasar</b><br>IHSG turun karena sentimen global/makro.</div><div class="mini"><b>Risiko perusahaan</b><br>Kinerja memburuk, skandal, gagal bayar.</div><div class="mini"><b>Risiko likuiditas</b><br>Sulit menjual tanpa menekan harga.</div><div class="mini"><b>Risiko regulasi</b><br>Suspensi, delisting, perubahan aturan.</div><div class="mini"><b>Risiko perilaku</b><br>Keputusan emosional — risiko terbesar pemula.</div></div>
+<h3>🧮 Kalkulator Ukuran Posisi</h3>
+<div class="card">
+<div class="grid"><div><label>Total modal (Rp)</label><input id="ps_mod" type="number" value="50000000"></div>
+<div><label>Risiko per transaksi (%)</label><input id="ps_r" type="number" value="1" step="0.5"></div>
+<div><label>Harga beli (Rp)</label><input id="ps_b" type="number" value="4500"></div>
+<div><label>Stop loss (Rp)</label><input id="ps_sl" type="number" value="4250"></div>
+<div><label>Target (Rp)</label><input id="ps_tp" type="number" value="5000"></div></div>
+<button class="btn" style="margin-top:12px" onclick="calcPS()">Hitung</button>
+<div class="out" id="ps_out">Isi angka lalu tekan Hitung.</div></div>`,
+quiz:[
+['Modal Rp20 juta, aturan risiko 2%. Rugi maksimal per transaksi…',['Rp200 ribu','Rp400 ribu','Rp2 juta','Rp4 juta'],1,'2% × Rp20 juta = Rp400 ribu.'],
+['Rugi 50% membutuhkan kenaikan berapa untuk balik modal?',['50%','75%','100%','150%'],2,'Dari 50 kembali ke 100 = naik 100%.'],
+['Beli Rp1.000, stop loss Rp950, target Rp1.100. Risk–reward-nya…',['1:1','1:2','1:3','2:1'],1,'Risiko Rp50, potensi Rp100 → 1:2.'],
+['Cara terbaik menentukan jumlah lot adalah…',['Semua modal di satu saham','Berdasarkan jarak stop loss & risiko %','Ikut jumlah teman','Sebanyak mungkin agar cepat kaya'],1,'Ukuran posisi diturunkan dari risiko yang sanggup ditanggung.']]},
+
+{id:'m7',sec:'Lanjut',t:'7. Berita, Makro & Sentimen',html:`
+<h2>Modul 7 — Membaca Berita, Makro & Sentimen <span class="lvl l3">LANJUT</span></h2>
+<p>Laporan otomatis pagi & malam Anda menggunakan kerangka ini. Pahami logikanya agar Anda bisa menilai sendiri setiap rekomendasi.</p>
+<table><tr><th>Faktor</th><th>Contoh kejadian</th><th>Dampak umum</th></tr>
+<tr><td>BI-Rate</td><td>BI menurunkan suku bunga</td><td>Positif untuk properti, otomotif, konsumer, bank (biaya dana); negatif untuk margin bunga sebagian bank</td></tr>
+<tr><td>The Fed & imbal hasil obligasi AS</td><td>Fed menahan/menaikkan bunga</td><td>Dana asing cenderung keluar, rupiah melemah, IHSG tertekan</td></tr>
+<tr><td>Kurs Rupiah</td><td>Rupiah melemah tajam</td><td>Positif untuk eksportir (batu bara, CPO, nikel); negatif untuk importir bahan baku & utang dolar</td></tr>
+<tr><td>Harga komoditas</td><td>Batu bara/nikel/CPO/emas naik</td><td>Mendorong emiten tambang & perkebunan terkait</td></tr>
+<tr><td>Inflasi & daya beli</td><td>Inflasi naik, penjualan ritel melemah</td><td>Negatif untuk konsumer & ritel</td></tr>
+<tr><td>Kebijakan pemerintah</td><td>Larangan ekspor, insentif pajak, program belanja negara</td><td>Sangat sektoral — cek emiten yang terdampak langsung</td></tr>
+<tr><td>Aliran dana asing (net buy/sell)</td><td>Asing net sell besar beberapa hari</td><td>Tekanan pada saham big cap</td></tr>
+<tr><td>Berita emiten</td><td>Laporan keuangan, dividen, akuisisi, kasus hukum, rating</td><td>Dampak paling langsung ke saham tersebut</td></tr>
+<tr><td>Aturan bursa</td><td>Perubahan ARA/ARB, masuk/keluar indeks, MSCI rebalancing</td><td>Mengubah volatilitas & aliran dana</td></tr></table>
+<h3>Cara menilai sebuah berita</h3>
+<ol class="steps"><li><b>Sumber</b> — resmi (idx.co.id, BI, BPS, Kemenkeu, emiten) atau media kredibel? Rumor grup chat = abaikan.</li><li><b>Relevansi</b> — langsung ke emiten, ke sektornya, atau makro umum?</li><li><b>Besaran</b> — material terhadap laba? (mis. kontrak senilai 1% vs 30% pendapatan)</li><li><b>Sudah “priced in”?</b> — bila harga sudah naik tinggi sebelum berita, reaksi bisa berbalik (“buy the rumor, sell the news”).</li><li><b>Tindakan</b> — sesuaikan dengan rencana: tahan, tambah bertahap, kurangi, atau keluar sesuai stop loss.</li></ol>
+<h3>Membaca rekomendasi & tingkat keyakinan</h3>
+<p>Laporan harian memberi label <b>BELI / TAHAN / KURANGI / JUAL / PANTAU</b> dengan tingkat keyakinan <b>Rendah / Sedang / Tinggi</b>. Keyakinan tinggi berarti beberapa faktor (fundamental, teknikal, berita) searah — <b>bukan jaminan</b>. Ukuran posisi tetap mengikuti aturan risiko Modul 6, berapa pun tingkat keyakinannya.</p>`,
+quiz:[
+['Rupiah melemah tajam umumnya menguntungkan…',['Importir bahan baku','Emiten eksportir komoditas','Emiten berutang dolar','Semua emiten'],1,'Pendapatan dolar dikonversi ke rupiah lebih besar.'],
+['Kabar baik keluar tetapi harga turun karena sudah naik tinggi sebelumnya. Fenomena ini…',['Priced in / sell the news','ARA','Suspensi','Right issue'],0,'Pasar bergerak berdasarkan ekspektasi.'],
+['Rekomendasi “BELI — keyakinan tinggi” berarti…',['Pasti untung','Boleh pakai seluruh modal','Banyak faktor searah, tapi tetap pakai stop loss & ukuran posisi','Abaikan risiko'],2,'Keyakinan bukan kepastian.']]},
+
+{id:'m8',sec:'Lanjut',t:'8. Psikologi & Rencana Trading',html:`
+<h2>Modul 8 — Psikologi & Rencana Investasi <span class="lvl l3">LANJUT</span></h2>
+<h3>Musuh utama</h3>
+<div class="grid"><div class="mini"><b>FOMO</b><br>Ikut membeli karena takut ketinggalan setelah harga melambung.</div><div class="mini"><b>Panic selling</b><br>Menjual saham bagus hanya karena pasar sedang turun.</div><div class="mini"><b>Averaging down tanpa rencana</b><br>Terus menambah saham yang jatuh tanpa alasan fundamental.</div><div class="mini"><b>Revenge trading</b><br>Mengejar balik kerugian dengan posisi lebih besar.</div><div class="mini"><b>Overconfidence</b><br>Setelah beberapa kali untung, melupakan stop loss.</div></div>
+<h3>Template rencana per transaksi</h3>
+<table><tr><th>Item</th><th>Isi</th></tr><tr><td>Saham & alasan</td><td>Mengapa? (fundamental + teknikal + berita)</td></tr><tr><td>Harga masuk</td><td>Rentang beli</td></tr><tr><td>Stop loss</td><td>Level & alasan</td></tr><tr><td>Target</td><td>Target 1 dan target 2</td></tr><tr><td>Ukuran posisi</td><td>Lot dari kalkulator</td></tr><tr><td>Horizon</td><td>Harian / mingguan / tahunan</td></tr><tr><td>Hasil & pelajaran</td><td>Diisi setelah keluar</td></tr></table>
+<h3>Rutinitas yang disarankan</h3>
+<ul><li><b>Pagi (sebelum 08.45)</b> — baca laporan pagi: kondisi global semalam, berita emiten, rencana hari ini.</li><li><b>Saat pasar</b> — jalankan rencana, jangan mengubah stop loss ke bawah.</li><li><b>Malam</b> — baca laporan malam: evaluasi penutupan, perbarui jurnal, siapkan rencana besok.</li><li><b>Mingguan</b> — tinjau portofolio & alokasi sektor.</li><li><b>Investasi rutin</b> — untuk jangka panjang, pertimbangkan membeli bertahap tiap bulan (<i>dollar cost averaging</i>) pada saham/reksa dana indeks berkualitas.</li></ul>`,
+quiz:[
+['Harga saham naik 40% dalam 3 hari dan semua orang membicarakannya. Respons paling sehat…',['Beli semua modal','Tetap pada rencana; jika tertarik, tunggu setup & hitung risikonya','Pinjam uang untuk beli','Jual saham lain untuk mengejar'],1,'Itu ciri FOMO.'],
+['Menurunkan stop loss saat harga mendekatinya adalah…',['Strategi bagus','Pelanggaran disiplin yang memperbesar risiko','Wajib','Cara menghindari pajak'],1,'Stop loss ditentukan sebelum emosi bermain.']]},
+
+{id:'m9',sec:'Lanjut',t:'9. Waspada Penipuan & Gorengan',html:`
+<h2>Modul 9 — Waspada Penipuan & Saham Gorengan <span class="lvl l3">LANJUT</span></h2>
+<div class="warn"><b>Tanda bahaya:</b> janji untung pasti/tetap, “sinyal VIP” berbayar, meminta transfer ke rekening pribadi, meminta username/PIN/OTP akun sekuritas, mengatasnamakan OJK/BEI, grup yang serentak “pom-pom” saham kecil.</div>
+<h3>Ciri saham gorengan</h3>
+<ul><li>Harga & volume melonjak tanpa berita fundamental.</li><li>Kapitalisasi kecil, free float kecil, dipegang segelintir pihak.</li><li>Sering kena UMA, suspensi, atau masuk Papan Pemantauan Khusus.</li><li>Dipromosikan besar-besaran di media sosial.</li></ul>
+<h3>Langkah perlindungan</h3>
+<ol class="steps"><li>Cek legalitas di OJK (kontak 157, WhatsApp 081-157-157-157) dan daftar Waspada Investasi / Satgas PASTI.</li><li>Jangan pernah membagikan PIN, password, OTP.</li><li>Aktifkan verifikasi dua langkah di aplikasi sekuritas & email.</li><li>Cocokkan portofolio dengan AKSes KSEI secara berkala.</li><li>Gunakan ukuran posisi kecil pada saham spekulatif — atau hindari sama sekali.</li></ol>`,
+quiz:[
+['Seseorang menawarkan “profit 5% per minggu pasti” lewat titip dana. Ini…',['Peluang bagus','Tanda kuat penipuan','Produk resmi BEI','Reksa dana'],1,'Tidak ada investasi saham dengan untung pasti.'],
+['Data yang TIDAK boleh dibagikan kepada siapa pun…',['Kode saham favorit','PIN/OTP akun sekuritas','Nama sekuritas','Sektor favorit'],1,'Petugas resmi tidak pernah meminta PIN/OTP.']]},
+
+{id:'tools',sec:'Alat',t:'🧮 Kalkulator Transaksi',quiz:null,html:`
+<h2>Kalkulator Transaksi</h2>
+<h3>1. Biaya, titik impas & laba bersih</h3>
+<div class="card"><div class="grid">
+<div><label>Harga beli (Rp)</label><input id="f_b" type="number" value="4500"></div>
+<div><label>Harga jual (Rp)</label><input id="f_s" type="number" value="5000"></div>
+<div><label>Jumlah lot</label><input id="f_l" type="number" value="10"></div>
+<div><label>Fee beli (%)</label><input id="f_fb" type="number" value="0.15" step="0.01"></div>
+<div><label>Fee jual + PPh (%)</label><input id="f_fs" type="number" value="0.25" step="0.01"></div></div>
+<button class="btn" style="margin-top:12px" onclick="calcFee()">Hitung</button>
+<div class="out" id="f_out">—</div></div>
+<h3>2. Batas ARA / ARB & fraksi harga</h3>
+<div class="card"><div class="grid"><div><label>Harga penutupan kemarin (Rp)</label><input id="a_p" type="number" value="3000"></div></div>
+<button class="btn" style="margin-top:12px" onclick="calcAR()">Hitung</button>
+<div class="out" id="a_out">—</div>
+<p style="font-size:12px;color:var(--mut)">Menggunakan ketentuan 20 Okt–31 Des 2026 untuk Papan Utama/Pengembangan/Ekonomi Baru. Hasil dibulatkan ke fraksi; angka resmi di aplikasi sekuritas yang berlaku.</p></div>
+<h3>3. Ukuran posisi</h3><p>Ada di <a href="#m6" onclick="go('m6');return false">Modul 6</a>.</p>`},
+
+
+{id:'ai',sec:'Alat',t:'🤖 Analisis AI: Beli/Jual',quiz:null,html:`
+<h2>🤖 Analisis AI — Rekomendasi Beli / Jual</h2>
+<p>Unggah screenshot (grafik harga, order book, portofolio, laporan keuangan, atau berita) dan/atau isi data di bawah. Claude akan membaca gambar & data Anda, lalu memberi rekomendasi lengkap dengan tingkat keyakinan dan rencana manajemen risiko.</p>
+<div class="note">Halaman ini <b>tidak terhubung ke data harga real-time</b>. Sumber utama analisis adalah screenshot & angka yang Anda berikan — semakin lengkap (grafik harian dengan MA/RSI/volume, harga terakhir, berita), semakin baik hasilnya. Untuk berita terbaru, lihat Laporan Harian Otomatis.</div>
+<div class="card">
+<div class="grid">
+<div><label>Kode saham *</label><input id="ai_kode" placeholder="mis. BBRI" style="text-transform:uppercase"></div>
+<div><label>Harga terakhir (Rp)</label><input id="ai_harga" type="number" placeholder="opsional bila terlihat di screenshot"></div>
+<div><label>Status</label><select id="ai_pos" onchange="document.getElementById('ai_posx').style.display=this.value==='punya'?'grid':'none'"><option value="belum">Belum punya — mau beli?</option><option value="punya">Sudah punya — tahan/jual?</option></select></div>
+<div><label>Horizon</label><select id="ai_hor"><option>Trading harian (1–5 hari)</option><option selected>Swing (1–8 minggu)</option><option>Investasi (1 tahun+)</option></select></div>
+<div><label>Total modal (Rp)</label><input id="ai_mod" type="number" value="50000000"></div>
+<div><label>Risiko per transaksi (%)</label><input id="ai_risk" type="number" value="1" step="0.5"></div>
+</div>
+<div class="grid" id="ai_posx" style="display:none"><div><label>Harga beli rata-rata (Rp)</label><input id="ai_avg" type="number"></div><div><label>Jumlah lot dimiliki</label><input id="ai_lot" type="number"></div></div>
+<label>Catatan / berita / pertanyaan tambahan</label><textarea id="ai_note" placeholder="mis. Ada kabar dividen interim; IHSG sedang turun karena asing jual; saya ragu karena..."></textarea>
+<label>Screenshot (maks. 4 gambar)</label>
+<div class="drop" id="ai_drop" onclick="document.getElementById('ai_file').click()">📷 Klik untuk memilih gambar, atau seret & lepas di sini<input id="ai_file" type="file" accept="image/*" multiple style="display:none"></div>
+<div class="thumbs" id="ai_th"></div>
+<div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="ai_go" onclick="runAI()">🔍 Analisis Sekarang</button><button class="btn sec" id="ai_stop" style="display:none" onclick="ai_ab&&ai_ab.abort()">Hentikan</button></div>
+<div id="ai_msg" style="font-size:13px;color:var(--mut);margin-top:8px"></div>
+</div>
+<div id="ai_res"></div>
+<h3>Riwayat analisis (perangkat ini)</h3><div class="hist" id="ai_hist"></div>
+<div class="warn">Hasil dibuat AI dan bisa salah membaca gambar atau keliru menilai. Ini bahan pertimbangan, bukan nasihat keuangan berlisensi. Tetap gunakan stop loss dan ukuran posisi dari Modul 6.</div>`},
+{id:'daily',sec:'Alat',t:'📰 Laporan Harian Otomatis',quiz:null,html:`
+<h2>Laporan Pagi & Malam Otomatis</h2>
+<p>Dua tugas terjadwal berjalan setiap hari dan mengirim notifikasi ke aplikasi Claude Anda:</p>
+<div class="grid"><div class="mini"><b>☀️ Laporan Pagi (± 05.40 WIB)</b><br>Penutupan Wall Street & Asia semalam, komoditas, rupiah, berita emiten di watchlist, rencana hari ini.</div>
+<div class="mini"><b>🌙 Laporan Malam (± 18.40 WIB)</b><br>Penutupan IHSG & watchlist, aliran dana asing, berita sore, evaluasi & rencana esok.</div></div>
+<h3>Isi setiap laporan</h3>
+<ol class="steps"><li>Ringkasan pasar (IHSG, regional, AS, rupiah, komoditas utama).</li><li>Berita ekonomi & emiten yang relevan, dengan sumber.</li><li>Tabel rekomendasi per saham: <b>BELI / TAHAN / KURANGI / JUAL / PANTAU</b>, tingkat keyakinan, alasan singkat.</li><li>Manajemen risiko per saham: area beli, stop loss, target, risk–reward, saran bobot maksimal.</li><li>Peringatan khusus (UMA, suspensi, perubahan aturan bursa).</li></ol>
+<h3>Watchlist saat ini</h3>
+<p><b>BBCA, BBRI, BMRI, TLKM, ASII</b> (watchlist awal blue chip). Begitu Anda membeli saham, cukup katakan di chat: <i>“Saya sudah punya ANTM 20 lot di Rp2.800”</i> — watchlist dan laporan akan disesuaikan.</p>
+<div class="warn">Rekomendasi dibuat AI dari berita publik dan data yang dapat ditelusuri; bisa keliru atau terlambat. Ini bahan pertimbangan, bukan nasihat keuangan berlisensi. Keputusan & risiko tetap di tangan Anda.</div>`}
+];
+
+const KEY='kbz_saham_v1';let st={done:{},cur:'home'};
+try{st=Object.assign(st,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+function rp(n){return 'Rp'+Math.round(n).toLocaleString('id-ID')}
+function nav(){const n=document.getElementById('nav');const qm=M.filter(m=>m.quiz);const d=qm.filter(m=>st.done[m.id]).length;
+let h=`<div class="progt">Kemajuan: ${d}/${qm.length} modul lulus</div><div class="prog"><i style="width:${d/qm.length*100}%"></i></div>`;let s='';
+M.forEach(m=>{if(m.sec!==s){s=m.sec;h+=`<div class="sec">${s}</div>`}h+=`<button class="${st.cur===m.id?'on':''}" onclick="go('${m.id}')">${m.t}<span class="chk">${st.done[m.id]?'✔ '+st.done[m.id]+'%':''}</span></button>`});n.innerHTML=h}
+function go(id){st.cur=id;save();render();document.querySelector('nav').classList.remove('open');window.scrollTo(0,0);try{history.replaceState(null,'','#'+id)}catch(e){}}
+function render(){const i=M.findIndex(m=>m.id===st.cur);const m=M[i]||M[0];let h=m.html;
+if(m.quiz){h+=`<h3>📝 Kuis Modul</h3><div class="card quiz" id="qz">`+m.quiz.map((q,qi)=>`<div class="q" data-a="${q[2]}"><b>${qi+1}. ${q[0]}</b>`+q[1].map((o,oi)=>`<button class="opt" onclick="ans(this,${qi},${oi})"><span class="lt">${'ABCD'[oi]}</span><span class="tx">${o}</span></button>`).join('')+`<div class="key">✔ Jawaban benar: ${'ABCD'[q[2]]}. ${q[1][q[2]]}</div><div class="ex">💡 ${q[3]}</div></div>`).join('')+`<div class="score" id="sc"></div><button class="btn sec" style="margin-top:10px" onclick="document.getElementById('qz').classList.toggle('showkey')">🔑 Tampilkan / sembunyikan kunci jawaban</button></div>`}
+h+=`<div class="pager">${i>0?`<button class="btn sec" onclick="go('${M[i-1].id}')">← ${M[i-1].t}</button>`:'<span></span>'}${i<M.length-1?`<button class="btn" onclick="go('${M[i+1].id}')">${M[i+1].t} →</button>`:''}</div>
+<footer>KABUZEN SAHAM CERDAS • Materi edukasi, bukan rekomendasi investasi pribadi. Data aturan per 15 Nov 2026 — verifikasi di idx.co.id & ojk.go.id.</footer>`;
+document.getElementById('main').innerHTML=h;nav();if(m.id==='m6')calcPS();if(m.id==='tools'){calcFee();calcAR()}if(m.id==='ai')aiInit();if(m.id==='anim')anInit();else{an_play=false;clearTimeout(an_timer)}}
+const ansd={};
+function ans(b,qi,oi){const q=b.parentElement;if(q.dataset.done)return;q.dataset.done=1;const a=+q.dataset.a;const os=q.querySelectorAll('.opt');os[a].classList.add('ok');if(oi!==a)os[oi].classList.add('no');q.querySelector('.ex').style.display='block';q.querySelector('.key').style.display='block';ansd[qi]=(oi===a);
+const m=M.find(x=>x.id===st.cur);const all=document.querySelectorAll('#qz .q');const n=[...all].filter(x=>x.dataset.done).length;
+if(n===all.length){const c=[...all].filter(x=>x.querySelector('.opt.ok')&&!x.querySelector('.opt.no')).length;const p=Math.round(c/all.length*100);
+document.getElementById('sc').innerHTML=p>=70?`🎉 Skor ${p}% — LULUS!`:`Skor ${p}% — belum lulus (min. 70%). <button class="btn sec" onclick="render()">Ulangi</button>`;
+if(p>=70){st.done[m.id]=Math.max(p,st.done[m.id]||0);save();nav()}}}
+function v(id){return parseFloat(document.getElementById(id).value)||0}
+function calcPS(){const mod=v('ps_mod'),r=v('ps_r'),b=v('ps_b'),sl=v('ps_sl'),tp=v('ps_tp');const o=document.getElementById('ps_out');
+if(b<=sl){o.innerHTML='Stop loss harus di bawah harga beli.';return}const risk=mod*r/100;const per=b-sl;const lot=Math.floor(risk/per/100);const nilai=lot*100*b;const rr=(tp-b)/per;const pct=nilai/mod*100;
+o.innerHTML=`Risiko maksimal: <b>${rp(risk)}</b> • Jarak stop loss: <b>${(per/b*100).toFixed(1)}%</b><br><span class="big">${lot.toLocaleString('id-ID')} lot</span> (${(lot*100).toLocaleString('id-ID')} lembar) senilai <b>${rp(nilai)}</b> = ${pct.toFixed(1)}% modal<br>Risk–reward: <b>1 : ${rr.toFixed(2)}</b> ${rr>=2?'✅ layak':'⚠️ di bawah 1:2 — pertimbangkan ulang'}${pct>20?'<br>⚠️ Posisi melebihi 20% modal — kurangi untuk diversifikasi.':''}`}
+function calcFee(){const b=v('f_b'),s=v('f_s'),l=v('f_l'),fb=v('f_fb')/100,fs=v('f_fs')/100;const sh=l*100;const cb=sh*b*(1+fb);const pj=sh*s*(1-fs);const net=pj-cb;const bep=b*(1+fb)/(1-fs);
+document.getElementById('f_out').innerHTML=`Total bayar beli: <b>${rp(cb)}</b><br>Total terima jual: <b>${rp(pj)}</b><br><span class="big">${net>=0?'Laba':'Rugi'} bersih ${rp(Math.abs(net))} (${(net/cb*100).toFixed(2)}%)</span><br>Harga impas (BEP): <b>${rp(bep)}</b> — harga harus naik ±${((bep/b-1)*100).toFixed(2)}% hanya untuk menutup biaya.`}
+function tick(p){return p<200?1:p<500?2:p<2000?5:p<5000?10:25}
+function calcAR(){const p=v('a_p');let up,dn;if(p<=10){up=p+1;dn=Math.max(1,p-1)}else if(p<=14){up=p*1.35;dn=p-1}else{up=p*(p<=200?1.35:p<=5000?1.25:1.20);dn=p*0.93}
+const tu=tick(up),td=tick(dn);up=Math.floor(up/tu)*tu;dn=Math.ceil(dn/td)*td;
+document.getElementById('a_out').innerHTML=`Fraksi di harga ${rp(p)}: <b>${rp(tick(p))}</b><br>Batas atas (ARA): <span class="big">${rp(up)}</span> • Batas bawah (ARB): <span class="big">${rp(dn)}</span><br>Rugi terburuk satu hari bila ARB: <b>${((1-dn/p)*100).toFixed(1)}%</b> (tanpa memperhitungkan gap hari berikutnya).`}
+const h0=(location.hash||'').slice(1);if(h0&&M.find(m=>m.id===h0))st.cur=h0;
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(M.find(m=>m.id===h)&&h!==st.cur){st.cur=h;render()}});
+
+// ===== Animasi alur transaksi =====
+const AN_W=800,AN_H=450,IND='#1d0b78',YEL='#ffd60a',GRN='#0f9d58',RED='#d93025',BLU='#4aa8ff';
+function ap(t,inner,d=.5){return `<g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="${t}s" dur="${d}s" fill="freeze"/>${inner}</g>`}
+function tx(x,y,s,o={}){return `<text x="${x}" y="${y}" text-anchor="${o.a||'middle'}" font-size="${o.s||16}" font-weight="${o.w||600}" fill="${o.c||'#1b1b2b'}" font-family="Inter,sans-serif">${s}</text>`}
+function actor(x,y,ic,lab,sub,c=IND){return `<g><circle cx="${x}" cy="${y}" r="42" fill="#fff" stroke="${c}" stroke-width="4"/>${tx(x,y+12,ic,{s:34})}${tx(x,y+68,lab,{s:15,w:800,c})}${sub?tx(x,y+86,sub,{s:12,w:500,c:'#5d6075'}):''}</g>`}
+function tok(path,t,dur,lab,c=YEL,tc=IND){return `<g opacity="0"><set attributeName="opacity" to="1" begin="${t}s"/><animateMotion path="${path}" begin="${t}s" dur="${dur}s" fill="freeze" calcMode="spline" keySplines=".4 0 .2 1" keyTimes="0;1"/><rect x="-62" y="-15" width="124" height="30" rx="15" fill="${c}" stroke="#fff" stroke-width="2"/>${tx(0,5,lab,{s:13,w:800,c:tc})}</g>`}
+function arrow(x1,y1,x2,y2,t,c='#b9bde0'){const L=Math.hypot(x2-x1,y2-y1);return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="3" stroke-dasharray="${L}" stroke-dashoffset="${L}"><animate attributeName="stroke-dashoffset" to="0" begin="${t}s" dur=".7s" fill="freeze"/></line>`}
+function pop(x,y,s,t,c=GRN){return `<g opacity="0" transform="translate(${x} ${y})"><set attributeName="opacity" to="1" begin="${t}s"/><g><animateTransform attributeName="transform" type="scale" values="0.2;1.25;1" begin="${t}s" dur=".5s" fill="freeze"/><rect x="${-(s.length*5+26)}" y="-20" width="${s.length*10+52}" height="40" rx="20" fill="${c}"/>${tx(0,6,s,{s:16,w:800,c:'#fff'})}</g></g>`}
+function title(n,s){return `<rect width="800" height="54" fill="${IND}"/><rect y="54" width="800" height="4" fill="${YEL}"/><circle cx="34" cy="27" r="17" fill="${YEL}"/>${tx(34,33,n,{s:16,w:800,c:IND})}${tx(64,34,s,{s:20,w:800,c:'#fff',a:'start'})}`}
+function chartBase(){let g=`<rect x="70" y="90" width="520" height="300" rx="10" fill="#f7f8fd" stroke="#e3e5f0"/>`;[[1100,GRN,'Target Rp1.100'],[1000,IND,'Beli Rp1.000'],[950,RED,'Stop loss Rp950']].forEach(([p,c,l])=>{const y=py(p);g+=`<line x1="70" x2="590" y1="${y}" y2="${y}" stroke="${c}" stroke-width="2" stroke-dasharray="6 5"/>`+tx(600,y+5,l,{s:13,w:700,c,a:'start'})});return g}
+function py(p){return 390-(p-900)/250*300}
+function pline(pts,t,dur,c){const d=pts.map((p,i)=>`${70+i*(520/(pts.length-1))},${py(p)}`).join(' ');return `<polyline points="${d}" fill="none" stroke="${c}" stroke-width="4" stroke-linejoin="round" stroke-dasharray="1400" stroke-dashoffset="1400"><animate attributeName="stroke-dashoffset" to="0" begin="${t}s" dur="${dur}s" fill="freeze"/></polyline>`}
+const AN=[
+{d:9,t:'Buka rekening efek',cap:'Langkah pertama: buka rekening di <b>sekuritas berizin OJK</b>. Anda akan menerima <b>SID</b> (nomor investor), <b>SRE</b> (tempat saham dicatat di KSEI) dan <b>RDN</b> (rekening dana atas nama Anda).',
+ s:()=>title(1,'Buka Rekening Efek')+actor(120,200,'🧑','INVESTOR','Anda')+actor(420,200,'🏢','SEKURITAS','berizin OJK')+arrow(165,200,375,200,.4)+tok('M120,160 L420,160',1,1.6,'📄 KTP + Formulir')+ap(3,`<line x1="462" y1="200" x2="600" y2="110" stroke="#b9bde0" stroke-width="3"/><line x1="462" y1="200" x2="600" y2="210" stroke="#b9bde0" stroke-width="3"/><line x1="462" y1="200" x2="600" y2="310" stroke="#b9bde0" stroke-width="3"/>`)+pop(680,110,'SID',3.3,IND)+pop(680,210,'SRE · KSEI',3.8,IND)+pop(680,310,'RDN · Bank',4.3,IND)+ap(5.5,tx(400,420,'✔ Cek legalitas sekuritas di ojk.go.id sebelum mendaftar',{s:15,c:GRN,w:700}))},
+{d:8,t:'Setor dana ke RDN',cap:'Setor modal ke <b>RDN atas nama Anda sendiri</b>. Contoh: Rp10.000.000 dana dingin. Jangan pernah transfer ke rekening pribadi siapa pun.',
+ s:()=>title(2,'Setor Dana ke RDN')+actor(140,210,'🧑','INVESTOR')+actor(640,210,'🏦','RDN','atas nama Anda',GRN)+arrow(185,210,595,210,.4)+tok('M140,170 L640,170',1,2,'💰 Rp10.000.000',YEL)+pop(640,90,'Saldo Rp10 jt',3.2)+ap(4,`<g transform="translate(400 330)"><rect x="-230" y="-24" width="460" height="48" rx="12" fill="#fdecea" stroke="${RED}"/>${tx(0,6,'⛔ Bukan ke rekening pribadi "admin" / "mentor"!',{s:15,c:RED,w:800})}</g>`)},
+{d:10,t:'Susun rencana',cap:'Sebelum membeli, tentukan tiga angka: <b>harga beli Rp1.000</b>, <b>stop loss Rp950</b> (rugi Rp50/lembar) dan <b>target Rp1.100</b> (untung Rp100/lembar). Risk–reward = <b>1 : 2</b>.',
+ s:()=>title(3,'Rencana Sebelum Membeli (contoh saham XYZ)')+chartBase()+pline([1040,1020,990,1010,985,1000],.5,2.5,IND)+ap(3,`<line x1="560" x2="560" y1="${py(1000)}" y2="${py(950)}" stroke="${RED}" stroke-width="10"/><line x1="560" x2="560" y1="${py(1100)}" y2="${py(1000)}" stroke="${GRN}" stroke-width="10"/>`)+ap(3.5,tx(500,py(975)+5,'Risiko Rp50',{s:14,c:RED,w:800,a:'end'}))+ap(4,tx(500,py(1050)+5,'Potensi Rp100',{s:14,c:GRN,w:800,a:'end'}))+pop(330,425,'Risk–Reward 1 : 2 ✔',5.5,IND)},
+{d:11,t:'Hitung jumlah lot',cap:'Ukuran posisi dihitung dari risiko, bukan dari perasaan. Dengan aturan <b>risiko 1% modal</b>, rugi maksimal Rp100.000 bila stop loss kena. Hasilnya <b>20 lot</b> senilai Rp2 juta (20% modal).',
+ s:()=>title(4,'Hitung Ukuran Posisi (Aturan 1%)')+[['Modal Rp10.000.000 × 1%','= Rp100.000 risiko maksimal',1],['Jarak stop loss Rp1.000 − Rp950','= Rp50 per lembar',3],['Rp100.000 ÷ Rp50 ÷ 100 lembar','= 20 lot',5],['20 lot × 100 × Rp1.000','= Rp2.000.000 (20% modal)',7]].map(([a,b,t],i)=>ap(t,`<g transform="translate(0 ${120+i*70})"><rect x="90" y="-30" width="620" height="54" rx="12" fill="${i==2?YEL:'#f1f2fb'}"/>${tx(110,4,a,{s:17,a:'start',w:600})}${tx(690,4,b,{s:17,a:'end',w:800,c:IND})}</g>`)).join('')+pop(400,425,'Sisanya 80% tetap tunai/diversifikasi',8.5,GRN)},
+{d:11,t:'Kirim order beli',cap:'Order <b>BELI 20 lot @Rp1.000</b> dikirim dari aplikasi → sekuritas → sistem perdagangan BEI (JATS). Order dipertemukan dengan <b>offer</b> terbaik: prioritas harga, lalu waktu. <b>MATCH!</b>',
+ s:()=>{let ob=`<g transform="translate(560 95)"><rect width="210" height="250" rx="10" fill="#fff" stroke="${IND}" stroke-width="2"/>${tx(105,24,'ORDER BOOK XYZ',{s:13,w:800,c:IND})}${tx(52,48,'BID',{s:12,c:GRN,w:800})}${tx(158,48,'OFFER',{s:12,c:RED,w:800})}`;[[995,1015],[990,1010],[985,1005],[980,1000]].forEach(([b,o],i)=>{const y=80+i*40;ob+=`<rect x="10" y="${y-20}" width="190" height="32" rx="6" fill="${o==1000?'#fff3c4':'#f7f8fd'}"/>`+tx(52,y+2,b.toLocaleString('id-ID'),{s:14})+tx(158,y+2,o.toLocaleString('id-ID'),{s:14,w:o==1000?800:500})});ob+='</g>';
+ return title(5,'Kirim Order Beli ke Bursa')+actor(90,220,'📱','APLIKASI','order Anda')+actor(300,220,'🏢','SEKURITAS')+ob+arrow(135,220,255,220,.3)+arrow(345,220,555,220,.6)+tok('M90,175 L300,175 L480,175',1,3,'BELI 20 lot @1.000')+pop(665,355,'⚡ MATCH!',4.4,GRN)+ap(5.5,tx(400,425,'Gunakan LIMIT order. Hindari market order di saham tidak likuid.',{s:14,w:700,c:IND}))}},
+{d:10,t:'Penyelesaian T+2',cap:'Transaksi diselesaikan <b>T+2</b> (dua hari bursa). <b>KPEI</b> menjamin transaksi, <b>KSEI</b> mencatat saham atas nama Anda, dana Rp2.003.000 (termasuk biaya ±0,15%) didebit dari RDN.',
+ s:()=>title(6,'Settlement T+2')+[['T','Transaksi',150],['T+1','Proses',400],['T+2','Selesai ✔',650]].map(([a,b,x],i)=>ap(.4+i*.8,`<circle cx="${x}" cy="130" r="30" fill="${i==2?GRN:IND}"/>${tx(x,136,a,{s:16,w:800,c:'#fff'})}${tx(x,182,b,{s:13,c:'#5d6075'})}`))+arrow(180,130,370,130,.8)+arrow(430,130,620,130,1.6)+actor(150,300,'🏦','RDN','',GRN)+actor(400,300,'🛡️','KPEI','penjamin')+actor(650,300,'🗄️','KSEI','portofolio Anda')+tok('M150,260 L400,260',3,1.4,'− Rp2.003.000',RED,'#fff')+tok('M400,260 L650,260',4.6,1.4,'+ 20 lot XYZ',GRN,'#fff')+ap(6.5,tx(400,430,'Cek kepemilikan Anda sendiri di AKSes KSEI',{s:14,w:700,c:IND}))},
+{d:9,t:'Pasang auto order',cap:'Segera pasang <b>auto sell</b>: stop loss di Rp950 dan take profit di Rp1.100. Keputusan dibuat <b>sebelum</b> emosi ikut bermain — ini kunci disiplin.',
+ s:()=>title(7,'Pasang Stop Loss & Take Profit Otomatis')+`<rect x="290" y="80" width="220" height="350" rx="28" fill="${IND}"/><rect x="304" y="104" width="192" height="300" rx="14" fill="#fff"/>`+tx(400,135,'Auto Order XYZ',{s:15,w:800,c:IND})+ap(1,`<rect x="318" y="160" width="164" height="90" rx="10" fill="#e6f4ea" stroke="${GRN}"/>${tx(400,190,'TAKE PROFIT',{s:13,w:800,c:GRN})}${tx(400,215,'Jual 20 lot',{s:13})}${tx(400,236,'jika ≥ Rp1.100',{s:13,w:700})}`)+ap(2.2,`<rect x="318" y="265" width="164" height="90" rx="10" fill="#fdecea" stroke="${RED}"/>${tx(400,295,'STOP LOSS',{s:13,w:800,c:RED})}${tx(400,320,'Jual 20 lot',{s:13})}${tx(400,341,'jika ≤ Rp950',{s:13,w:700})}`)+pop(400,380,'AKTIF ✔',3.4,GRN)+ap(4.5,tx(140,250,'🧠 Rencana',{s:18,w:800,c:IND})+tx(140,275,'dibuat saat tenang',{s:14}))+ap(5.5,tx(660,250,'🚫 Jangan geser',{s:18,w:800,c:RED})+tx(660,275,'stop loss ke bawah',{s:14}))},
+{d:11,t:'Skenario A: harga naik',cap:'Harga naik menyentuh <b>Rp1.100</b> → take profit tereksekusi otomatis. Laba kotor Rp200.000, dikurangi biaya beli & jual (±Rp8.500) = <b>laba bersih ± Rp191.500</b>.',
+ s:()=>title(8,'Skenario A — Target Tercapai')+chartBase()+pline([1000,1015,1005,1030,1050,1040,1070,1085,1100],.4,4,GRN)+pop(590,py(1100)-30,'🎯 TAKE PROFIT',4.5,GRN)+ap(5.5,`<rect x="140" y="320" width="380" height="60" rx="12" fill="#fff" stroke="${GRN}" stroke-width="2"/>${tx(330,346,'20 lot × 100 × (1.100 − 1.000) = Rp200.000',{s:14})}${tx(330,368,'Setelah biaya ± Rp191.500 (+1,9% modal)',{s:14,w:800,c:GRN})}`)},
+{d:12,t:'Skenario B: harga turun',cap:'Harga turun ke <b>Rp950</b> → stop loss terjual otomatis. Rugi ± Rp107.750 termasuk biaya, hanya <b>1,1% modal</b>. Modal masih aman untuk peluang berikutnya. Catatan: bila harga “gap” turun (batas ARB 7%), eksekusi bisa sedikit di bawah stop loss.',
+ s:()=>title(9,'Skenario B — Stop Loss Bekerja')+chartBase()+pline([1000,990,1005,985,970,975,960,955,950],.4,4,RED)+pop(590,py(950)+34,'🛑 STOP LOSS',4.5,RED)+ap(5.5,`<rect x="120" y="100" width="420" height="60" rx="12" fill="#fff" stroke="${RED}" stroke-width="2"/>${tx(330,126,'Rugi ± Rp107.750 = 1,1% modal',{s:15,w:800,c:RED})}${tx(330,148,'Modal tersisa ± Rp9.892.000 (98,9%)',{s:14,w:700,c:GRN})}`)},
+{d:13,t:'Mengapa disiplin menang',cap:'Dengan risk–reward 1:2, Anda tetap untung walau hanya benar <b>4 dari 10</b> transaksi: 4 × Rp191.500 − 6 × Rp107.750 = <b>+Rp119.500</b>. Kuncinya: rugi kecil, untung dibiarkan mencapai target.',
+ s:()=>{let g='';const r=[1,0,0,1,0,1,0,0,1,0];r.forEach((w,i)=>{const x=110+i*60,h=w?110:62,y=w?250-h:250;g+=ap(.3+i*.35,`<rect x="${x}" y="${y}" width="40" height="${h}" rx="5" fill="${w?GRN:RED}"/>${tx(x+20,w?y-8:y+h+18,w?'+191rb':'−108rb',{s:11,w:700,c:w?GRN:RED})}`)});
+ return title(10,'10 Transaksi, Benar Hanya 4 — Tetap Untung')+`<line x1="90" x2="710" y1="250" y2="250" stroke="#1b1b2b" stroke-width="2"/>`+g+pop(400,355,'TOTAL ≈ +Rp119.500',4.5,IND)+ap(6,tx(400,412,'① Risiko 1% ② Stop loss sebelum beli ③ RR ≥ 1:2 ④ Diversifikasi ⑤ Jurnal',{s:14,w:700,c:IND}))}}
+];
+let an_i=0,an_play=false,an_timer=null,an_left=0,an_start=0;
+function anRender(){const box=document.getElementById('an_stage');if(!box)return;const sc=AN[an_i];
+box.innerHTML=`<svg viewBox="0 0 ${AN_W} ${AN_H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;background:#fff;border-radius:12px">${sc.s()}</svg>`;
+document.getElementById('an_cap').innerHTML=`<b>${an_i+1}/${AN.length} · ${sc.t}.</b> ${sc.cap}`;
+document.getElementById('an_dots').innerHTML=AN.map((x,i)=>`<button title="${x.t}" onclick="anGo(${i})" style="width:${i==an_i?28:12}px;height:12px;border-radius:6px;border:0;margin:0 3px;cursor:pointer;background:${i<an_i?'#b9bde0':i==an_i?YEL:'#e3e5f0'}"></button>`).join('');
+const svg=box.querySelector('svg');if(!an_play){try{svg.pauseAnimations();svg.setCurrentTime(0)}catch(e){}}
+an_left=sc.d*1000;anSched()}
+function anSched(){clearTimeout(an_timer);if(!an_play)return;an_start=Date.now();an_timer=setTimeout(()=>{if(an_i<AN.length-1){an_i++;anRender()}else{an_play=false;anBtn()}},an_left)}
+function anBtn(){const b=document.getElementById('an_pp');if(b)b.textContent=an_play?'⏸ Jeda':(an_i==AN.length-1&&an_left<=0?'↺ Ulangi':'▶ Putar')}
+function anToggle(){const svg=document.querySelector('#an_stage svg');if(an_play){an_play=false;clearTimeout(an_timer);an_left-=Date.now()-an_start;try{svg.pauseAnimations()}catch(e){}}else{an_play=true;if(an_left<=200){if(an_i==AN.length-1)an_i=0;else an_i++;anRender()}else{try{svg.unpauseAnimations()}catch(e){}anSched()}}anBtn()}
+function anGo(i){an_i=Math.max(0,Math.min(AN.length-1,i));anRender();anBtn()}
+function anInit(){an_i=0;an_play=false;anRender();anBtn()}
+
+let ai_imgs=[],ai_ab=null,ai_sample=null,ai_ready=false;
+(async()=>{try{if(window.claude&&claude.use){ai_sample=await claude.use("sample")}}catch(e){}ai_ready=true;if(st.cur==='ai')aiInit()})();
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function md(t){const L=esc(t).split('\n');let o='',tb=[],ul=false;
+const inl=s=>s.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\b(BELI|JUAL|TAHAN|KURANGI|PANTAU)\b(?=[^<]*<\/b>)/g,'<span class="rec $1">$1</span>');
+const flushT=()=>{if(!tb.length)return;const r=tb.filter(x=>!/^\|?\s*:?-{2,}/.test(x));o+='<table>'+r.map((x,i)=>'<tr>'+x.replace(/^\||\|$/g,'').split('|').map(c=>i?`<td>${inl(c.trim())}</td>`:`<th>${inl(c.trim())}</th>`).join('')+'</tr>').join('')+'</table>';tb=[]};
+const flushU=()=>{if(ul){o+='</ul>';ul=false}};
+for(const l of L){const s=l.trim();if(s.startsWith('|')){flushU();tb.push(s);continue}flushT();
+if(/^#{1,4}\s/.test(s)){flushU();o+=`<h4>${inl(s.replace(/^#+\s/,''))}</h4>`}
+else if(/^[-*•]\s/.test(s)){if(!ul){o+='<ul>';ul=true}o+=`<li>${inl(s.slice(2))}</li>`}
+else if(s===''){flushU()}else{flushU();o+=`<p>${inl(s)}</p>`}}
+flushT();flushU();return o}
+function aiInit(){const f=document.getElementById('ai_file'),d=document.getElementById('ai_drop');if(!f)return;
+if(!ai_sample&&ai_ready){document.getElementById('ai_msg').innerHTML='⚠️ Fitur AI tidak tersedia di tampilan ini. Buka LMS langsung di claude.ai (aplikasi atau browser) dan izinkan akses saat diminta.';document.getElementById('ai_go').disabled=true}
+f.onchange=()=>addImgs(f.files);d.ondragover=e=>{e.preventDefault();d.classList.add('on')};d.ondragleave=()=>d.classList.remove('on');d.ondrop=e=>{e.preventDefault();d.classList.remove('on');addImgs(e.dataTransfer.files)};
+if(!window._kbzPaste){window._kbzPaste=1;document.addEventListener('paste',e=>{if(st.cur==='ai'&&e.clipboardData)addImgs(e.clipboardData.files)})}thumbs();hist()}
+async function shrink(file){const img=await createImageBitmap(file);const k=Math.min(1,1600/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=img.width*k;c.height=img.height*k;c.getContext('2d').drawImage(img,0,0,c.width,c.height);return await new Promise(r=>c.toBlob(r,'image/jpeg',0.85))}
+async function addImgs(fl){for(const f of [...fl]){if(!f.type.startsWith('image/')||ai_imgs.length>=4)continue;try{const b=await shrink(f);ai_imgs.push({b,u:URL.createObjectURL(b)})}catch(e){}}thumbs()}
+function thumbs(){const t=document.getElementById('ai_th');if(t)t.innerHTML=ai_imgs.map((x,i)=>`<div><img src="${x.u}"><button onclick="ai_imgs.splice(${i},1);thumbs()">×</button></div>`).join('')}
+function hist(){let H=[];try{H=JSON.parse(localStorage.getItem('kbz_ai_hist')||'[]')}catch(e){}const el=document.getElementById('ai_hist');if(!el)return;
+el.innerHTML=H.length?H.map((x,i)=>`<button onclick="showHist(${i})">${x.d} — <b>${x.k}</b></button>`).join(''):'<p style="font-size:13px;color:var(--mut)">Belum ada.</p>'}
+function showHist(i){try{const x=JSON.parse(localStorage.getItem('kbz_ai_hist')||'[]')[i];const r=document.getElementById('ai_res');r.style.display='block';r.innerHTML=md(x.t);r.scrollIntoView({behavior:'smooth'})}catch(e){}}
+async function runAI(){const g=id=>document.getElementById(id).value.trim();const kode=g('ai_kode').toUpperCase();const msg=document.getElementById('ai_msg');
+if(!kode&&!ai_imgs.length){msg.textContent='Isi kode saham atau unggah minimal satu screenshot.';return}
+if(!ai_sample){msg.textContent='Fitur AI tidak tersedia di tampilan ini.';return}
+const tgl=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const pos=g('ai_pos')==='punya'?`Investor SUDAH memiliki ${g('ai_lot')||'?'} lot dengan harga rata-rata Rp${g('ai_avg')||'?'}. Pertanyaan: tahan, tambah, kurangi, atau jual?`:'Investor BELUM memiliki saham ini. Pertanyaan: layak dibeli sekarang atau tidak?';
+const prompt=`Anda analis saham Bursa Efek Indonesia (BEI) yang berhati-hati, membantu investor pemula. Jawab dalam Bahasa Indonesia. Tanggal hari ini: ${tgl}.
+
+DATA DARI INVESTOR
+- Kode saham: ${kode||'(lihat screenshot)'}
+- Harga terakhir: ${g('ai_harga')?'Rp'+g('ai_harga'):'(baca dari screenshot bila ada)'}
+- ${pos}
+- Horizon: ${g('ai_hor')}
+- Total modal: Rp${g('ai_mod')} ; risiko per transaksi: ${g('ai_risk')}%
+- Catatan: ${g('ai_note')||'-'}
+- Jumlah screenshot terlampir: ${ai_imgs.length}
+
+ATURAN BEI YANG BERLAKU: 1 lot = 100 lembar. Fraksi: Rp1 (<200), Rp2 (200–<500), Rp5 (500–<2.000), Rp10 (2.000–<5.000), Rp25 (≥5.000). ARA 35% (≤Rp200), 25% (>200–5.000), 20% (>5.000); ARB 7% untuk harga ≥Rp15 (berlaku s.d. 31 Des 2026). Biaya ±0,15% beli, ±0,25% jual. Settlement T+2.
+
+PRINSIP: Jangan mengarang angka. Bila sesuatu tidak terbaca atau tidak diberikan, tulis "tidak terlihat/tidak tersedia" dan turunkan keyakinan. Pengetahuan umum Anda tentang emiten mungkin sudah usang — sebutkan bila Anda memakainya. Keyakinan "Tinggi" hanya bila teknikal, fundamental, dan berita searah. Risk–reward minimal 1:2 untuk rekomendasi BELI. Ukuran posisi: lot = (modal × risiko%) ÷ (harga masuk − stop loss) ÷ 100, dibulatkan ke bawah, dan nilai posisi maksimal 20% modal. Bulatkan semua level harga ke fraksi BEI.
+
+FORMAT JAWABAN (pakai judul ### persis seperti ini):
+### Yang terlihat di screenshot & data
+(poin-poin: tren, level harga, indikator, volume, order book, angka keuangan, berita — hanya yang benar-benar terlihat)
+### Rekomendasi
+Satu baris tebal: **REKOMENDASI: BELI/TAHAN/KURANGI/JUAL/PANTAU — Keyakinan: Rendah/Sedang/Tinggi (skor 0–100)**
+lalu 2–3 kalimat alasan utama.
+### Alasan pendukung & penentang
+(poin + dan poin −)
+### Rencana manajemen risiko
+Tabel: | Item | Nilai | dengan baris Area masuk, Stop loss, Target 1, Target 2, Risk–reward, Jumlah lot, Nilai posisi, % modal, Rugi maksimal bila stop loss kena.
+### Skenario yang membatalkan analisis
+### Yang perlu Anda cek sendiri
+### Penafian
+(1 kalimat: analisis AI, bukan nasihat keuangan berlisensi)`;
+const r=document.getElementById('ai_res');r.style.display='block';r.innerHTML='<p>⏳ Claude sedang membaca data & screenshot…</p>';r.scrollIntoView({behavior:'smooth'});
+const go=document.getElementById('ai_go'),sp=document.getElementById('ai_stop');go.disabled=true;sp.style.display='';msg.textContent='';ai_ab=new AbortController();
+try{let opts={modelTier:'complex',signal:ai_ab.signal,cache:false,onText:({text})=>{r.innerHTML=md(text)}};
+if(ai_imgs.length){let lim={};try{lim=await ai_sample.limits()}catch(e){}if(lim.images)opts.images=ai_imgs.map(x=>x.b);else msg.textContent='Catatan: gambar tidak dapat dikirim di tampilan ini; analisis memakai data teks saja.'}
+const res=await ai_sample(prompt,opts);r.innerHTML=md(res.text)+(res.truncated?'<p><i>(jawaban terpotong)</i></p>':'');
+try{const H=JSON.parse(localStorage.getItem('kbz_ai_hist')||'[]');H.unshift({d:new Date().toLocaleString('id-ID'),k:kode||'Screenshot',t:res.text});localStorage.setItem('kbz_ai_hist',JSON.stringify(H.slice(0,8)))}catch(e){}hist()}
+catch(e){if(e&&e.text)r.innerHTML=md(e.text);msg.textContent=e&&e.code==='not_granted'?'Akses AI ditolak. Muat ulang halaman dan izinkan saat diminta.':e&&e.code==='rate_limited'?'Terlalu banyak permintaan — coba lagi beberapa menit lagi.':(e&&e.name==='AbortError'?'Dihentikan.':'Gagal: '+((e&&e.message)||e))}
+finally{go.disabled=false;sp.style.display='none'}}
+
+document.getElementById('cvlogo').src=document.querySelector('header .logo').src;
+function masuk(){document.getElementById('cover').classList.add('hide')}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!document.getElementById('cover').classList.contains('hide'))masuk()});
+render();
+</script>
+</body>
+</html>
