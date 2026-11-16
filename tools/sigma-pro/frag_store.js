@@ -28,6 +28,7 @@ function supaStore(){
       sb.from("invites").select("email,name,role,team_id,member_key,user_id,joined_at"),
       sb.from("invite_codes").select("email,code"),
       sb.from("licenses").select("*").order("created_at", {ascending:false})]);
+    let sum = []; if (S.owner) { try { sum = ok(await sb.rpc("ringkasan_tim")) || []; } catch (e) {} }
     if (v !== ver) return;
     ok(ts); const iv = ok(inv);
     const o = {};
@@ -41,8 +42,8 @@ function supaStore(){
                    : {k:"m"+n, name:"Anggota " + n, email:"", uid:null}; }) };
     });
     const codes = {}; (cd.data || []).forEach(c => { codes[c.email] = c.code; });
-    const sig = JSON.stringify([o, codes, lc.data || [], iv]);
-    teams = o; S.codes = codes; S.lics = lc.data || []; S.invites = iv;
+    const sig = JSON.stringify([o, codes, lc.data || [], iv, sum]);
+    teams = o; S.codes = codes; S.lics = lc.data || []; S.invites = iv; S.sum = sum;
     if (sig !== lastSig || !S.teamsLoaded) { lastSig = sig; if (teamCb) teamCb(clone(o)); }
   }
   async function loadLogs(tid, full){
@@ -119,6 +120,7 @@ function supaStore(){
     async addMember(tid, k, name, email){ ver++; ok(await sb.from("invites").insert({email, role:"anggota", name, team_id:tid, member_key:k})); await loadTeams(); },
     async delMember(email){ ver++; ok(await sb.from("invites").delete().eq("email", email)); await loadTeams(); },
     async issue(email, nama, wa, harga){ ver++; const code = ok(await sb.rpc("terbitkan_lisensi", {p_email:email, p_nama:nama, p_wa:wa || null, p_harga:harga})); await loadTeams(); return code; },
+    async extend(id){ ver++; ok(await sb.rpc("perpanjang_lisensi", {p_id:id, p_bulan:12})); await loadTeams(); },
     async setRevoked(id, on){ ver++; ok(await sb.from("licenses").update({revoked_at:on ? new Date().toISOString() : null}).eq("id", id)); await loadTeams(); },
     poll(tid){
       loadTeams().catch(() => {});

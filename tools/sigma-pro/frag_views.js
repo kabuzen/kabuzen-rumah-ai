@@ -2,6 +2,9 @@
 const WA_KABUZEN = "628118102019";
 const appUrl = () => location.origin + location.pathname;
 const rp = n => "Rp" + Number(n || 0).toLocaleString("id-ID");
+const tgl = x => x ? new Date(x).toLocaleDateString("id-ID", {day:"numeric", month:"short", year:"numeric"}) : "";
+const kapan = x => { if (!x) return "belum ada"; const d = Math.floor((Date.now() - Date.parse(x)) / 864e5); return d <= 0 ? "hari ini" : d === 1 ? "kemarin" : d < 30 ? d + " hari lalu" : tgl(x); };
+const habis = l => !!(l.expires_at && Date.parse(l.expires_at) < Date.now());
 const waNum = s => { let d = String(s || "").replace(/\D/g, ""); if (d.startsWith("0")) d = "62" + d.slice(1); return d; };
 const lock = (b, txt) => { if (b) { b.disabled = true; b.dataset.txt = b.textContent; b.textContent = txt; } };
 const unlock = b => { if (b && b.isConnected) { b.disabled = false; if (b.dataset.txt) b.textContent = b.dataset.txt; } };
@@ -24,7 +27,7 @@ function viewAuth(){
       <label class="f">Ulangi password<input type="password" id="au-pass2" autocomplete="new-password"></label>
       <div class="row"><button class="btn pri" data-act="auth-activate">Simpan dan masuk</button><button class="link small" data-act="auth-mode" data-m="login">Kembali ke halaman masuk</button></div>`}
     </div>
-    <p class="small muted">Belum punya lisensi? Satu lisensi Rp1.000.000 untuk satu tim (1 koordinator dan 5 anggota), sekali beli berlaku selamanya. <a href="${wa}" target="_blank" rel="noopener">Beli lewat WhatsApp</a></p>
+    <p class="small muted">Belum punya lisensi? Satu lisensi Rp1.000.000 untuk satu tim (1 koordinator dan 5 anggota), berlaku 1 tahun. <a href="${wa}" target="_blank" rel="noopener">Beli lewat WhatsApp</a></p>
   </section>`;
 }
 async function authLogin(btn){
@@ -77,7 +80,10 @@ async function setSession(sess){
 function licNotice(){
   if (!team()) return "";
   const l = (S.lics || []).find(l => l.team_id === S.tid);
-  return l && !l.revoked_at ? "" : `<div class="notice" style="border-left-color:var(--bad);margin-bottom:12px">Lisensi tim ini tidak berlaku. Data masih bisa dibaca, tetapi tidak bisa diisi. Hubungi Kabuzen Rumah AI.</div>`;
+  const wa = `<a href="https://wa.me/${WA_KABUZEN}" target="_blank" rel="noopener">WhatsApp</a>`;
+  if (!l || l.revoked_at || habis(l)) return `<div class="notice" style="border-left-color:var(--bad);margin-bottom:12px">${l && !l.revoked_at ? "Masa lisensi tim ini berakhir pada " + tgl(l.expires_at) + "." : "Lisensi tim ini tidak berlaku."} Data masih bisa dibaca, tetapi tidak bisa diisi. Hubungi Kabuzen Rumah AI lewat ${wa} untuk memperpanjang.</div>`;
+  const sisa = l.expires_at ? Math.ceil((Date.parse(l.expires_at) - Date.now()) / 864e5) : null;
+  return sisa !== null && sisa <= 30 && mySlot() === "koor" ? `<div class="notice" style="border-left-color:var(--warn);margin-bottom:12px">Lisensi tim berakhir ${sisa} hari lagi (${tgl(l.expires_at)}). Hubungi Kabuzen Rumah AI lewat ${wa} untuk memperpanjang.</div>` : "";
 }
 function copyBox(){
   const c = S.copyText;
@@ -85,11 +91,11 @@ function copyBox(){
     <textarea id="cp-text" readonly rows="10" style="width:100%;font:inherit">${esc(c.text)}</textarea>
     <div class="row"><button class="btn sm" data-act="cp-copy">Salin teks</button><a class="btn sm" target="_blank" rel="noopener" href="https://wa.me/${esc(waNum(c.wa))}?text=${encodeURIComponent(c.text)}">Kirim lewat WhatsApp</a><button class="link small" data-act="cp-close">Tutup</button></div></div>`;
 }
-const buyerMsg = l => `Terima kasih telah membeli SIGMA Tim Enam Tahap.\n\nCara mulai:\n1. Buka ${appUrl()}\n2. Pilih "Pengguna baru? Aktivasi akun"\n3. Email: ${l.buyer_email}\n4. Kode lisensi: ${l.code}\n5. Buat password Anda, lalu buat tim dan tambahkan 5 anggota.\n\nLisensi berlaku selamanya untuk 1 tim (1 koordinator dan 5 anggota). Simpan kode lisensi ini; kode yang sama dipakai bila Anda lupa password.`;
+const buyerMsg = l => `Terima kasih telah membeli SIGMA Tim Enam Tahap.\n\nCara mulai:\n1. Buka ${appUrl()}\n2. Pilih "Pengguna baru? Aktivasi akun"\n3. Email: ${l.buyer_email}\n4. Kode lisensi: ${l.code}\n5. Buat password Anda, lalu buat tim dan tambahkan 5 anggota.\n\nLisensi berlaku ${l.duration_months ? (l.duration_months % 12 === 0 ? (l.duration_months / 12) + " tahun" : l.duration_months + " bulan") + " sejak tim dibuat" : "selamanya"}, untuk 1 tim (1 koordinator dan 5 anggota). Simpan kode lisensi ini; kode yang sama dipakai bila Anda lupa password.`;
 const memberMsg = (m, t) => `Halo ${m.name}, Anda diundang ke tim "${t.name}" di SIGMA Tim Enam Tahap.\n\nCara masuk:\n1. Buka ${appUrl()}\n2. Pilih "Pengguna baru? Aktivasi akun"\n3. Email: ${m.email}\n4. Kode aktivasi: ${(S.codes || {})[m.email] || ""}\n5. Buat password Anda sendiri.\n\nSimpan kode aktivasi ini; kode yang sama dipakai bila Anda lupa password.`;
 function viewTeamsPro(){
   const list = Object.entries(S.teams).sort((a,b) => (a[1].created || 0) - (b[1].created || 0));
-  const myLic = (S.lics || []).find(l => l.buyer_email === S.email && !l.revoked_at);
+  const myLic = (S.lics || []).find(l => l.buyer_email === S.email && !l.revoked_at && !habis(l));
   const free = myLic && !myLic.team_id;
   const me = (S.invites || []).find(i => i.email === S.email);
   return `${S.owner ? adminPanel() : ""}
@@ -162,11 +168,15 @@ async function memDel(){
 function adminPanel(){
   const L = S.lics || [], act = L.filter(l => !l.revoked_at);
   const tname = l => (l.team_id && S.teams[l.team_id]) ? S.teams[l.team_id].name : "tim";
+  const masa = l => l.expires_at ? (habis(l) ? "habis " : "s.d. ") + tgl(l.expires_at) : l.duration_months ? l.duration_months + " bulan sejak tim dibuat" : "selamanya";
+  const cf = (l, t) => S.confirm && S.confirm.type === t && S.confirm.id === l.id;
+  const sum = {}; (S.sum || []).forEach(r => { sum[r.team_id] = r; });
+  const teams = Object.entries(S.teams).sort((a,b) => (a[1].created || 0) - (b[1].created || 0));
   return `<section class="card stack" style="margin-bottom:16px">
     <div class="stagehead" style="--sc:var(--accent)"><span class="eyebrow">Admin Kabuzen</span><h2>Lisensi</h2>
       <p class="muted small">${act.length} lisensi berlaku · ${act.filter(l => l.team_id).length} sudah dipakai · total ${rp(act.reduce((a,l) => a + (l.price_idr || 0), 0))}</p></div>
     <h3>Terbitkan lisensi baru</h3>
-    <p class="small muted">Terbitkan setelah pembayaran diterima. Pembeli menjadi koordinator dan langsung bisa aktivasi akun.</p>
+    <p class="small muted">Terbitkan setelah pembayaran diterima. Pembeli menjadi koordinator dan langsung bisa aktivasi akun. Lisensi berlaku 1 tahun sejak tim dibuat.</p>
     <div class="grid2">
       <label class="f">Email pembeli<input type="text" inputmode="email" autocapitalize="off" id="lic-email" placeholder="nama@email.com" value="${esc(S.drafts["lic-email"] || "")}"></label>
       <label class="f">Nama pembeli<input type="text" id="lic-name" value="${esc(S.drafts["lic-name"] || "")}"></label>
@@ -177,12 +187,29 @@ function adminPanel(){
     ${S.copyText ? copyBox() : ""}
     <div class="scroll"><table class="t"><thead><tr><th align="left">Kode</th><th align="left">Pembeli</th><th align="left">Harga</th><th align="left">Status</th><th></th></tr></thead><tbody>
     ${L.map(l => `<tr><td class="mono small">${esc(l.code)}</td><td>${esc(l.buyer_name || "")}<br><span class="small muted">${esc(l.buyer_email)}</span></td><td class="tnum">${rp(l.price_idr)}</td>
-      <td>${l.revoked_at ? "Dicabut" : l.team_id ? "Dipakai: " + esc(tname(l)) : "Belum dipakai"}</td>
-      <td>${S.confirm && S.confirm.type === "lic-rev" && S.confirm.id === l.id
+      <td>${l.revoked_at ? "Dicabut" : habis(l) ? "Kedaluwarsa" : l.team_id ? "Dipakai: " + esc(tname(l)) : "Belum dipakai"}<br><span class="small muted">${esc(masa(l))}</span></td>
+      <td>${cf(l, "lic-rev")
         ? `<span class="small">${l.revoked_at ? "Pulihkan" : "Cabut"} lisensi ini?</span> <button class="link small" data-act="lic-rev-yes">Ya</button> <button class="link small" data-act="lic-rev-no">Batal</button>`
-        : `<button class="link small" data-act="lic-copy" data-id="${l.id}">Pesan pembeli</button> · <button class="link small" data-act="lic-rev" data-id="${l.id}">${l.revoked_at ? "Pulihkan" : "Cabut"}</button>`}</td></tr>`).join("") || `<tr><td colspan="5" class="muted">Belum ada lisensi.</td></tr>`}
+        : cf(l, "lic-ext") ? `<span class="small">Tambah 1 tahun?</span> <button class="link small" data-act="lic-ext-yes">Ya</button> <button class="link small" data-act="lic-rev-no">Batal</button>`
+        : `<button class="link small" data-act="lic-copy" data-id="${l.id}">Pesan pembeli</button> · ${l.duration_months || l.expires_at ? `<button class="link small" data-act="lic-ext" data-id="${l.id}">Perpanjang 1 tahun</button> · ` : ""}<button class="link small" data-act="lic-rev" data-id="${l.id}">${l.revoked_at ? "Pulihkan" : "Cabut"}</button>`}</td></tr>`).join("") || `<tr><td colspan="5" class="muted">Belum ada lisensi.</td></tr>`}
+    </tbody></table></div>
+    <h3>Pantau aktivitas tim</h3>
+    <p class="small muted">Klik nama tim untuk membuka isinya: setoran harian tiap anggota, hasil verifikasi, dan debat.</p>
+    <div class="scroll"><table class="t"><thead><tr><th align="left">Tim</th><th align="left">Posisi</th><th align="left">Anggota aktif</th><th align="left">Setoran</th><th align="left">Menunggu</th><th align="left">Setoran terakhir</th><th align="left">Terakhir dibuka</th></tr></thead><tbody>
+    ${teams.map(([id,t]) => { const r = sum[id] || {}, p = E.position(t.start, t.holidays || {}); return `<tr>
+      <td><button class="link" data-act="pick-team" data-id="${id}">${esc(t.name)}</button><br><span class="small muted">${esc(t.coord.name)}</span></td>
+      <td>${p.before ? "Mulai " + E.fmtShort(t.start) : p.done ? "Selesai" : "Tahap " + p.stage + " · Hari " + p.day}</td>
+      <td class="tnum">${r.anggota_aktif || 0}/5</td>
+      <td class="tnum">${r.diterima || 0} diterima dari ${r.setoran || 0}</td>
+      <td class="tnum">${r.menunggu || 0}</td>
+      <td>${kapan(r.setoran_terakhir)}</td><td>${kapan(r.terakhir_masuk)}</td></tr>`; }).join("") || `<tr><td colspan="7" class="muted">Belum ada tim.</td></tr>`}
     </tbody></table></div>
   </section>`;
+}
+async function licExtend(){
+  const id = S.confirm.id; S.confirm = null;
+  try { await store.extend(id); toast("Lisensi diperpanjang 1 tahun."); } catch (e) { toast(sbErr(e)); }
+  render();
 }
 async function licIssue(btn){
   const email = lower($("#lic-email").value), nama = ($("#lic-name").value || "").trim(), wa = ($("#lic-wa").value || "").trim();
@@ -225,6 +252,8 @@ function proAct(a, b){
     case "lic-copy": { const l = (S.lics || []).find(x => x.id === b.dataset.id); if (l) S.copyText = {title:"Pesan untuk " + (l.buyer_name || l.buyer_email), text:buyerMsg(l), wa:l.buyer_wa}; render(); return true; }
     case "lic-rev": S.confirm = {type:"lic-rev", id:b.dataset.id}; render(); return true;
     case "lic-rev-no": S.confirm = null; render(); return true;
+    case "lic-ext": S.confirm = {type:"lic-ext", id:b.dataset.id}; render(); return true;
+    case "lic-ext-yes": licExtend(); return true;
     case "lic-rev-yes": licRevoke(); return true;
   }
   return false;
