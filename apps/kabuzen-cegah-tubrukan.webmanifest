@@ -1,0 +1,23 @@
+{
+ "name": "KABUZEN CEGAH TUBRUKAN DI LAUT",
+ "short_name": "Cegah Tubrukan",
+ "lang": "id",
+ "start_url": "./kabuzen-cegah-tubrukan",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#1d0b78",
+ "theme_color": "#1d0b78",
+ "icons": [
+  {
+   "src": "kabuzen-cegah-tubrukan-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "kabuzen-cegah-tubrukan-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}

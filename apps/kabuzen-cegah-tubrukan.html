@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1d0b78">
+<title>KABUZEN CEGAH TUBRUKAN DI LAUT</title>
+<link rel="manifest" href="kabuzen-cegah-tubrukan.webmanifest">
+<link rel="icon" href="data:image/jpeg;base64,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">
+<link rel="apple-touch-icon" href="kabuzen-cegah-tubrukan-192.png">
+<style>
+:root{--indigo:#1d0b78;--indigo2:#2a1a9a;--kuning:#ffd60a;--laut:#0b2a4a;--bg:#f3f4fa;--kartu:#fff;--teks:#1a1c2b;--redup:#5d6178;--garis:#dfe1ee;--ok:#2f9e44;--salah:#d9480f}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--teks);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+button,input,select{font:inherit}
+a{color:var(--indigo2);overflow-wrap:anywhere}
+main{overflow-wrap:break-word}
+header.atas{position:sticky;top:0;z-index:20;background:var(--indigo);color:#fff;display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top))}
+header.atas h1{font-size:15px;margin:0;flex:1;font-weight:700;letter-spacing:.02em;line-height:1.2}
+header.atas small{display:block;font-weight:500;opacity:.8;font-size:11.5px;letter-spacing:0}
+.logo{width:38px;height:38px;border-radius:50%;border:2px solid var(--kuning);object-fit:cover;flex:none}
+.kembali{background:none;border:0;color:#fff;font-size:22px;padding:4px 8px 4px 0;cursor:pointer;line-height:1}
+.status{font-size:11px;padding:3px 8px;border-radius:99px;background:rgba(255,255,255,.14);white-space:nowrap}
+main{max-width:760px;margin:0 auto;padding:16px 14px 96px}
+nav.bawah{position:fixed;left:0;right:0;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--garis);display:flex;justify-content:space-around;padding-bottom:env(safe-area-inset-bottom)}
+nav.bawah a{flex:1;text-align:center;text-decoration:none;color:var(--redup);font-size:11.5px;padding:8px 2px 9px;min-height:56px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav.bawah a svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
+nav.bawah a.aktif{color:var(--indigo);font-weight:700}
+h2{font-size:21px;margin:4px 0 10px;line-height:1.25}
+h3{font-size:16.5px;margin:20px 0 6px}
+p{margin:0 0 10px}
+.kartu{background:var(--kartu);border:1px solid var(--garis);border-radius:14px;padding:14px;margin:0 0 12px}
+a.kartu{display:block;text-decoration:none;color:inherit}
+a.kartu:active{background:#f0f0fb}
+.baris{display:flex;gap:10px;align-items:center}
+.tumbuh{flex:1;min-width:0}
+.redup{color:var(--redup);font-size:14px}
+.kecil{font-size:13px}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 9px;border-radius:99px;color:#fff;margin:0 4px 4px 0}
+.nomor{width:40px;height:40px;border-radius:11px;background:var(--indigo);color:var(--kuning);font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.bar{height:8px;background:#e6e7f3;border-radius:99px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--indigo);border-radius:99px}
+.tombol{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:10px 18px;border-radius:12px;border:1px solid var(--indigo);background:#fff;color:var(--indigo);font-weight:700;cursor:pointer;text-decoration:none}
+.tombol.utama{background:var(--kuning);border-color:var(--kuning);color:#1a1440}
+.tombol.gelap{background:var(--indigo);color:#fff}
+.tombol.penuh{width:100%}
+.tombol:disabled{opacity:.45}
+.tab{display:flex;gap:6px;margin:0 0 14px;overflow-x:auto}
+.tab button{flex:1;min-height:42px;border-radius:10px;border:1px solid var(--garis);background:#fff;color:var(--redup);font-weight:600;padding:6px 10px;white-space:nowrap;cursor:pointer}
+.tab button.aktif{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+ul.rapi{margin:0 0 10px;padding-left:20px}
+ul.rapi li{margin-bottom:5px}
+ol.waktu{list-style:none;margin:0 0 10px;padding:0;border-left:3px solid var(--indigo);}
+ol.waktu li{padding:0 0 10px 14px;position:relative}
+ol.waktu li:before{content:"";position:absolute;left:-7.5px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--kuning);border:2px solid var(--indigo)}
+label{display:block;font-weight:600;font-size:14px;margin:10px 0 4px}
+input[type=text],input[type=email],input[type=number],select{width:100%;min-height:46px;border:1px solid #c5c8dc;border-radius:10px;padding:8px 12px;background:#fff;color:var(--teks)}
+.pilihan{display:block;width:100%;text-align:left;margin:0 0 8px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--garis);background:#fff;cursor:pointer;min-height:48px;color:var(--teks)}
+.pilihan.benar{border-color:var(--ok);background:#ebfbee}
+.pilihan.salah{border-color:var(--salah);background:#fff4e6}
+.pilihan:disabled{cursor:default;color:var(--teks)}
+.catatan{border-left:4px solid var(--kuning);background:#fffbe0;padding:10px 12px;border-radius:0 10px 10px 0;font-size:14px;margin:0 0 12px}
+.cek{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--garis)}
+.cek:last-child{border:0}
+.cek input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--indigo)}
+canvas.laut{width:100%;aspect-ratio:1/1;border-radius:14px;display:block;background:#0b2a4a;touch-action:manipulation}
+.keterangan{min-height:66px;background:#0f1b3d;color:#fff;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14.5px}
+.kendali{display:flex;gap:8px;align-items:center}
+.kendali input[type=range]{flex:1;min-width:0;accent-color:var(--indigo);min-height:40px}
+.kisi2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kisi2 .kartu{margin:0}
+.hasil{font-size:28px;font-weight:800;color:var(--indigo)}
+/* sampul */
+.sampul{min-height:100vh;background:linear-gradient(175deg,#1d0b78 0%,#16105c 55%,#0b2a4a 100%);color:#fff;padding:22px 20px 40px;position:relative;overflow:hidden}
+.sampul .logo{position:absolute;right:18px;top:18px;width:54px;height:54px;border-width:3px}
+.sampul .isi{max-width:520px;margin:0 auto;padding-top:86px}
+.sampul h1{font-size:34px;line-height:1.08;margin:10px 0 12px;letter-spacing:-.01em}
+.sampul h1 span{color:var(--kuning)}
+.sampul p{opacity:.9}
+.sampul .garis{display:flex;gap:6px;margin:18px 0}
+.sampul .garis i{height:5px;flex:1;border-radius:9px}
+.sampul form{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px;margin-top:18px}
+.sampul label{color:#fff}
+.sampul svg.ombak{position:absolute;left:0;right:0;bottom:0;width:100%;opacity:.25}
+@media (min-width:700px){main{padding-top:24px}h2{font-size:25px}}
+@media print{header.atas,nav.bawah,.tanpa-cetak{display:none!important}main{padding:0}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>/* KABUZEN CEGAH TUBRUKAN DI LAUT — data konten.
+   Semua fakta kecelakaan diringkas dari sumber pada daftar REFERENSI.
+   Uraian aturan adalah PARAFRASE; naskah resmi COLREG 1972 tetap menjadi rujukan utama. */
+window.KONTEN = {
+versi: "1.0 — November 2026",
+
+referensi: [
+ {id:"imo", judul:"COLREG — Preventing Collisions at Sea (ringkasan konvensi)", penerbit:"International Maritime Organization (IMO)", url:"https://imo.org/en/OurWork/Safety/Pages/Preventing-Collisions.aspx", ket:"Sumber resmi. Naskah lengkap aturan diterbitkan IMO (berbayar)."},
+ {id:"ntsb-fitz", judul:"Collision between US Navy Destroyer Fitzgerald and Philippine-Flag Container Ship ACX Crystal (MAR-20/02)", penerbit:"NTSB, Amerika Serikat, 2020", url:"https://www.ntsb.gov/investigations/Pages/DCA17PM018.aspx", ket:"Halaman investigasi resmi; laporan lengkap dapat diunduh dari halaman ini."},
+ {id:"ntsb-mccain", judul:"Collision between US Navy Destroyer John S McCain and Tanker Alnic MC (MAR-19/01)", penerbit:"NTSB, Amerika Serikat, 2019", url:"https://www.ntsb.gov/news/press-releases/Pages/NR20190805.aspx", ket:"Siaran pers resmi NTSB; ringkasan laporan dimuat juga oleh USNI News."},
+ {id:"usni-mccain", judul:"NTSB Accident Report on Fatal 2017 USS John McCain Collision off Singapore", penerbit:"USNI News, 6 Agustus 2019", url:"https://news.usni.org/2019/08/06/ntsb-accident-report-on-fatal-2017-uss-john-mccain-collision-off-singapore", ket:"Memuat ringkasan dan naskah laporan NTSB."},
+ {id:"ntsb-rm", judul:"Grounding of the Panamanian Passenger Ship Royal Majesty on Rose and Crown Shoal (MAR-97/01)", penerbit:"NTSB, Amerika Serikat, 1997", url:"https://www.ntsb.gov/investigations/Pages/DCA95MM042.aspx", ket:"Halaman investigasi resmi."},
+ {id:"knkt-bahuga", judul:"Investigation into the Collision between MV Bahuga Jaya and MT Norgas Cathinka at Sunda Strait, 26 September 2012 (KNKT-12-09-03-03)", penerbit:"Komite Nasional Keselamatan Transportasi (KNKT), 2013", url:"https://www.atsb.gov.au/node/7620", ket:"Laporan akhir KNKT; tautan menuju ringkasan ATSB Australia yang membantu analisis VDR. Naskah KNKT tersedia di situs KNKT."},
+ {id:"kontan-bahuga", judul:"Ini kronologis tabrakan Bahuga Jaya vs Norgas", penerbit:"Kontan, 29 April 2013", url:"https://industri.kontan.co.id/news/ini-kronologis-tabrakan-bahuga-jaya-vs-norgas", ket:"Liputan jumpa pers KNKT; memuat kronologi per menit."},
+ {id:"bisnis-bahuga", judul:"KNKT Rekomendasikan Pembenahan Alur Kapal Merak–Bakauheni", penerbit:"Bisnis Indonesia, 29 April 2013", url:"https://ekonomi.bisnis.com/read/20130429/98/11326/knkt-rekomendasikan-pembenahan-alur-kapal-merak-bakauheni", ket:"Liputan rekomendasi KNKT."},
+ {id:"maib-ever", judul:"Collision between container vessel Ever Smart and oil tanker Alexandra 1 (Report 28/2015)", penerbit:"Marine Accident Investigation Branch (MAIB), Inggris, 2015", url:"https://www.gov.uk/maib-reports/collision-between-container-vessel-ever-smart-and-oil-tanker-alexandra-1", ket:"Halaman laporan resmi dengan tautan PDF lengkap."},
+ {id:"maib-seagate", judul:"Collision between bulk carrier Seagate and refrigerated-cargo vessel Timor Stream (Report 17/2013)", penerbit:"MAIB, Inggris, 2013", url:"https://www.gov.uk/maib-reports/collision-between-bulk-carrier-seagate-and-refrigerated-cargo-vessel-timor-stream-off-the-dominican-republic", ket:"Halaman laporan resmi dengan tautan PDF lengkap."},
+ {id:"brit-doria", judul:"Andrea Doria (Italian ship)", penerbit:"Encyclopaedia Britannica", url:"https://www.britannica.com/topic/Andrea-Doria-Italian-ship", ket:"Ringkasan ensiklopedis. Penyebab pasti tidak pernah diputuskan pengadilan karena perkara diselesaikan di luar sidang."},
+ {id:"imo-mass", judul:"Autonomous shipping (FAQ) — MASS Code, resolusi MSC.595(111)", penerbit:"International Maritime Organization (IMO), 2026", url:"https://www.imo.org/en/mediacentre/hottopics/pages/autonomous-shipping.aspx", ket:"Sumber resmi: definisi MASS, hasil regulatory scoping exercise, status MASS Code."},
+ {id:"imo-msc111", judul:"Maritime Safety Committee — 111th session (MSC 111), 13–22 May 2026: ringkasan sidang", penerbit:"IMO, 2026", url:"https://www.imo.org/en/mediacentre/meetingsummaries/pages/temporary-msc-111.aspx", ket:"Sumber resmi: adopsi MASS Code tidak wajib."},
+ {id:"dnv-msc111", judul:"IMO MSC 111: New MASS Code adopted", penerbit:"DNV, Mei 2026", url:"https://www.dnv.com/news/2026/imo-mcs-111-new-mass-code-adopted/", ket:"Ringkasan badan klasifikasi: lingkup, pusat operasi jarak jauh, peran nakhoda, jadwal kode wajib."},
+ {id:"emsa-safemass", judul:"SAFEMASS — Study of the risks and regulatory issues of specific cases of MASS (Summary, Report 2020-0279)", penerbit:"DNV GL untuk European Maritime Safety Agency (EMSA), 2020", url:"https://emsa.europa.eu/damage-stability-study/download/6178/3892/23.html", ket:"Kajian risiko: kesadaran situasi operator, mode confusion, kepercayaan pada otomasi. Pandangan penulis kajian, bukan sikap resmi EMSA."},
+ {id:"zhou2024", judul:"Human errors analysis for remotely controlled ships during collision avoidance", penerbit:"Zhou dkk., Frontiers in Marine Science 11:1473367, 2024", url:"https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2024.1473367/full", ket:"Jurnal ilmiah akses terbuka; abstrak dan naskah lengkap pada tautan yang sama."},
+ {id:"wrobel2022", judul:"The Vagueness of COLREG versus Collision Avoidance Techniques — A Discussion on the Current State and Future Challenges Concerning the Operation of Autonomous Ships", penerbit:"Sustainability 14(24):16516, MDPI, 2022", url:"https://www.mdpi.com/2071-1050/14/24/16516", ket:"Jurnal ilmiah akses terbuka; abstrak dan naskah lengkap pada tautan yang sama."},
+ {id:"mgn379", judul:"Marine Guidance Note MGN 379 (M+F): Navigation — Use of Electronic Navigation Aids", penerbit:"Maritime and Coastguard Agency (MCA), Inggris", url:"https://assets.publishing.service.gov.uk/media/5d84d867ed915d5257b5b6f2/MGN_379.pdf", ket:"Pedoman resmi tentang radar, penanda haluan, masukan kompas/log, AIS, dan GPS."}
+],
+
+faktor: {
+ cuaca:{nama:"Cuaca & tampak terbatas", warna:"#3b82c4"},
+ manusia:{nama:"Human error", warna:"#d9480f"},
+ navigasi:{nama:"Kesalahan navigasi", warna:"#2f9e44"},
+ alat:{nama:"Peralatan elektronik", warna:"#7048e8"}
+},
+
+modul: [
+{id:"m1", judul:"Dasar pencegahan tubrukan", faktor:"manusia",
+ ringkas:"Tanggung jawab, pengamatan, kecepatan aman, bahaya tubrukan, dan tindakan menghindar (Aturan 2, 5, 6, 7, 8).",
+ tujuan:["Menjelaskan mengapa pengamatan yang baik menjadi dasar semua aturan lain.","Menentukan ada tidaknya bahaya tubrukan dengan baringan dan radar.","Menyebutkan ciri tindakan menghindar yang benar: dini, tegas, dan cukup besar."],
+ materi:[
+  {h:"Kedudukan COLREG 1972", p:["Peraturan Internasional untuk Mencegah Tubrukan di Laut (COLREG 1972, di Indonesia dikenal sebagai P2TL) disahkan IMO pada 20 Oktober 1972 dan berlaku sejak 15 Juli 1977. Isinya 38 aturan dalam lima bagian (A–E) ditambah empat lampiran; Bagian F (Aturan 39–41) ditambahkan kemudian.","Uraian di aplikasi ini adalah parafrase untuk belajar. Di kapal, naskah resmi edisi terakhir tetap menjadi rujukan."]},
+  {h:"Aturan 2 — Tanggung jawab", p:["Mematuhi aturan tidak membebaskan siapa pun dari akibat kelalaian, termasuk kelalaian terhadap tindakan berjaga-jaga yang dituntut oleh kecakapan pelaut yang baik (good seamanship).","Dalam keadaan bahaya yang mendesak, menyimpang dari aturan dibenarkan bila itu satu-satunya cara menghindari bahaya langsung."]},
+  {h:"Aturan 5 — Pengamatan", p:["Setiap kapal setiap saat wajib melakukan pengamatan yang layak dengan penglihatan dan pendengaran serta semua sarana yang tersedia sesuai keadaan, agar dapat menilai sepenuhnya situasi dan bahaya tubrukan.","Semua sarana berarti mata, telinga, radar/ARPA, AIS, dan VHF dipakai bersama. Tidak satu pun boleh menggantikan yang lain."]},
+  {h:"Aturan 6 — Kecepatan aman", p:["Kapal harus selalu bergerak dengan kecepatan aman sehingga dapat bertindak tepat dan berhasil guna untuk menghindari tubrukan dan dapat berhenti dalam jarak yang sesuai dengan keadaan.","Yang dipertimbangkan antara lain: tingkat penglihatan, kepadatan lalu lintas termasuk kumpulan kapal ikan, kemampuan olah gerak, cahaya latar pada malam hari, angin, laut, arus, bahaya navigasi di dekatnya, dan sarat dibanding kedalaman. Kapal berradar juga menimbang keterbatasan radarnya."]},
+  {h:"Aturan 7 — Bahaya tubrukan", p:["Gunakan semua sarana yang tersedia untuk menentukan ada tidaknya bahaya tubrukan. Bila ragu, anggap bahaya itu ada.","Radar dipakai dengan benar: pengamatan jarak jauh untuk peringatan dini dan plotting atau pengamatan sistematis yang setara. Jangan menarik kesimpulan dari keterangan yang sangat kurang, terutama keterangan radar yang sangat kurang.","Tanda utama: baringan pedoman kapal yang mendekat tidak menunjukkan perubahan berarti. Bahaya kadang tetap ada meski baringan berubah nyata, misalnya terhadap kapal sangat besar, tundaan, atau kapal pada jarak dekat."]},
+  {h:"Aturan 8 — Tindakan menghindari tubrukan", p:["Tindakan harus tegas, dilakukan dalam waktu yang cukup, dan memperhatikan kecakapan pelaut yang baik.","Perubahan haluan dan/atau kecepatan harus cukup besar sehingga segera tampak oleh kapal lain, baik secara visual maupun di radar. Hindari serangkaian perubahan kecil.","Bila perlu untuk menghindari tubrukan atau memberi waktu lebih untuk menilai keadaan, kurangi kecepatan atau hentikan laju dengan memberhentikan atau memundurkan mesin. Pantau hasil tindakan sampai kapal lain benar-benar lewat dan bebas."]}
+ ],
+ kasus:["seagate","fitzgerald"], anim:["r15"],
+ kuis:[
+  {q:"Menurut Aturan 5, pengamatan yang layak dilakukan dengan…", o:["Radar dan AIS saja bila tersedia","Penglihatan, pendengaran, dan semua sarana yang tersedia","Penglihatan saja pada siang hari","VHF sebagai sarana utama"], a:1, why:"Aturan 5 menuntut penglihatan, pendengaran, dan semua sarana yang tersedia sesuai keadaan."},
+  {q:"Baringan pedoman sebuah kapal yang mendekat tidak berubah berarti. Kesimpulan yang benar:", o:["Kapal itu akan lewat aman","Bahaya tubrukan harus dianggap ada","Tunggu sampai jarak 1 mil","Cukup pantau lewat AIS"], a:1, why:"Aturan 7: baringan yang tidak berubah berarti menandakan bahaya tubrukan."},
+  {q:"Anda ragu apakah ada bahaya tubrukan. Aturan 7 meminta Anda…", o:["Menganggap bahaya itu ada","Menganggap bahaya itu tidak ada","Memanggil kapal lain dulu lewat VHF","Menunggu perwira lain"], a:0, why:"Bila ada keraguan, bahaya tubrukan harus dianggap ada."},
+  {q:"Ciri tindakan menghindar yang benar menurut Aturan 8:", o:["Kecil dan bertahap agar tidak mengganggu","Tegas, cukup dini, dan cukup besar agar segera tampak","Hanya perubahan kecepatan","Menunggu kapal lain bertindak dulu"], a:1, why:"Aturan 8 meminta tindakan tegas, dalam waktu cukup, dan cukup besar; serangkaian perubahan kecil harus dihindari."},
+  {q:"Faktor yang BUKAN bagian dari pertimbangan kecepatan aman (Aturan 6):", o:["Tingkat penglihatan","Kepadatan lalu lintas","Jadwal tiba di pelabuhan","Kemampuan olah gerak kapal"], a:2, why:"Jadwal tidak termasuk; kecepatan aman ditentukan keadaan dan kemampuan kapal."}
+ ]},
+
+{id:"m2", judul:"Kapal saling melihat", faktor:"manusia",
+ ringkas:"Menyusul, berhadapan, memotong, kewajiban kapal yang menghindar dan yang bertahan (Aturan 13–17).",
+ tujuan:["Mengenali situasi menyusul, berhadapan, dan memotong.","Menentukan kapal mana yang wajib menghindar.","Menjelaskan kapan kapal yang bertahan boleh dan wajib bertindak."],
+ materi:[
+  {h:"Aturan 13 — Menyusul", p:["Kapal yang menyusul wajib menghindari kapal yang disusul, apa pun jenis kapalnya.","Kapal dianggap menyusul bila mendekat dari arah lebih dari 22,5° di belakang arah melintang kapal lain; pada malam hari ia hanya melihat lampu buritan. Bila ragu, anggap diri Anda menyusul.","Perubahan baringan sesudahnya tidak mengubah status: kapal yang menyusul tetap wajib menghindar sampai lewat dan bebas."]},
+  {h:"Aturan 14 — Berhadapan", p:["Dua kapal tenaga yang bertemu pada haluan berlawanan atau hampir berlawanan sehingga menimbulkan bahaya tubrukan masing-masing mengubah haluan ke kanan, sehingga saling berpapasan pada lambung kiri.","Bila ragu apakah situasinya berhadapan, anggap berhadapan dan bertindaklah sesuai."]},
+  {h:"Aturan 15 — Memotong", p:["Bila dua kapal tenaga berpotongan haluan dan ada bahaya tubrukan, kapal yang melihat kapal lain di lambung kanannya wajib menghindar dan, bila keadaan mengizinkan, menghindari memotong di depan kapal lain itu."]},
+  {h:"Aturan 16 — Kapal yang menghindar", p:["Kapal yang diwajibkan menghindar harus, sedapat mungkin, bertindak dini dan tegas agar tetap bebas dari kapal lain."]},
+  {h:"Aturan 17 — Kapal yang bertahan", p:["Kapal yang bertahan mempertahankan haluan dan kecepatan.","Ia boleh bertindak sendiri segera setelah jelas bahwa kapal yang wajib menghindar tidak bertindak sesuai aturan. Ia wajib bertindak bila tubrukan tidak lagi dapat dihindari oleh tindakan kapal yang menghindar saja.","Dalam situasi memotong, kapal tenaga yang bertindak atas dasar ini sedapat mungkin tidak mengubah haluan ke kiri terhadap kapal yang berada di lambung kirinya."]},
+  {h:"Isyarat olah gerak (Aturan 34)", p:["Satu tiup pendek: saya mengubah haluan ke kanan. Dua tiup pendek: ke kiri. Tiga tiup pendek: mesin saya bergerak mundur.","Sekurang-kurangnya lima tiup pendek cepat: saya ragu terhadap maksud atau tindakan Anda."]}
+ ],
+ kasus:["fitzgerald","bahuga","mccain"], anim:["r14","r15","r13"],
+ kuis:[
+  {q:"Dua kapal tenaga berhadapan dengan bahaya tubrukan. Tindakan yang benar:", o:["Keduanya mengubah haluan ke kanan","Keduanya mengubah haluan ke kiri","Kapal yang lebih kecil menghindar","Keduanya mempertahankan haluan"], a:0, why:"Aturan 14: masing-masing mengubah haluan ke kanan dan berpapasan lambung kiri."},
+  {q:"Dalam situasi memotong, kapal yang wajib menghindar adalah kapal yang…", o:["Melihat kapal lain di lambung kirinya","Melihat kapal lain di lambung kanannya","Lebih cepat","Lebih besar"], a:1, why:"Aturan 15: kapal yang melihat kapal lain di lambung kanannya wajib menghindar."},
+  {q:"Kapal dianggap menyusul bila mendekat dari arah…", o:["Lebih dari 22,5° di belakang arah melintang","Tepat dari haluan","Kurang dari 22,5° dari haluan","Sisi kanan saja"], a:0, why:"Aturan 13: lebih dari 22,5° di belakang arah melintang kapal yang disusul."},
+  {q:"Kapal yang bertahan WAJIB bertindak ketika…", o:["Jarak tinggal 5 mil","Tubrukan tidak lagi dapat dihindari hanya oleh tindakan kapal yang menghindar","Kapal lain memanggil lewat VHF","Kapten naik ke anjungan"], a:1, why:"Aturan 17(b)."},
+  {q:"Lima tiup pendek cepat atau lebih berarti…", o:["Saya mengubah haluan ke kanan","Saya menyusul","Saya ragu terhadap maksud atau tindakan Anda","Mesin saya mundur"], a:2, why:"Aturan 34(d): isyarat keraguan."},
+  {q:"Kapal menghindar dalam situasi memotong sebaiknya menghindari…", o:["Mengurangi kecepatan","Memotong di depan kapal lain","Mengubah haluan ke kanan","Memberi isyarat"], a:1, why:"Aturan 15: bila keadaan mengizinkan, jangan memotong di depan kapal lain."}
+ ]},
+
+{id:"m3", judul:"Cuaca dan tampak terbatas", faktor:"cuaca",
+ ringkas:"Berlayar dalam kabut, hujan lebat, atau asap: Aturan 19, isyarat kabut, dan penggunaan radar.",
+ tujuan:["Menerapkan Aturan 19 ketika kapal lain hanya terdeteksi radar.","Menyebutkan perubahan haluan yang harus dihindari dalam tampak terbatas.","Mengambil pelajaran dari tubrukan Andrea Doria–Stockholm."],
+ materi:[
+  {h:"Kapan Aturan 19 berlaku", p:["Aturan 19 berlaku bagi kapal yang tidak saling melihat ketika berlayar di dalam atau di dekat daerah tampak terbatas. Aturan menyusul, berhadapan, dan memotong (Aturan 13–17) hanya berlaku bagi kapal yang saling melihat.","Dalam tampak terbatas tidak ada kapal yang bertahan: setiap kapal bertanggung jawab menghindari situasi terlalu dekat."]},
+  {h:"Kecepatan aman dan kesiapan mesin", p:["Setiap kapal berlayar dengan kecepatan aman yang disesuaikan dengan keadaan dan tampak terbatas. Kapal tenaga menyiapkan mesinnya untuk olah gerak segera."]},
+  {h:"Kapal lain terdeteksi hanya dengan radar", p:["Tentukan apakah sedang berkembang situasi terlalu dekat dan/atau ada bahaya tubrukan. Bila ya, bertindaklah dalam waktu yang cukup.","Bila tindakan itu berupa perubahan haluan, sedapat mungkin hindari: (1) mengubah haluan ke kiri terhadap kapal di depan arah melintang, kecuali kapal yang sedang disusul; (2) mengubah haluan ke arah kapal yang berada melintang atau di belakang arah melintang."]},
+  {h:"Mendengar isyarat kabut di depan arah melintang", p:["Kecuali telah dipastikan tidak ada bahaya tubrukan, kurangi kecepatan sampai serendah-rendahnya yang masih mempertahankan haluan. Bila perlu hentikan laju sama sekali, dan berlayarlah dengan sangat hati-hati sampai bahaya berlalu."]},
+  {h:"Isyarat bunyi dalam tampak terbatas (Aturan 35)", p:["Kapal tenaga yang berlaju: satu tiup panjang dengan selang tidak lebih dari 2 menit.","Kapal tenaga yang berlayar tetapi berhenti dan tidak berlaju: dua tiup panjang berturut-turut dengan selang tidak lebih dari 2 menit."]},
+  {h:"Pelajaran dari kasus", p:["Pada tubrukan Andrea Doria–Stockholm (1956) kedua kapal saling mendeteksi dengan radar dari jarak jauh, tetapi salah membaca haluan lawan. Kabut tebal, kecepatan tinggi dalam tampak buruk, dan penggunaan radar yang keliru disebut sebagai faktor penyebab.","Radar memberi jarak dan baringan; haluan dan CPA kapal lain baru diketahui setelah plotting. Satu atau dua pengamatan sekilas termasuk keterangan yang sangat kurang."]}
+ ],
+ kasus:["doria"], anim:["r19","doria"],
+ kuis:[
+  {q:"Dalam tampak terbatas, kapal yang tidak saling melihat menggunakan…", o:["Aturan 13–17","Aturan 19","Aturan 18 saja","Kesepakatan lewat VHF"], a:1, why:"Aturan 13–17 hanya untuk kapal yang saling melihat; Aturan 19 untuk tampak terbatas."},
+  {q:"Radar mendeteksi kapal di depan arah melintang, situasi terlalu dekat sedang berkembang. Sedapat mungkin hindari…", o:["Mengurangi kecepatan","Mengubah haluan ke kanan","Mengubah haluan ke kiri","Membunyikan isyarat kabut"], a:2, why:"Aturan 19(d)(i): hindari perubahan haluan ke kiri terhadap kapal di depan arah melintang, kecuali yang sedang disusul."},
+  {q:"Isyarat kabut kapal tenaga yang berlaju:", o:["Satu tiup panjang tiap ≤ 2 menit","Dua tiup panjang tiap ≤ 2 menit","Tiga tiup pendek","Lonceng 5 detik"], a:0, why:"Aturan 35(a)."},
+  {q:"Anda mendengar isyarat kabut dari depan arah melintang dan belum yakin aman. Tindakan pertama:", o:["Menambah kecepatan agar cepat lewat","Mengurangi kecepatan sampai minimum yang masih bisa mengemudi","Mengubah haluan ke kiri","Mematikan radar agar tidak bingung"], a:1, why:"Aturan 19(e)."},
+  {q:"Faktor yang disebut Britannica sebagai penyebab tubrukan Andrea Doria–Stockholm:", o:["Kerusakan kemudi","Kabut tebal, kecepatan tinggi dalam tampak buruk, dan penggunaan radar yang keliru","Badai tropis","Kegagalan mesin"], a:1, why:"Lihat studi kasus Andrea Doria–Stockholm."}
+ ]},
+
+{id:"m4", judul:"Human error dan kerja tim anjungan", faktor:"manusia",
+ ringkas:"Mengapa perwira yang cakap tetap membuat kesalahan, dan bagaimana tim anjungan mencegahnya.",
+ tujuan:["Mengenali pola kesalahan manusia yang berulang pada laporan investigasi.","Menerapkan komunikasi tertutup dan saling mengingatkan di anjungan.","Menggunakan VHF dan isyarat bunyi secara tepat."],
+ materi:[
+  {h:"Pola yang berulang", p:["Laporan investigasi yang dibahas di aplikasi ini memperlihatkan pola serupa: kapal lain terlihat tetapi tidak dipantau (Seagate), asumsi tanpa baringan (Seagate), tindakan terlambat (Fitzgerald), tindakan kecil dan ragu-ragu (Norgas Cathinka), dan belok kiri pada situasi memotong (Bahuga Jaya).","Kelelahan, pelatihan yang kurang, dan pengawasan yang lemah disebut NTSB sebagai faktor pada tubrukan Fitzgerald dan John S McCain."]},
+  {h:"Kerja tim anjungan", p:["Bagi tugas dengan jelas: siapa mengamati, siapa memplot, siapa mengemudi, siapa berkomunikasi. Pada tubrukan Fitzgerald, NTSB mencatat komunikasi dan kerja sama yang tidak efektif antara anjungan dan pusat informasi tempur.","Gunakan komunikasi tertutup: perintah diulang, pelaksanaan dilaporkan. Setiap anggota tim berhak dan wajib menyampaikan keraguan.","Panggil nakhoda lebih awal. Menunggu sampai situasi genting menghilangkan pilihan."]},
+  {h:"VHF: alat bantu, bukan pengganti aturan", p:["Kesepakatan lewat VHF mudah salah paham: salah identifikasi kapal, bahasa, atau kanal. Pada tubrukan Ever Smart–Alexandra 1, MAIB mencatat olah gerak tanker didasarkan pada informasi VHF yang terbatas dan tidak ada kesepakatan berpapasan yang disampaikan kepada semua pihak.","Pada tubrukan Bahuga Jaya–Norgas Cathinka, panggilan VHF kanal 16 baru dilakukan ketika jarak kurang dari 0,25 mil dan tidak dipahami.","Bila VHF dipakai, lakukan dini, sebut identitas dengan jelas, dan tetap bertindak menurut COLREG."]},
+  {h:"Alih kendali dan perubahan mendadak", p:["Jangan memindahkan kendali kemudi atau mesin di perairan padat. NTSB menyebut keputusan memindahkan kendali dorong di perairan ramai sebagai isu keselamatan pada tubrukan John S McCain.","Bila kendali terasa hilang, jalankan prosedur darurat kemudi dan segera peringatkan kapal di sekitar."]}
+ ],
+ kasus:["fitzgerald","bahuga","seagate","eversmart"], anim:["fitzgerald","bahuga","seagate"],
+ kuis:[
+  {q:"Penyebab yang mungkin (probable cause) tubrukan Fitzgerald–ACX Crystal menurut NTSB:", o:["Kerusakan radar ACX Crystal","Tim anjungan Fitzgerald tidak bertindak dini dan tegas sebagai kapal yang wajib menghindar","Kabut tebal","Kegagalan kemudi"], a:1, why:"Lihat laporan NTSB MAR-20/02."},
+  {q:"Menurut KNKT, belok kiri KMP Bahuga Jaya…", o:["Sesuai Aturan 15","Tidak sesuai peraturan pencegahan tubrukan di laut","Diminta oleh Norgas Cathinka","Dilakukan terlalu dini"], a:1, why:"KNKT menyatakan perubahan haluan ke kiri itu tidak sesuai peraturan pencegahan tubrukan."},
+  {q:"Perwira jaga Seagate melihat Timor Stream lalu…", o:["Mengambil baringan berulang","Memplotnya di radar","Mengira kapal itu menyusul tanpa mengambil baringan atau memplot","Memanggil nakhoda"], a:2, why:"MAIB: ia berasumsi kapal itu menyusul; tidak ada baringan maupun plot radar."},
+  {q:"Sikap terbaik terhadap VHF dalam pencegahan tubrukan:", o:["Selalu sepakati menyimpang dari COLREG","Alat bantu yang dipakai dini dan jelas; tindakan tetap menurut COLREG","Tidak perlu dipakai sama sekali","Dipakai hanya setelah jarak di bawah 1 mil"], a:1, why:"VHF rawan salah paham; ia melengkapi, bukan mengganti aturan."},
+  {q:"Kapan sebaiknya nakhoda dipanggil?", o:["Setelah tubrukan tak terhindarkan","Lebih awal, ketika masih ada pilihan","Hanya pada siang hari","Bila radar mati saja"], a:1, why:"Panggilan dini memberi waktu untuk menilai dan bertindak."}
+ ]},
+
+{id:"m5", judul:"Kesalahan navigasi", faktor:"navigasi",
+ ringkas:"Alur pelayaran sempit, bagan pemisah lalu lintas, pemantauan posisi, dan perencanaan pelayaran (Aturan 9, 10).",
+ tujuan:["Menerapkan Aturan 9 dan 10 di alur sempit dan TSS.","Memeriksa posisi dengan lebih dari satu cara.","Mengambil pelajaran dari Royal Majesty dan Ever Smart–Alexandra 1."],
+ materi:[
+  {h:"Aturan 9 — Alur pelayaran sempit", p:["Kapal yang berlayar mengikuti alur sempit berlayar sedekat mungkin ke batas luar alur di sisi kanannya, sejauh aman dan dapat dilaksanakan.","Kapal dengan panjang kurang dari 20 meter dan kapal layar tidak boleh merintangi kapal yang hanya dapat berlayar aman di dalam alur. Kapal yang sedang menangkap ikan tidak boleh merintangi kapal lain yang berlayar di dalam alur. Jangan memotong alur bila itu merintangi kapal yang hanya dapat berlayar aman di dalamnya, dan sedapat mungkin hindari berlabuh jangkar di alur sempit."]},
+  {h:"Aturan 10 — Bagan pemisah lalu lintas (TSS)", p:["Ikuti jalur sesuai arah umum lalu lintas, jauhi garis atau zona pemisah, dan masuk atau keluar jalur pada ujungnya; bila dari samping, dengan sudut sekecil mungkin terhadap arah lalu lintas.","Sedapat mungkin hindari memotong jalur. Bila terpaksa, potonglah dengan haluan yang sedapat mungkin tegak lurus arah lalu lintas.","Berada di dalam TSS tidak memberi hak istimewa: aturan lain tetap berlaku."]},
+  {h:"Pemantauan posisi", p:["Royal Majesty kandas pada 10 Juni 1995 setelah berlayar lebih dari sehari dengan posisi GPS yang sebenarnya hasil hitungan duga (dead reckoning). NTSB menyebut ketergantungan berlebihan perwira jaga pada fitur otomatis sistem anjungan terpadu sebagai penyebab yang mungkin, dan mualim dua tidak bertindak walau beberapa petunjuk menunjukkan kapal keluar jalur.","Rekomendasi NTSB sesudahnya: bandingkan data dari beberapa penerima posisi yang berdiri sendiri, dan periksa posisi dengan benda darat, kedalaman, serta sarana bantu navigasi."]},
+  {h:"Perencanaan dan daerah padat", p:["Pada tubrukan Ever Smart–Alexandra 1 di pintu alur Jebel Ali, MAIB mencatat tanker berlayar terlalu dekat dengan pintu alur, VTS tidak menegurnya, pandu turun terlalu awal, dan kapal peti kemas tidak memantau gerak tanker.","Pada tubrukan Fitzgerald, NTSB mencatat perencanaan komandan yang kurang terhadap bahaya lintasan yang akan dilalui.","KNKT merekomendasikan pembenahan pengaturan lalu lintas penyeberangan Merak–Bakauheni setelah tubrukan Bahuga Jaya–Norgas Cathinka."]}
+ ],
+ kasus:["royalmajesty","eversmart","mccain"], anim:["royalmajesty","eversmart","mccain"],
+ kuis:[
+  {q:"Di alur pelayaran sempit, kapal berlayar…", o:["Di tengah alur","Sedekat mungkin ke batas luar alur di sisi kanannya","Di sisi kiri alur","Zig-zag agar terlihat"], a:1, why:"Aturan 9(a)."},
+  {q:"Bila terpaksa memotong jalur TSS, haluan sedapat mungkin…", o:["Sejajar arah lalu lintas","Tegak lurus arah lalu lintas","45° terhadap arah lalu lintas","Berlawanan arah lalu lintas"], a:1, why:"Aturan 10(c)."},
+  {q:"Penyebab yang mungkin kandasnya Royal Majesty menurut NTSB mencakup…", o:["Ketergantungan berlebihan perwira jaga pada fitur otomatis sistem anjungan terpadu","Badai besar","Kerusakan mesin induk","Peta yang salah cetak"], a:0, why:"Lihat laporan NTSB MAR-97/01."},
+  {q:"Cara memeriksa posisi yang direkomendasikan setelah kasus Royal Majesty:", o:["Cukup satu GPS yang mahal","Membandingkan beberapa sumber posisi dan memeriksa dengan benda darat, kedalaman, serta sarana bantu navigasi","Mengandalkan autopilot","Bertanya ke kapal lain"], a:1, why:"Rekomendasi NTSB seri M-97."},
+  {q:"Berada di dalam jalur TSS berarti…", o:["Kapal lain wajib menghindar","Aturan lain tetap berlaku; tidak ada hak istimewa","Boleh mengabaikan Aturan 5","Kecepatan bebas"], a:1, why:"Aturan 10(a): tidak membebaskan dari kewajiban menurut aturan lain."}
+ ]},
+
+{id:"m6", judul:"Peralatan elektronik dan kalibrasi", faktor:"alat",
+ ringkas:"Radar, ARPA, AIS, pedoman giro, GPS, dan perum gema: periksa, bandingkan, dan catat galatnya.",
+ tujuan:["Menjelaskan mengapa masukan haluan dan kecepatan yang salah membuat CPA/TCPA menyesatkan.","Melakukan pemeriksaan rutin radar, giro, AIS, GPS, dan perum gema.","Mengambil pelajaran dari Royal Majesty, Timor Stream, dan Ever Smart–Alexandra 1."],
+ materi:[
+  {h:"Mengapa kalibrasi menyangkut tubrukan", p:["ARPA menghitung haluan, kecepatan, CPA, dan TCPA sasaran dari masukan pedoman dan log kapal sendiri. Pedoman MCA Inggris (MGN 379) mengingatkan bahwa masukan haluan atau kecepatan yang tidak akurat menurunkan ketelitian hasil itu.","MGN 379 juga menyatakan penanda haluan radar yang tidak segaris, walau sedikit, dapat menimbulkan penafsiran situasi tubrukan yang menyesatkan dan berbahaya, terutama dalam tampak terbatas."]},
+  {h:"Radar dan ARPA", p:["Menurut MGN 379, unjuk kerja radar diperiksa dengan performance monitor sebelum berlayar dan sekurang-kurangnya tiap empat jam selama jaga radar. Kesegarisan penanda haluan diperiksa secara berkala.","Gunakan baringan pedoman, visual atau radar, untuk menilai bahaya tubrukan. Ganti skala jarak secara teratur agar sasaran jauh dan dekat sama-sama terpantau."]},
+  {h:"Pedoman giro dan magnet", p:["Tentukan galat pedoman secara teratur, misalnya dengan azimut benda angkasa atau garis baringan di darat, lalu catat di buku harian. Bandingkan pedoman giro, repeater, dan pedoman magnet setiap jaga dan setelah perubahan haluan besar.","Laporan MAIB tentang tubrukan Seagate–Timor Stream mencatat data haluan AIS yang dipancarkan Timor Stream berbeda sekitar 160° dari haluan sebenarnya, terkait penyelarasan repeater antarmuka giro. Data haluan AIS kapal lain karena itu jangan diterima begitu saja."]},
+  {h:"AIS", p:["AIS membantu identifikasi, tetapi datanya bergantung pada alat dan pengisian di kapal pengirim. Pada tubrukan Ever Smart–Alexandra 1, AIS tanker dalam keadaan mati sehingga nama dan data kapal tidak langsung tersedia bagi kapal lain maupun VTS.","Jangan mendasarkan keputusan menghindar pada AIS saja. Periksa juga data statis dan dinamis AIS kapal sendiri."]},
+  {h:"GPS, ECDIS, dan perum gema", p:["Pada Royal Majesty, sambungan kabel antena GPS terlepas tidak lama setelah berangkat dan penerima beralih ke mode hitungan duga tanpa disadari awak; autopilot terus mengikuti data itu. Kapal kandas sekitar 17 mil dari jalur yang direncanakan.","Kenali tanda mode dan alarm tiap alat. Setel alarm kedalaman pada nilai yang berguna. Bandingkan posisi GPS dengan radar, baringan visual, dan kedalaman.","NTSB merekomendasikan alarm suara yang terus berbunyi sampai dimatikan pengguna, serta penataan kabel navigasi yang tidak terbuka."]},
+  {h:"Catatan kejujuran data", p:["Tidak semua kasus di sini murni soal kalibrasi. Pada Seagate–Timor Stream, MAIB menyimpulkan penyebab utamanya adalah standar jaga yang buruk; galat haluan AIS dicatat sebagai temuan. Royal Majesty adalah kasus kandas, bukan tubrukan, tetapi pelajarannya tentang memeriksa alat elektronik berlaku langsung bagi pencegahan tubrukan."]}
+ ],
+ kasus:["royalmajesty","seagate","eversmart","doria"], anim:["royalmajesty","seagate"],
+ kuis:[
+  {q:"Masukan pedoman atau log yang salah ke ARPA menyebabkan…", o:["Tidak ada pengaruh","Hasil hitungan sasaran seperti CPA/TCPA menjadi kurang teliti","Radar mati","AIS berhenti memancar"], a:1, why:"MGN 379: masukan haluan atau kecepatan yang tidak akurat menurunkan ketelitian."},
+  {q:"Menurut MGN 379, unjuk kerja radar diperiksa…", o:["Setahun sekali","Sebelum berlayar dan sekurang-kurangnya tiap empat jam selama jaga radar","Hanya ketika rusak","Tiap ganti awak"], a:1, why:"MGN 379."},
+  {q:"Pada Royal Majesty, penerima GPS beralih ke mode…", o:["Diferensial","Hitungan duga (dead reckoning)","Simulasi","Hemat daya"], a:1, why:"Kabel antena terlepas; penerima beralih ke mode DR."},
+  {q:"Laporan MAIB mencatat data haluan AIS Timor Stream…", o:["Tepat sama dengan haluan sebenarnya","Berbeda sekitar 160° dari haluan sebenarnya","Tidak dipancarkan","Berbeda 2°"], a:1, why:"Bagian 1.5.6 laporan MAIB 17/2013."},
+  {q:"Pada tubrukan Ever Smart–Alexandra 1, AIS Alexandra 1…", o:["Memancarkan nama yang salah","Dalam keadaan mati","Berfungsi normal","Belum terpasang"], a:1, why:"MAIB: AIS mati sehingga data kapal tidak langsung tersedia."},
+  {q:"Sikap yang benar terhadap data AIS kapal lain:", o:["Dasar tunggal untuk menghindar","Alat bantu yang harus dicocokkan dengan radar dan pengamatan visual","Lebih dipercaya daripada baringan","Diabaikan sama sekali"], a:1, why:"Data AIS bergantung pada alat dan pengisian kapal pengirim."}
+ ]},
+{id:"m7", judul:"Kapal otonom dan kecerdasan artifisial", faktor:"alat",
+ ringkas:"Peluang dan risiko kapal otonom (MASS), berawak maupun tanpa awak, serta AI dalam lalu lintas laut terhadap kecelakaan kapal.",
+ tujuan:["Menjelaskan istilah MASS, empat tingkat otonomi, dan status MASS Code IMO.","Menimbang peluang dan risiko otomasi serta AI terhadap tubrukan.","Menentukan sikap tim anjungan ketika berbagi perairan dengan kapal otonom."],
+ materi:[
+  {h:"Istilah dan tingkat otonomi", p:["IMO memakai istilah Maritime Autonomous Surface Ships (MASS) untuk kapal yang, dalam tingkat tertentu, dapat beroperasi tanpa campur tangan manusia.","Untuk kajian peraturannya, IMO memakai empat tingkat: (1) kapal dengan proses terotomasi dan dukungan keputusan, pelaut tetap di kapal; (2) kapal dikendalikan dari jauh, pelaut masih di kapal; (3) kapal dikendalikan dari jauh tanpa pelaut di kapal; (4) kapal otonom penuh yang sistemnya mengambil keputusan sendiri.","Jadi kapal otonom tidak selalu tanpa awak. Tingkat 1 dan 2 adalah kapal berawak dengan bantuan otomasi atau kendali jarak jauh."]},
+  {h:"Status peraturan", p:["IMO menyelesaikan kajian lingkup peraturan (regulatory scoping exercise) pada 2021. Kajian itu menyoroti antara lain arti nakhoda dan awak, pusat kendali jarak jauh, dan kedudukan operator jarak jauh.","Pada sidang MSC 111 bulan Mei 2026, IMO mengadopsi MASS Code yang tidak wajib melalui resolusi MSC.595(111), berlaku 1 Juli 2026. Kode ini berbasis tujuan, berlaku bagi kapal barang, dan mensyaratkan penilaian risiko dalam proses persetujuan.","Menurut ringkasan DNV, nakhoda manusia tetap bertanggung jawab atas kapal; ia boleh tidak berada di kapal tetapi harus dapat campur tangan. Pusat operasi jarak jauh disertifikasi negara bendera.","Kode wajib direncanakan berlaku paling cepat 1 Januari 2032, setelah tahap pengumpulan pengalaman."]},
+  {h:"COLREG tetap sama", p:["Aturan 1 menyatakan COLREG berlaku bagi semua kapal di laut lepas dan perairan yang berhubungan dengannya. Tidak ada aturan pencegahan tubrukan tersendiri bagi kapal otonom.","Kajian ilmiah mencatat persoalan terbuka: Aturan 5 ditulis untuk penglihatan dan pendengaran manusia, dan banyak aturan memakai ukuran seperti kecakapan pelaut yang baik yang sulit diterjemahkan menjadi algoritma. Satu tinjauan tahun 2022 menyimpulkan hampir semua metode penghindaran tubrukan yang ada paling jauh hanya sebagian sesuai COLREG."]},
+  {h:"Peluang", p:["Bagian ini adalah analisis penulis yang ditarik dari kasus di buku ini; belum ada statistik kecelakaan yang membuktikannya.","Sensor yang tidak lelah dapat menutup celah pengamatan seperti pada Seagate–Timor Stream dan Ever Smart–Alexandra 1. Dukungan keputusan dapat mengingatkan lebih dini pada situasi seperti Fitzgerald–ACX Crystal. Kelelahan awak, yang disebut NTSB pada dua tubrukan tahun 2017, tidak dialami mesin.","AI juga dipakai di kapal berawak dan di darat: peringatan bahaya tubrukan, pengenalan sasaran dari kamera, dan pemantauan lalu lintas. Perekaman data yang lengkap memudahkan investigasi dan pembelajaran."]},
+  {h:"Risiko", p:["Kajian SAFEMASS (DNV GL untuk EMSA, 2020) menyoroti bahaya yang terkait kesadaran situasi operator jarak jauh, mode confusion, serta rasa terlalu percaya atau tidak percaya pada otomasi.","Penelitian tahun 2024 tentang kapal kendali jarak jauh menemukan interaksi manusia dan komputer yang tidak selaras pada tahap pengambilan keputusan sebagai faktor kunci dalam penghindaran tubrukan.","Dua kasus di buku ini sudah menunjukkan risiko itu pada kapal berawak: Royal Majesty (terlalu percaya pada sistem anjungan terpadu) dan John S McCain (salah paham mode kendali layar sentuh).","Risiko lain: ketergantungan pada sambungan komunikasi dan keamanan siber (pedoman uji coba MASS IMO meminta pengelolaan risiko siber), sensor yang menurun kinerjanya dalam hujan lebat atau kabut, dan lalu lintas campuran ketika kapal berawak sulit menebak maksud kapal otonom."]},
+  {h:"Sikap tim anjungan", p:["Perlakukan kapal otonom sama dengan kapal lain: tentukan bahaya tubrukan dan status menurut COLREG, lalu bertindak dini. Jangan berasumsi kapal itu pasti melihat Anda atau pasti patuh.","Panggilan VHF mungkin dijawab operator di darat, mungkin terlambat, atau tidak dijawab. Isyarat bunyi dan olah gerak yang jelas tetap berlaku.","Di kapal sendiri, perlakukan saran AI sebagai salah satu sarana menurut Aturan 5. Keputusan dan tanggung jawab tetap pada perwira jaga dan nakhoda (Aturan 2). Kenali mode tiap alat dan cocokkan dengan pengamatan sendiri."]}
+ ],
+ kasus:["royalmajesty","mccain","seagate"], anim:["royalmajesty","mccain"],
+ kuis:[
+  {q:"Menurut tingkat otonomi yang dipakai IMO, kapal tingkat 2 adalah…", o:["Kapal otonom penuh","Kapal dikendalikan dari jauh dengan pelaut masih di kapal","Kapal dikendalikan dari jauh tanpa pelaut","Kapal tanpa otomasi"], a:1, why:"Tingkat 2: kendali jarak jauh, pelaut masih di kapal."},
+  {q:"MASS Code yang diadopsi IMO pada Mei 2026 bersifat…", o:["Wajib bagi semua kapal","Tidak wajib, berlaku 1 Juli 2026","Hanya untuk kapal perang","Pengganti COLREG"], a:1, why:"Resolusi MSC.595(111); kode wajib direncanakan paling cepat 2032."},
+  {q:"Terhadap kapal otonom, COLREG…", o:["Tidak berlaku","Berlaku sama seperti terhadap kapal lain","Memberi hak jalan khusus","Hanya berlaku pada siang hari"], a:1, why:"Aturan 1: COLREG berlaku bagi semua kapal."},
+  {q:"Risiko yang disoroti kajian SAFEMASS:", o:["Kesadaran situasi operator jarak jauh dan mode confusion","Kekurangan bahan bakar","Ukuran kapal terlalu kecil","Kelebihan awak"], a:0, why:"Lihat ringkasan SAFEMASS (DNV GL untuk EMSA, 2020)."},
+  {q:"Sikap yang benar terhadap saran sistem AI di anjungan:", o:["Diikuti tanpa diperiksa","Salah satu sarana; dicocokkan dengan pengamatan, keputusan tetap pada perwira jaga","Diabaikan sepenuhnya","Menggantikan pengamat"], a:1, why:"Aturan 5 dan Aturan 2; pelajaran Royal Majesty."}
+ ]}
+],
+
+kasus: [
+{id:"doria", judul:"Andrea Doria – Stockholm", tanggal:"25–26 Juli 1956", lokasi:"Lepas pantai Nantucket, Samudra Atlantik", faktor:["cuaca","alat","manusia"], anim:"doria",
+ ringkas:"Dua kapal penumpang berradar bertubrukan di tepi daerah kabut. 51 orang meninggal dan Andrea Doria tenggelam.",
+ kronologi:["Sekitar pukul 22.45, radar Andrea Doria mendeteksi Stockholm pada jarak sekitar 17 mil laut. Tidak lama kemudian Stockholm mendeteksi Andrea Doria.","Andrea Doria berlayar dalam kabut tebal. Kedua awak salah menilai haluan kapal lawan dari radar.","Stockholm bermaksud berpapasan lambung kiri; Andrea Doria memilih berpapasan lambung kanan.","Pada jarak sekitar 2 mil laut keduanya saling melihat. Kecepatan gabungan sekitar 40 knot tidak menyisakan waktu.","Sekitar pukul 23.10 haluan Stockholm menghantam lambung kanan Andrea Doria.","Andrea Doria segera miring ke kanan sehingga sekoci sisi kiri tidak dapat dipakai. Kapal terbalik dan tenggelam pukul 10.09 keesokan harinya."],
+ temuan:["Faktor yang disebut: kabut tebal, kecepatan tinggi dalam tampak buruk, dan penggunaan radar yang keliru.","Korban: 46 orang dari Andrea Doria dan 5 orang dari Stockholm."],
+ pelajaran:["Deteksi radar dini tidak berguna tanpa plotting yang sistematis.","Kurangi kecepatan sungguh-sungguh dalam kabut.","Dalam tampak terbatas, hindari mengubah haluan ke kiri terhadap kapal di depan arah melintang."],
+ aturan:["Aturan 6","Aturan 7","Aturan 19","Aturan 35"], ref:["brit-doria"],
+ catatan:"Kejadian ini mendahului COLREG 1972. Penyebab pastinya tidak pernah diputuskan pengadilan."},
+
+{id:"fitzgerald", judul:"USS Fitzgerald – ACX Crystal", tanggal:"17 Juni 2017, sekitar 01.30", lokasi:"Teluk Sagami Nada, lepas Pulau Honshu, Jepang", faktor:["manusia","navigasi"], anim:"fitzgerald",
+ ringkas:"Kapal perusak yang wajib menghindar dalam situasi memotong terlambat bertindak. Tujuh pelaut meninggal.",
+ kronologi:["Fitzgerald (315 orang) berlayar ke selatan dengan kecepatan sekitar 22,1 knot dari Yokosuka.","ACX Crystal (kapal peti kemas berbendera Filipina) berlayar ke timur-timur laut sekitar 18,5 knot dari Nagoya menuju Tokyo.","Jarak terus mengecil. Tidak ada kapal yang memanggil lewat radio.","Beberapa detik sebelum benturan, perwira jaga kedua kapal mencoba mengolah gerak, tetapi terlambat.","Haluan ACX Crystal mengenai lambung kanan depan Fitzgerald."],
+ temuan:["Penyebab yang mungkin: tim anjungan Fitzgerald tidak bertindak dini dan tegas untuk menghindar sebagai kapal yang wajib menghindar dalam situasi memotong.","Faktor penyumbang: komunikasi dan kerja sama yang tidak efektif antara anjungan dan pusat informasi tempur; perencanaan komandan yang kurang; pengawasan Angkatan Laut yang tidak efektif atas jadwal operasi, pelatihan, dan mitigasi kelelahan.","Perwira jaga ACX Crystal tidak mendeteksi Fitzgerald secara dini dan tindakannya tidak cukup ketika ragu terhadap maksud kapal perusak itu.","Korban: 7 meninggal dan 3 luka berat di Fitzgerald; tidak ada korban di ACX Crystal."],
+ pelajaran:["Kapal yang wajib menghindar bertindak dini dan tegas (Aturan 16).","Kapal yang bertahan memakai isyarat keraguan dan bertindak sebelum terlambat (Aturan 17, 34).","Kelelahan dan pembagian tugas tim adalah bagian dari pencegahan tubrukan."],
+ aturan:["Aturan 5","Aturan 7","Aturan 15","Aturan 16","Aturan 17"], ref:["ntsb-fitz"]},
+
+{id:"bahuga", judul:"KMP Bahuga Jaya – MT Norgas Cathinka", tanggal:"26 September 2012, sekitar 04.44 WIB", lokasi:"Selat Sunda, lintasan Merak–Bakauheni", faktor:["manusia","navigasi"], anim:"bahuga",
+ ringkas:"Feri ro-ro dan tanker gas bertubrukan pada situasi memotong. Bahuga Jaya tenggelam.",
+ kronologi:["03.05 — Bahuga Jaya berangkat dari Merak menuju Bakauheni; Norgas Cathinka melintasi Selat Sunda menuju Singapura.","04.20 — Norgas melaju 11 knot; radarnya mendeteksi lima kapal yang akan melintas di depan haluan.","04.36 — Bahuga Jaya masih pada lintasan berpotensi tubrukan pada jarak 2 mil laut.","04.40 — Mualim jaga Norgas mengubah haluan ke 050° dengan autopilot; mualim jaga Bahuga Jaya memerintahkan belok 20° ke kiri.","04.41 — Norgas mengubah haluan dari 055° ke 060°; jarak kurang dari 1 mil laut.","04.43 — Bahuga Jaya memanggil tiga kali di VHF kanal 16; panggilan terdengar tetapi tidak dipahami. Jarak kurang dari 0,25 mil laut.","04.44 — Norgas berbelok tajam ke kanan; haluan kirinya menghantam sisi kanan Bahuga Jaya di bawah anjungan."],
+ temuan:["KNKT: tubrukan terjadi karena tindakan kedua kapal tidak konsisten untuk mencegah tubrukan.","Perubahan haluan Norgas Cathinka terlalu pelan dan tidak signifikan, sehingga Bahuga Jaya ragu.","Belok kiri Bahuga Jaya dinilai tidak sesuai peraturan pencegahan tubrukan di laut.","Rekomendasi: meningkatkan kemampuan komunikasi navigasi dan pemahaman P2TL/COLREG 1972 awak feri, serta membenahi pengaturan lalu lintas penyeberangan.","Korban meninggal dilaporkan 7 orang oleh sebagian sumber dan 8 orang oleh sumber lain."],
+ pelajaran:["Perubahan haluan kecil bertahap membingungkan kapal lain (Aturan 8).","Hindari belok kiri terhadap kapal di lambung kiri pada situasi memotong (Aturan 17).","Panggilan VHF pada jarak seperempat mil sudah terlambat."],
+ aturan:["Aturan 8","Aturan 15","Aturan 16","Aturan 17"], ref:["knkt-bahuga","kontan-bahuga","bisnis-bahuga"]},
+
+{id:"mccain", judul:"USS John S McCain – Alnic MC", tanggal:"21 Agustus 2017, pukul 05.24", lokasi:"Selat Singapura, jalur barat TSS, sekitar 5 mil dari Mercusuar Horsburgh", faktor:["manusia","navigasi","alat"], anim:"mccain",
+ ringkas:"Saat menyusul di TSS yang padat, awak mengira kemudi hilang setelah kendali berpindah tanpa disengaja. Sepuluh pelaut meninggal.",
+ kronologi:["John S McCain menyusul tanker Alnic MC di jalur barat TSS Selat Singapura.","Saat memindahkan kendali dorong ke stasiun lain, kendali kemudi ikut berpindah tanpa disengaja.","Juru mudi melaporkan kehilangan kemudi; awak berusaha memulihkan kendali.","Kapal perusak berbelok ke kiri tanpa dikehendaki, masuk ke lintasan Alnic MC, dan tubrukan terjadi."],
+ temuan:["Penyebab yang mungkin: kurangnya pengawasan operasional yang efektif oleh Angkatan Laut AS, yang berakibat pada pelatihan yang kurang dan prosedur anjungan yang tidak memadai.","Faktor penyumbang: tim anjungan kehilangan kesadaran situasi dan tidak menjalankan prosedur darurat kehilangan kemudi, termasuk memperingatkan lalu lintas di sekitar.","Isu keselamatan: pemindahan kendali dorong di perairan padat, tidak ada komunikasi VHF antar kapal, kebijakan pemancaran AIS, rancangan sistem anjungan terpadu, dan kelelahan.","Korban: 10 meninggal dan 48 luka di John S McCain; tidak ada korban di Alnic MC."],
+ pelajaran:["Jangan mengubah konfigurasi kendali di perairan padat.","Kapal yang menyusul wajib tetap bebas dan memberi ruang lebih.","Kenali betul mode alat kemudi; latih prosedur darurat kemudi."],
+ aturan:["Aturan 5","Aturan 10","Aturan 13"], ref:["ntsb-mccain","usni-mccain"]},
+
+{id:"eversmart", judul:"Ever Smart – Alexandra 1", tanggal:"11 Februari 2015", lokasi:"Pintu alur masuk Pelabuhan Jebel Ali, Uni Emirat Arab", faktor:["navigasi","manusia","alat"], anim:"eversmart",
+ ringkas:"Kapal peti kemas keluar alur bertubrukan dengan tanker yang menunggu pandu di dekat pintu alur.",
+ kronologi:["Pandu pelabuhan dipindahkan dengan motor pandu dari Ever Smart yang keluar ke Alexandra 1 yang akan masuk.","Alexandra 1 bergerak dekat pintu alur sambil menunggu pandu.","Ever Smart tidak memantau gerak tanker dan baru menyadari kedekatannya beberapa detik sebelum benturan.","Kedua kapal bertubrukan di pintu alur; keduanya rusak, tanpa korban dan tanpa pencemaran."],
+ temuan:["Ever Smart tidak memantau gerak Alexandra 1.","Alexandra 1 berlayar terlalu dekat dengan pintu alur tanpa perlu, dan VTS pelabuhan tidak menegur.","Olah gerak Alexandra 1 didasarkan pada informasi VHF yang terbatas.","Tidak ada kesepakatan berpapasan yang disampaikan ke semua pihak, dan pandu meninggalkan Ever Smart terlalu awal.","AIS Alexandra 1 mati."],
+ pelajaran:["Hak jalan tidak menghapus kewajiban mengamati.","Jangan menunggu di depan pintu alur.","Pastikan AIS hidup dan kesepakatan berpapasan dipahami semua pihak."],
+ aturan:["Aturan 5","Aturan 7","Aturan 9"], ref:["maib-ever"]},
+
+{id:"seagate", judul:"Seagate – Timor Stream", tanggal:"10 Maret 2012, pukul 05.40", lokasi:"24 mil laut di utara Republik Dominika", faktor:["manusia","alat"], anim:"seagate",
+ ringkas:"Dua kapal bertubrukan di laut terbuka dengan tampak baik karena kedua perwira jaga tidak menjaga pengamatan.",
+ kronologi:["Timor Stream meninggalkan pelabuhan tiga jam sebelumnya menuju Inggris; Seagate menuju pantai barat Afrika.","Perwira jaga Seagate melihat Timor Stream tetapi mengira kapal itu menyusul dan akan menghindar.","Ia tidak mengambil baringan dan tidak memplot kapal itu di radar.","Nakhoda Timor Stream, sendirian di anjungan, tidak melihat Seagate sampai sesaat sebelum benturan.","Pukul 05.40 haluan Timor Stream menghantam sisi kanan Seagate."],
+ temuan:["MAIB: tubrukan terjadi karena kedua perwira jaga tidak cukup memperhatikan jaga navigasi yang aman; isu keselamatannya standar jaga yang buruk akibat rasa puas diri.","Laporan mencatat data haluan AIS Timor Stream berbeda sekitar 160° dari haluan sebenarnya, terkait penyelarasan repeater antarmuka giro.","Tidak ada korban; kedua kapal rusak berat dan terjadi pencemaran ringan."],
+ pelajaran:["Melihat kapal lain belum berarti mengamatinya: ambil baringan dan plot.","Asumsi adalah keterangan yang sangat kurang.","Jangan jaga sendirian di anjungan pada malam hari.","Data haluan AIS bisa salah; cocokkan dengan radar dan mata."],
+ aturan:["Aturan 5","Aturan 7","Aturan 15","Aturan 17"], ref:["maib-seagate"]},
+
+{id:"royalmajesty", judul:"Royal Majesty (kandas)", tanggal:"10 Juni 1995, sekitar 22.25", lokasi:"Rose and Crown Shoal, sekitar 10 mil di timur Pulau Nantucket", faktor:["alat","navigasi","manusia"], anim:"royalmajesty",
+ ringkas:"Kapal penumpang dengan 1.509 orang kandas setelah GPS diam-diam beralih ke hitungan duga.",
+ kronologi:["9 Juni sekitar tengah hari, Royal Majesty berangkat dari St. George's, Bermuda, menuju Boston.","Tidak lama setelah berangkat, sambungan kabel antena GPS terlepas dan penerima beralih ke mode hitungan duga.","Autopilot terus mengikuti data posisi itu; pengaruh angin dan laut tidak terhitung.","Beberapa petunjuk bahwa kapal keluar jalur tidak ditindaklanjuti.","10 Juni sekitar 22.25 kapal kandas, sekitar 17 mil dari jalur yang direncanakan."],
+ temuan:["Penyebab yang mungkin: ketergantungan berlebihan perwira jaga pada fitur otomatis sistem anjungan terpadu; perusahaan tidak memastikan perwiranya terlatih; kekurangan rancangan dan prosedur sistem; mualim dua tidak bertindak atas petunjuk yang ada.","Tidak ada korban. Kerusakan dan kehilangan pendapatan ditaksir sekitar 7 juta dolar AS."],
+ pelajaran:["Satu sumber posisi tidak pernah cukup.","Kenali tanda mode dan alarm setiap alat.","Setel alarm kedalaman pada nilai yang berguna dan periksa posisi dengan radar serta kedalaman."],
+ aturan:["Aturan 2","Aturan 5"], ref:["ntsb-rm"],
+ catatan:"Ini kasus kandas, bukan tubrukan. Dimuat karena pelajarannya tentang verifikasi alat elektronik."}
+],
+
+anim: {
+ r14:{judul:"Aturan 14 — Berhadapan", ket:"Kedua kapal tenaga mengubah haluan ke kanan dan berpapasan lambung kiri.",
+  ships:[{nama:"Kapal A",w:"#ffd60a",kf:[[0,50,95],[.35,50,68],[.6,61,48],[1,61,5]]},{nama:"Kapal B",w:"#ff8a65",kf:[[0,50,5],[.35,50,32],[.6,39,52],[1,39,95]]}],
+  caps:[[0,"Dua kapal tenaga pada haluan berlawanan. Baringan tidak berubah: bahaya tubrukan ada."],[.3,"Keduanya mengubah haluan ke kanan, dini dan cukup besar. Satu tiup pendek."],[.6,"Berpapasan lambung kiri dengan lambung kiri."],[.85,"Pantau sampai lewat dan bebas, baru kembali ke haluan."]]},
+ r15:{judul:"Aturan 15 — Memotong", ket:"Kapal A melihat B di lambung kanannya: A wajib menghindar dan tidak memotong di depan B.",
+  ships:[{nama:"A (menghindar)",w:"#ffd60a",kf:[[0,50,95],[.35,50,70],[.6,68,52],[.8,68,35],[1,60,10]]},{nama:"B (bertahan)",w:"#ff8a65",kf:[[0,95,45],[1,5,45]]}],
+  caps:[[0,"A melihat B di lambung kanan. Baringan B tetap."],[.3,"A mengubah haluan ke kanan dengan tegas. B mempertahankan haluan dan kecepatan."],[.6,"A melewati buritan B."],[.85,"Setelah bebas, A kembali ke haluan semula."]]},
+ r13:{judul:"Aturan 13 — Menyusul", ket:"Kapal yang menyusul wajib menghindar sampai lewat dan bebas.",
+  ships:[{nama:"A (menyusul)",w:"#ffd60a",kf:[[0,50,98],[.3,50,80],[.5,63,60],[.8,63,25],[1,56,5]]},{nama:"B (disusul)",w:"#ff8a65",kf:[[0,50,70],[1,50,35]]}],
+  caps:[[0,"A mendekat dari belakang arah melintang B: A menyusul."],[.3,"A memberi ruang lebar di samping B."],[.6,"A tetap wajib menghindar walau baringan berubah."],[.85,"Setelah lewat dan bebas, A kembali ke haluan."]]},
+ r19:{judul:"Aturan 19 — Tampak terbatas", ket:"Kapal lain hanya terlihat di radar. Kurangi kecepatan, plot, hindari belok kiri.", fog:"all",
+  ships:[{nama:"Kapal sendiri",w:"#ffd60a",kf:[[0,50,95],[.45,50,72],[.7,62,58],[1,62,30]]},{nama:"Gema radar",w:"#ff8a65",kf:[[0,52,5],[1,46,80]]}],
+  caps:[[0,"Kabut. Kecepatan aman, mesin siap, isyarat kabut tiap ≤ 2 menit."],[.2,"Radar mendeteksi gema di depan. Plot: situasi terlalu dekat berkembang."],[.45,"Kurangi kecepatan dan ubah haluan ke kanan. Jangan ke kiri."],[.8,"Pantau di radar sampai gema lewat dan bebas."]]},
+ doria:{judul:"Andrea Doria – Stockholm (1956)", ket:"Ilustrasi skematik. Andrea Doria berbelok ke kiri, Stockholm ke kanan, di tepi kabut.", fog:"right", hit:.9,
+  ships:[{nama:"Andrea Doria",w:"#ffd60a",kf:[[0,95,48],[.6,62,48],[.9,52,56],[1,52,56]]},{nama:"Stockholm",w:"#ff8a65",kf:[[0,5,55],[.6,36,55],[.9,49,57],[1,49,57]]}],
+  caps:[[0,"22.45 — Saling terdeteksi radar pada jarak belasan mil. Andrea Doria di dalam kabut."],[.3,"Masing-masing salah menilai haluan lawan dari radar."],[.6,"Stockholm bermaksud berpapasan lambung kiri; Andrea Doria memilih lambung kanan."],[.8,"Jarak 2 mil: saling melihat. Kecepatan gabungan sekitar 40 knot."],[.9,"23.10 — Haluan Stockholm menghantam lambung kanan Andrea Doria."]]},
+ fitzgerald:{judul:"Fitzgerald – ACX Crystal (2017)", ket:"Ilustrasi skematik. Fitzgerald melihat ACX Crystal di lambung kanan: Fitzgerald wajib menghindar.", hit:.9,
+  ships:[{nama:"Fitzgerald",w:"#ffd60a",kf:[[0,43,5],[.55,43,38],[.9,40,62],[1,40,62]]},{nama:"ACX Crystal",w:"#ff8a65",kf:[[0,2,78],[.9,37,63.5],[1,37,63.5]]}],
+  caps:[[0,"Fitzgerald ke selatan ±22 knot; ACX Crystal ke timur-timur laut ±18,5 knot."],[.3,"Situasi memotong. ACX Crystal di lambung kanan Fitzgerald."],[.55,"Jarak terus mengecil. Tidak ada panggilan radio dari kedua kapal."],[.8,"Olah gerak baru dicoba beberapa detik sebelum benturan."],[.9,"01.30 — Haluan ACX Crystal mengenai lambung kanan depan Fitzgerald."]]},
+ bahuga:{judul:"Bahuga Jaya – Norgas Cathinka (2012)", ket:"Ilustrasi skematik. Norgas berbelok kanan sedikit demi sedikit; Bahuga Jaya berbelok kiri.", hit:.92,
+  ships:[{nama:"Norgas Cathinka",w:"#ff8a65",kf:[[0,10,90],[.6,40,62],[.85,51,55],[.92,54.5,53.5],[1,54.5,53.5]]},{nama:"Bahuga Jaya",w:"#ffd60a",kf:[[0,95,40],[.6,70,40],[.85,60,46],[.92,56.5,51],[1,56.5,51]]}],
+  caps:[[0,"04.20 — Norgas 11 knot menuju timur laut. Bahuga Jaya menuju Bakauheni."],[.35,"04.36 — Jarak 2 mil, masih pada lintasan berpotensi tubrukan."],[.6,"04.40 — Norgas ke 050° dengan autopilot; Bahuga Jaya belok 20° ke kiri."],[.75,"04.41 — Norgas 055° lalu 060°. Perubahan kecil, jarak < 1 mil."],[.85,"04.43 — Panggilan VHF kanal 16 tidak dipahami. Jarak < 0,25 mil."],[.92,"04.44 — Haluan kiri Norgas menghantam sisi kanan Bahuga Jaya."]]},
+ mccain:{judul:"John S McCain – Alnic MC (2017)", ket:"Ilustrasi skematik. Kapal perusak yang menyusul berbelok kiri tanpa dikehendaki.", hit:.9,
+  ships:[{nama:"John S McCain",w:"#ffd60a",kf:[[0,95,5],[.5,62,32],[.75,50,47],[.9,46.5,57.5],[1,46.5,57.5]]},{nama:"Alnic MC",w:"#ff8a65",kf:[[0,80,25],[.9,45,60],[1,45,60]]}],
+  caps:[[0,"Keduanya di jalur barat TSS Selat Singapura. McCain menyusul."],[.35,"Kendali dorong dipindahkan; kendali kemudi ikut berpindah tanpa disengaja."],[.55,"Juru mudi melaporkan kehilangan kemudi."],[.75,"McCain berbelok ke kiri menuju lintasan Alnic MC."],[.9,"05.24 — Tubrukan."]]},
+ eversmart:{judul:"Ever Smart – Alexandra 1 (2015)", ket:"Ilustrasi skematik. Kapal keluar alur dan tanker yang menunggu pandu di dekat pintu alur.", hit:.9,
+  marks:[{t:"line",x1:44,y1:98,x2:44,y2:38},{t:"line",x1:56,y1:98,x2:56,y2:38},{t:"txt",x:68,y:72,s:"Alur masuk"}],
+  ships:[{nama:"Ever Smart",w:"#ffd60a",kf:[[0,50,96],[.9,50,37],[1,50,37]]},{nama:"Alexandra 1",w:"#ff8a65",kf:[[0,74,14],[.5,62,23],[.9,51.5,33],[1,51.5,33]]}],
+  caps:[[0,"Ever Smart keluar alur. Pandu sudah turun."],[.3,"Alexandra 1 menunggu pandu, bergerak dekat pintu alur. AIS-nya mati."],[.6,"Tidak ada kesepakatan berpapasan yang dipahami semua pihak."],[.8,"Ever Smart tidak memantau gerak tanker."],[.9,"Tubrukan di pintu alur."]]},
+ seagate:{judul:"Seagate – Timor Stream (2012)", ket:"Ilustrasi skematik. Laut terbuka, tampak baik, kedua anjungan tidak mengamati.", hit:.9,
+  ships:[{nama:"Seagate",w:"#ffd60a",kf:[[0,5,45],[.9,55,52],[1,55,52]]},{nama:"Timor Stream",w:"#ff8a65",kf:[[0,63,98],[.9,56,55],[1,56,55]]}],
+  caps:[[0,"Malam, laut terbuka, tampak baik."],[.3,"Perwira jaga Seagate melihat Timor Stream, mengira kapal itu menyusul."],[.55,"Tidak ada baringan, tidak ada plot radar."],[.75,"Nakhoda Timor Stream sendirian di anjungan, tidak melihat Seagate."],[.9,"05.40 — Haluan Timor Stream menghantam sisi kanan Seagate."]]},
+ royalmajesty:{judul:"Royal Majesty (1995)", ket:"Ilustrasi skematik. Kuning: posisi sebenarnya. Garis putus: posisi yang ditampilkan GPS dalam mode hitungan duga.", hit:.95, hitTxt:"KANDAS",
+  marks:[{t:"shoal",x:37,y:13,s:"Rose and Crown Shoal"},{t:"land",x:12,y:14,s:"Nantucket"},{t:"txt",x:82,y:6,s:"ke Boston"}],
+  ships:[{nama:"Posisi GPS (DR)",w:"#9ec5ff",ghost:true,kf:[[0,60,95],[.95,60,14],[1,60,14]]},{nama:"Royal Majesty",w:"#ffd60a",kf:[[0,60,95],[.95,38,15],[1,38,15]]}],
+  caps:[[0,"9 Juni — Berangkat dari Bermuda menuju Boston."],[.1,"Kabel antena GPS terlepas. Penerima beralih ke hitungan duga (DR)."],[.4,"Autopilot mengikuti posisi DR. Angin dan laut menggeser kapal ke barat."],[.7,"Petunjuk bahwa kapal keluar jalur tidak ditindaklanjuti."],[.95,"10 Juni 22.25 — Kandas, sekitar 17 mil dari jalur rencana."]]}
+},
+
+checklist: [
+ {id:"c1", judul:"Sebelum mengambil alih jaga", item:["Mata sudah menyesuaikan gelap sebelum serah terima","Posisi kapal diperiksa dengan lebih dari satu cara","Haluan, kecepatan, dan mode kemudi dipahami","Semua kapal di sekitar dikenali: baringan, jarak, CPA","Radar disetel: skala, gain, clutter; performance monitor diperiksa","Galat pedoman giro dan magnet diketahui dan dicatat","AIS kapal sendiri hidup dan datanya benar","Perintah nakhoda dan kapan memanggilnya dipahami"]},
+ {id:"c2", judul:"Memasuki tampak terbatas", item:["Nakhoda diberi tahu","Kecepatan aman; mesin siap olah gerak","Isyarat kabut dibunyikan","Lampu navigasi dinyalakan","Pengamat tambahan ditempatkan","Kedua radar bekerja; plotting sistematis dimulai","Kemudi tangan disiapkan","Pintu anjungan dibuka untuk mendengar isyarat"]},
+ {id:"c3", judul:"Verifikasi peralatan elektronik", item:["Penanda haluan radar segaris dengan haluan kapal","Masukan giro dan log ke radar/ARPA benar","Repeater giro cocok dengan pedoman induk","Pedoman giro dibandingkan dengan pedoman magnet","Mode penerima GPS diperiksa (bukan DR/simulasi)","Posisi GPS dicocokkan dengan radar atau baringan visual","Alarm kedalaman disetel pada nilai yang berguna","Data haluan dan posisi AIS kapal sendiri benar","Alarm tiap alat terdengar di anjungan"]},
+ {id:"c4", judul:"Saat ada bahaya tubrukan", item:["Baringan pedoman diambil berulang","Sasaran diplot; CPA dan TCPA diketahui","Status ditentukan: menyusul, berhadapan, memotong, atau Aturan 19","Tindakan dini, tegas, cukup besar","Isyarat olah gerak dibunyikan","Hasil tindakan dipantau sampai lewat dan bebas","Nakhoda dipanggil bila ragu"]}
+],
+
+glosarium: [
+ ["AIS","Automatic Identification System; pemancar-penerima data identitas, posisi, haluan, dan kecepatan kapal."],
+ ["ARPA","Automatic Radar Plotting Aid; alat bantu plotting radar otomatis."],
+ ["Baringan","Arah suatu benda dilihat dari kapal, dinyatakan dalam derajat."],
+ ["BRM","Bridge Resource Management; pengelolaan sumber daya dan kerja tim anjungan."],
+ ["COLREG / P2TL","Peraturan Internasional untuk Mencegah Tubrukan di Laut 1972."],
+ ["CPA","Closest Point of Approach; jarak terdekat yang akan dicapai dua kapal."],
+ ["DR","Dead reckoning, hitungan duga; posisi dihitung dari haluan, kecepatan, dan waktu."],
+ ["Kapal yang bertahan","Stand-on vessel; kapal yang mempertahankan haluan dan kecepatan."],
+ ["Kapal yang menghindar","Give-way vessel; kapal yang wajib menghindari kapal lain."],
+ ["AI","Artificial intelligence, kecerdasan artifisial; di sini: sistem komputer yang membantu atau mengambil keputusan navigasi."],
+ ["KNKT","Komite Nasional Keselamatan Transportasi, Indonesia."],
+ ["MAIB","Marine Accident Investigation Branch, Inggris."],
+ ["MASS","Maritime Autonomous Surface Ships; kapal yang dalam tingkat tertentu dapat beroperasi tanpa campur tangan manusia."],
+ ["NTSB","National Transportation Safety Board, Amerika Serikat."],
+ ["ROC","Remote Operations Centre; pusat operasi jarak jauh bagi kapal otonom."],
+ ["Tampak terbatas","Keadaan penglihatan dibatasi kabut, hujan lebat, asap, badai pasir, atau sebab serupa."],
+ ["TCPA","Time to CPA; waktu menuju titik terdekat."],
+ ["Tiup pendek / panjang","Tiup suling sekitar 1 detik / 4 sampai 6 detik."],
+ ["TSS","Traffic Separation Scheme; bagan pemisah lalu lintas."],
+ ["VDR","Voyage Data Recorder; perekam data pelayaran."],
+ ["VTS","Vessel Traffic Service; layanan lalu lintas kapal."]
+]
+};
+</script>
+<script>
+(function(){
+"use strict";
+var K=window.KONTEN, LOGO="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABgAGADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6foornPHnjDSvBOgS6rrMpCA7IoUx5k744RB6+/QDk1UYubUYq7YGzqV/aaXYzXuo3MNraQrukmmcIij3Jrwbx1+0dY2byW3g6w+3yDj7Zd5SL6qgwzfjtrw74kfETW/Hup+dqcvlWMbE29jEx8qEev8AtN6sefTA4rjq+iwmTxiuavq+xaj3O58Q/FjxvrzP9q8QXcETf8sbMi3QD0+TBP4k1xlzdXN05e6uJpnPUySFifzNRqpYgKCWJwABkk+ld/Z/DHUHtUluLy1inIDG3YMQP9kuOh+gNexCjTp6Qjb0RyYvMMNgUvby5b7HCW11cWrh7W4mhcdGjkKkflXZeH/iz410FkFr4iupol/5Y3jCdCPT58kfgRXIX9tLaXtzbTxGGaF2R4yclCD09/6169p+q+F7CytrWO70wRtEOoXDYGCW44J9+acqFOqrTS+ZzZjmn1SEJU6bnzdu3rZndeBv2jrK7eO28Y2H2F2wPttpl4vqyHLKPoWr3rTb+01SxhvdNuYbq0mXdHNC4dGHsRXxX448I20tl/bHh2JPLC75oIeVZf76Y/UD6+tZnwz+IOseBb97jTLkPZuQ01hKSYrj1/3Wx0Yc/UcV4+MyaLXNR0fboaYDH0sfS9pT0a3XVM+8aK5zwH4w0rxtoEWq6NKShOyaF8eZA/dGHr79CORXR185KLg3GSs0dpV1O+ttL065vr+ZYLS2jaWWRuiqoyTXwr8VfHV5498US6hPvjsYsx2VsTxDFnv/ALR6k+vHQCvcf2svFzWelWHha0k2yXv+lXeD/wAslOEU/VgT/wAAFfL5KsqBUwwzk5zur6LJ8Iox9vLd7ehcV1EAz0BPfpU1pI8VwskahnTkKRn9K3PB2hy6lrPk3Blgt0jLzEcFlzjaD2ye/sa9T/szRLC3+yy2mn2ts+EfzdiZB9WY5zjnOc178Ytq54eZ59SwVT2PLzPyPG9ElUeIdOlnxs+1xM3YY3ivoc3MKxyK8bNJzht2APwr53hs47zULi3sXklHmMkA6u43EKTjgcYJPSvbYbkMgSSMykYBdWwc1rRhz6nz/FUYVp0prtt9zPKviKvmeM9UljRvLZoznGefLTOT61zPTnpXpthozaje3l/qtwssM77litCY43IAGQ33iuAAORkgnpjN2DwzpFrfTTwWQm3Y2LLmVU4GcBs8k55OfalTpTktFoejh8+o4ShHDuLbjFLTa6SXUn8ATmDwnpjg5X959OJGyK4r4maFDo+tpPZqEtL1TIqDorZ5A9uh/GvQbTTXjDpZWawo5ywRdik+uOmffFc18W7m0fTtLtluIpb2FjuWNg20YHXHTkVpUp8sEnujxstxUlminS2m3deTu1f0fUxfhZ45vPAXiiHUbcvJZSYjvbYHiaLP/oQ6g+vHQmvurTL+21TTrW/sJlntLmNZYpF6MrDINfnLX1B+yb4ua70y/wDC13Juez/0q0yf+WTHDqPoxB/4Ga+ZznCKUfbx3W/ofokl1PF/jfrR134peILkPuihuDaRegSIbOPxBP41xEbFHVx1UgipL6drq9uLiQ5eaRpCfUkk/wBahHSvWoQUIRguiLtpY9P8CPu0y5v5V2+bKqYB/hUH+u6sXXfDl1qnjHXJZGhht/tkh85zy6k5AQAZJwRzwB61reAoru/8PCOziDrC5STJAGc7gfyate9hFgXudcure1iyWbdICzn2A5P0FepCjSlCLlK1unU/PKuLnhsdWdNrmd1bd7q1l8hLWWPT4Ft7SNIoUGAmwEfjnrUOoSXmqhbWJmWFmCTvGuNqkbiigdCVwSewZf71Up9Vi1A2t1FEY4ZUyqtwzKGYAn3IX8Pwrq/AOoWd3BYw6roOnyWel29xf6hd3EjSsS7DO1AAmXcKqg7uI/avO4kzKplmChiaNFzi371rKy6JX3cnaKSu9dEa5bl8cRVftXyy6X11/wCBqyrbyIs0USqoRSFCDoB0AxU3iHXYdBhtGkglnlut6xRREAkqR1J6Dnr7GrGli3u7yS9lsooJbuTeUgCxrEvRVAAxhVwM9+T3rz7VdSPiDxFPfgbbG2zb2adgoJ+b6nqfc+1djrVJU4OpHllbVXvZ9r9bd/I8ujhIYnFyhvThu9r9uvV6+iKvizxXrN8Psz7LG1kGTHC+5mHozd/oOK4/aB0HNbHiFhJfxxhgNqgEntk1m3MXkzNHvV9v8S9DWe+5+gZbhqOHoxVOKV9SEKWztBOBk4Fdv8EtaOg/FLw/dF9sUtwLWX0KS/Jz+JB/CuNhnlty/lNtLLtb6UlpO1rdwXEZw8MiyKfQgg/0rmrw9pCUH1R6GrC+t2tb24t5Bh4ZWjI9CCR/SoR0rufjfop0L4peILYJtimuDdxehSUb+PxLD8K42Ly3gEKQyPdvIAhXnOf4QPWpo1FOmp90DkkrsiBO1lBIVuoBOD9R3oVFByqqD6gV0z+E/srmLWNe0bTbwY320speSP2baMA+1W9O8M6NIZVuvGnh2EY4d0mbn2Cir9vTirs4Y46hJ+7d368rt99rfiXPBtzLfeGr+xyA9oQYmA52vklc+m5T/wB9GuntJVh8MWVhCcSatP8AbJyOot4yY4E+h2vJ9WB71j6Lo2i6R9q+z/ETw0wuI/LYNb3HHoRgdRk/nVyzt9JtpIZP+Fg+GJDFGsS7oLnAVVCjt6CsatejiJUYVW+SnJztZ6tL3emyb5vWKPFq4SpCdedBfHt81733tfizoL14LTw3qlz5rwvb2zFWC5AB+Xgdc88ds4ry2CdNN0mESYMm3cqA+vI/n1r0G8utLudKvrF/HPhMJdReUzCC53AZzxx7V59/wjunEj/ir9C7DJMh/pXQ8XTqTbTfzVjiynAvBqSxV9XfROWiXknbW5kXltL5ZuZXDM5yw+tQzW4VoVhlWVpAOF7E9q6y+8M6PHbKIfiDoNyQQBGI5lwPXJFZ48NWDuqp4u0DcxABZpFA+pxxUrEwkrpn0/1unTfLJv5RbX4I5uRSjlGGGU4Ip9pA11eW9vGMvLIsYHuSB/WtDxJoN94d1L7HqSR72QSxSwuJIp4z0dHH3lP/AOuui+CWinXvil4ftim6GK4F1L6BIvnOfxAH41FStFU3UT0SO2M1KPNF3R7V+1l4Ra80qw8U2ke6Sy/0W7wOfKY5Rj9GJH/AxXhXwpijl8eaaZVB8vfIuezAcH9a+7tTsbbU9OubG/hWe0uY2iljbo6sMEV8SeN/DGo/Cj4gRfK89mrmazmPAuITwVJ7MOhHrg9CK8bKcWpQ9jLdben/AADjx1KVfC1KUN2mkdh8DtIsfE3hTxrZ6tMyRT38PmykZO0MWb5uxOMZ96ltNPu739ofVZL6xZ7bQ7WSe0tYY/laJY8QKo9WLg/XNcDo2pyW3h7xFoujapoq6drDpK738rQXEWDkADpkd8ZFdNqvjfXr6O8ddU8JWuo3dnHZSX9tfOk2xGLAg5wGJJycd6+bxWWY6WLr1YKLVS61e3MoJy36pNO2ui7nVTxdFQim7Nf8E7yz0a3sv2gJ7wwmC21HQmutrxcRyDYrAj2Kgn61etltL/xN8O71pLLVi73qTatY26xwyfunxGFyT2zzxlT64rzfT/HevWs+kXEup+Ebu6060ls1nuL5meZH25MhzyfkHP1qDVvHHiG6vNHuLTVfBunRaTK08FvZzbY2YqVO5ecgqWGBjqe9eZPIMfVkuaMbqHLe/RRlFeeqa/U2WNor7XW/5E8d3LpvgzxDfaXAs2o2/jT/AEZGh3hjyAuO+c9K7TxV4jW11XwL4W1P7JNr91f2t1qZggCJAA4IRR6k/mFz/EK4PUvidrF/qWlzpJ4TtorK6+2+REXCTT7Su+Q4ycbievXntVrXfiPqt00E848DfaI7mK4E0EjNKWjYMAWGTg4APtXRVyTG1akZVKEb6v4ldOyS17K17Le67ErGUknaZ2/jPWYh460XSYta0a6tpNcto5NNistt1bqp3ZZ93PIAPHcU7x1pOjf8I9488QaRgpe6cbadPLx5dzBKUY+2RjP0z3rz7VPihqeoy280kXg2OeG6iuxNGJA7NGwYAt1wcYPtWEvjDVF0zxTYNqWgGz8QSvPOhkkPku5yxjwO/HXPQVOH4cx1NQcYRi42vqtVzJva3ZNX7dRyx1F3vK5ja/qMl34N8J20gDC2ilCOfvYZ3yv0+UV79+yb4Ra00y/8U3ceHvP9FtMj/lkpy7D6sAP+AGvHPh/4Pn+IXibTdE0xpRpGnRD7VfFNuELEswB6EklVB57noa+3dMsLbS9OtbCwhWC0to1iijXoqqMAV9fmmLioexhu7X+5X+9/1qcWFi4U2n1bfybLVc5488H6V420CXStZiJQ/PFMmPMgfHDofX26EcGujorwYycGpRdmjc+C/iT8O9b8Bal5OqRedYyMRb30SnypR6f7Leqnn0yOa43Ffo5qVhaanYzWWo20N1aTLtkhmQOjj3Brwbx1+zhY3jyXXg6/+wSHn7Hd5eL6K4+Zfx3V9DhM3jJctfR9y1LufLv4UcV3PiH4TeN9CZzd+H7ueJf+W1mBcIR6/Jkj8QK4y5tLm1cpdW80LjqskZUj8xXsQrU6ivBpl6MhwPajj0qa2tLm6cJa280znoscZYn8hXZ+HvhN4311k+yeH7uCJv8AlteAW6Aevz4J/AGidanTV5tINEcN+Fdj8N/h3rfj3UvJ0uHyrKNgLi+lU+VCPT/ab0Uc+uBzXuHgX9nCxtHjufGN/wDb5Bz9jtMpF9Gc/Mw+m2vetNsLTS7GGy022htbSFdscMKBEUewFePi83hFctDV9yHLsY3gPwfpXgnQItL0aIhAd80z/wCsnfHLufX26AcCujoor56UnNuUndsg/9k=", KUNCI="kabuzen-p2tl-v1";
+var $=function(s,r){return (r||document).querySelector(s)};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+/* ---------- penyimpanan: localStorage dengan cadangan memori ---------- */
+var mem=null;
+function muat(){ if(mem) return mem; try{ mem=JSON.parse(localStorage.getItem(KUNCI)||"null") }catch(e){ mem=null } if(!mem) mem={profil:null,baca:{},kuis:{},kasus:{},anim:{},cek:{},ujian:[]}; return mem }
+function simpan(){ try{ localStorage.setItem(KUNCI,JSON.stringify(mem)) }catch(e){} }
+var D=muat();
+
+/* ---------- kemajuan ---------- */
+function lulusKuis(id){ var k=D.kuis[id]; return k && k.benar/k.total>=0.8 }
+function kemajuanModul(m){ var n=0; if(D.baca[m.id]) n++; if(lulusKuis(m.id)) n++; return n/2 }
+function kemajuanTotal(){ var s=0; K.modul.forEach(function(m){s+=kemajuanModul(m)}); var kasus=K.kasus.filter(function(k){return D.kasus[k.id]}).length; return (s+kasus)/(K.modul.length+K.kasus.length) }
+function ujianTerbaik(){ var b=null; D.ujian.forEach(function(u){ if(!b||u.nilai>b.nilai) b=u }); return b }
+function semuaKuisLulus(){ return K.modul.every(function(m){return lulusKuis(m.id)}) }
+
+/* ---------- kerangka ---------- */
+var ikon={
+ beranda:'<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
+ modul:'<svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM8 7h7M8 11h7"/></svg>',
+ kasus:'<svg viewBox="0 0 24 24"><path d="M12 3l9 16H3zM12 10v4M12 17h.01"/></svg>',
+ animasi:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4z"/></svg>',
+ lain:'<svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>'
+};
+function kerangka(judul,sub,isi,aktif,kembali){
+ var nav=[["beranda","#/","Beranda"],["modul","#/modul","Modul"],["kasus","#/kasus","Kasus"],["animasi","#/animasi","Animasi"],["lain","#/lain","Lainnya"]];
+ return '<header class="atas">'+(kembali?'<button class="kembali" aria-label="Kembali" data-kembali="'+kembali+'">&#8249;</button>':'')+
+  '<h1>'+esc(judul)+(sub?'<small>'+esc(sub)+'</small>':'')+'</h1><span class="status" id="jaringan"></span><img class="logo" src="'+LOGO+'" alt="Logo KABUZEN"></header>'+
+  '<main>'+isi+'</main><nav class="bawah">'+nav.map(function(n){return '<a href="'+n[1]+'" class="'+(aktif===n[0]?"aktif":"")+'">'+ikon[n[0]]+n[2]+'</a>'}).join("")+'</nav>';
+}
+function tagFaktor(f){ var x=K.faktor[f]; return '<span class="tag" style="background:'+x.warna+'">'+esc(x.nama)+'</span>' }
+function setJaringan(){ var e=$("#jaringan"); if(e) e.textContent=navigator.onLine?"Daring":"Luring" }
+window.addEventListener("online",setJaringan); window.addEventListener("offline",setJaringan);
+
+/* ---------- halaman: sampul & daftar ---------- */
+function hSampul(){
+ return '<div class="sampul"><img class="logo" src="'+LOGO+'" alt="Logo KABUZEN"><div class="isi">'+
+ '<div class="kecil" style="letter-spacing:.14em;font-weight:700;color:#ffd60a">KABUZEN</div>'+
+ '<h1>CEGAH <span>TUBRUKAN</span> DI LAUT</h1>'+
+ '<div class="garis"><i style="background:#3b82c4"></i><i style="background:#d9480f"></i><i style="background:#2f9e44"></i><i style="background:#7048e8"></i></div>'+
+ '<p><b>Selamat datang.</b> Pelatihan mandiri untuk tim anjungan: COLREG 1972, tujuh studi kasus kecelakaan nyata, serta kapal otonom dan kecerdasan artifisial dalam lalu lintas laut. Tujuh modul, animasi, kuis, dan ujian akhir. Bisa dipakai tanpa internet.</p>'+
+ '<form id="fDaftar"><label for="nama">Nama lengkap</label><input id="nama" type="text" required maxlength="60" autocomplete="name" placeholder="mis. Rudi Hartono">'+
+ '<label for="jabatan">Jabatan di anjungan</label><select id="jabatan"><option>Nakhoda</option><option>Mualim I</option><option>Mualim II</option><option>Mualim III</option><option>Juru mudi</option><option>Pengamat</option><option>Kadet / taruna</option><option>Lainnya</option></select>'+
+ '<label for="kapal">Kapal / satuan (boleh kosong)</label><input id="kapal" type="text" maxlength="60">'+
+ '<label for="email">Email (boleh kosong)</label><input id="email" type="email" maxlength="80" autocomplete="email">'+
+ '<p class="kecil" style="margin-top:10px">Data hanya disimpan di perangkat ini. Aplikasi tidak mengirim email konfirmasi karena dirancang berjalan tanpa internet.</p>'+
+ '<button class="tombol utama penuh" type="submit">Daftar dan mulai belajar</button></form></div>'+
+ '<svg class="ombak" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0 30 Q50 5 100 30 T200 30 T300 30 T400 30 V60 H0z" fill="#fff"/></svg></div>';
+}
+
+/* ---------- beranda ---------- */
+function hBeranda(){
+ var p=Math.round(kemajuanTotal()*100), u=ujianTerbaik();
+ var lanjut=K.modul.filter(function(m){return kemajuanModul(m)<1})[0];
+ var isi='<h2>Halo, '+esc(D.profil.nama.split(" ")[0])+'</h2><p class="redup">'+esc(D.profil.jabatan)+(D.profil.kapal?" · "+esc(D.profil.kapal):"")+'</p>'+
+ '<div class="kartu"><div class="baris"><div class="tumbuh"><b>Kemajuan belajar</b><div class="bar"><i style="width:'+p+'%"></i></div></div><div class="hasil" id="persen">'+p+'%</div></div></div>'+
+ (lanjut?'<a class="kartu" href="#/modul/'+lanjut.id+'"><div class="redup kecil">Lanjutkan</div><b>'+esc(lanjut.judul)+'</b><div class="redup">'+esc(lanjut.ringkas)+'</div></a>':'<div class="kartu"><b>Semua modul selesai.</b> Lanjutkan ke ujian akhir.</div>')+
+ '<h3>Empat faktor penyebab</h3><div class="kisi2">'+Object.keys(K.faktor).map(function(f){var n=K.kasus.filter(function(k){return k.faktor.indexOf(f)>=0}).length;return '<a class="kartu" href="#/kasus?f='+f+'" style="border-top:5px solid '+K.faktor[f].warna+'"><b>'+esc(K.faktor[f].nama)+'</b><div class="redup kecil">'+n+' studi kasus</div></a>'}).join("")+'</div>'+
+ '<h3>Ujian akhir</h3><div class="kartu">'+(u?'<p>Nilai terbaik: <b>'+u.nilai+'</b> ('+(u.nilai>=80?"lulus":"belum lulus")+')</p>':'<p class="redup">Belum pernah mengikuti ujian.</p>')+
+ '<div class="baris"><a class="tombol gelap tumbuh" href="#/ujian">Ujian akhir</a>'+(u&&u.nilai>=80?'<a class="tombol tumbuh" href="#/sertifikat">Sertifikat</a>':'')+'</div></div>';
+ return kerangka("KABUZEN CEGAH TUBRUKAN DI LAUT","Pelatihan tim anjungan",isi,"beranda");
+}
+
+/* ---------- modul ---------- */
+function hModulDaftar(){
+ var isi='<h2>Modul belajar</h2><p class="redup">Baca materi, tonton animasi, lalu kerjakan kuis. Lulus kuis bila benar 80% atau lebih.</p>'+
+ K.modul.map(function(m,i){var p=Math.round(kemajuanModul(m)*100);return '<a class="kartu" href="#/modul/'+m.id+'"><div class="baris"><div class="nomor">'+(i+1)+'</div><div class="tumbuh"><b>'+esc(m.judul)+'</b><div class="redup kecil">'+esc(m.ringkas)+'</div></div></div><div class="bar"><i style="width:'+p+'%"></i></div><div class="redup kecil" style="margin-top:4px">'+(D.baca[m.id]?"Materi dibaca":"Materi belum dibaca")+' · '+(D.kuis[m.id]?("Kuis "+D.kuis[m.id].benar+"/"+D.kuis[m.id].total):"Kuis belum dikerjakan")+'</div></a>'}).join("");
+ return kerangka("Modul",K.modul.length+" modul",isi,"modul");
+}
+function hModul(id,tab){
+ var m=K.modul.filter(function(x){return x.id===id})[0]; if(!m) return hModulDaftar();
+ tab=tab||"materi"; var no=K.modul.indexOf(m)+1, isi='';
+ isi+='<div class="tab">'+[["materi","Materi"],["animasi","Animasi"],["kuis","Kuis"]].map(function(t){return '<button data-tab="'+t[0]+'" class="'+(tab===t[0]?"aktif":"")+'">'+t[1]+'</button>'}).join("")+'</div>';
+ if(tab==="materi"){
+  isi+='<h2>'+no+'. '+esc(m.judul)+'</h2>'+tagFaktor(m.faktor)+'<div class="kartu" style="margin-top:8px"><b>Tujuan belajar</b><ul class="rapi">'+m.tujuan.map(function(t){return '<li>'+esc(t)+'</li>'}).join("")+'</ul></div>'+
+  m.materi.map(function(s){return '<h3>'+esc(s.h)+'</h3>'+s.p.map(function(p){return '<p>'+esc(p)+'</p>'}).join("")}).join("")+
+  '<h3>Studi kasus terkait</h3>'+m.kasus.map(function(c){var k=kasusById(c);return '<a class="kartu" href="#/kasus/'+k.id+'"><b>'+esc(k.judul)+'</b><div class="redup kecil">'+esc(k.tanggal)+'</div></a>'}).join("")+
+  '<button class="tombol '+(D.baca[m.id]?"":"utama")+' penuh" id="tandaBaca">'+(D.baca[m.id]?"✓ Sudah ditandai dibaca":"Tandai materi sudah dibaca")+'</button>';
+ } else if(tab==="animasi"){
+  isi+='<h2>Animasi modul '+no+'</h2>'+m.anim.map(function(a){return '<a class="kartu" href="#/animasi/'+a+'"><div class="baris"><div class="nomor">▶</div><div class="tumbuh"><b>'+esc(K.anim[a].judul)+'</b><div class="redup kecil">'+esc(K.anim[a].ket)+'</div></div></div></a>'}).join("");
+ } else {
+  isi+='<h2>Kuis modul '+no+'</h2><div id="kuis"></div>';
+ }
+ return kerangka("Modul "+no,m.judul,isi,"modul","#/modul");
+}
+function kasusById(id){ return K.kasus.filter(function(k){return k.id===id})[0] }
+
+/* ---------- mesin kuis (dipakai kuis modul dan ujian) ---------- */
+function jalankanKuis(wadah,soal,selesai,modeUjian){
+ var i=0,benar=0,jawab=[];
+ function tampil(){
+  var s=soal[i];
+  wadah.innerHTML='<div class="redup kecil">Soal '+(i+1)+' dari '+soal.length+'</div><div class="bar" style="margin:6px 0 12px"><i style="width:'+(i/soal.length*100)+'%"></i></div><p><b>'+esc(s.q)+'</b></p>'+
+   s.o.map(function(o,j){return '<button class="pilihan" data-j="'+j+'">'+esc(o)+'</button>'}).join("")+'<div id="umpan"></div>';
+  [].forEach.call(wadah.querySelectorAll(".pilihan"),function(b){b.onclick=function(){
+   var j=+b.getAttribute("data-j"), ok=j===s.a; if(ok) benar++; jawab.push(j);
+   [].forEach.call(wadah.querySelectorAll(".pilihan"),function(x,k){x.disabled=true; if(!modeUjian){ if(k===s.a) x.className+=" benar"; else if(k===j) x.className+=" salah" } else if(k===j) x.style.borderColor="#1d0b78"});
+   $("#umpan",wadah).innerHTML=(modeUjian?'':'<div class="catatan"><b>'+(ok?"Benar.":"Belum tepat.")+'</b> '+esc(s.why)+'</div>')+'<button class="tombol gelap penuh" id="lanjut">'+(i+1<soal.length?"Soal berikutnya":"Lihat hasil")+'</button>';
+   $("#lanjut",wadah).onclick=function(){ i++; if(i<soal.length) tampil(); else selesai(benar,soal.length,jawab) };
+  }});
+ }
+ tampil();
+}
+function acak(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t} return a }
+
+/* ---------- kasus ---------- */
+function hKasusDaftar(f){
+ var daftar=K.kasus.filter(function(k){return !f||k.faktor.indexOf(f)>=0});
+ var isi='<h2>Studi kasus</h2><p class="redup">Diringkas dari laporan investigasi resmi dan sumber terbuka. Sumber tercantum di tiap kasus.</p>'+
+ '<div class="tab"><button data-f="" class="'+(!f?"aktif":"")+'">Semua</button>'+Object.keys(K.faktor).map(function(x){return '<button data-f="'+x+'" class="'+(f===x?"aktif":"")+'">'+esc(K.faktor[x].nama)+'</button>'}).join("")+'</div>'+
+ daftar.map(function(k){return '<a class="kartu" href="#/kasus/'+k.id+'"><div class="baris"><div class="tumbuh"><b>'+esc(k.judul)+'</b><div class="redup kecil">'+esc(k.tanggal)+' · '+esc(k.lokasi)+'</div></div>'+(D.kasus[k.id]?'<span style="color:#2f9e44;font-weight:800">✓</span>':'')+'</div><p class="kecil" style="margin:8px 0 6px">'+esc(k.ringkas)+'</p>'+k.faktor.map(tagFaktor).join("")+'</a>'}).join("");
+ return kerangka("Studi kasus",daftar.length+" kejadian",isi,"kasus");
+}
+function hKasus(id){
+ var k=kasusById(id); if(!k) return hKasusDaftar();
+ function ul(a){return '<ul class="rapi">'+a.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>'}
+ var isi='<h2>'+esc(k.judul)+'</h2><p class="redup">'+esc(k.tanggal)+'<br>'+esc(k.lokasi)+'</p>'+k.faktor.map(tagFaktor).join("")+
+ '<p style="margin-top:8px"><b>'+esc(k.ringkas)+'</b></p>'+(k.catatan?'<div class="catatan">'+esc(k.catatan)+'</div>':'')+
+ '<a class="tombol gelap penuh" href="#/animasi/'+k.anim+'">▶ Tonton animasi kejadian</a>'+
+ '<h3>Kronologi</h3><ol class="waktu">'+k.kronologi.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ol>'+
+ '<h3>Temuan investigasi</h3>'+ul(k.temuan)+'<h3>Pelajaran bagi tim anjungan</h3>'+ul(k.pelajaran)+
+ '<h3>Aturan terkait</h3><p>'+k.aturan.map(function(a){return '<span class="tag" style="background:#1d0b78">'+esc(a)+'</span>'}).join("")+'</p>'+
+ '<h3>Sumber</h3>'+k.ref.map(function(r){var x=K.referensi.filter(function(y){return y.id===r})[0];return '<div class="kartu kecil"><b>'+esc(x.judul)+'</b><br>'+esc(x.penerbit)+'<br><a href="'+x.url+'" target="_blank" rel="noopener">'+esc(x.url)+'</a></div>'}).join("")+
+ '<button class="tombol '+(D.kasus[k.id]?"":"utama")+' penuh" id="tandaKasus">'+(D.kasus[k.id]?"✓ Sudah dipelajari":"Tandai sudah dipelajari")+'</button>';
+ return kerangka("Studi kasus",k.judul,isi,"kasus","#/kasus");
+}
+
+/* ---------- animasi ---------- */
+function hAnimDaftar(){
+ var ids=Object.keys(K.anim);
+ function kartu(a){return '<a class="kartu" href="#/animasi/'+a+'"><div class="baris"><div class="nomor">▶</div><div class="tumbuh"><b>'+esc(K.anim[a].judul)+'</b><div class="redup kecil">'+esc(K.anim[a].ket)+'</div></div>'+(D.anim[a]?'<span style="color:#2f9e44;font-weight:800">✓</span>':'')+'</div></a>'}
+ var isi='<h2>Animasi</h2><p class="redup">Tampak atas, utara di atas. Semua animasi adalah ilustrasi skematik dan tidak berskala.</p><h3>Aturan dasar</h3>'+ids.filter(function(a){return a.charAt(0)==="r"&&a.length===3}).map(kartu).join("")+'<h3>Rekonstruksi kejadian</h3>'+ids.filter(function(a){return !(a.charAt(0)==="r"&&a.length===3)}).map(kartu).join("");
+ return kerangka("Animasi",ids.length+" animasi",isi,"animasi");
+}
+function hAnim(id){
+ var a=K.anim[id]; if(!a) return hAnimDaftar();
+ var isi='<h2>'+esc(a.judul)+'</h2><p class="redup">'+esc(a.ket)+'</p><canvas class="laut" id="cv" width="720" height="720" aria-label="Animasi '+esc(a.judul)+'"></canvas>'+
+ '<div class="keterangan" id="cap" aria-live="polite"></div><div class="kendali"><button class="tombol gelap" id="main" style="min-width:92px;padding:10px 12px">▶ Putar</button><input type="range" id="geser" min="0" max="1000" value="0" aria-label="Posisi waktu"><select id="laju" style="width:auto" aria-label="Kecepatan"><option value="1">1×</option><option value="0.5">0,5×</option><option value="2">2×</option></select></div>'+
+ '<div class="catatan" style="margin-top:12px">Ilustrasi skematik untuk belajar. Posisi, jarak, dan sudut tidak berskala dan bukan rekonstruksi resmi.</div>';
+ return kerangka("Animasi",a.judul,isi,"animasi","back");
+}
+var animHenti=null;
+function pasangAnim(id){
+ var a=K.anim[id], cv=$("#cv"), g=cv.getContext("2d"), W=cv.width, t=0, main=false, laju=1, akhir=0, DUR=16000;
+ function pos(kf,tt){ for(var i=0;i<kf.length-1;i++){ if(tt<=kf[i+1][0]){ var u=(tt-kf[i][0])/((kf[i+1][0]-kf[i][0])||1); u=Math.max(0,Math.min(1,u)); return [kf[i][1]+(kf[i+1][1]-kf[i][1])*u, kf[i][2]+(kf[i+1][2]-kf[i][2])*u] } } var l=kf[kf.length-1]; return [l[1],l[2]] }
+ function arah(kf,tt){ var p=pos(kf,Math.max(0,tt-0.012)), q=pos(kf,Math.min(1,tt+0.012)); if(Math.abs(q[0]-p[0])+Math.abs(q[1]-p[1])<1e-4){ for(var s=tt;s>=0;s-=0.01){ p=pos(kf,Math.max(0,s-0.012)); q=pos(kf,s); if(Math.abs(q[0]-p[0])+Math.abs(q[1]-p[1])>1e-4) break } } return Math.atan2(q[0]-p[0],-(q[1]-p[1])) }
+ function X(v){return v/100*W}
+ function gambar(){
+  var gr=g.createLinearGradient(0,0,0,W); gr.addColorStop(0,"#0d3560"); gr.addColorStop(1,"#0a2444"); g.fillStyle=gr; g.fillRect(0,0,W,W);
+  g.strokeStyle="rgba(255,255,255,.07)"; g.lineWidth=1; for(var i=1;i<10;i++){ g.beginPath(); g.moveTo(X(i*10),0); g.lineTo(X(i*10),W); g.moveTo(0,X(i*10)); g.lineTo(W,X(i*10)); g.stroke() }
+  (a.marks||[]).forEach(function(m){ g.font="600 20px Inter,system-ui,sans-serif"; g.textAlign="center";
+   if(m.t==="line"){ g.strokeStyle="rgba(255,214,10,.7)"; g.setLineDash([10,10]); g.lineWidth=3; g.beginPath(); g.moveTo(X(m.x1),X(m.y1)); g.lineTo(X(m.x2),X(m.y2)); g.stroke(); g.setLineDash([]) }
+   else if(m.t==="shoal"){ g.fillStyle="rgba(120,200,220,.35)"; g.beginPath(); g.ellipse(X(m.x),X(m.y),X(13),X(6),0,0,7); g.fill(); g.fillStyle="#cfeaf2"; g.fillText(m.s,X(m.x),X(m.y)-X(7.5)) }
+   else if(m.t==="land"){ g.fillStyle="#5b7a4a"; g.beginPath(); g.ellipse(X(m.x),X(m.y),X(11),X(5),-.2,0,7); g.fill(); g.fillStyle="#e7f0df"; g.fillText(m.s,X(m.x),X(m.y)+7) }
+   else { g.fillStyle="rgba(255,255,255,.7)"; g.fillText(m.s,X(m.x),X(m.y)) } });
+  a.ships.forEach(function(s){
+   g.strokeStyle=s.w; g.globalAlpha=s.ghost?.55:.5; g.lineWidth=3; g.setLineDash(s.ghost?[6,10]:[]); g.beginPath();
+   for(var u=0;u<=t+1e-6;u+=0.01){ var p=pos(s.kf,u); if(u===0) g.moveTo(X(p[0]),X(p[1])); else g.lineTo(X(p[0]),X(p[1])) } g.stroke(); g.setLineDash([]); g.globalAlpha=1 });
+  a.ships.forEach(function(s,si){ var p=pos(s.kf,t), h=arah(s.kf,t), L=X(4.2);
+   g.save(); g.translate(X(p[0]),X(p[1])); g.rotate(h); g.globalAlpha=s.ghost?.6:1; g.fillStyle=s.w; g.strokeStyle="#0a1a33"; g.lineWidth=2;
+   g.beginPath(); g.moveTo(0,-L*1.5); g.lineTo(L*.62,-L*.5); g.lineTo(L*.62,L*1.3); g.lineTo(-L*.62,L*1.3); g.lineTo(-L*.62,-L*.5); g.closePath(); g.fill(); if(!s.ghost) g.stroke(); g.restore(); g.globalAlpha=1; });
+  a.ships.forEach(function(s,si){ var p=pos(s.kf,t);
+   g.font="700 21px Inter,system-ui,sans-serif"; g.textAlign=p[0]>72?"right":"left"; g.lineWidth=5; g.strokeStyle="rgba(8,20,45,.85)"; var tx=X(p[0])+(p[0]>72?-X(5):X(5)), ty=X(p[1])+(si%2?X(8):-X(5)); g.strokeText(s.nama,tx,ty); g.fillStyle="#fff"; g.fillText(s.nama,tx,ty) });
+  if(a.fog){ var x0=a.fog==="right"?W*.42:0; var fg=g.createLinearGradient(x0,0,x0+W*.2,0); fg.addColorStop(0,"rgba(215,225,235,0)"); fg.addColorStop(1,"rgba(215,225,235,.42)"); g.fillStyle=a.fog==="all"?"rgba(215,225,235,.36)":fg; g.fillRect(x0,0,W-x0,W);
+   g.fillStyle="rgba(255,255,255,.75)"; g.font="600 20px Inter,system-ui,sans-serif"; g.textAlign="right"; g.fillText("KABUT",W-18,W-18) }
+  if(a.fog==="all"){ var me=pos(a.ships[0].kf,t); g.strokeStyle="rgba(120,255,160,.5)"; g.lineWidth=2; [14,28].forEach(function(r){ g.beginPath(); g.arc(X(me[0]),X(me[1]),X(r),0,7); g.stroke() }) }
+  if(a.hit!=null && t>=a.hit){ var c=pos(a.ships[a.ships.length-1].kf,a.hit), r=X(5)+X(2.5)*Math.sin((t-a.hit)*60); g.strokeStyle="#ff4d4d"; g.lineWidth=6; g.beginPath(); g.arc(X(c[0]),X(c[1]),Math.abs(r),0,7); g.stroke(); g.font="800 30px Inter,system-ui,sans-serif"; g.textAlign="center"; g.lineWidth=6; g.strokeStyle="#300"; g.strokeText(a.hitTxt||"TUBRUKAN",W/2,W-46); g.fillStyle="#ff6b6b"; g.fillText(a.hitTxt||"TUBRUKAN",W/2,W-46) }
+  g.fillStyle="rgba(255,255,255,.85)"; g.font="700 20px Inter,system-ui,sans-serif"; g.textAlign="center"; g.fillText("U",34,30); g.strokeStyle="rgba(255,255,255,.85)"; g.lineWidth=3; g.beginPath(); g.moveTo(34,70); g.lineTo(34,38); g.moveTo(27,47); g.lineTo(34,38); g.lineTo(41,47); g.stroke();
+  var c0=a.caps[0][1]; a.caps.forEach(function(c){ if(t>=c[0]) c0=c[1] }); $("#cap").textContent=c0;
+ }
+ function set(v){ t=Math.max(0,Math.min(1,v)); $("#geser").value=Math.round(t*1000); gambar(); if(t>=1){ main=false; $("#main").textContent="↺ Ulangi"; if(!D.anim[id]){D.anim[id]=1;simpan()} } }
+ function langkah(now){ if(!main) return; if(!akhir) akhir=now; set(t+(now-akhir)/DUR*laju); akhir=now; if(main) raf=requestAnimationFrame(langkah) }
+ var raf=0;
+ $("#main").onclick=function(){ if(t>=1) t=0; main=!main; akhir=0; this.textContent=main?"❚❚ Jeda":"▶ Putar"; if(main) raf=requestAnimationFrame(langkah) };
+ $("#geser").oninput=function(){ main=false; $("#main").textContent="▶ Putar"; set(this.value/1000) };
+ $("#laju").onchange=function(){ laju=+this.value };
+ animHenti=function(){ main=false; cancelAnimationFrame(raf) };
+ window.__animSet=set; set(0);
+}
+
+/* ---------- ujian & sertifikat ---------- */
+function hUjian(){
+ var siap=semuaKuisLulus(), u=ujianTerbaik();
+ var isi='<h2>Ujian akhir</h2><div class="kartu"><ul class="rapi"><li>15 soal diambil acak dari bank soal semua modul.</li><li>Jawaban tidak dikoreksi per soal; hasil tampil di akhir.</li><li>Lulus bila nilai 80 atau lebih. Boleh diulang.</li></ul>'+
+ (siap?'':'<div class="catatan">Disarankan lulus semua kuis modul lebih dulu. Ujian tetap dapat dimulai.</div>')+(u?'<p>Nilai terbaik sejauh ini: <b>'+u.nilai+'</b></p>':'')+
+ '<button class="tombol utama penuh" id="mulaiUjian">Mulai ujian</button></div><div id="kuis"></div>'+
+ (D.ujian.length?'<h3>Riwayat</h3>'+D.ujian.slice().reverse().map(function(x){return '<div class="kartu baris"><div class="tumbuh">'+esc(x.tgl)+'</div><b>'+x.nilai+'</b></div>'}).join(""):'');
+ return kerangka("Ujian akhir","15 soal",isi,"beranda","#/");
+}
+function tglID(d){ var b=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]; return d.getDate()+" "+b[d.getMonth()]+" "+d.getFullYear() }
+function hSertifikat(){
+ var u=ujianTerbaik();
+ if(!u||u.nilai<80) return kerangka("Sertifikat","",'<h2>Sertifikat</h2><div class="kartu">Sertifikat tersedia setelah lulus ujian akhir dengan nilai 80 atau lebih.</div><a class="tombol gelap penuh" href="#/ujian">Ke ujian akhir</a>',"beranda","#/");
+ var isi='<h2>Sertifikat penyelesaian</h2><canvas id="sert" width="1400" height="990" style="width:100%;border-radius:10px;border:1px solid #dfe1ee"></canvas><div class="baris tanpa-cetak" style="margin-top:12px"><a class="tombol utama tumbuh" id="unduh" download="sertifikat-kabuzen-cegah-tubrukan.png">Unduh PNG</a><button class="tombol tumbuh" onclick="print()">Cetak</button></div><p class="redup kecil" style="margin-top:10px">Sertifikat ini bukti penyelesaian pelatihan mandiri, bukan sertifikat kompetensi resmi.</p>';
+ return kerangka("Sertifikat","",isi,"beranda","#/");
+}
+function gambarSertifikat(){
+ var u=ujianTerbaik(), c=$("#sert"), g=c.getContext("2d"), W=c.width, H=c.height, im=new Image();
+ function lukis(){
+  g.fillStyle="#fff"; g.fillRect(0,0,W,H); g.fillStyle="#1d0b78"; g.fillRect(0,0,W,150); g.fillStyle="#ffd60a"; g.fillRect(0,150,W,8);
+  g.strokeStyle="#1d0b78"; g.lineWidth=6; g.strokeRect(26,26,W-52,H-52);
+  g.fillStyle="#fff"; g.textAlign="left"; g.font="800 40px Inter,system-ui,sans-serif"; g.fillText("KABUZEN CEGAH TUBRUKAN DI LAUT",70,100);
+  g.save(); g.beginPath(); g.arc(W-120,88,46,0,7); g.closePath(); g.clip(); try{ g.drawImage(im,W-166,42,92,92) }catch(e){} g.restore(); g.strokeStyle="#ffd60a"; g.lineWidth=5; g.beginPath(); g.arc(W-120,88,47,0,7); g.stroke();
+  g.fillStyle="#1a1c2b"; g.textAlign="center"; g.font="600 30px Inter,system-ui,sans-serif"; g.fillText("SERTIFIKAT PENYELESAIAN",W/2,260);
+  g.font="400 26px Inter,system-ui,sans-serif"; g.fillStyle="#5d6178"; g.fillText("Diberikan kepada",W/2,330);
+  g.fillStyle="#1d0b78"; g.font="800 64px Inter,system-ui,sans-serif"; g.fillText(D.profil.nama,W/2,420,W-200);
+  g.fillStyle="#1a1c2b"; g.font="400 26px Inter,system-ui,sans-serif"; g.fillText(D.profil.jabatan+(D.profil.kapal?" — "+D.profil.kapal:""),W/2,470,W-200);
+  g.fillText("telah menyelesaikan pelatihan mandiri pencegahan tubrukan di laut",W/2,560); g.fillText("(7 modul: COLREG 1972, studi kasus, kapal otonom dan AI) dan lulus ujian akhir",W/2,600);
+  g.font="800 44px Inter,system-ui,sans-serif"; g.fillStyle="#1d0b78"; g.fillText("Nilai "+u.nilai,W/2,690);
+  g.font="400 24px Inter,system-ui,sans-serif"; g.fillStyle="#5d6178"; g.fillText(u.tgl,W/2,740);
+  g.font="400 20px Inter,system-ui,sans-serif"; g.fillText("Bukti penyelesaian pelatihan mandiri. Bukan sertifikat kompetensi resmi.",W/2,H-70);
+  try{ $("#unduh").href=c.toDataURL("image/png") }catch(e){}
+ }
+ im.onload=lukis; im.onerror=lukis; im.src=LOGO;
+}
+
+/* ---------- lainnya ---------- */
+function hLain(){
+ var d=[["#/cek","Daftar periksa anjungan","Empat daftar periksa yang bisa dicentang"],["#/cpa","Kalkulator CPA / TCPA","Alat bantu belajar plotting"],["#/isyarat","Isyarat bunyi","Ringkasan Aturan 34 dan 35"],["#/glosarium","Glosarium","Istilah dan singkatan"],["#/referensi","Referensi","Sumber semua materi"],["#/profil","Profil dan data","Ubah profil, ekspor, atau hapus kemajuan"],["#/tentang","Tentang dan batas rujukan","Versi, cara pasang, penafian"]];
+ return kerangka("Lainnya","",'<h2>Lainnya</h2>'+d.map(function(x){return '<a class="kartu" href="'+x[0]+'"><b>'+x[1]+'</b><div class="redup kecil">'+x[2]+'</div></a>'}).join(""),"lain");
+}
+function hCek(){
+ var isi='<h2>Daftar periksa anjungan</h2><p class="redup">Alat bantu latihan. Daftar periksa resmi kapal tetap berlaku.</p>'+K.checklist.map(function(c){var n=c.item.filter(function(_,i){return D.cek[c.id+"-"+i]}).length;return '<div class="kartu"><div class="baris"><b class="tumbuh">'+esc(c.judul)+'</b><span class="redup kecil" data-hit="'+c.id+'">'+n+'/'+c.item.length+'</span></div>'+c.item.map(function(t,i){return '<label class="cek" style="font-weight:400;margin:0"><input type="checkbox" data-cek="'+c.id+'-'+i+'" '+(D.cek[c.id+"-"+i]?"checked":"")+'><span>'+esc(t)+'</span></label>'}).join("")+'</div>'}).join("")+'<button class="tombol penuh" id="kosongCek">Kosongkan semua centang</button>';
+ return kerangka("Daftar periksa","",isi,"lain","#/lain");
+}
+function hCPA(){
+ function f(id,l,v,mx){return '<div><label for="'+id+'">'+l+'</label><input type="number" inputmode="decimal" id="'+id+'" value="'+v+'" min="0" max="'+mx+'" step="0.1"></div>'}
+ var isi='<h2>Kalkulator CPA / TCPA</h2><div class="catatan">Alat bantu belajar. Jangan dipakai untuk navigasi. Di kapal, gunakan plotting radar/ARPA dan baringan pedoman.</div><div class="kartu"><b>Kapal sendiri</b><div class="kisi2">'+f("oc","Haluan (°)",0,360)+f("os","Kecepatan (knot)",12,60)+'</div><b style="display:block;margin-top:12px">Kapal sasaran</b><div class="kisi2">'+f("tb","Baringan sejati (°)",45,360)+f("tr","Jarak (mil laut)",6,100)+f("tc","Haluan (°)",270,360)+f("ts","Kecepatan (knot)",12,60)+'</div><button class="tombol gelap penuh" id="hitung" style="margin-top:14px">Hitung</button></div><div class="kartu" id="hasilCPA"></div>';
+ return kerangka("Kalkulator CPA","",isi,"lain","#/lain");
+}
+function hitungCPA(oc,os,tb,tr,tc,ts){
+ var r=Math.PI/180, rx=tr*Math.sin(tb*r), ry=tr*Math.cos(tb*r), vx=ts*Math.sin(tc*r)-os*Math.sin(oc*r), vy=ts*Math.cos(tc*r)-os*Math.cos(oc*r), v2=vx*vx+vy*vy;
+ if(v2<1e-9) return {cpa:tr,tcpa:null};
+ var t=-(rx*vx+ry*vy)/v2, cx=rx+vx*t, cy=ry+vy*t; return {cpa:Math.sqrt(cx*cx+cy*cy),tcpa:t*60};
+}
+window.__hitungCPA=hitungCPA;
+function hIsyarat(){
+ var d=[["•","Saya mengubah haluan ke kanan","Aturan 34"],["• •","Saya mengubah haluan ke kiri","Aturan 34"],["• • •","Mesin saya bergerak mundur","Aturan 34"],["• • • • •","Saya ragu terhadap maksud atau tindakan Anda (lima tiup pendek atau lebih)","Aturan 34"],["▬","Kapal tenaga berlaju dalam tampak terbatas, tiap ≤ 2 menit","Aturan 35"],["▬ ▬","Kapal tenaga berlayar tetapi berhenti, tiap ≤ 2 menit","Aturan 35"]];
+ return kerangka("Isyarat bunyi","",'<h2>Isyarat bunyi</h2><p class="redup">• tiup pendek sekitar 1 detik · ▬ tiup panjang 4 sampai 6 detik</p>'+d.map(function(x){return '<div class="kartu baris"><div style="font-size:22px;font-weight:800;color:#1d0b78;min-width:96px">'+x[0]+'</div><div class="tumbuh">'+x[1]+'<div class="redup kecil">'+x[2]+'</div></div></div>'}).join(""),"lain","#/lain");
+}
+function hGlos(){ return kerangka("Glosarium","",'<h2>Glosarium</h2><input type="text" id="cari" placeholder="Cari istilah…" aria-label="Cari istilah"><div id="glos" style="margin-top:12px"></div>',"lain","#/lain") }
+function isiGlos(q){ q=(q||"").toLowerCase(); var h=K.glosarium.filter(function(x){return !q||(x[0]+" "+x[1]).toLowerCase().indexOf(q)>=0}).map(function(x){return '<div class="kartu"><b>'+esc(x[0])+'</b><div>'+esc(x[1])+'</div></div>'}).join(""); $("#glos").innerHTML=h||'<p class="redup">Tidak ditemukan.</p>' }
+function hRef(){ return kerangka("Referensi","",'<h2>Referensi</h2><p class="redup">Tautan memerlukan internet. Judul dan penerbit tetap terbaca saat luring.</p>'+K.referensi.map(function(x,i){return '<div class="kartu kecil"><b>['+(i+1)+'] '+esc(x.judul)+'</b><br>'+esc(x.penerbit)+'<br><a href="'+x.url+'" target="_blank" rel="noopener" style="word-break:break-all">'+esc(x.url)+'</a><div class="redup" style="margin-top:4px;font-size:13px">'+esc(x.ket)+'</div></div>'}).join(""),"lain","#/lain") }
+function hProfil(){
+ var p=D.profil;
+ var isi='<h2>Profil dan data</h2><form id="fProfil" class="kartu"><label for="nama">Nama lengkap</label><input id="nama" type="text" required maxlength="60" value="'+esc(p.nama)+'"><label for="jabatan2">Jabatan</label><input id="jabatan2" type="text" maxlength="40" value="'+esc(p.jabatan)+'"><label for="kapal">Kapal / satuan</label><input id="kapal" type="text" maxlength="60" value="'+esc(p.kapal||"")+'"><button class="tombol gelap penuh" style="margin-top:14px">Simpan profil</button><p class="kecil redup" id="psn" style="margin:8px 0 0"></p></form>'+
+ '<div class="kartu"><b>Laporan kemajuan</b><p class="redup kecil">Untuk diserahkan kepada instruktur. Berkas teks berisi nilai kuis dan ujian.</p><a class="tombol penuh" id="ekspor" download="kemajuan-cegah-tubrukan.txt">Unduh laporan kemajuan</a></div>'+
+ '<div class="kartu"><b>Hapus semua data</b><p class="redup kecil">Menghapus profil dan seluruh kemajuan di perangkat ini.</p><button class="tombol penuh" id="hapus" style="border-color:#d9480f;color:#d9480f">Hapus data</button><div id="yakin"></div></div>';
+ return kerangka("Profil","",isi,"lain","#/lain");
+}
+function laporan(){
+ var u=ujianTerbaik(), L=["KABUZEN CEGAH TUBRUKAN DI LAUT — LAPORAN KEMAJUAN","Nama    : "+D.profil.nama,"Jabatan : "+D.profil.jabatan,"Kapal   : "+(D.profil.kapal||"-"),"Tanggal : "+tglID(new Date()),"Kemajuan: "+Math.round(kemajuanTotal()*100)+"%","","MODUL"];
+ K.modul.forEach(function(m,i){ var k=D.kuis[m.id]; L.push((i+1)+". "+m.judul+" | materi: "+(D.baca[m.id]?"dibaca":"belum")+" | kuis: "+(k?k.benar+"/"+k.total+(lulusKuis(m.id)?" (lulus)":" (belum lulus)"):"belum")) });
+ L.push("","STUDI KASUS"); K.kasus.forEach(function(k){ L.push("- "+k.judul+": "+(D.kasus[k.id]?"dipelajari":"belum")) });
+ L.push("","UJIAN AKHIR"); if(!D.ujian.length) L.push("belum pernah"); D.ujian.forEach(function(x){ L.push("- "+x.tgl+": "+x.nilai) }); if(u) L.push("Nilai terbaik: "+u.nilai+(u.nilai>=80?" (LULUS)":" (BELUM LULUS)"));
+ return L.join("\r\n");
+}
+window.__laporan=laporan;
+function hTentang(){
+ return kerangka("Tentang","",'<h2>Tentang aplikasi</h2><div class="kartu"><b>KABUZEN CEGAH TUBRUKAN DI LAUT</b><br>Versi '+esc(K.versi)+'<br><span class="redup kecil">Pelatihan mandiri tim anjungan.</span></div>'+
+ '<h3>Batas rujukan</h3><ul class="rapi"><li>Uraian aturan adalah parafrase untuk belajar. Naskah resmi COLREG 1972 edisi terakhir dan perintah nakhoda tetap menjadi rujukan di kapal.</li><li>Fakta kecelakaan diringkas dari sumber pada menu Referensi. Bila ada perbedaan, laporan investigasi aslinya yang berlaku.</li><li>Animasi adalah ilustrasi skematik, tidak berskala.</li><li>Kalkulator CPA adalah alat bantu belajar, bukan alat navigasi.</li></ul>'+
+ '<h3>Memakai tanpa internet</h3><ul class="rapi"><li><b>Dari berkas:</b> simpan berkas <i>index.html</i> di HP atau laptop, lalu buka dengan peramban. Tidak perlu internet sama sekali.</li><li><b>Dari alamat web:</b> buka sekali saat ada internet, lalu pilih “Tambahkan ke layar utama”. Sesudah itu aplikasi dapat dibuka saat luring.</li></ul>'+
+ '<h3>Data</h3><p>Profil dan kemajuan hanya tersimpan di perangkat ini. Tidak ada data yang dikirim ke server.</p>',"lain","#/lain");
+}
+
+/* ---------- perute ---------- */
+function render(){
+ if(animHenti){ animHenti(); animHenti=null }
+ var h=location.hash.replace(/^#/,"")||"/", q={}, i=h.indexOf("?"); if(i>=0){ h.slice(i+1).split("&").forEach(function(x){var a=x.split("=");q[a[0]]=decodeURIComponent(a[1]||"")}); h=h.slice(0,i) }
+ var s=h.split("/").filter(Boolean), app=$("#app"), html;
+ if(!D.profil){ app.innerHTML=hSampul(); $("#fDaftar").onsubmit=function(e){ e.preventDefault(); var n=$("#nama").value.trim(); if(!n) return; D.profil={nama:n,jabatan:$("#jabatan").value,kapal:$("#kapal").value.trim(),email:$("#email").value.trim(),daftar:tglID(new Date())}; simpan(); location.hash="#/"; render() }; return }
+ if(!s.length) html=hBeranda();
+ else if(s[0]==="modul") html=s[1]?hModul(s[1],q.tab):hModulDaftar();
+ else if(s[0]==="kasus") html=s[1]?hKasus(s[1]):hKasusDaftar(q.f);
+ else if(s[0]==="animasi") html=s[1]?hAnim(s[1]):hAnimDaftar();
+ else if(s[0]==="ujian") html=hUjian();
+ else if(s[0]==="sertifikat") html=hSertifikat();
+ else if(s[0]==="lain") html=hLain();
+ else if(s[0]==="cek") html=hCek();
+ else if(s[0]==="cpa") html=hCPA();
+ else if(s[0]==="isyarat") html=hIsyarat();
+ else if(s[0]==="glosarium") html=hGlos();
+ else if(s[0]==="referensi") html=hRef();
+ else if(s[0]==="profil") html=hProfil();
+ else if(s[0]==="tentang") html=hTentang();
+ else html=hBeranda();
+ app.innerHTML=html; setJaringan(); window.scrollTo(0,0);
+ var kb=$(".kembali"); if(kb) kb.onclick=function(){ var t=kb.getAttribute("data-kembali"); if(t==="back"&&history.length>1) history.back(); else location.hash=t==="back"?"#/animasi":t };
+ /* pengikat per halaman */
+ if(s[0]==="modul"&&s[1]){
+  [].forEach.call(document.querySelectorAll("[data-tab]"),function(b){b.onclick=function(){location.hash="#/modul/"+s[1]+"?tab="+b.getAttribute("data-tab")}});
+  var tb=$("#tandaBaca"); if(tb) tb.onclick=function(){ D.baca[s[1]]=1; simpan(); render() };
+  var kw=$("#kuis"); if(kw){ var m=K.modul.filter(function(x){return x.id===s[1]})[0]; var mulai=function(){ jalankanKuis(kw,m.kuis,function(b,n){ D.kuis[m.id]={benar:b,total:n,tgl:tglID(new Date())}; simpan(); var ok=b/n>=0.8; kw.innerHTML='<div class="kartu" style="text-align:center"><div class="hasil">'+b+' / '+n+'</div><p><b>'+(ok?"Lulus.":"Belum lulus.")+'</b> '+(ok?"Lanjutkan ke modul berikutnya.":"Baca ulang materi lalu coba lagi.")+'</p><button class="tombol gelap" id="ulang">Ulangi kuis</button> <a class="tombol" href="#/modul">Daftar modul</a></div>'; $("#ulang").onclick=mulai }) }; var k0=D.kuis[m.id]; if(k0){ kw.innerHTML='<div class="kartu"><p>Hasil terakhir: <b>'+k0.benar+' / '+k0.total+'</b> ('+(lulusKuis(m.id)?"lulus":"belum lulus")+')</p><button class="tombol utama penuh" id="ulang">Kerjakan lagi</button></div>'; $("#ulang").onclick=mulai } else mulai() }
+ }
+ if(s[0]==="kasus"&&!s[1]) [].forEach.call(document.querySelectorAll("[data-f]"),function(b){b.onclick=function(){var f=b.getAttribute("data-f");location.hash="#/kasus"+(f?"?f="+f:"")}});
+ if(s[0]==="kasus"&&s[1]){ var tk=$("#tandaKasus"); if(tk) tk.onclick=function(){ D.kasus[s[1]]=1; simpan(); render() } }
+ if(s[0]==="animasi"&&s[1]&&K.anim[s[1]]) pasangAnim(s[1]);
+ if(s[0]==="ujian") $("#mulaiUjian").onclick=function(){ var bank=[]; K.modul.forEach(function(m){ m.kuis.forEach(function(x){bank.push(x)}) }); var soal=acak(bank).slice(0,15); this.parentNode.style.display="none"; jalankanKuis($("#kuis"),soal,function(b,n,jw){ var nilai=Math.round(b/n*100); D.ujian.push({nilai:nilai,tgl:tglID(new Date())}); simpan(); var salah=soal.map(function(x,i){return jw[i]!==x.a?'<div class="kartu kecil"><b>'+esc(x.q)+'</b><br>Jawaban benar: '+esc(x.o[x.a])+'<br><span class="redup">'+esc(x.why)+'</span></div>':''}).join(""); $("#kuis").innerHTML='<div class="kartu" style="text-align:center"><div class="hasil">Nilai '+nilai+'</div><p><b>'+(nilai>=80?"Lulus.":"Belum lulus.")+'</b> Benar '+b+' dari '+n+' soal.</p>'+(nilai>=80?'<a class="tombol utama" href="#/sertifikat">Lihat sertifikat</a> ':'')+'<a class="tombol" href="#/">Beranda</a></div>'+(salah?'<h3>Pembahasan soal yang salah</h3>'+salah:'') },true) };
+ if(s[0]==="sertifikat"&&$("#sert")) gambarSertifikat();
+ if(s[0]==="cek"){ [].forEach.call(document.querySelectorAll("[data-cek]"),function(c){c.onchange=function(){ var id=c.getAttribute("data-cek"); if(c.checked) D.cek[id]=1; else delete D.cek[id]; simpan(); var g=id.split("-")[0], L=K.checklist.filter(function(x){return x.id===g})[0]; $('[data-hit="'+g+'"]').textContent=L.item.filter(function(_,i){return D.cek[g+"-"+i]}).length+"/"+L.item.length }}); $("#kosongCek").onclick=function(){ D.cek={}; simpan(); render() } }
+ if(s[0]==="cpa"){ var hit=function(){ var v=["oc","os","tb","tr","tc","ts"].map(function(i){return parseFloat($("#"+i).value)}); if(v.some(isNaN)){ $("#hasilCPA").innerHTML='<p>Isi semua kolom dengan angka.</p>'; return } var r=hitungCPA.apply(null,v), w=$("#hasilCPA"); if(r.tcpa===null) w.innerHTML='<p>Gerak relatif nol: jarak tetap <b>'+r.cpa.toFixed(2)+' mil</b>.</p>'; else if(r.tcpa<0) w.innerHTML='<div class="redup kecil">CPA sudah terlewati</div><p>Kedua kapal saling menjauh. Jarak terdekat tadi '+r.cpa.toFixed(2)+' mil, '+Math.abs(r.tcpa).toFixed(1)+' menit lalu.</p>'; else w.innerHTML='<div class="kisi2"><div><div class="redup kecil">CPA</div><div class="hasil" id="vCPA">'+r.cpa.toFixed(2)+' mil</div></div><div><div class="redup kecil">TCPA</div><div class="hasil" id="vTCPA">'+r.tcpa.toFixed(1)+' mnt</div></div></div><p style="margin-top:8px">'+(r.cpa<0.5?'<b style="color:#d9480f">CPA sangat kecil: bahaya tubrukan.</b> Tentukan status menurut aturan dan bertindak dini.':r.cpa<2?'CPA kecil. Pantau baringan dan pertimbangkan tindakan dini.':'CPA cukup lebar menurut data ini. Tetap pantau.')+'</p>' }; $("#hitung").onclick=hit; hit() }
+ if(s[0]==="glosarium"){ isiGlos(""); $("#cari").oninput=function(){isiGlos(this.value)} }
+ if(s[0]==="profil"){ $("#fProfil").onsubmit=function(e){ e.preventDefault(); var n=$("#nama").value.trim(); if(!n) return; D.profil.nama=n; D.profil.jabatan=$("#jabatan2").value.trim()||"-"; D.profil.kapal=$("#kapal").value.trim(); simpan(); $("#psn").textContent="Profil tersimpan." }; try{ $("#ekspor").href=URL.createObjectURL(new Blob([laporan()],{type:"text/plain"})) }catch(e){ $("#ekspor").href="data:text/plain;charset=utf-8,"+encodeURIComponent(laporan()) }
+  $("#hapus").onclick=function(){ $("#yakin").innerHTML='<p style="margin-top:10px"><b>Yakin?</b> Tindakan ini tidak dapat dibatalkan.</p><div class="baris"><button class="tombol tumbuh" id="tidak">Batal</button><button class="tombol tumbuh" id="ya" style="background:#d9480f;border-color:#d9480f;color:#fff">Ya, hapus</button></div>'; $("#tidak").onclick=function(){$("#yakin").innerHTML=""}; $("#ya").onclick=function(){ try{localStorage.removeItem(KUNCI)}catch(e){} mem=null; D=muat(); location.hash="#/"; render() } } }
+}
+window.addEventListener("hashchange",render); render();
+if("serviceWorker" in navigator && /^https?:/.test(location.protocol)){ window.addEventListener("load",function(){ navigator.serviceWorker.register("kabuzen-cegah-tubrukan-sw.js").catch(function(){}) }) }
+})();
+</script>
+</body>
+</html>
