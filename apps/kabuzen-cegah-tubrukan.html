@@ -92,7 +92,7 @@ canvas.laut{width:100%;aspect-ratio:1/1;border-radius:14px;display:block;backgro
    Semua fakta kecelakaan diringkas dari sumber pada daftar REFERENSI.
    Uraian aturan adalah PARAFRASE; naskah resmi COLREG 1972 tetap menjadi rujukan utama. */
 window.KONTEN = {
-versi: "1.0 — November 2026",
+versi: "1.1 — November 2026",
 
 referensi: [
  {id:"imo", judul:"COLREG — Preventing Collisions at Sea (ringkasan konvensi)", penerbit:"International Maritime Organization (IMO)", url:"https://imo.org/en/OurWork/Safety/Pages/Preventing-Collisions.aspx", ket:"Sumber resmi. Naskah lengkap aturan diterbitkan IMO (berbayar)."},
@@ -392,9 +392,19 @@ var $=function(s,r){return (r||document).querySelector(s)};
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 
 /* ---------- penyimpanan: localStorage dengan cadangan memori ---------- */
-var mem=null;
-function muat(){ if(mem) return mem; try{ mem=JSON.parse(localStorage.getItem(KUNCI)||"null") }catch(e){ mem=null } if(!mem) mem={profil:null,baca:{},kuis:{},kasus:{},anim:{},cek:{},ujian:[]}; return mem }
-function simpan(){ try{ localStorage.setItem(KUNCI,JSON.stringify(mem)) }catch(e){} }
+var mem=null, BISA=false;
+try{ localStorage.setItem(KUNCI+"-t","1"); localStorage.removeItem(KUNCI+"-t"); BISA=true }catch(e){ BISA=false }
+function baca(){ var t=null; try{ t=localStorage.getItem(KUNCI) }catch(e){} if(!t){ try{ t=sessionStorage.getItem(KUNCI) }catch(e){} } if(!t){ try{ if(window.name&&window.name.indexOf(KUNCI+"=")===0) t=window.name.slice(KUNCI.length+1) }catch(e){} } return t }
+function muat(){ if(mem) return mem; try{ mem=JSON.parse(baca()||"null") }catch(e){ mem=null } if(!mem||typeof mem!=="object") mem={profil:null,baca:{},kuis:{},kasus:{},anim:{},cek:{},ujian:[]}; return mem }
+function simpan(){ var t=JSON.stringify(mem); try{ localStorage.setItem(KUNCI,t) }catch(e){} try{ sessionStorage.setItem(KUNCI,t) }catch(e){} if(!BISA){ try{ window.name=KUNCI+"="+t }catch(e){} } }
+function hapusSimpanan(){ try{ localStorage.removeItem(KUNCI) }catch(e){} try{ sessionStorage.removeItem(KUNCI) }catch(e){} try{ if(window.name&&window.name.indexOf(KUNCI+"=")===0) window.name="" }catch(e){} }
+/* ---------- rute: disimpan di memori; alamat (#/...) hanya diikuti bila peramban mengizinkan ---------- */
+var RUTE="/", JEJAK=[];
+try{ RUTE=(location.hash||"").replace(/^#/,"")||"/" }catch(e){}
+function pergi(r){ r=String(r).replace(/^#/,"")||"/"; if(r!==RUTE){ JEJAK.push(RUTE); if(JEJAK.length>50) JEJAK.shift(); RUTE=r }
+ if(BISA){ try{ if((location.hash||"").replace(/^#/,"")!==r) location.hash="#"+r }catch(e){} }
+ render() }
+function mundur(cadangan){ var r=JEJAK.pop(); if(r==null) r=cadangan; RUTE="\u0000"; var j=JEJAK.length; pergi(r); JEJAK.length=j }
 var D=muat();
 
 /* ---------- kemajuan ---------- */
@@ -434,7 +444,7 @@ function hSampul(){
  '<label for="kapal">Kapal / satuan (boleh kosong)</label><input id="kapal" type="text" maxlength="60">'+
  '<label for="email">Email (boleh kosong)</label><input id="email" type="email" maxlength="80" autocomplete="email">'+
  '<p class="kecil" style="margin-top:10px">Data hanya disimpan di perangkat ini. Aplikasi tidak mengirim email konfirmasi karena dirancang berjalan tanpa internet.</p>'+
- '<button class="tombol utama penuh" type="submit">Daftar dan mulai belajar</button></form></div>'+
+ '<p class="kecil" id="psnDaftar" role="alert" style="color:#ffd60a;font-weight:700;margin:0 0 8px"></p><button class="tombol utama penuh" type="button" id="btnDaftar">Daftar dan mulai belajar</button></form></div>'+
  '<svg class="ombak" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0 30 Q50 5 100 30 T200 30 T300 30 T400 30 V60 H0z" fill="#fff"/></svg></div>';
 }
 
@@ -633,7 +643,7 @@ function isiGlos(q){ q=(q||"").toLowerCase(); var h=K.glosarium.filter(function(
 function hRef(){ return kerangka("Referensi","",'<h2>Referensi</h2><p class="redup">Tautan memerlukan internet. Judul dan penerbit tetap terbaca saat luring.</p>'+K.referensi.map(function(x,i){return '<div class="kartu kecil"><b>['+(i+1)+'] '+esc(x.judul)+'</b><br>'+esc(x.penerbit)+'<br><a href="'+x.url+'" target="_blank" rel="noopener" style="word-break:break-all">'+esc(x.url)+'</a><div class="redup" style="margin-top:4px;font-size:13px">'+esc(x.ket)+'</div></div>'}).join(""),"lain","#/lain") }
 function hProfil(){
  var p=D.profil;
- var isi='<h2>Profil dan data</h2><form id="fProfil" class="kartu"><label for="nama">Nama lengkap</label><input id="nama" type="text" required maxlength="60" value="'+esc(p.nama)+'"><label for="jabatan2">Jabatan</label><input id="jabatan2" type="text" maxlength="40" value="'+esc(p.jabatan)+'"><label for="kapal">Kapal / satuan</label><input id="kapal" type="text" maxlength="60" value="'+esc(p.kapal||"")+'"><button class="tombol gelap penuh" style="margin-top:14px">Simpan profil</button><p class="kecil redup" id="psn" style="margin:8px 0 0"></p></form>'+
+ var isi='<h2>Profil dan data</h2><form id="fProfil" class="kartu"><label for="nama">Nama lengkap</label><input id="nama" type="text" required maxlength="60" value="'+esc(p.nama)+'"><label for="jabatan2">Jabatan</label><input id="jabatan2" type="text" maxlength="40" value="'+esc(p.jabatan)+'"><label for="kapal">Kapal / satuan</label><input id="kapal" type="text" maxlength="60" value="'+esc(p.kapal||"")+'"><button class="tombol gelap penuh" type="button" id="btnProfil" style="margin-top:14px">Simpan profil</button><p class="kecil redup" id="psn" style="margin:8px 0 0"></p></form>'+
  '<div class="kartu"><b>Laporan kemajuan</b><p class="redup kecil">Untuk diserahkan kepada instruktur. Berkas teks berisi nilai kuis dan ujian.</p><a class="tombol penuh" id="ekspor" download="kemajuan-cegah-tubrukan.txt">Unduh laporan kemajuan</a></div>'+
  '<div class="kartu"><b>Hapus semua data</b><p class="redup kecil">Menghapus profil dan seluruh kemajuan di perangkat ini.</p><button class="tombol penuh" id="hapus" style="border-color:#d9480f;color:#d9480f">Hapus data</button><div id="yakin"></div></div>';
  return kerangka("Profil","",isi,"lain","#/lain");
@@ -656,9 +666,9 @@ function hTentang(){
 /* ---------- perute ---------- */
 function render(){
  if(animHenti){ animHenti(); animHenti=null }
- var h=location.hash.replace(/^#/,"")||"/", q={}, i=h.indexOf("?"); if(i>=0){ h.slice(i+1).split("&").forEach(function(x){var a=x.split("=");q[a[0]]=decodeURIComponent(a[1]||"")}); h=h.slice(0,i) }
+ var h=RUTE||"/", q={}, i=h.indexOf("?"); if(i>=0){ h.slice(i+1).split("&").forEach(function(x){var a=x.split("=");q[a[0]]=decodeURIComponent(a[1]||"")}); h=h.slice(0,i) }
  var s=h.split("/").filter(Boolean), app=$("#app"), html;
- if(!D.profil){ app.innerHTML=hSampul(); $("#fDaftar").onsubmit=function(e){ e.preventDefault(); var n=$("#nama").value.trim(); if(!n) return; D.profil={nama:n,jabatan:$("#jabatan").value,kapal:$("#kapal").value.trim(),email:$("#email").value.trim(),daftar:tglID(new Date())}; simpan(); location.hash="#/"; render() }; return }
+ if(!D.profil){ app.innerHTML=hSampul(); var daftar=function(e){ if(e&&e.preventDefault) e.preventDefault(); var n=$("#nama").value.trim(); if(!n){ $("#psnDaftar").textContent="Isi nama lengkap terlebih dahulu."; try{ $("#nama").focus() }catch(x){} return false } D.profil={nama:n,jabatan:$("#jabatan").value,kapal:$("#kapal").value.trim(),email:$("#email").value.trim(),daftar:tglID(new Date())}; simpan(); JEJAK=[]; pergi("/"); return false }; $("#btnDaftar").onclick=daftar; $("#fDaftar").onsubmit=daftar; $("#fDaftar").onkeydown=function(e){ if(e.key==="Enter"&&e.target.tagName!=="BUTTON") daftar(e) }; return }
  if(!s.length) html=hBeranda();
  else if(s[0]==="modul") html=s[1]?hModul(s[1],q.tab):hModulDaftar();
  else if(s[0]==="kasus") html=s[1]?hKasus(s[1]):hKasusDaftar(q.f);
@@ -675,14 +685,14 @@ function render(){
  else if(s[0]==="tentang") html=hTentang();
  else html=hBeranda();
  app.innerHTML=html; setJaringan(); window.scrollTo(0,0);
- var kb=$(".kembali"); if(kb) kb.onclick=function(){ var t=kb.getAttribute("data-kembali"); if(t==="back"&&history.length>1) history.back(); else location.hash=t==="back"?"#/animasi":t };
+ var kb=$(".kembali"); if(kb) kb.onclick=function(){ var t=kb.getAttribute("data-kembali"); mundur(t==="back"?"/animasi":t) };
  /* pengikat per halaman */
  if(s[0]==="modul"&&s[1]){
-  [].forEach.call(document.querySelectorAll("[data-tab]"),function(b){b.onclick=function(){location.hash="#/modul/"+s[1]+"?tab="+b.getAttribute("data-tab")}});
+  [].forEach.call(document.querySelectorAll("[data-tab]"),function(b){b.onclick=function(){ var j=JEJAK.length; pergi("/modul/"+s[1]+"?tab="+b.getAttribute("data-tab")); JEJAK.length=j }});
   var tb=$("#tandaBaca"); if(tb) tb.onclick=function(){ D.baca[s[1]]=1; simpan(); render() };
   var kw=$("#kuis"); if(kw){ var m=K.modul.filter(function(x){return x.id===s[1]})[0]; var mulai=function(){ jalankanKuis(kw,m.kuis,function(b,n){ D.kuis[m.id]={benar:b,total:n,tgl:tglID(new Date())}; simpan(); var ok=b/n>=0.8; kw.innerHTML='<div class="kartu" style="text-align:center"><div class="hasil">'+b+' / '+n+'</div><p><b>'+(ok?"Lulus.":"Belum lulus.")+'</b> '+(ok?"Lanjutkan ke modul berikutnya.":"Baca ulang materi lalu coba lagi.")+'</p><button class="tombol gelap" id="ulang">Ulangi kuis</button> <a class="tombol" href="#/modul">Daftar modul</a></div>'; $("#ulang").onclick=mulai }) }; var k0=D.kuis[m.id]; if(k0){ kw.innerHTML='<div class="kartu"><p>Hasil terakhir: <b>'+k0.benar+' / '+k0.total+'</b> ('+(lulusKuis(m.id)?"lulus":"belum lulus")+')</p><button class="tombol utama penuh" id="ulang">Kerjakan lagi</button></div>'; $("#ulang").onclick=mulai } else mulai() }
  }
- if(s[0]==="kasus"&&!s[1]) [].forEach.call(document.querySelectorAll("[data-f]"),function(b){b.onclick=function(){var f=b.getAttribute("data-f");location.hash="#/kasus"+(f?"?f="+f:"")}});
+ if(s[0]==="kasus"&&!s[1]) [].forEach.call(document.querySelectorAll("[data-f]"),function(b){b.onclick=function(){var f=b.getAttribute("data-f");var j=JEJAK.length; pergi("/kasus"+(f?"?f="+f:"")); JEJAK.length=j}});
  if(s[0]==="kasus"&&s[1]){ var tk=$("#tandaKasus"); if(tk) tk.onclick=function(){ D.kasus[s[1]]=1; simpan(); render() } }
  if(s[0]==="animasi"&&s[1]&&K.anim[s[1]]) pasangAnim(s[1]);
  if(s[0]==="ujian") $("#mulaiUjian").onclick=function(){ var bank=[]; K.modul.forEach(function(m){ m.kuis.forEach(function(x){bank.push(x)}) }); var soal=acak(bank).slice(0,15); this.parentNode.style.display="none"; jalankanKuis($("#kuis"),soal,function(b,n,jw){ var nilai=Math.round(b/n*100); D.ujian.push({nilai:nilai,tgl:tglID(new Date())}); simpan(); var salah=soal.map(function(x,i){return jw[i]!==x.a?'<div class="kartu kecil"><b>'+esc(x.q)+'</b><br>Jawaban benar: '+esc(x.o[x.a])+'<br><span class="redup">'+esc(x.why)+'</span></div>':''}).join(""); $("#kuis").innerHTML='<div class="kartu" style="text-align:center"><div class="hasil">Nilai '+nilai+'</div><p><b>'+(nilai>=80?"Lulus.":"Belum lulus.")+'</b> Benar '+b+' dari '+n+' soal.</p>'+(nilai>=80?'<a class="tombol utama" href="#/sertifikat">Lihat sertifikat</a> ':'')+'<a class="tombol" href="#/">Beranda</a></div>'+(salah?'<h3>Pembahasan soal yang salah</h3>'+salah:'') },true) };
@@ -690,10 +700,13 @@ function render(){
  if(s[0]==="cek"){ [].forEach.call(document.querySelectorAll("[data-cek]"),function(c){c.onchange=function(){ var id=c.getAttribute("data-cek"); if(c.checked) D.cek[id]=1; else delete D.cek[id]; simpan(); var g=id.split("-")[0], L=K.checklist.filter(function(x){return x.id===g})[0]; $('[data-hit="'+g+'"]').textContent=L.item.filter(function(_,i){return D.cek[g+"-"+i]}).length+"/"+L.item.length }}); $("#kosongCek").onclick=function(){ D.cek={}; simpan(); render() } }
  if(s[0]==="cpa"){ var hit=function(){ var v=["oc","os","tb","tr","tc","ts"].map(function(i){return parseFloat($("#"+i).value)}); if(v.some(isNaN)){ $("#hasilCPA").innerHTML='<p>Isi semua kolom dengan angka.</p>'; return } var r=hitungCPA.apply(null,v), w=$("#hasilCPA"); if(r.tcpa===null) w.innerHTML='<p>Gerak relatif nol: jarak tetap <b>'+r.cpa.toFixed(2)+' mil</b>.</p>'; else if(r.tcpa<0) w.innerHTML='<div class="redup kecil">CPA sudah terlewati</div><p>Kedua kapal saling menjauh. Jarak terdekat tadi '+r.cpa.toFixed(2)+' mil, '+Math.abs(r.tcpa).toFixed(1)+' menit lalu.</p>'; else w.innerHTML='<div class="kisi2"><div><div class="redup kecil">CPA</div><div class="hasil" id="vCPA">'+r.cpa.toFixed(2)+' mil</div></div><div><div class="redup kecil">TCPA</div><div class="hasil" id="vTCPA">'+r.tcpa.toFixed(1)+' mnt</div></div></div><p style="margin-top:8px">'+(r.cpa<0.5?'<b style="color:#d9480f">CPA sangat kecil: bahaya tubrukan.</b> Tentukan status menurut aturan dan bertindak dini.':r.cpa<2?'CPA kecil. Pantau baringan dan pertimbangkan tindakan dini.':'CPA cukup lebar menurut data ini. Tetap pantau.')+'</p>' }; $("#hitung").onclick=hit; hit() }
  if(s[0]==="glosarium"){ isiGlos(""); $("#cari").oninput=function(){isiGlos(this.value)} }
- if(s[0]==="profil"){ $("#fProfil").onsubmit=function(e){ e.preventDefault(); var n=$("#nama").value.trim(); if(!n) return; D.profil.nama=n; D.profil.jabatan=$("#jabatan2").value.trim()||"-"; D.profil.kapal=$("#kapal").value.trim(); simpan(); $("#psn").textContent="Profil tersimpan." }; try{ $("#ekspor").href=URL.createObjectURL(new Blob([laporan()],{type:"text/plain"})) }catch(e){ $("#ekspor").href="data:text/plain;charset=utf-8,"+encodeURIComponent(laporan()) }
-  $("#hapus").onclick=function(){ $("#yakin").innerHTML='<p style="margin-top:10px"><b>Yakin?</b> Tindakan ini tidak dapat dibatalkan.</p><div class="baris"><button class="tombol tumbuh" id="tidak">Batal</button><button class="tombol tumbuh" id="ya" style="background:#d9480f;border-color:#d9480f;color:#fff">Ya, hapus</button></div>'; $("#tidak").onclick=function(){$("#yakin").innerHTML=""}; $("#ya").onclick=function(){ try{localStorage.removeItem(KUNCI)}catch(e){} mem=null; D=muat(); location.hash="#/"; render() } } }
+ if(s[0]==="profil"){ var sp=function(e){ if(e&&e.preventDefault) e.preventDefault(); var n=$("#nama").value.trim(); if(!n){ $("#psn").textContent="Nama tidak boleh kosong."; return false } D.profil.nama=n; D.profil.jabatan=$("#jabatan2").value.trim()||"-"; D.profil.kapal=$("#kapal").value.trim(); simpan(); $("#psn").textContent="Profil tersimpan."; return false }; $("#btnProfil").onclick=sp; $("#fProfil").onsubmit=sp; try{ $("#ekspor").href=URL.createObjectURL(new Blob([laporan()],{type:"text/plain"})) }catch(e){ $("#ekspor").href="data:text/plain;charset=utf-8,"+encodeURIComponent(laporan()) }
+  $("#hapus").onclick=function(){ $("#yakin").innerHTML='<p style="margin-top:10px"><b>Yakin?</b> Tindakan ini tidak dapat dibatalkan.</p><div class="baris"><button class="tombol tumbuh" id="tidak">Batal</button><button class="tombol tumbuh" id="ya" style="background:#d9480f;border-color:#d9480f;color:#fff">Ya, hapus</button></div>'; $("#tidak").onclick=function(){$("#yakin").innerHTML=""}; $("#ya").onclick=function(){ hapusSimpanan(); mem=null; D=muat(); JEJAK=[]; pergi("/") } } }
 }
-window.addEventListener("hashchange",render); render();
+window.addEventListener("hashchange",function(){ var h="/"; try{ h=(location.hash||"").replace(/^#/,"")||"/" }catch(e){} if(h!==RUTE){ JEJAK.push(RUTE); RUTE=h; render() } });
+/* semua tautan dalam aplikasi (#/...) ditangani sendiri, tidak bergantung pada navigasi peramban */
+document.addEventListener("click",function(e){ var a=e.target&&e.target.closest?e.target.closest('a[href^="#/"]'):null; if(!a||a.hasAttribute("download")||a.target==="_blank") return; e.preventDefault(); pergi(a.getAttribute("href")) });
+window.__pergi=pergi; render();
 if("serviceWorker" in navigator && /^https?:/.test(location.protocol)){ window.addEventListener("load",function(){ navigator.serviceWorker.register("kabuzen-cegah-tubrukan-sw.js").catch(function(){}) }) }
 })();
 </script>
