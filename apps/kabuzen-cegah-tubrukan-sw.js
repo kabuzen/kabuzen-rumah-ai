@@ -1,5 +1,5 @@
 /* Service worker KABUZEN CEGAH TUBRUKAN DI LAUT. Hanya menangani berkas aplikasi ini; aplikasi lain di /apps/ tidak disentuh. */
-const VERSI="p2tl-web-v1.1", NAMA="kabuzen-cegah-tubrukan";
+const VERSI="p2tl-web-v1.2", NAMA="kabuzen-cegah-tubrukan";
 const BERKAS=["./"+NAMA,"./"+NAMA+".webmanifest","./"+NAMA+"-192.png","./"+NAMA+"-512.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(VERSI).then(c=>c.addAll(BERKAS)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x.startsWith("p2tl-web-")&&x!==VERSI).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});

@@ -72,8 +72,8 @@ canvas.laut{width:100%;aspect-ratio:1/1;border-radius:14px;display:block;backgro
 .hasil{font-size:28px;font-weight:800;color:var(--indigo)}
 /* sampul */
 .sampul{min-height:100vh;background:linear-gradient(175deg,#1d0b78 0%,#16105c 55%,#0b2a4a 100%);color:#fff;padding:22px 20px 40px;position:relative;overflow:hidden}
-.sampul .logo{position:absolute;right:18px;top:18px;width:54px;height:54px;border-width:3px}
-.sampul .isi{max-width:520px;margin:0 auto;padding-top:86px}
+.sampul .logo{position:absolute;right:18px;top:18px;z-index:2;width:54px;height:54px;border-width:3px}
+.sampul .isi{max-width:520px;margin:0 auto;padding-top:86px;position:relative;z-index:1}
 .sampul h1{font-size:34px;line-height:1.08;margin:10px 0 12px;letter-spacing:-.01em}
 .sampul h1 span{color:var(--kuning)}
 .sampul p{opacity:.9}
@@ -81,7 +81,7 @@ canvas.laut{width:100%;aspect-ratio:1/1;border-radius:14px;display:block;backgro
 .sampul .garis i{height:5px;flex:1;border-radius:9px}
 .sampul form{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px;margin-top:18px}
 .sampul label{color:#fff}
-.sampul svg.ombak{position:absolute;left:0;right:0;bottom:0;width:100%;opacity:.25}
+.sampul svg.ombak{position:absolute;left:0;right:0;bottom:0;width:100%;height:70px;opacity:.25;pointer-events:none;z-index:0}
 @media (min-width:700px){main{padding-top:24px}h2{font-size:25px}}
 @media print{header.atas,nav.bawah,.tanpa-cetak{display:none!important}main{padding:0}}
 </style>
@@ -92,7 +92,7 @@ canvas.laut{width:100%;aspect-ratio:1/1;border-radius:14px;display:block;backgro
    Semua fakta kecelakaan diringkas dari sumber pada daftar REFERENSI.
    Uraian aturan adalah PARAFRASE; naskah resmi COLREG 1972 tetap menjadi rujukan utama. */
 window.KONTEN = {
-versi: "1.1 — November 2026",
+versi: "1.2 — November 2026",
 
 referensi: [
  {id:"imo", judul:"COLREG — Preventing Collisions at Sea (ringkasan konvensi)", penerbit:"International Maritime Organization (IMO)", url:"https://imo.org/en/OurWork/Safety/Pages/Preventing-Collisions.aspx", ket:"Sumber resmi. Naskah lengkap aturan diterbitkan IMO (berbayar)."},
