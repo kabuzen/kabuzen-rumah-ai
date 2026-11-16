@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KABUZEN HLC — Animasi Pengendalian Helikopter</title>
+<link rel="icon" href="data:image/jpeg;base64,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">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#0b0630;color:#fff;font-family:Inter,system-ui,Arial,sans-serif}
+.wrap{max-width:1280px;margin:0 auto;padding:12px}
+canvas{width:100%;height:auto;display:block;border-radius:12px;background:#071a2a}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+button{font:inherit;font-weight:700;font-size:14px;border:0;border-radius:9px;padding:9px 14px;cursor:pointer;background:#2a1599;color:#fff}
+button.y{background:#ffd60a;color:#1a1300}button.on{outline:2px solid #ffd60a}
+input[type=range]{flex:1;min-width:160px;accent-color:#ffd60a}
+#t{font-variant-numeric:tabular-nums;font-size:14px;min-width:92px;text-align:right}
+.ch{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.ch button{background:#1d0b78;font-weight:600;font-size:13px;padding:7px 11px}
+.note{font-size:13px;color:#bdb7ef;margin-top:10px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+<canvas id="c" width="1280" height="720" aria-label="Animasi pengendalian helikopter dari CIC sampai mendarat di geladak"></canvas>
+<div class="bar"><button class="y" id="play">❚❚ Jeda</button><button id="restart">↺ Ulang</button><input type="range" id="scrub" min="0" max="1000" value="0" aria-label="Posisi animasi"><span id="t">0:00 / 0:00</span><button id="speed">Kecepatan 1×</button></div>
+<div class="ch" id="ch"></div>
+<div class="note">Animasi pembelajaran pendamping buku KABUZEN HLC. Percakapan radio, haluan, ketinggian, dan warna lampu pemandu adalah ilustrasi; yang berlaku dalam operasi adalah prosedur tetap satuan, SHOL kapal, dan buku petunjuk helikopter.</div>
+</div>
+<script>
+const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=1280,H=720,F='Inter,system-ui,Arial,sans-serif';
+const LOGO=new Image();LOGO.src="data:image/jpeg;base64,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";
+const TOTAL=92;
+const CH=[[0,'Pembuka'],[5,'1 · Komunikasi dengan CIC'],[24,'2 · Menuju kapal, turun dipandu lampu'],[44,'3 · Serah terima ke HLC'],[56,'4 · Isyarat pemandu'],[80,'5 · Mendarat dan diikat']];
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),lerp=(a,b,k)=>a+(b-a)*k,seg=(t,a,b)=>clamp((t-a)/(b-a)),ease=k=>k*k*(3-2*k);
+function txt(s,x,y,o={}){ctx.font=`${o.w||600} ${o.s||20}px ${F}`;ctx.fillStyle=o.c||'#fff';ctx.textAlign=o.a||'left';ctx.textBaseline=o.b||'alphabetic';ctx.fillText(s,x,y)}
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function wrap(s,x,y,mw,lh,o){ctx.font=`${o.w||600} ${o.s||20}px ${F}`;const ws=s.split(' ');let l='',n=0;for(const w of ws){if(ctx.measureText(l+w).width>mw&&l){txt(l.trim(),x,y+n*lh,o);l='';n++}l+=w+' '}txt(l.trim(),x,y+n*lh,o);return n+1}
+function lines(s,mw,o){ctx.font=`${o.w||600} ${o.s||20}px ${F}`;const ws=s.split(' ');let l='',n=1;for(const w of ws){if(ctx.measureText(l+w).width>mw&&l){l='';n++}l+=w+' '}return n}
+
+/* ---------- unsur gambar ---------- */
+function sky(k){const g=ctx.createLinearGradient(0,0,0,470);g.addColorStop(0,'#0b0630');g.addColorStop(.55,'#2a1599');g.addColorStop(.86,'#b0456f');g.addColorStop(1,'#f0a23a');ctx.fillStyle=g;ctx.fillRect(0,0,W,470);
+  ctx.fillStyle='rgba(255,255,255,.75)';for(let i=0;i<46;i++){const x=(i*271)%W,y=(i*97)%250;ctx.globalAlpha=.25+((i*13)%7)/14;ctx.fillRect(x,y,2,2)}ctx.globalAlpha=1}
+function sea(t,y0=470){ctx.fillStyle='#07102e';ctx.fillRect(0,y0,W,H-y0);ctx.strokeStyle='rgba(79,216,255,.28)';ctx.lineWidth=1.5;for(let r=0;r<6;r++){ctx.beginPath();const y=y0+18+r*42;for(let x=0;x<=W;x+=16){const yy=y+Math.sin(x/70+t*1.3+r)*4;x?ctx.lineTo(x,yy):ctx.moveTo(x,yy)}ctx.stroke()}}
+// kapal tampak samping: buritan di kiri (x,y = sudut kiri geladak heli), s = skala
+function ship(x,y,s,t,lights){ctx.save();ctx.translate(x,y+Math.sin(t*1.1)*2*s);ctx.scale(s,s);
+  ctx.fillStyle='#10163a';ctx.beginPath();ctx.moveTo(-14,0);ctx.lineTo(170,0);ctx.lineTo(170,-34);ctx.lineTo(250,-34);ctx.lineTo(250,-62);ctx.lineTo(300,-62);ctx.lineTo(300,-84);ctx.lineTo(330,-84);ctx.lineTo(330,-62);ctx.lineTo(380,-62);ctx.lineTo(380,-34);ctx.lineTo(455,-34);ctx.lineTo(455,-8);ctx.lineTo(560,-8);ctx.lineTo(600,0);ctx.lineTo(574,34);ctx.lineTo(0,34);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#10163a';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(315,-84);ctx.lineTo(315,-132);ctx.moveTo(300,-112);ctx.lineTo(330,-112);ctx.stroke();
+  ctx.fillStyle='#232c5c';ctx.fillRect(172,-30,76,28);ctx.fillStyle='#ffd60a';ctx.fillRect(0,-3,168,3);
+  if(lights){for(let i=0;i<6;i++){ctx.fillStyle=(Math.floor(t*3)+i)%2?'#3ddc84':'#9df5c4';ctx.beginPath();ctx.arc(10+i*30,-5,2.6,0,6.3);ctx.fill()}}
+  ctx.fillStyle='#ffd60a';ctx.beginPath();ctx.arc(176,-36,3.5,0,6.3);ctx.fill();ctx.restore()}
+// helikopter tampak samping, hidung ke kanan
+function heli(x,y,s,t,spin=1){ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.fillStyle='#0c1030';ctx.strokeStyle='#0c1030';
+  ctx.beginPath();ctx.ellipse(0,0,40,16,0,0,6.3);ctx.fill();ctx.beginPath();ctx.moveTo(-30,-4);ctx.lineTo(-96,-10);ctx.lineTo(-100,-26);ctx.lineTo(-108,-26);ctx.lineTo(-104,2);ctx.lineTo(-32,8);ctx.closePath();ctx.fill();
+  ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(0,-16);ctx.lineTo(0,-24);ctx.stroke();ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-18,15);ctx.lineTo(-18,26);ctx.moveTo(20,15);ctx.lineTo(20,26);ctx.moveTo(-30,26);ctx.lineTo(34,26);ctx.stroke();
+  ctx.fillStyle='#4fd8ff';ctx.beginPath();ctx.ellipse(20,-3,14,8,0,0,6.3);ctx.fill();
+  const rw=74*(.35+.65*Math.abs(Math.sin(t*22*spin)));ctx.strokeStyle='rgba(12,16,48,.9)';ctx.lineWidth=3.5;ctx.beginPath();ctx.moveTo(-rw,-24);ctx.lineTo(rw,-24);ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.12)';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(0,-24,74,5,0,0,6.3);ctx.stroke();
+  const tr=10*Math.abs(Math.cos(t*30*spin));ctx.strokeStyle='#0c1030';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(-104,-26-tr);ctx.lineTo(-104,-26+tr);ctx.stroke();
+  ctx.fillStyle=Math.floor(t*2)%2?'#ff5c6c':'#7a2a33';ctx.beginPath();ctx.arc(-2,17,3,0,6.3);ctx.fill();ctx.restore()}
+function bubble(who,s,x,y,w,col,k=1){const o={s:21,w:600},n=lines(s,w-36,o),h=44+n*28;ctx.save();ctx.globalAlpha=k;ctx.fillStyle='rgba(8,5,40,.92)';rr(x,y,w,h,14);ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=2.5;rr(x,y,w,h,14);ctx.stroke();
+  txt(who,x+18,y+26,{s:15,w:800,c:col});wrap(s,x+18,y+54,w-36,28,{s:21,w:600});ctx.restore();return h}
+function caption(s){if(!s)return;const o={s:24,w:600},n=lines(s,W-180,o),h=24+n*32;ctx.fillStyle='rgba(8,5,40,.82)';rr(60,H-h-22,W-120,h,14);ctx.fill();ctx.textAlign='center';const ws=s.split(' ');let l='',i=0;ctx.font=`600 24px ${F}`;const out=[];for(const w of ws){if(ctx.measureText(l+w).width>W-180&&l){out.push(l.trim());l=''}l+=w+' '}out.push(l.trim());out.forEach((q,j)=>txt(q,W/2,H-h-22+34+j*32,{s:24,w:600,a:'center'}))}
+function chapterTag(s){ctx.fillStyle='rgba(29,11,120,.92)';rr(28,24,Math.max(260,ctx.measureText(s).width+60),44,22);ctx.font=`800 18px ${F}`;const w=ctx.measureText(s).width+44;ctx.fillStyle='rgba(29,11,120,.95)';rr(28,24,w,44,22);ctx.fill();txt(s,50,53,{s:18,w:800,c:'#ffd60a'})}
+function logo(){if(!LOGO.complete)return;ctx.save();ctx.beginPath();ctx.arc(W-64,58,30,0,6.3);ctx.closePath();ctx.clip();ctx.drawImage(LOGO,W-94,28,60,60);ctx.restore();ctx.strokeStyle='#ffd60a';ctx.lineWidth=4;ctx.beginPath();ctx.arc(W-64,58,30,0,6.3);ctx.stroke()}
+function radar(cx,cy,r,t,blip,vec){ctx.save();ctx.fillStyle='#03150f';ctx.beginPath();ctx.arc(cx,cy,r,0,6.3);ctx.fill();ctx.strokeStyle='rgba(61,220,132,.45)';ctx.lineWidth=1.2;for(let i=1;i<=4;i++){ctx.beginPath();ctx.arc(cx,cy,r*i/4,0,6.3);ctx.stroke()}
+  for(let d=0;d<12;d++){const a=d*Math.PI/6;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.sin(a)*r,cy-Math.cos(a)*r);ctx.stroke()}
+  const a=t*1.6;const g=ctx.createConicGradient(a-Math.PI/2-1.1,cx,cy);g.addColorStop(0,'rgba(61,220,132,0)');g.addColorStop(.175,'rgba(61,220,132,.55)');g.addColorStop(.176,'rgba(61,220,132,0)');g.addColorStop(1,'rgba(61,220,132,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,r,0,6.3);ctx.fill();
+  ctx.fillStyle='#ffd60a';ctx.beginPath();ctx.moveTo(cx,cy-r*.07);ctx.lineTo(cx+r*.03,cy+r*.05);ctx.lineTo(cx-r*.03,cy+r*.05);ctx.closePath();ctx.fill();
+  if(blip){const bx=cx+blip[0]*r,by=cy+blip[1]*r;if(vec>0){ctx.strokeStyle='#ffd60a';ctx.setLineDash([8,7]);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(lerp(bx,cx,vec*.92),lerp(by,cy+r*.08,vec*.92));ctx.stroke();ctx.setLineDash([])}
+    ctx.fillStyle='#7dffb5';ctx.beginPath();ctx.arc(bx,by,r*.028+Math.sin(t*6)*1,0,6.3);ctx.fill();ctx.strokeStyle='#7dffb5';ctx.lineWidth=1.5;ctx.strokeRect(bx-r*.06,by-r*.06,r*.12,r*.12)}
+  ctx.strokeStyle='#1d6b45';ctx.lineWidth=5;ctx.beginPath();ctx.arc(cx,cy,r,0,6.3);ctx.stroke();ctx.restore()}
+
+/* ---------- adegan ---------- */
+function sTitle(t){sky();sea(t);ship(700,500,1,t,true);heli(lerp(160,300,seg(t,0,5)),lerp(200,225,seg(t,0,5)),1.1,t);
+  ctx.fillStyle='rgba(8,5,40,.55)';ctx.fillRect(0,0,W,H);txt('KABUZEN HLC',W/2,250,{s:30,w:800,c:'#ffd60a',a:'center'});txt('Pengendalian Helikopter',W/2,330,{s:76,w:800,a:'center'});txt('dari CIC sampai geladak',W/2,400,{s:44,w:700,a:'center',c:'#d9d4ff'});
+  const bw=64;['#ffd60a','#ff5c6c','#3ddc84','#fff','#4fd8ff'].forEach((c,i)=>{ctx.fillStyle=c;rr(W/2-180+i*74,440,bw,8,4);ctx.fill()})}
+const RAD1=[[6.5,12.5,'PILOT · ELANG','Kapal, di sini Elang. Posisi 5 mil buritan, 4 orang, bahan bakar 60 menit, mohon mendarat.','#4fd8ff'],
+ [12.8,17.8,'PENGENDALI CIC','Elang, di sini Kapal. Terpantau di radar. Arahkan haluan 090, turun ke 300 kaki.','#ffd60a'],
+ [18.1,21.4,'PILOT · ELANG','Haluan 090, turun 300 kaki. Elang.','#4fd8ff'],
+ [21.6,24,'PENGENDALI CIC','Elang, lampu pemandu kapal menyala.','#ffd60a']];
+function sCIC(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#050a1c');g.addColorStop(1,'#0a1430');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#0d1a3a';ctx.fillRect(0,520,W,200);ctx.fillStyle='#132450';for(let i=0;i<5;i++){rr(40+i*130,96+((i%2)*14),104,64,6);ctx.fill()}
+  ctx.fillStyle='rgba(79,216,255,.5)';for(let i=0;i<5;i++)for(let j=0;j<4;j++)ctx.fillRect(52+i*130,110+((i%2)*14)+j*12,40+((i*7+j*13+Math.floor(t*2))%5)*10,4);
+  // konsol dan operator
+  ctx.fillStyle='#152a5c';ctx.beginPath();ctx.moveTo(60,520);ctx.lineTo(560,520);ctx.lineTo(600,640);ctx.lineTo(20,640);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#1c2f66';ctx.beginPath();ctx.arc(300,330,54,0,6.3);ctx.fill();ctx.beginPath();ctx.moveTo(196,520);ctx.quadraticCurveTo(200,392,300,388);ctx.quadraticCurveTo(400,392,404,520);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#ffd60a';ctx.lineWidth=7;ctx.beginPath();ctx.arc(300,326,60,Math.PI*1.08,Math.PI*1.92);ctx.stroke();ctx.fillStyle='#ffd60a';rr(232,316,18,40,7);ctx.fill();rr(350,316,18,40,7);ctx.fill();
+  ctx.strokeStyle='#ffd60a';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(350,350);ctx.quadraticCurveTo(350,380,318,376);ctx.stroke();
+  // radar
+  const k=ease(seg(t,13,23));radar(905,330,236,t,[lerp(-.12,-.05,k),lerp(.82,.5,k)],seg(t,13.5,15.5));
+  txt('PUSAT INFORMASI TEMPUR (CIC)',60,596,{s:22,w:800,c:'#ffd60a'});txt('Pengendali memantau helikopter di radar dan memberi haluan',60,626,{s:17,w:500,c:'#bdb7ef'});
+  txt('HALUAN KAPAL 090°',905,74,{s:16,w:800,c:'#7dffb5',a:'center'});txt('helikopter',905+lerp(-.12,-.05,k)*236+26,330+lerp(.82,.5,k)*236+6,{s:15,w:700,c:'#7dffb5'});
+  if(t>13.5)txt('haluan 090°',842,470,{s:16,w:800,c:'#ffd60a',a:'right'});
+  RAD1.forEach(r=>{if(t>=r[0]&&t<r[1]){const kk=Math.min(seg(t,r[0],r[0]+.4),1-seg(t,r[1]-.3,r[1]));bubble(r[2],r[3],r[2][1]=='I'?40:90,r[2][1]=='I'?176:190,500,r[4],kk)}})}
+function beam(sx,sy,len,ang,t){const bands=[['rgba(61,220,132,.30)',-9,-3,'terlalu tinggi'],['rgba(255,214,10,.42)',-3,3,'pada jalur'],['rgba(255,92,108,.30)',3,9,'terlalu rendah']];
+  bands.forEach(b=>{ctx.fillStyle=b[0];ctx.beginPath();ctx.moveTo(sx,sy);const a1=ang+b[1]*Math.PI/180,a2=ang+b[2]*Math.PI/180;ctx.lineTo(sx+Math.cos(a1)*len,sy+Math.sin(a1)*len);ctx.lineTo(sx+Math.cos(a2)*len,sy+Math.sin(a2)*len);ctx.closePath();ctx.fill()});
+  ctx.fillStyle='#fff';ctx.globalAlpha=.6+.4*Math.sin(t*8);ctx.beginPath();ctx.arc(sx,sy,7,0,6.3);ctx.fill();ctx.globalAlpha=1}
+function sTransit(t){sky();sea(t);const k=seg(t,24,44),sx=880,sy=492;
+  const ang=Math.PI+18*Math.PI/180; // menghadap kiri-atas
+  beam(sx+176*.72,sy-36*.72,1000,ang,t);ship(sx,sy,.72,t,true);
+  // helikopter mulai di atas jalur, lalu mengikuti pita kuning
+  const d=lerp(900,150,ease(k)),off=lerp(-70,0,ease(seg(t,24,32)));const hx=sx+176*.72+Math.cos(ang)*d,hy=sy-36*.72+Math.sin(ang)*d+off;heli(hx,hy,.62,t);
+  const st=off<-22?['TERLALU TINGGI','#3ddc84']:['PADA JALUR','#ffd60a'];
+  ctx.fillStyle='rgba(8,5,40,.85)';rr(40,96,330,150,14);ctx.fill();txt('HALUAN',62,130,{s:14,w:800,c:'#bdb7ef'});txt('090°',62,162,{s:30,w:800});txt('TINGGI',180,130,{s:14,w:800,c:'#bdb7ef'});txt(Math.round(lerp(300,60,ease(k)))+' kaki',180,162,{s:30,w:800});
+  txt('LAMPU PEMANDU',62,198,{s:14,w:800,c:'#bdb7ef'});txt(st[0],62,228,{s:24,w:800,c:st[1]});
+  // keterangan pita
+  ctx.fillStyle='rgba(8,5,40,.85)';rr(40,262,330,104,14);ctx.fill();[['#3ddc84','hijau: terlalu tinggi'],['#ffd60a','kuning: pada jalur turun'],['#ff5c6c','merah: terlalu rendah']].forEach((b,i)=>{ctx.fillStyle=b[0];rr(60,280+i*28,22,14,4);ctx.fill();txt(b[1],92,293+i*28,{s:16,w:600})});
+  radar(1150,190,84,t,[lerp(-.05,-.01,k),lerp(.5,.12,k)],1);
+  if(t>=40.5&&t<44)bubble('PENGENDALI CIC','Elang, jarak 1 mil. Hubungi HLC di geladak.',430,96,520,'#ffd60a',Math.min(seg(t,40.5,40.9),1-seg(t,43.7,44)))}
+function deckScene(t,hx,hy,spin,crew){sky();ctx.fillStyle='#f0a23a';ctx.fillRect(0,469,W,92);sea(t,560);ship(330,560,2.1,t,true);
+  // pemandu kecil di geladak
+  ctx.save();ctx.translate(330+150*2.1,560-4+Math.sin(t*1.1)*4);ctx.strokeStyle='#ffd60a';ctx.lineWidth=5;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(0,-40);ctx.lineTo(0,-14);ctx.moveTo(0,-14);ctx.lineTo(-7,0);ctx.moveTo(0,-14);ctx.lineTo(7,0);ctx.moveTo(-16,-44);ctx.lineTo(0,-36);ctx.lineTo(16,-44);ctx.stroke();ctx.fillStyle='#ffd60a';ctx.beginPath();ctx.arc(0,-48,7,0,6.3);ctx.fill();ctx.fillStyle='#ff5c6c';ctx.fillRect(-22,-52,8,12);ctx.fillRect(14,-52,8,12);ctx.restore();
+  if(crew>0){for(const dx of [-34,44]){const cx=lerp(330+168*2.1,hx+dx,ease(crew)),cy=560-4+Math.sin(t*1.1)*4;ctx.strokeStyle='#4fd8ff';ctx.lineWidth=5;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(cx,cy-34);ctx.lineTo(cx,cy-12);ctx.lineTo(cx-6,cy);ctx.moveTo(cx,cy-12);ctx.lineTo(cx+6,cy);ctx.stroke();ctx.fillStyle='#4fd8ff';ctx.beginPath();ctx.arc(cx,cy-41,6,0,6.3);ctx.fill()}}
+  heli(hx,hy+Math.sin(t*1.1)*(hy>500?4:1),1.5,t,spin)}
+function sHandover(t){const k=ease(seg(t,44,53));const hx=lerp(-120,470,k),hy=lerp(250,380,k)+Math.sin(t*2.2)*3;deckScene(t,hx,hy,1,0);
+  if(t>=46&&t<51.5)bubble('HLC · GELADAK','Elang, di sini HLC. Angin relatif Merah 18, 29 knot. Angguk 1, oleng 2. Geladak hijau.',660,96,560,'#3ddc84',Math.min(seg(t,46,46.4),1-seg(t,51.2,51.5)));
+  if(t>=51.8&&t<56)bubble('PILOT · ELANG','Geladak hijau, Elang. Pemandu terlihat.',660,96,560,'#4fd8ff',Math.min(seg(t,51.8,52.2),1-seg(t,55.7,56)));
+  if(t>48){ctx.fillStyle='#12805c';rr(40,96,300,64,14);ctx.fill();txt('GELADAK HIJAU',190,138,{s:28,w:800,a:'center'})}}
+const POSE={maju:[[-40,-34],[40,-34]],hover:[[-74,0],[74,0]],turun:[[-70,14],[70,14]],darat:[[22,54],[-22,54]]};
+const SIGT=[[56,62,'maju','MAJU MENDEKAT','Lengan agak terbuka di depan badan, digerakkan berulang ke atas dan ke belakang.'],[62,67,'hover','MELAYANG','Kedua lengan direntangkan lurus mendatar ke samping.'],[67,75,'turun','TURUN','Lengan mendatar, telapak ke bawah, digerakkan ke bawah.'],[75,80,'darat','MENDARAT','Kedua lengan disilangkan di depan badan, mengarah ke bawah.']];
+function marsh(cx,cy,s,pose,t,name){ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);ctx.lineCap='round';
+  ctx.strokeStyle='#ffd60a';ctx.lineWidth=13;ctx.beginPath();ctx.moveTo(0,-64);ctx.lineTo(0,16);ctx.moveTo(0,16);ctx.lineTo(-20,84);ctx.moveTo(0,16);ctx.lineTo(20,84);ctx.moveTo(-22,-52);ctx.lineTo(22,-52);ctx.stroke();
+  ctx.fillStyle='#ffd60a';ctx.beginPath();ctx.arc(0,-86,18,0,6.3);ctx.fill();ctx.fillStyle='#1d0b78';ctx.beginPath();ctx.arc(0,-90,18,Math.PI,0);ctx.fill();
+  const sh=[[-22,-52],[22,-52]];pose.forEach((p,i)=>{let dx=p[0],dy=p[1];if(name==='maju'){const w=Math.sin(t*6);dy+=w*14;dx+=(i?-1:1)*w*4}if(name==='turun'){dy+=Math.sin(t*5)*14}
+    const ex=sh[i][0]+dx,ey=sh[i][1]+dy;ctx.strokeStyle='#ffd60a';ctx.lineWidth=11;ctx.beginPath();ctx.moveTo(sh[i][0],sh[i][1]);ctx.lineTo(ex,ey);ctx.stroke();
+    // kotak isyarat
+    const a=Math.atan2(dy,dx);ctx.save();ctx.translate(ex+Math.cos(a)*16,ey+Math.sin(a)*16);ctx.rotate(a);ctx.fillStyle='#ff5c6c';ctx.strokeStyle='#fff';ctx.lineWidth=3;rr(-14,-17,32,34,5);ctx.fill();ctx.stroke();ctx.restore()});ctx.restore()}
+function sSignals(t){const cur=SIGT.find(s=>t>=s[0]&&t<s[1])||SIGT[3],i=SIGT.indexOf(cur),prev=SIGT[Math.max(0,i-1)];const kk=ease(seg(t,cur[0],cur[0]+.7));
+  const pose=POSE[cur[2]].map((p,j)=>[lerp(POSE[prev[2]][j][0],p[0],kk),lerp(POSE[prev[2]][j][1],p[1],kk)]);
+  const alt=t<67?1:(t<75?1-ease(seg(t,67,75))*.86:lerp(.14,0,ease(seg(t,75,79))));const z=lerp(1.32,1,alt);
+  // pandangan pilot
+  const hz=lerp(250,300,alt);const g=ctx.createLinearGradient(0,0,0,hz);g.addColorStop(0,'#150a55');g.addColorStop(1,'#c2527a');ctx.fillStyle=g;ctx.fillRect(0,0,W,hz);ctx.fillStyle='#07102e';ctx.fillRect(0,hz,W,H-hz);
+  ctx.save();ctx.translate(520,hz);ctx.scale(z,z);ctx.translate(0,Math.sin(t*1.1)*3);
+  ctx.fillStyle='#2c355e';ctx.beginPath();ctx.moveTo(-150,0);ctx.lineTo(150,0);ctx.lineTo(430,330);ctx.lineTo(-430,330);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#1a2145';ctx.fillRect(-150,-150,300,150);ctx.fillStyle='#10163a';ctx.fillRect(-100,-112,200,112);ctx.strokeStyle='#ffd60a';ctx.lineWidth=3;ctx.strokeRect(-150,-150,300,150);
+  ctx.strokeStyle='#fff';ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(0,170,150,56,0,0,6.3);ctx.stroke();ctx.setLineDash([14,10]);ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,330);ctx.stroke();ctx.setLineDash([]);
+  ctx.font=`800 70px ${F}`;ctx.fillStyle='#fff';ctx.textAlign='center';ctx.save();ctx.translate(0,196);ctx.scale(1,.42);ctx.fillText('H',0,0);ctx.restore();
+  for(let j=0;j<5;j++){for(const sgn of [-1,1]){const yy=30+j*62,xx=sgn*(150+yy*.85);ctx.fillStyle=(Math.floor(t*3)+j)%2?'#3ddc84':'#9df5c4';ctx.beginPath();ctx.arc(xx,yy,4,0,6.3);ctx.fill()}}
+  marsh(0,-10,.92,pose,t,cur[2]);ctx.restore();
+  // bingkai kokpit
+  ctx.fillStyle='#05071a';ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(60,0);ctx.lineTo(24,H);ctx.lineTo(0,H);ctx.fill();ctx.beginPath();ctx.moveTo(1040,0);ctx.lineTo(1066,0);ctx.lineTo(1050,H);ctx.lineTo(1026,H);ctx.fill();ctx.fillRect(0,0,W,22);
+  ctx.beginPath();ctx.moveTo(0,H);ctx.lineTo(0,628);ctx.quadraticCurveTo(520,560,1050,628);ctx.lineTo(1050,H);ctx.fill();txt('PANDANGAN PILOT',520,694,{s:15,w:800,c:'#4fd8ff',a:'center'});
+  // panel kanan
+  ctx.fillStyle='#0a0a2e';ctx.fillRect(1050,0,230,H);txt('ISYARAT PEMANDU',1165,150,{s:15,w:800,c:'#bdb7ef',a:'center'});
+  ctx.fillStyle='#ffd60a';rr(1070,166,190,58,12);ctx.fill();ctx.font=`800 ${cur[3].length>9?19:26}px ${F}`;ctx.fillStyle='#1a1300';ctx.textAlign='center';ctx.fillText(cur[3],1165,203);
+  wrap(cur[4],1072,256,186,23,{s:15.5,w:500,c:'#e4e0ff'});
+  txt('TINGGI DI ATAS GELADAK',1165,420,{s:13,w:800,c:'#bdb7ef',a:'center'});ctx.fillStyle='#1a2145';rr(1146,436,38,200,8);ctx.fill();ctx.fillStyle=alt>.02?'#4fd8ff':'#3ddc84';rr(1146,436+200*(1-alt),38,Math.max(6,200*alt),8);ctx.fill();
+  txt(alt>.02?Math.round(alt*30)+' kaki':'MENAPAK',1165,664,{s:19,w:800,a:'center',c:alt>.02?'#fff':'#3ddc84'});
+  SIGT.forEach((s,j)=>{ctx.fillStyle=j===i?'#ffd60a':(j<i?'#3ddc84':'#2a2f5e');ctx.beginPath();ctx.arc(1108+j*38,112,9,0,6.3);ctx.fill()})}
+function sLanded(t){const k=seg(t,80,86);deckScene(t,470,560-56,lerp(1,.12,k),seg(t,81,84.5));
+  if(t>84){const a=seg(t,84,85);ctx.globalAlpha=a;const by=560-4+Math.sin(t*1.1)*4;ctx.fillStyle='#ffd60a';for(const dx of [-40,-14,18,44]){ctx.beginPath();ctx.moveTo(470+dx-9,by-16);ctx.lineTo(470+dx+9,by-16);ctx.lineTo(470+dx,by-28);ctx.closePath();ctx.fill()}
+    ctx.strokeStyle='#ff5c6c';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(470-30,by-60);ctx.lineTo(470-92,by-12);ctx.moveTo(470+40,by-60);ctx.lineTo(470+104,by-12);ctx.stroke();ctx.globalAlpha=1}
+  if(t<86.5){ctx.fillStyle=t>82?'#c62828':'#12805c';rr(40,96,300,64,14);ctx.fill();txt(t>82?'GELADAK MERAH':'GELADAK HIJAU',190,138,{s:28,w:800,a:'center'})}
+  if(t>86.5){const a=ease(seg(t,86.5,87.5));ctx.globalAlpha=a;ctx.fillStyle='rgba(8,5,40,.9)';ctx.fillRect(0,0,W,H);txt('Lima langkah pengendalian',W/2,150,{s:44,w:800,a:'center'});
+    ['CIC memberi haluan dan ketinggian lewat radio','Helikopter mengikuti haluan dan turun dipandu lampu kapal','HLC memberi informasi kapal dan geladak hijau','Pemandu memberi isyarat: maju, melayang, turun, mendarat','Regu pengikat memasang ganjal dan lashing'].forEach((s,j)=>{ctx.fillStyle='#ffd60a';ctx.beginPath();ctx.arc(250,226+j*62,20,0,6.3);ctx.fill();txt(String(j+1),250,234+j*62,{s:22,w:800,c:'#1a1300',a:'center'});txt(s,292,234+j*62,{s:25,w:600})});
+    txt('KABUZEN HLC · pendamping buku bahan ajar Helicopter Landing Controller',W/2,590,{s:18,w:600,c:'#bdb7ef',a:'center'});ctx.globalAlpha=1}}
+const CAP=[[5,13,'Helikopter memanggil kapal. Pengendali di CIC melihatnya di radar, 5 mil di buritan.'],[13,24,'CIC mengarahkan helikopter ke haluan 090 menuju geladak heli dan memerintahkan turun.'],[24,33,'Helikopter berbelok ke haluan yang diperintahkan dan mulai turun perlahan.'],[33,44,'Lampu pemandu kapal menunjukkan jalur turun. Pilot menjaga helikopter di pita kuning.'],[44,56,'Menjelang geladak, kendali diserahkan ke HLC, yang memberi informasi kapal dan izin.'],[80,86.5,'Roda menapak. Regu pengikat masuk atas isyarat, memasang ganjal dan lashing.']];
+function render(t){ctx.clearRect(0,0,W,H);ctx.textBaseline='alphabetic';
+  if(t<5)sTitle(t);else if(t<24)sCIC(t);else if(t<44)sTransit(t);else if(t<56)sHandover(t);else if(t<80)sSignals(t);else sLanded(t);
+  const c=CAP.find(c=>t>=c[0]&&t<c[1]);if(c)caption(c[2]);
+  if(t>=5&&t<86.5){let n=CH[1][1];for(const h of CH)if(t>=h[0])n=h[1];chapterTag(n)}
+  if(!(t>=56&&t<80))logo();
+  const f=Math.max(seg(t,4.6,5)*(1-seg(t,5,5.4)),seg(t,23.6,24)*(1-seg(t,24,24.4)),seg(t,43.6,44)*(1-seg(t,44,44.4)),seg(t,55.6,56)*(1-seg(t,56,56.4)),seg(t,79.6,80)*(1-seg(t,80,80.4)));if(f>0){ctx.fillStyle=`rgba(5,4,26,${f})`;ctx.fillRect(0,0,W,H)}}
+
+/* ---------- pemutar ---------- */
+let T=0,playing=true,speed=1,last=null;const scrub=document.getElementById('scrub'),tl=document.getElementById('t'),pb=document.getElementById('play');
+const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+const chEl=document.getElementById('ch');CH.forEach(c=>{const b=document.createElement('button');b.textContent=c[1];b.onclick=()=>{T=c[0]+.01;render(T)};chEl.appendChild(b)});
+function frame(ts){if(last==null)last=ts;const dt=Math.min(.1,(ts-last)/1000);last=ts;if(playing){T+=dt*speed;if(T>=TOTAL){T=TOTAL;playing=false;pb.textContent='▶ Putar'}}
+  render(T);scrub.value=Math.round(T/TOTAL*1000);tl.textContent=fmt(T)+' / '+fmt(TOTAL);[...chEl.children].forEach((b,i)=>b.classList.toggle('on',T>=CH[i][0]&&(i==CH.length-1||T<CH[i+1][0])));requestAnimationFrame(frame)}
+pb.onclick=()=>{if(T>=TOTAL)T=0;playing=!playing;pb.textContent=playing?'❚❚ Jeda':'▶ Putar'};
+document.getElementById('restart').onclick=()=>{T=0;playing=true;pb.textContent='❚❚ Jeda'};
+const SP=[1,1.5,2,.5];let si=0;document.getElementById('speed').onclick=e=>{si=(si+1)%SP.length;speed=SP[si];e.target.textContent='Kecepatan '+String(speed).replace('.',',')+'×'};
+scrub.oninput=()=>{T=scrub.value/1000*TOTAL};
+window.__seek=t=>{T=t;playing=false;render(T)};
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
