@@ -39,13 +39,23 @@ h1{font:800 clamp(30px,4.4vw,48px)/1.08 var(--fd);margin:12px 0 14px;letter-spac
 .rels a{display:block;text-decoration:none;color:var(--text);background:var(--night);border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .rels a:hover{border-color:var(--cyan)}.rels img{aspect-ratio:16/10;object-fit:cover;width:100%}.rels .bk img{aspect-ratio:3/4;object-fit:cover}
 .rels b{display:block;padding:12px 14px 2px}.rels span{display:block;padding:0 14px 14px;color:var(--muted);font-size:13px}
+h1+.player,.player{margin-top:6px}
+.player{border-radius:18px;overflow:hidden;background:#000;box-shadow:0 0 0 1px var(--line),0 30px 80px rgba(0,0,0,.45);max-width:960px}
+.player video{width:100%;display:block;aspect-ratio:16/9;background:#000}
+.player.tall{max-width:380px}.player.tall video{aspect-ratio:9/16}
+.player.poster{position:relative;display:block}.player.poster img{width:100%;aspect-ratio:16/9;object-fit:cover;opacity:.85}
+.player .pbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--bolt);color:#1A1040;font-weight:800;padding:14px 22px;border-radius:999px;white-space:nowrap}
+.vtabs{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.vtabs button{font:700 14px var(--fb);background:var(--night);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:8px 14px;cursor:pointer;text-align:left}
+.vtabs button small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.vtabs button[aria-pressed=true]{border-color:var(--bolt);box-shadow:inset 0 0 0 1px var(--bolt)}
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center;padding:24px 20px}
 @media(max-width:820px){.hero,.grid2{grid-template-columns:1fr}.bar nav a:not(.cta){display:none}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Akademi PM Pelabuhan", "description": "LMS 10 pertemuan untuk belajar membangun web app Project Management Pelabuhan Umum dengan VS Code, Supabase, GitHub, dan Vercel. Ada flash card, kuis, dan 22 studi kasus error nyata.", "applicationCategory": "Pendidikan", "operatingSystem": "Web", "url": "https://kabuzen-rumah-ai-37bk.vercel.app/aplikasi/akademi-pm-pelabuhan", "author": {"@type": "Organization", "name": "Kabuzen Rumah AI"}, "image": "https://kabuzen-rumah-ai-37bk.vercel.app/img/aplikasi/akademi-pm-pelabuhan.webp"}</script>
 </head><body>
 <header class="bar"><div class="in"><a class="brand" href="/"><img src="/img/site/logo.webp" alt="KABUZEN"><span>KABUZEN<small>RUMAH AI</small></span></a>
-<nav><a href="/#aplikasi">Aplikasi</a><a href="/#buku">Buku</a><a href="/majalah">Majalah</a><a href="/#galeri">Video</a><a href="/#layanan">Layanan</a><a class="cta btn btn-bolt" style="padding:9px 14px" href="/#kontak">Kontak</a></nav></div></header>
+<nav><a href="/#aplikasi">Aplikasi</a><a href="/#buku">Buku</a><a href="/majalah">Majalah</a><a href="/#animasi">Animasi</a><a href="/#galeri">Video</a><a href="/#layanan">Layanan</a><a class="cta btn btn-bolt" style="padding:9px 14px" href="/#kontak">Kontak</a></nav></div></header>
 <main><div class="crumb"><a href="/">Beranda</a> / <a href="/#aplikasi">Aplikasi</a> / Akademi PM Pelabuhan</div>
 <section class="hero"><div><div class="kick">Pendidikan<span class="st">LIVE</span></div>
 <h1>Akademi PM Pelabuhan</h1><p class="lead">LMS 10 pertemuan untuk belajar membangun web app Project Management Pelabuhan Umum dengan VS Code, Supabase, GitHub, dan Vercel. Ada flash card, kuis, dan 22 studi kasus error nyata.</p><div class="price">Harga via WhatsApp</div><div class="acts"><a class="btn btn-bolt" href="https://wa.me/628118102019?text=Halo%20Kabuzen%2C%20saya%20ingin%20membeli%20aplikasi%20%E2%80%9CAkademi%20PM%20Pelabuhan%E2%80%9D.%20Mohon%20info%20harga%2C%20cara%20pembayaran%2C%20dan%20pemasangannya." target="_blank" rel="noopener">Beli via WhatsApp</a><a class="btn btn-ghost" href="/apps/akademi-pm-pelabuhan">Coba demo →</a></div></div>

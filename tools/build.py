@@ -50,7 +50,7 @@ def extract_images(data):
     slug = lambda x, pre: re.sub(r'[^a-z0-9-]+', '-', (x.get('id') or x.get('slug') or hashlib.md5(json.dumps(x, sort_keys=True).encode()).hexdigest()[:10]).lower().removeprefix(pre)).strip('-')
     for k, v in list(data.get('config', {}).items()):
         if isinstance(v, str) and v.startswith('data:image/'): data['config'][k] = put(v, 'site', k)
-    for coll, folder, pre in [('apps', 'aplikasi', 'app-'), ('books', 'buku', 'b-'), ('videos', 'video', 'v-'), ('posts', 'artikel', ''), ('gallery', 'galeri', '')]:
+    for coll, folder, pre in [('apps', 'aplikasi', 'app-'), ('books', 'buku', 'b-'), ('videos', 'video', 'v-'), ('posts', 'artikel', ''), ('gallery', 'galeri', ''), ('animations', 'animasi', 'an-')]:
         for x in data.get(coll, []):
             for k, v in list(x.items()):
                 if isinstance(v, str) and v.startswith('data:image/'):
@@ -90,6 +90,16 @@ h1{font:800 clamp(30px,4.4vw,48px)/1.08 var(--fd);margin:12px 0 14px;letter-spac
 .rels a{display:block;text-decoration:none;color:var(--text);background:var(--night);border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .rels a:hover{border-color:var(--cyan)}.rels img{aspect-ratio:16/10;object-fit:cover;width:100%}.rels .bk img{aspect-ratio:3/4;object-fit:cover}
 .rels b{display:block;padding:12px 14px 2px}.rels span{display:block;padding:0 14px 14px;color:var(--muted);font-size:13px}
+h1+.player,.player{margin-top:6px}
+.player{border-radius:18px;overflow:hidden;background:#000;box-shadow:0 0 0 1px var(--line),0 30px 80px rgba(0,0,0,.45);max-width:960px}
+.player video{width:100%;display:block;aspect-ratio:16/9;background:#000}
+.player.tall{max-width:380px}.player.tall video{aspect-ratio:9/16}
+.player.poster{position:relative;display:block}.player.poster img{width:100%;aspect-ratio:16/9;object-fit:cover;opacity:.85}
+.player .pbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--bolt);color:#1A1040;font-weight:800;padding:14px 22px;border-radius:999px;white-space:nowrap}
+.vtabs{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.vtabs button{font:700 14px var(--fb);background:var(--night);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:8px 14px;cursor:pointer;text-align:left}
+.vtabs button small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.vtabs button[aria-pressed=true]{border-color:var(--bolt);box-shadow:inset 0 0 0 1px var(--bolt)}
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center;padding:24px 20px}
 @media(max-width:820px){.hero,.grid2{grid-template-columns:1fr}.bar nav a:not(.cta){display:none}}
 """
@@ -113,7 +123,7 @@ def page(title, desc, canon, image, body, data, ld):
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False).replace('<', '\\u003c')}</script>
 </head><body>
 <header class="bar"><div class="in"><a class="brand" href="/"><img src="{E(logo)}" alt="KABUZEN"><span>KABUZEN<small>RUMAH AI</small></span></a>
-<nav><a href="/#aplikasi">Aplikasi</a><a href="/#buku">Buku</a><a href="/majalah">Majalah</a><a href="/#galeri">Video</a><a href="/#layanan">Layanan</a><a class="cta btn btn-bolt" style="padding:9px 14px" href="/#kontak">Kontak</a></nav></div></header>
+<nav><a href="/#aplikasi">Aplikasi</a><a href="/#buku">Buku</a><a href="/majalah">Majalah</a><a href="/#animasi">Animasi</a><a href="/#galeri">Video</a><a href="/#layanan">Layanan</a><a class="cta btn btn-bolt" style="padding:9px 14px" href="/#kontak">Kontak</a></nav></div></header>
 <main>{body}</main>
 <footer>© {date.today().year} Kabuzen Rumah AI · Batam, Kepulauan Riau · WhatsApp {E(data['config'].get('whatsappLabel', ''))}</footer>
 <script src="/assets/kz.js" defer></script>
@@ -182,6 +192,66 @@ def book_page(b, data):
     return slug, page(b['title'], b.get('desc', ''), f'{SITE}/buku/{slug}', b.get('cover'), body, data, ld)
 
 
+def fmt_dur(n):
+    n = int(round(float(n or 0)))
+    return f'{n // 60}:{n % 60:02d}' if n else ''
+
+
+def anim_page(x, data):
+    slug = x['id'].removeprefix('an-')
+    apps = {a['id']: a for a in data['apps']}; books = {b['id']: b for b in data['books']}
+    app = apps.get(x.get('app') or '')
+    order = wa_link(data, f'Halo Kabuzen, saya sudah menonton animasi “{x["title"]}” dan ingin memesan animasi serupa untuk lembaga/produk saya. Mohon info prosesnya.')
+    vs = x.get('versions') or []
+    if vs:
+        first = vs[0]
+        tabs = ''.join(f'<button type="button" data-src="{E(v["url"])}" data-r="{E(v.get("label", ""))}"{" aria-pressed=true" if i == 0 else ""}>{E(v.get("label", ""))}<small>{E(v.get("note", ""))}</small></button>' for i, v in enumerate(vs))
+        ratio = 'tall' if first.get('label') == '9:16' else ''
+        player = f"""<div class="player {ratio}" id="pl"><video id="vd" controls playsinline preload="metadata" poster="{E(x.get('cover', ''))}" src="{E(first['url'])}"></video></div>
+{f'<div class="vtabs" role="group" aria-label="Pilih versi">{tabs}</div>' if len(vs) > 1 else ''}
+<script>document.querySelectorAll('.vtabs button').forEach(b=>b.onclick=()=>{{const v=document.getElementById('vd');document.querySelectorAll('.vtabs button').forEach(x=>x.removeAttribute('aria-pressed'));b.setAttribute('aria-pressed','true');document.getElementById('pl').classList.toggle('tall',b.dataset.r==='9:16');v.src=b.dataset.src;v.play().catch(()=>{{}});}});</script>"""
+    else:
+        player = f'<a class="player poster" href="{E(app.get("url", "#") if app else "#")}">' + (f'<img src="{E(x["cover"])}" alt="Cuplikan {E(x["title"])}">' if x.get('cover') else '') + '<span class="pbtn">▶ Putar animasi interaktif</span></a>'
+    acts = f'<a class="btn btn-bolt" href="{E(order)}" target="_blank" rel="noopener">Pesan animasi serupa</a>'
+    if app:
+        acts += f'<a class="btn btn-ghost" href="{E(app.get("url", ""))}">{"Buka versi interaktif" if vs else "Coba animasi (demo)"} →</a>'
+        if not app.get('free'):
+            buy = wa_link(data, f'Halo Kabuzen, saya ingin membeli animasi interaktif “{app["name"]}”. Mohon info harga dan cara pemasangannya.')
+            acts += f'<a class="btn btn-ghost" href="{E(buy)}" target="_blank" rel="noopener">Beli versi lengkap</a>'
+    hl = ''.join(f'<li>{E(h)}</li>' for h in x.get('highlights', []))
+    def relcard(rid):
+        if rid in books:
+            r = books[rid]; return f'<a class="bk" href="/buku/{E(rid.removeprefix("b-"))}">' + (f'<img src="{E(r["cover"])}" alt="" loading="lazy">' if r.get('cover') else '') + f'<b>{E(r["title"])}</b><span>Buku · {E(r.get("kind", ""))}</span></a>'
+        if rid in apps:
+            r = apps[rid]; im = r.get('shot') or r.get('image')
+            return f'<a href="/aplikasi/{E(rid.removeprefix("app-"))}">' + (f'<img src="{E(im)}" alt="" loading="lazy">' if im else '') + f'<b>{E(r["name"])}</b><span>Aplikasi · {E(r.get("cat", ""))}</span></a>'
+        return ''
+    others = [y for y in data.get('animations', []) if y['id'] != x['id']][:3]
+    def animcard(y):
+        return f'<a href="/animasi/{E(y["id"].removeprefix("an-"))}">' + (f'<img src="{E(y["cover"])}" alt="" loading="lazy">' if y.get('cover') else '') + f'<b>{E(y["title"])}</b><span>{E(y.get("kind", ""))}</span></a>'
+    rels = ''.join(relcard(r) for r in x.get('related', []))
+    info = ''.join(f'<tr><td>{k}</td><td>{v}</td></tr>' for k, v in [('Jenis', E(x.get('kind', ''))), ('Durasi', fmt_dur(x.get('duration'))), ('Versi', ' · '.join([E(', '.join(v.get('label', '') + (' (' + v['note'] + ')' if v.get('note') else '') for v in vs))] * bool(vs) + ['Interaktif'] * bool(app))), ('Rilis', E(str(x.get('year', ''))))] if v)
+    body = f"""<div class="crumb"><a href="/">Beranda</a> / <a href="/#animasi">Animasi</a> / {E(x['title'])}</div>
+<div class="kick">{E(x.get('kind', 'Animasi'))}</div><h1>{E(x['title'])}</h1>
+{player}
+<div class="acts" style="margin-top:20px">{acts}</div>
+<section class="grid2"><div class="card"><h2>Tentang animasi ini</h2><p style="margin:0;color:var(--muted)">{E(x.get('desc', ''))}</p>{f'<h2 style="margin-top:22px">Isi animasi</h2><ul>{hl}</ul>' if hl else ''}</div>
+<div><div class="card">{f'<h2>Cocok untuk</h2><p style="margin:0 0 4px;color:var(--muted)">{E(x["audience"])}</p>' if x.get('audience') else ''}<h2 style="margin-top:{'18px' if x.get('audience') else '0'}">Info</h2><table class="info">{info}</table></div>
+<div class="card" style="margin-top:20px"><h2>Pesan animasi untuk lembaga Anda</h2><p style="margin:0 0 14px;color:var(--muted)">Kabuzen membuat animasi 2D, 3D, dan interaktif untuk sekolah, pelatihan, dan instansi: naskah, narasi, sampai versi 9:16 dan 16:9.</p><a class="btn btn-bolt" href="{E(order)}" target="_blank" rel="noopener">Konsultasi via WhatsApp</a></div></div></section>
+{f'<section class="rel"><h2>Produk terkait</h2><div class="rels">{rels}</div></section>' if rels else ''}
+{f'<section class="rel"><h2>Animasi lainnya</h2><div class="rels">{"".join(animcard(y) for y in others)}</div></section>' if others else ''}"""
+    canon = f'{SITE}/animasi/{slug}'
+    if vs:
+        ld = {'@context': 'https://schema.org', '@type': 'VideoObject', 'name': x['title'], 'description': x.get('desc', ''), 'inLanguage': 'id',
+              'contentUrl': SITE + vs[0]['url'], 'embedUrl': canon, 'uploadDate': x.get('date') or str(x.get('year', ''))}
+        if x.get('duration'): ld['duration'] = f'PT{int(x["duration"]) // 60}M{int(x["duration"]) % 60}S'
+        if (x.get('cover') or '').startswith('/'): ld['thumbnailUrl'] = SITE + x['cover']
+    else:
+        ld = {'@context': 'https://schema.org', '@type': 'CreativeWork', 'name': x['title'], 'description': x.get('desc', ''), 'inLanguage': 'id', 'url': canon}
+        if (x.get('cover') or '').startswith('/'): ld['image'] = SITE + x['cover']
+    return slug, page(x['title'], x.get('desc', ''), canon, x.get('cover'), body, data, ld)
+
+
 def katalog(data):
     """Data ringkas untuk asisten katalog (assets/kz.js) -> data/katalog.json."""
     cut = lambda t, n=170: (t[:n].rsplit(' ', 1)[0] + '…') if len(t or '') > n else (t or '')
@@ -196,6 +266,9 @@ def katalog(data):
                     'i': b.get('cover') or '', 'p': 'Gratis' if (b.get('free') or b.get('pdf')) else (b.get('price') or '')})
     for v in data.get('videos', []):
         if v.get('url'): out.append({'t': 'video', 'id': v['id'].removeprefix('v-'), 'n': v['title'], 'c': '', 'd': '', 'k': '', 'u': v['url'], 'i': v.get('cover') or '', 'p': ''})
+    for x in data.get('animations', []):
+        out.append({'t': 'animasi', 'id': x['id'].removeprefix('an-'), 'n': x['title'], 'c': x.get('kind', ''), 'd': cut(x.get('desc', '')),
+                    'k': ' '.join(x.get('highlights', []) + [x.get('audience', '')]), 'u': '/animasi/' + x['id'].removeprefix('an-'), 'i': x.get('cover') or '', 'p': ''})
     for p in data.get('posts', []):
         out.append({'t': 'artikel', 'id': p['slug'], 'n': p['title'], 'c': p.get('cat', ''), 'd': cut(p.get('excerpt', '')), 'k': '', 'u': '/#artikel-' + p['slug'], 'i': p.get('cover') or '', 'p': ''})
     os.makedirs(os.path.join(ROOT, 'data'), exist_ok=True)
@@ -218,6 +291,11 @@ def main():
         slug, h = app_page(a, data); open(os.path.join(ROOT, 'aplikasi', slug + '.html'), 'w', encoding='utf8').write(h); urls.append(f'{SITE}/aplikasi/{slug}')
     for b in data['books']:
         slug, h = book_page(b, data); open(os.path.join(ROOT, 'buku', slug + '.html'), 'w', encoding='utf8').write(h); urls.append(f'{SITE}/buku/{slug}')
+    os.makedirs(os.path.join(ROOT, 'animasi'), exist_ok=True)
+    for f in os.listdir(os.path.join(ROOT, 'animasi')):
+        if f.endswith('.html'): os.remove(os.path.join(ROOT, 'animasi', f))
+    for x in data.get('animations', []):
+        slug, h = anim_page(x, data); open(os.path.join(ROOT, 'animasi', slug + '.html'), 'w', encoding='utf8').write(h); urls.append(f'{SITE}/animasi/{slug}')
     for dp, _, fs in sorted(os.walk(os.path.join(ROOT, 'majalah'))):
         for f in sorted(fs):
             if f.endswith('.html'):
@@ -227,7 +305,7 @@ def main():
     open(os.path.join(ROOT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n' for u in urls) + '</urlset>\n')
     open(os.path.join(ROOT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nDisallow: /log\nSitemap: {SITE}/sitemap.xml\n')
     nk = katalog(data)
-    print(f'{n} gambar dipindah ke img/ · index.html {size // 1024} KB · {len(data["apps"])} halaman aplikasi · {len(data["books"])} halaman buku · sitemap {len(urls)} alamat · katalog asisten {nk} entri')
+    print(f'{n} gambar dipindah ke img/ · index.html {size // 1024} KB · {len(data["apps"])} halaman aplikasi · {len(data["books"])} halaman buku · {len(data.get("animations", []))} halaman animasi · sitemap {len(urls)} alamat · katalog asisten {nk} entri')
 
 
 if __name__ == '__main__':
