@@ -227,12 +227,13 @@ function galat(e){ return {code:(e.code==="42501"||/row-level security/i.test(e.
 function coll(name){ return {
   onSnapshot(next){ const load=async()=>{ if(!O.sesi){ next({docs:[],metadata:{fromCache:false}}); return; }
       const r=await sb.from(name).select("*"); if(r.error) return;
-      next({docs:(r.data||[]).map(x=>name==="akses"?{id:x.user_id,data:()=>x}:{id:x.id,data:()=>x.data}),metadata:{fromCache:false}}); };
+      next({docs:(r.data||[]).map(x=>name==="akses"?{id:x.user_id,data:()=>x}:name==="undangan"?{id:x.email,data:()=>x}:{id:x.id,data:()=>x.data}),metadata:{fromCache:false}}); };
     loaders[name]=load; O.siap.then(load); return ()=>{}; },
   doc(id){ return {
-    async set(d){ const q= name==="akses" ? sb.from("akses").update({disetujui:!!d.disetujui,peran:d.peran==="panitia"?"panitia":"juri"}).eq("user_id",id) : sb.from(name).upsert({id,data:d,diubah:new Date().toISOString()});
+    async set(d){ if(name==="undangan"){ const r=await sb.from("undangan").upsert({email:id,nama:d.nama,jabatan:d.jabatan||"",kategori:d.kategori||[]}); if(r.error) throw galat(r.error); for(const t of ["undangan","akses","juri"]) if(loaders[t]) await loaders[t](); return; }
+      const q= name==="akses" ? sb.from("akses").update({disetujui:!!d.disetujui,peran:d.peran==="panitia"?"panitia":"juri"}).eq("user_id",id) : sb.from(name).upsert({id,data:d,diubah:new Date().toISOString()});
       const r=await q; if(r.error) throw galat(r.error); if(loaders[name]) await loaders[name](); },
-    async delete(){ const r=await (name==="akses"?sb.from("akses").delete().eq("user_id",id):sb.from(name).delete().eq("id",id)); if(r.error) throw galat(r.error); if(loaders[name]) await loaders[name](); } }; } }; }
+    async delete(){ const r=await (name==="akses"?sb.from("akses").delete().eq("user_id",id):name==="undangan"?sb.from("undangan").delete().eq("email",id):sb.from(name).delete().eq("id",id)); if(r.error) throw galat(r.error); if(loaders[name]) await loaders[name](); } }; } }; }
 const db={collection:coll};
 const pan=()=>!!(O.akses&&O.akses.peran==="panitia"&&O.akses.disetujui);
 const user={id:async()=>{await O.siap; return O.sesi?O.sesi.user.id:null}, isOwner:async()=>{await O.siap; return pan()}, canEdit:async()=>{await O.siap; return pan()}, can:async()=>{await O.siap; return O.sesi?true:null}};
@@ -286,7 +287,7 @@ const idBaru = p=>p+"_"+Date.now().toString(36)+Math.random().toString(36).slice
 const predikat = n=> n==null ? "" : (PANDUAN_SKOR.find(p=>Math.round(n)>=p[0])||PANDUAN_SKOR[4])[2];
 
 /* ---------- Penyimpanan ---------- */
-const S = {karya:{}, juri:{}, nilai:{}, akses:{}};
+const S = {karya:{}, juri:{}, nilai:{}, akses:{}, undangan:{}};
 const ONLINE=window.__ONLINE||null, RAW={juri:{},akses:{}};
 let authMode="masuk", authPesan="", aEmail="", aSandi="", sibukAuth=false;
 function saring(){ if(!ONLINE) return; const j={}; for(const [id,d] of Object.entries(RAW.juri)){ const a=RAW.akses[id]; if(!a||a.disetujui||id===uid) j[id]=d; } S.juri=j; S.akses=RAW.akses; }
@@ -351,7 +352,7 @@ async function mulai(){
   db=d; mode="bersama";
   const siap={};
   const jam=setTimeout(()=>{ lambat=true; render(); },10000);
-  for(const col of ["karya","juri","nilai"].concat(ONLINE?["akses"]:[])){
+  for(const col of ["karya","juri","nilai"].concat(ONLINE?["akses","undangan"]:[])){
     db.collection(col).onSnapshot(snap=>{
       const o={}; snap.docs.forEach(x=>{ o[x.id]=x.data(); }); S[col]=o;
       if(ONLINE&&(col==="juri"||col==="akses")){ RAW[col]=o; saring(); }
@@ -478,7 +479,7 @@ function vRingkasan(){
   }).join("");
   const juri=Object.entries(S.juri).sort((a,b)=>String(a[1].nama).localeCompare(String(b[1].nama))).map(([id,j])=>{
     const n=Object.values(S.nilai).filter(x=>x.juriId===id&&S.karya[x.karyaId]).length, tugas=Object.values(S.karya).filter(k=>juriKat(j).includes(k.kategori)).length;
-    return `<tr><td><b>${esc(j.nama)}</b> ${j.ai?'<span class="cip emas">AI</span>':""}${j.jabatan?`<br><span class="kecil redup">${esc(j.jabatan)}</span>`:""}</td><td class="kecil">${juriKat(j).map(c=>esc(katById(c).nama)).join("<br>")}</td><td class="kanan num">${n} dari ${tugas}</td><td class="kanan">${panitia?`<button class="btn mini bahaya" data-aksi="hapus-juri" data-id="${id}">Hapus</button>`:""}</td></tr>`;
+    return `<tr><td><b>${esc(j.nama)}</b> ${j.ai?'<span class="cip emas">AI</span>':""}${j.jabatan?`<br><span class="kecil redup">${esc(j.jabatan)}</span>`:""}</td><td class="kecil">${panitia&&!j.ai?KATEGORI.map(k=>`<label class="cek kecil" style="font-size:inherit"><input type="checkbox" id="jk_${id}_${k.id}" data-jkat="${k.id}" data-id="${id}" ${juriKat(j).includes(k.id)?"checked":""}> ${esc(k.nama)}</label>`).join(""):juriKat(j).map(c=>esc(katById(c).nama)).join("<br>")}</td><td class="kanan num">${n} dari ${tugas}</td><td class="kanan">${panitia?`<button class="btn mini bahaya" data-aksi="hapus-juri" data-id="${id}">Hapus</button>`:""}</td></tr>`;
   }).join("");
   let panelAkses="";
   if(ONLINE&&panitia){
@@ -494,7 +495,42 @@ function vRingkasan(){
       <span class="kecil redup" style="max-width:75ch">Hanya akun yang disetujui yang dapat membuka data lomba dan menilai. Periksa nama dan email sebelum menyetujui.</span>
       <div class="gulir"><table><thead><tr><th>Akun</th><th>Bidang yang dipilih</th><th>Status</th><th></th></tr></thead><tbody>${baris||'<tr><td colspan="4" class="redup">Belum ada akun terdaftar.</td></tr>'}</tbody></table></div></section>`;
   }
-  return `${panelAkses}<section class="panel linimasa">
+  let panelUndang="";
+  if(ONLINE&&panitia){
+    const alamat=location.origin+location.pathname;
+    const teks=u=>`Yth. ${u.nama},
+
+Anda diundang menjadi juri Kompetisi Inovasi Digital Koarmada I Tahun 2026 (dalam rangka Hari Armada 2026) untuk bidang: ${(u.kategori||[]).map(c=>katById(c)?katById(c).nama:c).join(", ")}.
+
+Cara masuk ke aplikasi penilaian:
+1. Buka ${alamat}
+2. Pilih "Daftar akun baru" dan daftar dengan email ini: ${u.email}
+3. Buka tautan konfirmasi yang dikirim ke email Anda.
+4. Kembali ke alamat di atas, pilih "Masuk". Akun Anda sudah disetujui panitia.
+
+Periode lomba 20 November - 3 Desember 2026.
+
+Panitia Kompetisi Inovasi Digital Koarmada I`;
+    const und=Object.values(S.undangan).sort((a,b)=>String(a.email).localeCompare(String(b.email))).map(u=>{
+      const t=teks(u), sudah=Object.values(S.akses).some(a=>String(a.email||"").toLowerCase()===u.email);
+      return `<tr><td><b>${esc(u.nama)}</b><br><span class="kecil redup">${esc(u.email)}${u.jabatan?" · "+esc(u.jabatan):""}</span></td>
+        <td class="kecil">${(u.kategori||[]).map(c=>esc(katById(c)?katById(c).nama:c)).join("<br>")}</td>
+        <td>${sudah?'<span class="cip good">Sudah membuat akun</span>':'<span class="cip warn">Belum membuat akun</span>'}</td>
+        <td class="kanan"><div class="baris" style="justify-content:flex-end;gap:6px"><a class="btn mini utama" style="text-decoration:none" href="mailto:${encodeURIComponent(u.email)}?subject=${encodeURIComponent("Undangan Juri Kompetisi Inovasi Digital Koarmada I")}&body=${encodeURIComponent(t)}">Kirim lewat email</a><a class="btn mini" style="text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(t)}">WhatsApp</a><button class="btn mini" data-aksi="salin-undangan" data-id="${esc(u.email)}">Salin teks</button><button class="btn mini bahaya" data-aksi="hapus-undangan" data-id="${esc(u.email)}">Hapus</button></div></td></tr>`;
+    }).join("");
+    panelUndang=`<section class="panel kolom"><h2>Undang juri</h2>
+      <span class="kecil redup" style="max-width:75ch">Isi data juri dan centang produk yang dinilainya. Juri yang mendaftar dengan email undangan langsung disetujui dan langsung tercatat sebagai juri bidang tersebut, tanpa mengisi pendaftaran lagi.</span>
+      <form id="formUndang" class="kolom"><div class="baris">
+        <label style="flex:1 1 220px">Email juri<input type="text" inputmode="email" id="uEmail" maxlength="120"></label>
+        <label style="flex:1 1 220px">Pangkat dan nama lengkap<input type="text" id="uNama" maxlength="80"></label>
+        <label style="flex:1 1 220px">Jabatan / satuan (opsional)<input type="text" id="uJabatan" maxlength="80"></label></div>
+        <div class="kolom" style="gap:4px"><span style="font-weight:500;font-size:.92rem">Produk yang dinilai</span><div class="baris">${KATEGORI.map(k=>`<label class="cek"><input type="checkbox" id="uKat_${k.id}"> ${esc(k.nama)}</label>`).join("")}</div></div>
+        <div><button class="btn utama">Simpan undangan</button></div></form>
+      <div class="gulir"><table><thead><tr><th>Juri diundang</th><th>Produk yang dinilai</th><th>Status</th><th></th></tr></thead><tbody>${und||'<tr><td colspan="4" class="redup">Belum ada undangan.</td></tr>'}</tbody></table></div>
+      <span class="kecil redup">Tombol Kirim lewat email membuka aplikasi email di perangkat Anda dengan isi undangan yang sudah terisi. Aplikasi ini tidak mengirim email undangan sendiri.</span></section>`;
+    window.__teksUndangan=teks;
+  }
+  return `${panelUndang}${panelAkses}<section class="panel linimasa">
       <div class="baris antara"><h2>${teks}</h2><span class="redup">Jumat, 20 November – Kamis, 3 Desember 2026</span></div>
       <div class="rel" aria-hidden="true"><i style="width:${pct}%"></i></div>
     </section>
@@ -506,6 +542,7 @@ function vRingkasan(){
       <form class="baris" id="formJuri" ${panitia?"":"hidden"}>
         <label style="flex:1 1 200px">Nama juri<input type="text" id="jNama" maxlength="80"></label>
         <label style="flex:1 1 200px">Jabatan (opsional)<input type="text" id="jJabatan" maxlength="80"></label>
+        <div class="kolom" style="gap:4px;flex:1 1 100%"><span style="font-weight:500;font-size:.92rem">Produk yang dinilai</span><div class="baris">${KATEGORI.map(k=>`<label class="cek"><input type="checkbox" id="jKat_${k.id}" data-jbaru="${k.id}"> ${esc(k.nama)}</label>`).join("")}</div></div>
         <button class="btn utama" style="align-self:flex-end">Tambah juri</button>
       </form>
     </section>`;
@@ -897,6 +934,8 @@ document.addEventListener("click",async e=>{
     try{ const r=await ONLINE.sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname}); authPesan=r.error?"Gagal mengirim: "+r.error.message:"Tautan untuk mengganti kata sandi dikirim ke "+em+"."; }catch(err){ authPesan="Layanan akun tidak terjangkau."; }
     render();
   }
+  else if(aksi==="salin-undangan"){ const u=S.undangan[id]; if(!u) return; const t=window.__teksUndangan(u); try{ await navigator.clipboard.writeText(t); roti("Teks undangan disalin."); }catch(err){ $("#salinTeks").value=t; $("#dlgSalin").showModal(); } }
+  else if(aksi==="hapus-undangan"){ if(await yakin("Hapus undangan ini?","Akun yang sudah dibuat tidak ikut terhapus. Cabut aksesnya di panel Akun bila perlu.")){ try{ await hapus("undangan",id); roti("Undangan dihapus."); render(); }catch(err){} } }
   else if(aksi==="setujui"||aksi==="cabut"||aksi==="jadikan-panitia"){
     const a=S.akses[id]; if(!a) return;
     try{ await simpan("akses",id,{disetujui:aksi!=="cabut", peran:aksi==="jadikan-panitia"?"panitia":(aksi==="cabut"?"juri":a.peran)}); roti(aksi==="cabut"?"Akses dicabut.":"Akses disetujui."); render(); }catch(err){}
@@ -964,6 +1003,13 @@ document.addEventListener("submit",async e=>{
     }catch(err){ authPesan="Layanan akun tidak terjangkau. Coba lagi."; }
     sibukAuth=false; render();
   }
+  if(e.target.id==="formUndang"){
+    e.preventDefault(); const em=$("#uEmail").value.trim().toLowerCase(), nm=$("#uNama").value.trim(), kj=SEMUA_KAT.filter(k=>$("#uKat_"+k).checked);
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ roti("Isi alamat email juri yang benar."); return; }
+    if(!nm){ roti("Isi pangkat dan nama juri."); return; }
+    if(!kj.length){ roti("Centang paling sedikit satu produk yang dinilai."); return; }
+    try{ await simpan("undangan",em,{nama:nm,jabatan:$("#uJabatan").value.trim(),kategori:kj}); if(document.activeElement) document.activeElement.blur(); roti("Undangan tersimpan. Kirim lewat email atau WhatsApp dari daftar di bawah."); render(); }catch(err){}
+  }
   if(e.target.id==="formSandi"){
     e.preventDefault(); const v=$("#sBaru").value;
     if(v.length<8){ authPesan="Kata sandi paling sedikit 8 karakter."; render(); return; }
@@ -971,7 +1017,8 @@ document.addEventListener("submit",async e=>{
   }
   if(e.target.id==="formJuri"){
     e.preventDefault(); const nama=$("#jNama").value.trim(); if(!nama){ roti("Isi nama juri."); return; }
-    try{ await simpan("juri",idBaru("j"),{nama, jabatan:$("#jJabatan").value.trim()}); roti("Juri ditambahkan."); render(); }catch(err){}
+    const kj=SEMUA_KAT.filter(k=>$("#jKat_"+k).checked); if(!kj.length){ roti("Centang paling sedikit satu produk yang dinilai juri ini."); return; }
+    try{ await simpan("juri",idBaru("j"),{nama, jabatan:$("#jJabatan").value.trim(), kategori:kj, daftar:Date.now()}); roti("Juri ditambahkan."); render(); }catch(err){}
   }
   if(e.target.id==="formEmail"){ e.preventDefault(); kueri=$("#eKueri").value.trim(); if(document.activeElement) document.activeElement.blur(); cariEmail(); }
   if(e.target.id==="formNilai"){
@@ -995,7 +1042,15 @@ document.addEventListener("input",e=>{
   if(t.id==="dNama") dNama=t.value;
   if(t.id==="dJabatan") dJabatan=t.value;
 });
-document.addEventListener("change",e=>{
+document.addEventListener("change",async e=>{
+  const dj=e.target.dataset||{};
+  if(dj.jkat){
+    const id=dj.id, j=S.juri[id]; if(!j) return;
+    const baru=SEMUA_KAT.filter(k=>{ const el=document.getElementById("jk_"+id+"_"+k); return el&&el.checked; });
+    if(!baru.length){ e.target.checked=true; roti("Setiap juri harus menilai paling sedikit satu produk."); return; }
+    try{ await simpan("juri",id,Object.assign({},j,{kategori:baru})); roti("Bidang juri diperbarui."); render(); }catch(err){ render(); }
+    return;
+  }
   if(e.target.id==="dPakta") dPakta=e.target.checked;
   if(e.target.id==="eBalas"){ balasOtomatis=e.target.checked; try{localStorage.setItem(LS_BALAS,balasOtomatis?"1":"0")}catch(err){} }
   if(e.target.dataset&&e.target.dataset.dkat) dKat[e.target.dataset.dkat]=e.target.checked;
