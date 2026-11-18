@@ -77,6 +77,7 @@ td.w{white-space:normal;min-width:180px;overflow-wrap:anywhere}
   <div id="dash" hidden>
     <div class="kpis" id="kpis"></div>
     <div class="card"><h2>Kunjungan per hari</h2><p class="sub">Jumlah halaman dibuka, waktu Indonesia Barat (WIB).</p><div class="chart" id="chart"></div><div class="axis" id="axis"></div></div>
+    <div class="card" id="kwCard"><h2>KABUZEN KELOLA WAKTU</h2><p class="sub">Pemakaian aplikasi pengelola waktu pelajar (kabuzen-kelola-waktu.vercel.app) dan slide paparannya. Tidak dihitung dalam angka website di atas. Nama siswa dan isi catatannya tidak dicatat.</p><div class="kpis" id="kw"></div><h2 style="margin-top:16px">Siswa mulai memakai, per hari</h2><ul class="rows" id="tKw"></ul></div>
     <div class="cols">
       <div class="card"><h2>Produk paling banyak diklik</h2><p class="sub">Halaman produk, demo, contoh buku, dan video yang dibuka.</p><ul class="rows" id="tProd"></ul></div>
       <div class="card"><h2>Halaman terpopuler</h2><p class="sub">Halaman yang paling sering dibuka.</p><ul class="rows" id="tPage"></ul></div>
@@ -149,6 +150,7 @@ td.w{white-space:normal;min-width:180px;overflow-wrap:anywhere}
   function nice(t){
     if (!t) return ["", ""];
     var i = t.indexOf(":"), k = i > 0 ? t.slice(0, i) : t, rest = i > 0 ? t.slice(i + 1) : "";
+    if (t === "kw-start") return ["Mulai memakai KELOLA WAKTU", ""];
     if (t === "whatsapp") return ["WhatsApp", ""]; if (t === "majalah") return ["Majalah", ""]; if (t === "appcentre") return ["Halaman AppCentre", ""]; if (t === "tanpa-hasil") return ["Tidak ada hasil", "pengunjung mencari sesuatu yang belum ada di katalog"];
     if (["sapaan","kontak","layanan","harga","terima-kasih"].indexOf(t) >= 0) return [{ sapaan: "Sapaan", kontak: "Tanya kontak", layanan: "Tanya jasa pembuatan aplikasi", harga: "Tanya harga", "terima-kasih": "Ucapan terima kasih" }[t], ""];
     return [NAMES[t] || rest, KIND[k] || k];
@@ -164,9 +166,18 @@ td.w{white-space:normal;min-width:180px;overflow-wrap:anywhere}
       : '<li class="none" style="display:block;border:0">' + esc(empty || "Belum ada data pada rentang ini.") + "</li>";
   }
   function render(days){
-    var views = ROWS.filter(function(r){ return r.kind === "view"; }), clicks = ROWS.filter(function(r){ return r.kind === "click"; });
-    var chats = ROWS.filter(function(r){ return r.kind === "chat_query"; }), opens = ROWS.filter(function(r){ return r.kind === "chat_open"; });
-    var uniq = {}; ROWS.forEach(function(r){ if (r.visitor) uniq[dayKey(new Date(r.created_at)) + r.visitor] = 1; });
+    var isKW = function(r){ return /^\/kelola-waktu/.test(r.path || ""); };
+    var BASE = ROWS.filter(function(r){ return !isKW(r); }), KW = ROWS.filter(isKW);
+    var views = BASE.filter(function(r){ return r.kind === "view"; }), clicks = BASE.filter(function(r){ return r.kind === "click"; });
+    var chats = BASE.filter(function(r){ return r.kind === "chat_query"; }), opens = BASE.filter(function(r){ return r.kind === "chat_open"; });
+    var uniq = {}; BASE.forEach(function(r){ if (r.visitor) uniq[dayKey(new Date(r.created_at)) + r.visitor] = 1; });
+    var kwApp = KW.filter(function(r){ return r.kind === "view" && r.path === "/kelola-waktu"; }), kwPap = KW.filter(function(r){ return r.kind === "view" && r.path === "/kelola-waktu/paparan"; });
+    var kwStart = KW.filter(function(r){ return r.kind === "click" && r.target === "kw-start"; }), kwU = {};
+    kwApp.forEach(function(r){ if (r.visitor) kwU[dayKey(new Date(r.created_at)) + r.visitor] = 1; });
+    $("kw").innerHTML = [["Pengunjung aplikasi", Object.keys(kwU).length, "unik, dihitung per hari"], ["Aplikasi dibuka", kwApp.length, ""], ["Siswa mulai memakai", kwStart.length, "mengisi nama di halaman sampul"],
+      ["Putra / Putri", kwStart.filter(function(r){ return r.label === "putra"; }).length + " / " + kwStart.filter(function(r){ return r.label === "putri"; }).length, "pilihan tampilan"], ["Paparan dibuka", kwPap.length, ""]]
+      .map(function(k){ return '<div class="kpi"><span>' + k[0] + "</span><b>" + (typeof k[1] === "number" ? nf.format(k[1]) : esc(k[1])) + "</b>" + (k[2] ? "<i>" + esc(k[2]) + "</i>" : "") + "</div>"; }).join("");
+    list("tKw", tally(kwStart, function(r){ return dayKey(new Date(r.created_at)); }).sort(function(a, b){ return a[0] < b[0] ? 1 : -1; }), function(k){ return [+k.slice(8) + "/" + +k.slice(5, 7) + "/" + k.slice(0, 4), ""]; }, "Belum ada siswa yang mulai memakai aplikasi pada rentang ini.");
     var prod = clicks.filter(function(r){ return /^(app|demo|buku|contoh|video|artikel|pdf):/.test(r.target || "") || r.target === "majalah"; });
     var aff = clicks.filter(function(r){ return /^aff:/.test(r.target || "") || r.target === "whatsapp" || r.target === "appcentre"; });
     $("kpis").innerHTML = [["Halaman dibuka", views.length, ""], ["Pengunjung unik", Object.keys(uniq).length, "dihitung per hari"], ["Klik produk", prod.length, ""], ["Klik WhatsApp", clicks.filter(function(r){ return r.target === "whatsapp"; }).length, ""], ["Pencarian di asisten", chats.length, nf.format(opens.length) + " kali asisten dibuka"]]
