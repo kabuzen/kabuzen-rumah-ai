@@ -117,7 +117,7 @@ footer{max-width:1100px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
       <label for="rnama">Nama lengkap</label><input id="rnama" type="text" autocomplete="name" required>
       <label for="remail">Email</label><input id="remail" type="email" autocomplete="email" required>
       <div class="err" id="rerr" role="alert"></div>
-      <button class="btn full" type="submit">Daftar</button>
+      <button class="btn full" type="button" id="regbtn">Daftar</button>
       <p class="note">Pendaftaran dan kemajuan belajar tersimpan di peramban perangkat ini. Versi ini belum mengirim email konfirmasi.</p>
     </form>
   </div>
@@ -189,7 +189,7 @@ function vMod(n){
      '<div class="card"><ul class="clean">'+m.uraian[curLapis].map(function(t){return '<li>'+esc(t)+'</li>'}).join('')+'</ul></div></div>';
   if(sk.length)h+='<div class="sec"><h3>Skill di modul ini ('+sk.length+')</h3>'+sk.map(skillCard).join('')+'</div>';
   h+='<div class="sec"><h3>Kegiatan</h3><div class="card">'+m.kegiatan.map(function(k,i){var id=n+'-'+i;return '<label class="chk"><input type="checkbox" data-act="'+id+'"'+(S.act[id]?' checked':'')+'><span>'+esc(k)+'</span></label>'}).join('')+'</div></div>';
-  h+='<div class="sec"><h3>Kuis modul</h3><form id="quiz" data-n="'+n+'">'+m.kuis.map(function(q,i){return qHtml(q,i)}).join('')+'<button class="btn" type="submit">Periksa jawaban</button> <span class="result" id="qres" role="status"></span></form></div>';
+  h+='<div class="sec"><h3>Kuis modul</h3><form id="quiz" data-n="'+n+'">'+m.kuis.map(function(q,i){return qHtml(q,i)}).join('')+'<button class="btn" type="button" data-do="1">Periksa jawaban</button> <span class="result" id="qres" role="status"></span></form></div>';
   if(n<D.modules.length)h+='<p style="margin-top:20px"><a href="#modul-'+(n+1)+'">Modul berikutnya →</a></p>';
   return h}
 function qHtml(q,i){return '<fieldset class="q" style="border:1px solid var(--line)"><b class="qq">'+(i+1)+'. '+esc(q.q)+'</b>'+q.o.map(function(o,j){return '<label><input type="radio" name="q'+i+'" value="'+j+'"> <span>'+esc(o)+'</span></label>'}).join('')+'<div class="ex hide">'+esc(q.e)+'</div></fieldset>'}
@@ -217,7 +217,7 @@ function vUjian(){
   if(!ready)return h+'<div class="card">Ujian terbuka setelah kedelapan kuis modul lulus. Saat ini '+passedCount()+' dari '+D.modules.length+' lulus.<p><a href="#modul">Buka daftar modul</a></p></div>';
   if(!EX){var all=[];D.modules.forEach(function(m){m.kuis.forEach(function(q){all.push(q)})});for(var i=all.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=all[i];all[i]=all[j];all[j]=t}EX=all.slice(0,20)}
   if(S.exam)h+='<p>Nilai terbaik sejauh ini: <b>'+S.exam.best+'%</b></p>';
-  return h+'<form id="exam">'+EX.map(qHtml).join('')+'<button class="btn" type="submit">Kumpulkan ujian</button> <button class="btn sec" type="button" id="exnew">Soal baru</button> <span class="result" id="eres" role="status"></span></form>'}
+  return h+'<form id="exam">'+EX.map(qHtml).join('')+'<button class="btn" type="button" data-do="1">Kumpulkan ujian</button> <button class="btn sec" type="button" id="exnew">Soal baru</button> <span class="result" id="eres" role="status"></span></form>'}
 function vSert(){
   var ok=S.exam&&S.exam.best>=PASS;
   var h='<h2 class="pg">Sertifikat</h2>';
@@ -227,7 +227,7 @@ function vSert(){
 function route(){
   if(!S.user){$('#cover').classList.remove('hide');$('#app').classList.add('hide');return}
   $('#cover').classList.add('hide');$('#app').classList.remove('hide');
-  var h=(location.hash||'#beranda').slice(1),v=$('#view'),m=h.match(/^modul-(\d+)$/);
+  var h=(CUR||(location.hash||'#beranda').slice(1)),v=$('#view'),m=h.match(/^modul-(\d+)$/);
   if(m){nav('modul');v.innerHTML=vMod(+m[1])}
   else if(h==='modul'){nav(h);v.innerHTML=vModul()}
   else if(h==='katalog'){nav(h);v.innerHTML=vKatalog();drawK()}
@@ -236,32 +236,39 @@ function route(){
   else{nav('beranda');v.innerHTML=vBeranda()}
   window.scrollTo(0,0)}
 
-$('#regform').addEventListener('submit',function(e){e.preventDefault();
+var CUR='';function go(h){CUR=h;try{location.hash=h}catch(x){}route()}
+function reg(e){if(e&&e.preventDefault)e.preventDefault();
   var n=$('#rnama').value.trim(),m=$('#remail').value.trim();
   if(n.length<2){$('#rerr').textContent='Isi nama lengkap Anda.';$('#rnama').focus();return}
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){$('#rerr').textContent='Isi alamat email yang benar.';$('#remail').focus();return}
-  S.user={nama:n,email:m,tgl:new Date().toISOString()};save(S);location.hash='beranda';route()});
+  S.user={nama:n,email:m,tgl:new Date().toISOString()};save(S);go('beranda')}
+$('#regform').addEventListener('submit',reg);$('#regbtn').addEventListener('click',reg);
+$('#regform').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();reg()}});
 document.addEventListener('click',function(e){var t=e.target;
+  var a=t.closest?t.closest('a[href^="#"]'):null;
+  if(a&&a.id!=='keluar'){e.preventDefault();go(a.getAttribute('href').slice(1));return}
+  if(t.dataset&&t.dataset.do){handle(t.closest('form'));return}
   if(t.dataset&&t.dataset.copy!=null){copy(t.dataset.copy)}
   else if(t.dataset&&t.dataset.lapis){curLapis=t.dataset.lapis;route()}
   else if(t.id==='exnew'){EX=null;route()}
-  else if(t.id==='keluar'){e.preventDefault();S={user:null,quiz:{},act:{},seen:{},exam:null};save(S);EX=null;location.hash='';route()}});
+  else if(t.id==='keluar'){e.preventDefault();S={user:null,quiz:{},act:{},seen:{},exam:null};save(S);EX=null;CUR='';try{location.hash=''}catch(x){}route()}});
 document.addEventListener('change',function(e){var t=e.target;
   if(t.dataset&&t.dataset.act){S.act[t.dataset.act]=t.checked;save(S)}
   else if(t.id==='fs'){fS=t.value;drawK()}else if(t.id==='fl'){fL=t.value;drawK()}});
 document.addEventListener('input',function(e){if(e.target.id==='fq'){fQ=e.target.value;drawK()}});
-document.addEventListener('submit',function(e){var f=e.target;
-  if(f.id==='quiz'){e.preventDefault();var n=+f.dataset.n,m=D.modules.filter(function(x){return x.n===n})[0],r=grade(f,m.kuis);
+document.addEventListener('submit',function(e){e.preventDefault();handle(e.target)});
+function handle(f){
+  if(f.id==='quiz'){var n=+f.dataset.n,m=D.modules.filter(function(x){return x.n===n})[0],r=grade(f,m.kuis);
     if(r.miss){$('#qres').textContent='Masih ada '+r.miss+' soal belum dijawab.';return}
     S.quiz[n]=Math.max(S.quiz[n]||0,r.score);save(S);
     $('#qres').textContent='Nilai '+r.score+'% ('+r.ok+' dari '+m.kuis.length+'). '+(r.score>=PASS?'Lulus.':'Belum lulus, baca pembahasan lalu coba lagi.')}
-  else if(f.id==='exam'){e.preventDefault();var r2=grade(f,EX);
+  else if(f.id==='exam'){var r2=grade(f,EX);
     if(r2.miss){$('#eres').textContent='Masih ada '+r2.miss+' soal belum dijawab.';return}
     var best=Math.max(S.exam?S.exam.best:0,r2.score);
     S.exam={best:best,tgl:(r2.score>=PASS&&(!S.exam||r2.score>=S.exam.best))?new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}):(S.exam?S.exam.tgl:'')};
     if(!S.exam.tgl&&best>=PASS)S.exam.tgl=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
-    save(S);$('#eres').textContent='Nilai '+r2.score+'% ('+r2.ok+' dari 20). '+(r2.score>=PASS?'Lulus. Sertifikat sudah terbuka.':'Belum lulus. Klik Soal baru untuk mencoba lagi.')}});
-window.addEventListener('hashchange',route);
+    save(S);$('#eres').textContent='Nilai '+r2.score+'% ('+r2.ok+' dari 20). '+(r2.score>=PASS?'Lulus. Sertifikat sudah terbuka.':'Belum lulus. Klik Soal baru untuk mencoba lagi.')}}
+window.addEventListener('hashchange',function(){CUR=location.hash.slice(1);route()});
 route();
 })();
 </script>
