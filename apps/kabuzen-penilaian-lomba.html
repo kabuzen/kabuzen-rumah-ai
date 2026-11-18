@@ -959,7 +959,7 @@ document.addEventListener("submit",async e=>{
         const r=await ONLINE.sb.auth.signUp({email:em,password:aSandi,options:{emailRedirectTo:location.origin+location.pathname}});
         if(r.error){ const m=r.error.message||""; authPesan=/rate limit/i.test(m)?"Batas pengiriman email konfirmasi tercapai. Coba lagi sekitar satu jam lagi.":/already registered/i.test(m)?"Email ini sudah terdaftar. Pilih Masuk.":"Pendaftaran gagal: "+m; }
         else if(r.data&&r.data.session){ location.reload(); return; }
-        else { authMode="masuk"; aSandi=""; authPesan="Email konfirmasi dikirim ke "+em+". Buka tautannya, lalu masuk di halaman ini."; }
+        else { authMode="masuk"; aSandi=""; authPesan="Email konfirmasi dikirim ke "+em+". Buka tautannya, lalu kembali ke halaman ini dan pilih Masuk. Bila tautan membuka halaman localhost yang gagal dimuat, abaikan saja: akun Anda sudah terkonfirmasi."; }
       }
     }catch(err){ authPesan="Layanan akun tidak terjangkau. Coba lagi."; }
     sibukAuth=false; render();
