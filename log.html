@@ -26,6 +26,8 @@ select{background:var(--night);color:var(--text);border:1px solid var(--line);bo
 .login input{width:100%;background:var(--ink);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:16px}
 .login .b{width:100%;margin-top:18px;padding:13px}
 .err{color:var(--bad);font-size:14px;margin-top:12px;min-height:1.4em}
+.err.ok{color:var(--ok)}
+.lnk{background:none;border:0;padding:0;margin-top:10px;color:var(--cyan);font-size:14px;text-decoration:underline;cursor:pointer}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
 .kpi{background:var(--night);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
 .kpi span{display:block;color:var(--muted);font-size:13.5px}.kpi b{display:block;font:800 30px/1.15 var(--fd);margin-top:6px;font-variant-numeric:tabular-nums}.kpi i{display:block;font-style:normal;color:var(--muted);font-size:12.5px;margin-top:4px}
@@ -72,6 +74,16 @@ td.w{white-space:normal;min-width:180px;overflow-wrap:anywhere}
     <label for="pw">Kata sandi</label><input id="pw" type="password" autocomplete="current-password" required>
     <button class="b" type="submit" id="go">Masuk</button>
     <div class="err" id="err" role="alert"></div>
+    <button class="lnk" type="button" id="lupa">Lupa kata sandi?</button>
+  </form>
+
+  <form class="login" id="reset" hidden>
+    <h2>Buat kata sandi baru</h2>
+    <p>Tulis kata sandi baru untuk akun admin Anda, minimal 8 karakter.</p>
+    <label for="np1">Kata sandi baru</label><input id="np1" type="password" autocomplete="new-password" minlength="8" required>
+    <label for="np2">Ulangi kata sandi baru</label><input id="np2" type="password" autocomplete="new-password" minlength="8" required>
+    <button class="b" type="submit" id="rgo">Simpan dan masuk</button>
+    <div class="err" id="rerr" role="alert"></div>
   </form>
 
   <div id="dash" hidden>
@@ -211,7 +223,40 @@ td.w{white-space:normal;min-width:180px;overflow-wrap:anywhere}
   });
   var nl = $("nolog"); nl.checked = ls.get("kz-nolog") === "1" || ls.get("kz-nolog-asked") !== "1";
   nl.addEventListener("change", function(){ ls.set("kz-nolog", nl.checked ? "1" : null); ls.set("kz-nolog-asked", "1"); });
-  if (token) { show(true); load(); } else show(false);
+  /* ---------- lupa kata sandi ---------- */
+  $("lupa").addEventListener("click", function(){
+    var em = $("em").value.trim(), er = $("err"); er.className = "err";
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { er.textContent = "Isi email admin Anda dulu, lalu klik Lupa kata sandi."; $("em").focus(); return; }
+    var b = $("lupa"); b.disabled = true; er.textContent = "Mengirim tautan…";
+    fetch(SB + "/auth/v1/recover?redirect_to=" + encodeURIComponent(location.origin + "/log"), { method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: JSON.stringify({ email: em }) })
+      .then(function(r){
+        if (r.status === 429) throw new Error("Terlalu sering meminta tautan. Tunggu sekitar satu menit lalu coba lagi.");
+        if (!r.ok) throw new Error("Tautan gagal dikirim (kode " + r.status + ").");
+        er.className = "err ok"; er.textContent = "Bila email ini terdaftar sebagai admin, tautan untuk membuat kata sandi baru sudah dikirim. Buka email tersebut (periksa juga folder Spam), lalu klik tautannya.";
+      })
+      .catch(function(e){ er.textContent = e.message === "Failed to fetch" ? "Tidak bisa terhubung ke server. Periksa koneksi lalu coba lagi." : e.message; })
+      .then(function(){ b.disabled = false; });
+  });
+  var hp = new URLSearchParams(location.hash.slice(1)), rtoken = null;
+  if (hp.get("type") === "recovery" && hp.get("access_token")) {
+    rtoken = hp.get("access_token"); history.replaceState(null, "", location.pathname);
+    $("login").hidden = true; $("reset").hidden = false; $("dash").hidden = true; $("ctl").hidden = true;
+  } else if (hp.get("error_description")) {
+    history.replaceState(null, "", location.pathname);
+    $("err").textContent = /expired|invalid/i.test(hp.get("error_description")) ? "Tautan sudah kedaluwarsa atau sudah dipakai. Minta tautan baru lewat Lupa kata sandi." : hp.get("error_description");
+  }
+  $("reset").addEventListener("submit", function(e){
+    e.preventDefault(); var a = $("np1").value, b2 = $("np2").value, er = $("rerr");
+    if (a.length < 8) { er.textContent = "Kata sandi minimal 8 karakter."; return; }
+    if (a !== b2) { er.textContent = "Kedua kata sandi tidak sama."; return; }
+    var g = $("rgo"); g.disabled = true; g.textContent = "Menyimpan…"; er.textContent = "";
+    fetch(SB + "/auth/v1/user", { method: "PUT", headers: { apikey: KEY, Authorization: "Bearer " + rtoken, "Content-Type": "application/json" }, body: JSON.stringify({ password: a }) })
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ if (!r.ok) throw new Error(j.msg || j.error_description || ("Gagal menyimpan (kode " + r.status + ").")); }); })
+      .then(function(){ token = rtoken; ss.set("kz-admin", token); $("np1").value = $("np2").value = ""; $("reset").hidden = true; show(true); load(); })
+      .catch(function(er2){ er.textContent = /different from the old|same/i.test(er2.message) ? "Kata sandi baru harus berbeda dari yang lama." : er2.message; })
+      .then(function(){ g.disabled = false; g.textContent = "Simpan dan masuk"; });
+  });
+  if (rtoken) {} else if (token) { show(true); load(); } else show(false);
 })();
 </script>
 </body></html>
