@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kopi Lereng — sangrai kecil, catatan lengkap (contoh)</title>
+<style>
+:root{--krem:#f3ece0;--kopi:#23160f;--tera:#a63c17;--daun:#2f4a3a;--kertas:#fbf7ef;--garis:#d8cbb6;
+--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--krem);color:var(--kopi);font:17px/1.6 var(--sans)}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.contoh{background:var(--kopi);color:var(--krem);font:13px/1.5 var(--mono);padding:8px 24px;text-align:center}
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:24px 0;border-bottom:1px solid var(--garis)}
+.merek{font:700 22px var(--serif);text-decoration:none;letter-spacing:.01em}
+.merek span{font:13px var(--mono);color:var(--tera);margin-left:8px}
+nav{display:flex;gap:24px;overflow-x:auto;white-space:nowrap}
+nav a{font-size:15px;text-decoration:none;padding:12px 0;border-bottom:3px solid transparent}
+nav a:hover,nav a:focus-visible{border-bottom-color:var(--tera)}
+:focus-visible{outline:3px solid var(--kopi);outline-offset:2px}
+.hero{display:grid;grid-template-columns:7fr 5fr;gap:32px;align-items:center;padding:56px 0 40px}
+.label{font:13px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--tera)}
+h1{font:700 68px/1.02 var(--serif);margin:16px 0 24px;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--tera)}
+.lead{max-width:34em;margin:0 0 32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:2px;font:600 15px var(--sans);text-decoration:none;cursor:pointer;border:1px solid var(--kopi);background:transparent;color:var(--kopi)}
+.btn:hover{background:var(--kopi);color:var(--krem)}
+.btn.utama{background:var(--tera);border-color:var(--tera);color:#fff}.btn.utama:hover{background:var(--kopi);border-color:var(--kopi)}
+.aksi{display:flex;gap:16px;flex-wrap:wrap}
+.cangkir{position:relative;border-left:3px solid var(--tera);padding-left:24px}
+.cangkir canvas{display:block;width:100%;aspect-ratio:1/1;touch-action:none;cursor:grab}
+.cangkir canvas:active{cursor:grabbing}
+.cangkir p{font:13px var(--mono);margin:8px 0 0;color:#5b4a3d}
+section{padding:56px 0;border-top:1px solid var(--garis)}
+h2{font:700 46px/1.08 var(--serif);margin:8px 0 24px;max-width:16em}
+.dua{display:grid;grid-template-columns:4fr 8fr;gap:40px}
+table{width:100%;border-collapse:collapse}
+th{font:13px var(--mono);text-transform:uppercase;letter-spacing:.1em;text-align:left;padding:12px 16px 12px 0;border-bottom:3px solid var(--tera)}
+td{padding:20px 16px 20px 0;border-bottom:1px solid var(--garis);vertical-align:top}
+.nm{font:700 22px var(--serif)}.asal{font:13px var(--mono);color:#5b4a3d}
+.sangrai{display:inline-block;width:120px;height:8px;background:var(--garis);position:relative;vertical-align:middle}
+.sangrai i{position:absolute;inset:0 auto 0 0;background:var(--kopi)}
+.harga{font:15px var(--mono);white-space:nowrap}
+.seduh{background:var(--kertas);border:1px solid var(--garis);padding:32px}
+.baris{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+label{display:block;font:600 15px var(--sans);margin-bottom:8px}
+input,select{width:100%;min-height:48px;padding:0 12px;border:1px solid var(--kopi);border-radius:2px;background:var(--kertas);color:var(--kopi);font:17px var(--sans)}
+input:focus,select:focus{outline:3px solid var(--tera);outline-offset:0}
+.hasil{display:grid;grid-template-columns:repeat(3,1fr);border-top:3px solid var(--tera)}
+.hasil div{padding:16px 16px 0 0}.hasil b{display:block;font:700 30px var(--mono)}.hasil span{font:13px var(--mono);color:#5b4a3d;text-transform:uppercase;letter-spacing:.1em}
+.catatan{font-size:15px;margin:16px 0 0;max-width:40em}
+.langganan{background:var(--daun);color:var(--krem);border-top:0}
+.langganan .label{color:#e9c9a8}.langganan h2{color:var(--krem)}
+.langganan form{background:var(--krem);color:var(--kopi);padding:32px}
+.err{color:var(--tera);font:600 15px var(--sans);min-height:24px;margin:0 0 8px}
+.ok{border-left:3px solid var(--daun);padding:16px 0 16px 16px;margin-top:24px;background:var(--kertas)}
+.ok b{font-family:var(--mono)}
+.hide{display:none}
+footer{padding:32px 0 56px;font:13px/1.7 var(--mono);color:#5b4a3d;border-top:1px solid var(--garis)}
+@media(max-width:820px){h1{font-size:46px}h2{font-size:30px}.hero,.dua{grid-template-columns:1fr}.cangkir{border-left:0;border-top:3px solid var(--tera);padding:16px 0 0}.baris{grid-template-columns:1fr}
+ table,tbody,tr,td{display:block}thead{display:none}tr{border-bottom:1px solid var(--garis);padding:16px 0}td{border:0;padding:4px 0}.hasil b{font-size:22px}header.top{flex-direction:column;gap:4px;padding-bottom:8px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="contoh">Halaman contoh. Kopi Lereng adalah merek fiktif; pesanan tidak dikirim ke mana pun.</div>
+<div class="wrap">
+<header class="top">
+  <a class="merek" href="#atas">Kopi Lereng<span>sangrai kecil</span></a>
+  <nav aria-label="Utama"><a href="#biji">Biji bulan ini</a><a href="#seduh">Takaran seduh</a><a href="#langganan">Langganan</a></nav>
+</header>
+<main id="atas">
+<div class="hero">
+  <div>
+    <div class="label">Catatan sangrai no. 47</div>
+    <h1>Kami menyangrai sedikit, lalu <em>menuliskan semuanya.</em></h1>
+    <p class="lead">Tiap kantong Kopi Lereng datang dengan catatannya: kebun, ketinggian, tanggal sangrai, dan takaran seduh yang kami pakai sendiri di meja uji.</p>
+    <div class="aksi"><a class="btn utama" href="#langganan">Mulai langganan</a><a class="btn" href="#seduh">Hitung takaran seduh</a></div>
+  </div>
+  <div class="cangkir">
+    <canvas id="c3d" width="720" height="720" role="img" aria-label="Cangkir kopi tiga dimensi yang bisa diputar"></canvas>
+    <p id="c3dnote">Seret untuk memutar cangkir.</p>
+  </div>
+</div>
+
+<section id="biji">
+  <div class="label">Biji bulan ini</div>
+  <h2>Tiga biji, tiga lereng.</h2>
+  <table>
+    <thead><tr><th>Biji</th><th>Catatan rasa</th><th>Sangrai</th><th>200 g</th></tr></thead>
+    <tbody id="tbiji"></tbody>
+  </table>
+</section>
+
+<section id="seduh">
+  <div class="dua">
+    <div><div class="label">Takaran seduh</div><h2>Berapa gram untuk berapa cangkir?</h2><p>Takaran awal dari meja uji kami. Sesuaikan dengan selera Anda setelah seduhan pertama.</p></div>
+    <div class="seduh">
+      <div class="baris">
+        <div><label for="metode">Cara seduh</label><select id="metode"></select></div>
+        <div><label for="cangkir">Jumlah cangkir (200 ml)</label><input id="cangkir" type="number" min="1" max="12" value="2" inputmode="numeric"></div>
+      </div>
+      <div class="hasil" aria-live="polite"><div><b id="h-kopi">-</b><span>kopi</span></div><div><b id="h-air">-</b><span>air</span></div><div><b id="h-rasio">-</b><span>rasio</span></div></div>
+      <p class="catatan" id="h-catatan"></p>
+    </div>
+  </div>
+</section>
+</main>
+</div>
+
+<section class="langganan" id="langganan">
+  <div class="wrap"><div class="dua">
+    <div><div class="label">Langganan</div><h2>Satu kantong, tiap dua minggu.</h2><p>Pilih biji dan gilingannya. Kami sangrai hari Senin, kirim hari Selasa.</p></div>
+    <form id="fl" novalidate>
+      <div class="baris">
+        <div><label for="lnama">Nama</label><input id="lnama" autocomplete="name"></div>
+        <div><label for="lwa">Nomor WhatsApp</label><input id="lwa" inputmode="tel" autocomplete="tel" placeholder="08..."></div>
+      </div>
+      <div class="baris">
+        <div><label for="lbiji">Biji</label><select id="lbiji"></select></div>
+        <div><label for="lgiling">Gilingan</label><select id="lgiling"><option>Biji utuh</option><option>Kasar (French press)</option><option>Sedang (V60)</option><option>Halus (tubruk)</option></select></div>
+      </div>
+      <p class="err" id="lerr" role="alert"></p>
+      <button class="btn utama" type="submit">Buat ringkasan pesanan</button>
+      <div class="ok hide" id="lok" aria-live="polite"></div>
+    </form>
+  </div></div>
+</section>
+
+<div class="wrap"><footer>Kopi Lereng adalah merek fiktif untuk contoh skill website-berkelas. Harga dan catatan rasa adalah contoh. Halaman ini tidak mengirim data; ringkasan pesanan hanya tampil di layar Anda.<br>Dibuat di KABUZEN Rumah AI.</footer></div>
+
+<script>
+(function(){
+var BIJI=[{n:'Gayo Atu Lintang',a:'Aceh Tengah · 1.450 mdpl · giling basah',r:'Cokelat hitam, jeruk bali, gula aren',s:55,h:98000},
+{n:'Kintamani Natural',a:'Bangli, Bali · 1.300 mdpl · proses natural',r:'Jeruk mandarin, stroberi kering, teh hitam',s:40,h:112000},
+{n:'Flores Bajawa',a:'Ngada, NTT · 1.500 mdpl · cuci penuh',r:'Karamel, kacang mete, tembakau manis',s:68,h:104000}];
+var METODE=[{n:'V60',r:15,c:'Gilingan sedang, air 92 °C, tuang tiga kali, selesai sekitar 3 menit.'},{n:'French press',r:14,c:'Gilingan kasar, air 94 °C, rendam 4 menit, tekan pelan.'},{n:'Tubruk',r:12,c:'Gilingan halus, air mendidih, aduk, tunggu 4 menit sampai ampas turun.'},{n:'Seduh dingin (konsentrat)',r:8,c:'Gilingan kasar, air suhu ruang, rendam 14 jam di kulkas, saring. Encerkan 1:1 saat disajikan.'}];
+function rp(x){return 'Rp'+String(x).replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+function $(q){return document.querySelector(q)}
+$('#tbiji').innerHTML=BIJI.map(function(b){return '<tr><td><div class="nm">'+b.n+'</div><div class="asal">'+b.a+'</div></td><td>'+b.r+'</td><td><span class="sangrai" role="img" aria-label="Tingkat sangrai '+b.s+' dari 100"><i style="width:'+b.s+'%"></i></span></td><td class="harga">'+rp(b.h)+'</td></tr>'}).join('');
+$('#lbiji').innerHTML=BIJI.map(function(b){return '<option>'+b.n+'</option>'}).join('');
+$('#metode').innerHTML=METODE.map(function(m,i){return '<option value="'+i+'">'+m.n+'</option>'}).join('');
+function hitung(){var m=METODE[+$('#metode').value],n=parseInt($('#cangkir').value,10);
+  if(!(n>=1&&n<=12)){$('#h-kopi').textContent='-';$('#h-air').textContent='-';$('#h-rasio').textContent='1:'+m.r;$('#h-catatan').textContent='Isi jumlah cangkir antara 1 dan 12.';return}
+  var air=n*200,kopi=Math.round(air/m.r);
+  $('#h-kopi').textContent=kopi+' g';$('#h-air').textContent=air+' ml';$('#h-rasio').textContent='1:'+m.r;$('#h-catatan').textContent=m.c}
+$('#metode').addEventListener('change',hitung);$('#cangkir').addEventListener('input',hitung);hitung();
+$('#fl').addEventListener('submit',function(e){e.preventDefault();var n=$('#lnama').value.trim(),w=$('#lwa').value.replace(/[\s-]/g,''),er=$('#lerr'),ok=$('#lok');ok.classList.add('hide');
+  if(n.length<2){er.textContent='Isi nama Anda.';$('#lnama').focus();return}
+  if(!/^(\+62|62|0)8\d{7,11}$/.test(w)){er.textContent='Isi nomor WhatsApp yang benar, misalnya 0812 3456 7890.';$('#lwa').focus();return}
+  er.textContent='';var b=BIJI[$('#lbiji').selectedIndex];
+  ok.innerHTML='Ringkasan untuk <b></b>: '+b.n+', 200 g, '+$('#lgiling').value.toLowerCase()+', tiap dua minggu. <b>'+rp(b.h)+'</b> per kiriman.<br>Ini halaman contoh, jadi pesanan tidak dikirim.';ok.querySelector('b').textContent=n;ok.classList.remove('hide')});
+
+/* ---------- cangkir 3D, digambar dengan kode di kanvas ---------- */
+var cv=$('#c3d'),g=cv.getContext('2d'),W=cv.width,H=cv.height,faces=[];
+function quad(a,b,c,d,col){faces.push({p:[a,b,c,d],col:col})}
+function lathe(prof,seg,col,flip){for(var i=0;i<prof.length-1;i++)for(var s=0;s<seg;s++){var a0=s/seg*6.2832,a1=(s+1)/seg*6.2832,p=prof[i],q=prof[i+1];
+  var A=[p[0]*Math.cos(a0),p[1],p[0]*Math.sin(a0)],B=[p[0]*Math.cos(a1),p[1],p[0]*Math.sin(a1)],C=[q[0]*Math.cos(a1),q[1],q[0]*Math.sin(a1)],Dd=[q[0]*Math.cos(a0),q[1],q[0]*Math.sin(a0)];
+  flip?quad(Dd,C,B,A,col):quad(A,B,C,Dd,col)}}
+var PUTIH=[246,240,228],TERA=[166,60,23],KOPI=[58,32,18];
+lathe([[0,-1.02],[2.05,-1.02],[2.15,-.96],[2.05,-.9],[.9,-.88],[0,-.88]],40,PUTIH);          /* tatakan */
+lathe([[0,-.88],[.62,-.88],[.7,-.8],[.95,-.2],[1.12,.55],[1.16,.9]],40,PUTIH);               /* dinding luar */
+lathe([[1.16,.9],[1.08,.9],[1.04,.55],[.88,-.15],[.6,-.7],[0,-.72]],40,PUTIH,false);          /* dinding dalam */
+lathe([[1.16,.9],[1.16,.78]],40,TERA);lathe([[1.165,.78],[1.165,.9]],40,TERA);                 /* garis bibir */
+lathe([[0,.62],[1.03,.62]],40,KOPI);                                                           /* permukaan kopi */
+(function(){var R=.52,r=.085,cx=1.12,cy=.2,N=14,M=8;                                           /* gagang */
+  for(var i=0;i<N;i++)for(var j=0;j<M;j++){var f=function(u,v){var t=-1.9+u/N*3.8,ph=v/M*6.2832,rr=R+r*Math.cos(ph);return [cx+rr*Math.cos(t)*.95+.05,cy+rr*Math.sin(t),r*Math.sin(ph)*1.5]};
+    quad(f(i,j),f(i+1,j),f(i+1,j+1),f(i,j+1),PUTIH)}})();
+var yaw=-.7,pitch=.42,auto=!matchMedia('(prefers-reduced-motion: reduce)').matches,drag=null,L=[-.45,.8,-.4];
+(function(){var n=Math.hypot(L[0],L[1],L[2]);L=L.map(function(x){return x/n})})();
+function rot(p){var cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch),x=p[0]*cy+p[2]*sy,z=-p[0]*sy+p[2]*cy,y=p[1]*cp-z*sp;z=p[1]*sp+z*cp;return [x,y,z]}
+function draw(t){g.clearRect(0,0,W,H);
+  g.fillStyle='rgba(35,22,15,.10)';g.beginPath();g.ellipse(W/2,H*.80,W*.36,H*.07*Math.max(.3,Math.sin(pitch)*2),0,0,6.2832);g.fill();
+  var out=[];for(var i=0;i<faces.length;i++){var f=faces[i],P=f.p.map(rot),z=(P[0][2]+P[1][2]+P[2][2]+P[3][2])/4;
+    var u=[P[1][0]-P[0][0],P[1][1]-P[0][1],P[1][2]-P[0][2]],v=[P[3][0]-P[0][0],P[3][1]-P[0][1],P[3][2]-P[0][2]];
+    if(Math.abs(u[0])+Math.abs(u[1])+Math.abs(u[2])<1e-6){u=[P[2][0]-P[1][0],P[2][1]-P[1][1],P[2][2]-P[1][2]]}
+    var n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],m=Math.hypot(n[0],n[1],n[2])||1;
+    var d=Math.abs((n[0]*L[0]+n[1]*L[1]+n[2]*L[2])/m),sh=.74+.26*d;out.push({P:P,z:z,c:f.col,sh:sh})}
+  out.sort(function(a,b){return b.z-a.z});var S=W*.185,ox=W/2-10,oy=H*.5;
+  for(var k=0;k<out.length;k++){var o=out[k],c='rgb('+(o.c[0]*o.sh|0)+','+(o.c[1]*o.sh|0)+','+(o.c[2]*o.sh|0)+')';g.fillStyle=c;g.strokeStyle=c;g.lineWidth=1;g.beginPath();
+    for(var q=0;q<4;q++){var pe=5/(5+o.P[q][2]*.35),x=ox+o.P[q][0]*S*pe,y=oy-o.P[q][1]*S*pe;q?g.lineTo(x,y):g.moveTo(x,y)}g.closePath();g.fill();g.stroke()}
+  if(auto){g.strokeStyle='rgba(35,22,15,.22)';g.lineWidth=5;g.lineCap='round';for(var s=0;s<3;s++){g.beginPath();var bx=ox+(s-1)*46,by=oy-S*1.15;for(var a=0;a<=20;a++){var yy=by-a*9,xx=bx+Math.sin(a*.45+t/700+s*2)*(6+a*.6);a?g.lineTo(xx,yy):g.moveTo(xx,yy)}g.globalAlpha=.5;g.stroke();g.globalAlpha=1}}}
+function loop(t){if(auto&&!drag)yaw+=.0055;draw(t);requestAnimationFrame(loop)}
+cv.addEventListener('pointerdown',function(e){drag={x:e.clientX,y:e.clientY,yaw:yaw,pitch:pitch};cv.setPointerCapture(e.pointerId)});
+cv.addEventListener('pointermove',function(e){if(!drag)return;yaw=drag.yaw+(e.clientX-drag.x)*.01;pitch=Math.max(.08,Math.min(1.2,drag.pitch+(e.clientY-drag.y)*.008));cv.dataset.yaw=yaw.toFixed(3)});
+cv.addEventListener('pointerup',function(){drag=null});cv.addEventListener('pointercancel',function(){drag=null});
+cv.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'){yaw-=.15;e.preventDefault()}if(e.key==='ArrowRight'){yaw+=.15;e.preventDefault()}});cv.tabIndex=0;
+if(!auto)$('#c3dnote').textContent='Seret atau tekan panah kiri dan kanan untuk memutar cangkir.';
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
