@@ -158,6 +158,8 @@ ol.aturan{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;
       <a href="#karya">Karya Peserta</a>
       <a href="#penilaian">Penilaian Juri</a>
       <a href="#rekap">Rekap &amp; Peringkat</a>
+      <a href="#rekap-juri">Rekap Juri</a>
+      <a href="#hasil">Hasil &amp; Juara</a>
       <a href="#ketentuan">Ketentuan &amp; Rubrik</a>
     </nav>
   </div>
@@ -237,13 +239,15 @@ function coll(name){ return {
 const db={collection:coll};
 const pan=()=>!!(O.akses&&O.akses.peran==="panitia"&&O.akses.disetujui);
 const user={id:async()=>{await O.siap; return O.sesi?O.sesi.user.id:null}, isOwner:async()=>{await O.siap; return pan()}, canEdit:async()=>{await O.siap; return pan()}, can:async()=>{await O.siap; return O.sesi?true:null}};
-const downloads={save:async({filename,data})=>{ const b=new Blob([data],{type:"text/csv;charset=utf-8"}), u=URL.createObjectURL(b), a=document.createElement("a"); a.href=u; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),2000); return {status:"saved"}; }};
+const downloads={save:async({filename,data})=>{ const b=(data instanceof Blob)?data:new Blob([data],{type:/\.pdf$/i.test(filename)?"application/pdf":"text/csv;charset=utf-8"}), u=URL.createObjectURL(b), a=document.createElement("a"); a.href=u; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),2000); return {status:"saved"}; }};
 window.claude={use:async n=>{ await O.siap; return ({db,user,downloads})[n]||null; }};
 O.siap.then(()=>{ if(!O.sesi) return;
   try{ sb.channel("lomba").on("postgres_changes",{event:"*",schema:"public"},p=>{ const t=p.table; if(loaders[t]) loaders[t](); }).subscribe(); }catch(e){}
   setInterval(()=>{ if(!document.hidden) Object.values(loaders).forEach(f=>f()); },30000); });
 })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 <script>
 "use strict";
 const KATEGORI = [
@@ -287,7 +291,7 @@ const idBaru = p=>p+"_"+Date.now().toString(36)+Math.random().toString(36).slice
 const predikat = n=> n==null ? "" : (PANDUAN_SKOR.find(p=>Math.round(n)>=p[0])||PANDUAN_SKOR[4])[2];
 
 /* ---------- Penyimpanan ---------- */
-const S = {karya:{}, juri:{}, nilai:{}, akses:{}, undangan:{}};
+const S = {karya:{}, juri:{}, nilai:{}, rekap:{}, hasil:{}, akses:{}, undangan:{}};
 const ONLINE=window.__ONLINE||null, RAW={juri:{},akses:{}};
 let authMode="masuk", authPesan="", aEmail="", aSandi="", sibukAuth=false;
 function saring(){ if(!ONLINE) return; const j={}; for(const [id,d] of Object.entries(RAW.juri)){ const a=RAW.akses[id]; if(!a||a.disetujui||id===uid) j[id]=d; } S.juri=j; S.akses=RAW.akses; }
@@ -323,7 +327,7 @@ const jumlahJuriKat=katId=>Object.values(S.juri).filter(j=>juriKat(j).includes(k
 let juriAktif=""; try{ juriAktif=localStorage.getItem(LS_JURI)||"" }catch(e){}
 let katAktif="kt", karyaAktif="", draf=null, tundaRender=false;
 
-function muatLokal(){ try{ const d=JSON.parse(localStorage.getItem(LS)||"null"); if(d){ for(const c of ["karya","juri","nilai"]) S[c]=d[c]||{}; } }catch(e){} }
+function muatLokal(){ try{ const d=JSON.parse(localStorage.getItem(LS)||"null"); if(d){ for(const c of ["karya","juri","nilai","rekap","hasil"]) S[c]=d[c]||{}; } }catch(e){} }
 function simpanLokal(){ try{ localStorage.setItem(LS,JSON.stringify(S)) }catch(e){} }
 async function simpan(col,id,data){
   if(mode==="memuat"){ roti("Penyimpanan masih dihubungkan. Coba lagi sebentar."); throw new Error("memuat"); }
@@ -352,11 +356,11 @@ async function mulai(){
   db=d; mode="bersama";
   const siap={};
   const jam=setTimeout(()=>{ lambat=true; render(); },10000);
-  for(const col of ["karya","juri","nilai"].concat(ONLINE?["akses","undangan"]:[])){
+  for(const col of ["karya","juri","nilai","rekap","hasil"].concat(ONLINE?["akses","undangan"]:[])){
     db.collection(col).onSnapshot(snap=>{
       const o={}; snap.docs.forEach(x=>{ o[x.id]=x.data(); }); S[col]=o;
       if(ONLINE&&(col==="juri"||col==="akses")){ RAW[col]=o; saring(); }
-      if(!snap.metadata.fromCache){ siap[col]=true; if(siap.karya&&siap.juri&&siap.nilai){ clearTimeout(jam); lambat=false; dataSiap=true; cobaOto(); } }
+      if(!snap.metadata.fromCache){ siap[col]=true; siapData[col]=true; if(siap.karya&&siap.juri&&siap.nilai){ clearTimeout(jam); lambat=false; dataSiap=true; cobaOto(); } }
       renderData();
     }, ()=>{ clearTimeout(jam); lambat=true; render(); });
   }
@@ -394,9 +398,10 @@ function cipLengkap(k){
 function adaContoh(){ return ["karya","juri","nilai"].some(c=>Object.values(S[c]).some(d=>d.contoh)); }
 
 /* ---------- Tampilan ---------- */
-const RUTE=["ringkasan","email","karya","penilaian","rekap","ketentuan"];
+const RUTE=["ringkasan","email","karya","penilaian","rekap","rekap-juri","hasil","ketentuan"];
 function rute(){ const h=location.hash.replace("#",""); if(!panitia&&(h==="email"||h==="karya")) return "ringkasan"; return RUTE.includes(h)?h:"ringkasan"; }
 function renderData(){
+  cobaTetapkan();
   const a=document.activeElement;
   if(a && $("#isi").contains(a) && /INPUT|TEXTAREA/.test(a.tagName)){ tundaRender=true; return; }
   render();
@@ -417,7 +422,7 @@ function render(){
   if(!bisaTulis) h+='<div class="pemberitahuan warn">Akses Anda hanya untuk melihat. Perubahan tidak akan tersimpan.</div>';
   if(!masuk){ isi.innerHTML=h+vSampul(); return; }
   if(adaContoh()&&panitia) h+='<div class="pemberitahuan info"><span>Halaman ini masih berisi <b>data contoh</b> untuk memperlihatkan cara kerja aplikasi.</span><button class="btn mini" data-aksi="hapus-contoh">Hapus semua data contoh</button></div>';
-  h+= ({ringkasan:vRingkasan,email:vEmail,karya:vKarya,penilaian:vPenilaian,rekap:vRekap,ketentuan:vKetentuan})[rute()]();
+  h+= ({ringkasan:vRingkasan,email:vEmail,karya:vKarya,penilaian:vPenilaian,rekap:vRekap,"rekap-juri":vRekapJuri,hasil:vHasil,ketentuan:vKetentuan})[rute()]();
   isi.innerHTML=h;
 }
 function pilihKat(boleh){ return '<div class="pilih-kat" role="group" aria-label="Kategori">'+KATEGORI.filter(k=>!boleh||boleh.includes(k.id)).map(k=>`<button data-aksi="kat" data-id="${k.id}" aria-pressed="${k.id===katAktif}">${esc(k.nama)}</button>`).join("")+"</div>"; }
@@ -863,9 +868,9 @@ function vRekap(){
       <td class="kanan"><span class="nilai-akhir num">${fmt(r.akhir)}</span><br><span class="kecil redup">${predikat(r.akhir)}</span></td></tr>`;
   }).join("");
   return `<section class="panel kolom">
-    <div class="baris antara"><h2>Rekap dan peringkat</h2><div class="baris"><button class="btn" data-aksi="unduh-rekap">Unduh rekap (CSV)</button><button class="btn" data-aksi="unduh-rinci">Unduh rincian per juri (CSV)</button></div></div>
+    <div class="baris antara"><h2>Rekap dan peringkat sementara</h2><div class="baris"><button class="btn" data-aksi="unduh-rekap">Unduh rekap (CSV)</button><button class="btn" data-aksi="unduh-rinci">Unduh rincian per juri (CSV)</button></div></div>
     ${pilihKat()}
-    <p class="redup kecil" style="max-width:75ch">Kolom aspek menampilkan rata-rata skor seluruh juri (0–100). Nilai akhir adalah rata-rata nilai tertimbang tiap juri sesuai bobot aspek.</p>
+    <p class="redup kecil" style="max-width:75ch">Kolom aspek menampilkan rata-rata skor seluruh juri (0–100). Nilai akhir adalah rata-rata nilai tertimbang tiap juri sesuai bobot aspek. Tabel ini memantau semua nilai yang sudah masuk; juara resmi ditetapkan di tab Hasil &amp; Juara dari rekap yang dikirim juri.</p>
     <div class="gulir"><table><thead><tr><th>Peringkat</th><th>Karya</th>${kat.aspek.map(a=>`<th class="kanan" title="${esc(a.nama)}">${esc(singkat(a.nama))}<br><span class="num">${a.bobot}%</span></th>`).join("")}<th class="kanan">Juri</th><th class="kanan">Nilai akhir</th></tr></thead>
     <tbody>${tb||`<tr><td colspan="${kat.aspek.length+4}" class="redup">Belum ada karya di kategori ini.</td></tr>`}</tbody></table></div>
   </section>`;
@@ -884,6 +889,7 @@ function vKetentuan(){
     <section class="panel kolom"><h2>Cara menghitung nilai</h2>
     <p style="max-width:75ch">Juri memberi skor 0–100 pada setiap aspek. Nilai tertimbang seorang juri = jumlah (skor aspek × bobot aspek). Nilai akhir karya = rata-rata nilai tertimbang seluruh juri yang menilai. Peringkat disusun per kategori dari nilai akhir tertinggi.</p>
     <p style="max-width:75ch">Nilai dari Penilai AI dihitung sebagai satu juri dan diberi tanda di rekap. AI menilai hanya dari teks email dan nama lampiran. Untuk mengeluarkan nilai AI dari peringkat, hapus juri "Penilai AI (otomatis)" di tab Ringkasan.</p>
+    <p style="max-width:75ch"><b>Rekap juri dan penetapan juara.</b> Setelah selesai menilai, tiap juri membuka tab Rekap Juri, memeriksa urutan karya di tiap bidang (otomatis dari nilai, atau diatur manual), lalu mengirim rekapnya ke panitia paling lambat ${TEKS_TENGGAT_REKAP}. Rekap dapat diunduh sebagai CSV atau PDF. Setelah batas itu juara tiap bidang ditetapkan otomatis di tab Hasil &amp; Juara: nilai akhir adalah rata-rata nilai tertimbang dari rekap yang diterima, nilai yang sama diurutkan menurut rata-rata peringkat juri, dan Juara 1 sampai 3 diambil dari tiga peringkat teratas. Nilai juri yang rekapnya tidak diterima tidak ikut dihitung.</p>
     <div class="gulir"><table style="max-width:420px"><thead><tr><th>Rentang skor</th><th>Predikat</th></tr></thead><tbody>${PANDUAN_SKOR.map(p=>`<tr><td class="num">${p[0]}–${p[1]}</td><td>${p[2]}</td></tr>`).join("")}</tbody></table></div></section>
     ${KATEGORI.map((k,i)=>`<section class="panel kolom"><div><h2>${i+1}. ${esc(k.nama)}</h2><span class="redup">${esc(k.sub)}</span></div>
       <p style="max-width:75ch"><b>Fokus:</b> ${esc(k.fokus)}</p>
@@ -891,6 +897,321 @@ function vKetentuan(){
       ${k.aspek.map(a=>`<tr><td><b>${esc(a.nama)}</b></td><td class="kanan num">${a.bobot}%</td><td>${esc(a.desc)}</td></tr>`).join("")}
       <tr><td><b>Jumlah</b></td><td class="kanan num"><b>${k.aspek.reduce((s,a)=>s+a.bobot,0)}%</b></td><td></td></tr></tbody></table></div></section>`).join("")}`;
 }
+
+/* ---------- Rekap juri, penerimaan panitia, dan penetapan juara ---------- */
+const TENGGAT_REKAP=Date.UTC(2026,11,3,16,59,59); /* Kamis, 3 Desember 2026 pukul 23.59 WIB */
+const TEKS_TENGGAT_REKAP="Kamis, 3 Desember 2026 pukul 23.59 WIB";
+let modeRekap={}, urutManual={}, rjCatatan={}, sibukRekap=false, sibukTetap=false, gagalTetap=false, siapData={};
+const lewatTenggat=()=>Date.now()>TENGGAT_REKAP;
+const bulat=(n,d)=>{ const f=Math.pow(10,d); return Math.round(Number(n)*f)/f; };
+const waktuWIB=ms=>ms?new Date(ms).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short",timeZone:"Asia/Jakarta"})+" WIB":"-";
+function sisaTenggat(){
+  const d=TENGGAT_REKAP-Date.now(); if(d<=0) return "Batas pengumpulan rekap sudah lewat.";
+  const h=Math.floor(d/864e5), j=Math.floor(d%864e5/36e5), m=Math.floor(d%36e5/6e4);
+  return "Sisa waktu: "+(h?h+" hari ":"")+(h||j?j+" jam ":"")+m+" menit.";
+}
+const kunciRJ=()=>katAktif+"__"+juriAktif;
+
+function nilaiJuriKat(katId,juriId){
+  const kat=katById(katId);
+  const rows=karyaKat(katId).map(([id,k])=>{ const n=S.nilai[id+"__"+juriId]||null; return {id,k,n,total:n?bulat(totalNilai(n,kat),2):null}; });
+  const dinilai=rows.filter(r=>r.n).sort((x,y)=>(y.total-x.total)||String(x.k.judul).localeCompare(String(y.k.judul)));
+  return {dinilai, belum:rows.filter(r=>!r.n)};
+}
+function susunRekap(katId,juriId){
+  const key=katId+"__"+juriId, nj=nilaiJuriKat(katId,juriId), terkirim=S.rekap[key]||null;
+  const cara=modeRekap[key]||(terkirim&&terkirim.cara==="manual"?"manual":"otomatis");
+  let baris;
+  if(cara==="manual"){
+    const peta={}; nj.dinilai.forEach(r=>{ peta[r.id]=r; });
+    let urut=urutManual[key]||((terkirim&&terkirim.cara==="manual"&&Array.isArray(terkirim.baris))?terkirim.baris.map(b=>b.karyaId):nj.dinilai.map(r=>r.id));
+    urut=urut.filter(id=>peta[id]); nj.dinilai.forEach(r=>{ if(!urut.includes(r.id)) urut.push(r.id); });
+    urutManual[key]=urut;
+    baris=urut.map((id,i)=>Object.assign({},peta[id],{peringkat:i+1,seri:false}));
+  } else {
+    let p=0, prev=null;
+    baris=nj.dinilai.map((row,i)=>{ if(prev===null||row.total!==prev) p=i+1; prev=row.total; return Object.assign({},row,{peringkat:p,seri:false}); });
+    baris.forEach(b=>{ b.seri=baris.filter(o=>o.peringkat===b.peringkat).length>1; });
+  }
+  return {key,cara,baris,belum:nj.belum,terkirim};
+}
+function catatanRekap(r){ const c=rjCatatan[r.key]; return c!=null?c:((r.terkirim&&r.terkirim.catatan)||""); }
+function isiRekap(katId,juriId){
+  const kat=katById(katId), r=susunRekap(katId,juriId), j=S.juri[juriId]||{};
+  return {juriId, kategori:katId, namaJuri:String(j.nama||""), jabatan:String(j.jabatan||""), cara:r.cara, waktu:Date.now(), terlambat:lewatTenggat(),
+    atasNama:(uid&&uid!==juriId)?String(uid):"", catatan:String(catatanRekap(r)).trim().slice(0,1500),
+    jumlahKarya:r.baris.length+r.belum.length, belumDinilai:r.belum.length,
+    baris:r.baris.map(b=>{ const skor={}; kat.aspek.forEach(a=>{ skor[a.id]=Number(b.n.skor&&b.n.skor[a.id])||0; });
+      return {karyaId:b.id, judul:String(b.k.judul||""), peserta:String(b.k.peserta||""), satuan:String(b.k.satuan||""), skor, total:b.total, peringkat:b.peringkat, caraNilai:(b.n.cara==="ai"||juriId==="ai")?"ai":"manual"}; })};
+}
+function rekapBerubah(r){
+  const t=r.terkirim; if(!t||!Array.isArray(t.baris)) return false;
+  if((t.cara==="manual"?"manual":"otomatis")!==r.cara||t.baris.length!==r.baris.length) return true;
+  if(String(catatanRekap(r)).trim()!==String(t.catatan||"")) return true;
+  return r.baris.some((b,i)=>{ const o=t.baris[i]; return o.karyaId!==b.id||Math.abs(Number(o.total)-b.total)>0.005||o.peringkat!==b.peringkat; });
+}
+function cipStatusRekap(r){
+  if(!r.terkirim) return '<span class="cip netral">Belum dikirim ke panitia</span>';
+  return `<span class="cip good">Terkirim ke panitia · ${esc(waktuWIB(r.terkirim.waktu))}</span>`+(r.terkirim.terlambat?' <span class="cip warn">Diterima setelah batas</span>':"")+(rekapBerubah(r)?' <span class="cip warn">Ada perubahan sejak dikirim, kirim ulang</span>':"");
+}
+function vRekapJuri(){
+  if(!panitia) juriAktif=(uid&&S.juri[uid])?uid:"";
+  if(juriAktif&&!S.juri[juriAktif]&&mode!=="memuat") juriAktif="";
+  const j=juriAktif?S.juri[juriAktif]:null, boleh=j?juriKat(j):null;
+  if(boleh&&!boleh.includes(katAktif)) katAktif=boleh[0];
+  const kat=katById(katAktif), lewat=lewatTenggat();
+  const opsi='<option value="">Pilih nama juri…</option>'+Object.entries(S.juri).sort((a,b)=>String(a[1].nama).localeCompare(String(b[1].nama))).map(([id,x])=>`<option value="${esc(id)}" ${id===juriAktif?"selected":""}>${esc(x.nama)}${x.ai?" (AI)":""}</option>`).join("");
+  let badan;
+  if(!j) badan=panitia?'<p class="redup">Pilih nama juri untuk melihat rekapnya atau mengirimkannya atas nama juri tersebut.</p>':'<p class="redup">Anda belum terdaftar sebagai juri. Kembali ke sampul untuk mendaftar.</p>';
+  else {
+    const r=susunRekap(katAktif,juriAktif), manual=r.cara==="manual", bolehKirim=r.baris.length&&(!lewat||panitia)&&!sibukRekap;
+    const status=boleh.map(c=>{ const x=susunRekap(c,juriAktif); return `<span class="kecil"><b>${esc(katById(c).nama)}:</b> ${cipStatusRekap(x)}</span>`; }).join("");
+    const tb=r.baris.map((b,i)=>`<tr class="${b.peringkat<=3?"juara":""}"><td class="pangkat num">${b.peringkat}</td>
+      <td><b>${esc(b.k.judul)}</b><br><span class="kecil redup">${esc(b.k.peserta)} · ${esc(b.k.satuan)}</span>${b.seri?'<br><span class="cip warn">Nilai seri</span>':""}${b.n.cara==="ai"?' <span class="cip netral">Dinilai dengan AI</span>':""}</td>
+      ${kat.aspek.map(a=>`<td class="kanan num">${Number(b.n.skor&&b.n.skor[a.id])||0}</td>`).join("")}
+      <td class="kanan"><span class="nilai-akhir num">${fmt(b.total)}</span><br><span class="kecil redup">${predikat(b.total)}</span></td>
+      ${manual?`<td class="kanan" style="white-space:nowrap"><button class="btn mini" data-aksi="rj-naik" data-id="${esc(b.id)}" ${i===0?"disabled":""} aria-label="Naikkan urutan ${esc(b.k.judul)}">Naik</button> <button class="btn mini" data-aksi="rj-turun" data-id="${esc(b.id)}" ${i===r.baris.length-1?"disabled":""} aria-label="Turunkan urutan ${esc(b.k.judul)}">Turun</button></td>`:""}</tr>`).join("");
+    badan=`<div class="kolom" style="gap:6px">${status}</div>
+      <div class="kolom" style="gap:8px"><span style="font-weight:500;font-size:.92rem">Cara menyusun urutan</span>
+        <div class="pilih-kat" role="group" aria-label="Cara menyusun urutan"><button type="button" data-aksi="rj-mode" data-id="otomatis" aria-pressed="${!manual}">Otomatis dari nilai</button><button type="button" data-aksi="rj-mode" data-id="manual" aria-pressed="${manual}">Manual oleh juri</button></div>
+        <span class="kecil redup" style="max-width:75ch">${manual?"Urutan manual: pakai tombol Naik dan Turun untuk menetapkan urutan terbaik menurut Anda, misalnya untuk memutus nilai seri. Skor tiap aspek tidak berubah.":"Urutan otomatis: karya diurutkan dari nilai tertimbang tertinggi. Karya dengan nilai sama mendapat peringkat yang sama."}</span></div>
+      <div class="gulir"><table><thead><tr><th>Peringkat</th><th>Karya</th>${kat.aspek.map(a=>`<th class="kanan" title="${esc(a.nama)}">${esc(singkat(a.nama))}<br><span class="num">${a.bobot}%</span></th>`).join("")}<th class="kanan">Nilai</th>${manual?'<th class="kanan">Urutan</th>':""}</tr></thead>
+      <tbody>${tb||`<tr><td colspan="${kat.aspek.length+4}" class="redup">Belum ada karya yang dinilai di bidang ini. Isi nilai di tab Penilaian Juri.</td></tr>`}</tbody></table></div>
+      ${r.belum.length?`<div class="pemberitahuan warn"><span><b>${r.belum.length} karya belum dinilai</b> dan tidak ikut dalam rekap: ${r.belum.map(b=>esc(b.k.judul)).join("; ")}.</span></div>`:""}
+      <label>Catatan rekap untuk panitia (opsional)<textarea id="rjCatatan" maxlength="1500">${esc(catatanRekap(r))}</textarea></label>
+      <div class="baris antara"><div class="baris"><button class="btn" data-aksi="rj-csv">Unduh rekap (CSV)</button><button class="btn" data-aksi="rj-pdf">Unduh rekap (PDF)</button></div>
+        <button class="btn utama" data-aksi="rj-kirim" ${bolehKirim?"":"disabled"}>${sibukRekap?"Mengirim…":(r.terkirim?"Kirim ulang rekap ke panitia":"Kirim rekap ke panitia")}</button></div>
+      <span class="kecil redup" style="max-width:75ch">Berkas CSV dan PDF memuat rekap semua bidang yang dinilai juri ini. Tombol kirim mengirim rekap bidang ${esc(kat.nama)} saja; kirim tiap bidang satu per satu.${lewat&&!panitia?" Batas pengumpulan sudah lewat, hubungi panitia bila rekap Anda belum terkirim.":""}${panitia&&juriAktif!==uid?" Anda mengirim atas nama juri ini; rekap diberi tanda dikirim panitia.":""}</span>`;
+  }
+  return `<section class="panel kolom">
+      <div class="baris antara"><h2>Rekap penilaian juri</h2>${panitia?`<label style="min-width:240px">Rekap milik juri<select id="pilihJuriRekap">${opsi}</select></label>`:`<span class="cip emas">Juri: ${esc(j?j.nama:"belum terdaftar")}</span>`}</div>
+      ${pilihKat(boleh)}
+      <div class="pemberitahuan ${lewat?"warn":"info"}"><span><b>Batas pengumpulan rekap ke panitia:</b> ${TEKS_TENGGAT_REKAP}. ${sisaTenggat()} Setelah batas itu juara tiap bidang ditetapkan otomatis dari rekap yang sudah diterima.</span></div>
+    </section>
+    <section class="panel kolom">${badan}</section>`;
+}
+
+/* Hasil gabungan dari rekap yang diterima panitia */
+function hitungHasil(kat){
+  const reks=Object.values(S.rekap).filter(r=>r&&r.kategori===kat.id&&S.juri[r.juriId]&&Array.isArray(r.baris));
+  const rows=karyaKat(kat.id).map(([id,k])=>{
+    const es=[]; reks.forEach(r=>{ const b=r.baris.find(x=>x.karyaId===id); if(b) es.push(b); });
+    const n=es.length;
+    return {karyaId:id, judul:String(k.judul||""), peserta:String(k.peserta||""), satuan:String(k.satuan||""), n,
+      akhir:n?bulat(es.reduce((s,b)=>s+(Number(b.total)||0),0)/n,2):null, rataPeringkat:n?bulat(es.reduce((s,b)=>s+(Number(b.peringkat)||0),0)/n,2):null,
+      gugur:!!k.gugur, dari:reks.length, peringkat:null, seri:false, juara:0};
+  });
+  const ikut=rows.filter(r=>r.akhir!=null&&!r.gugur).sort((x,y)=>(y.akhir-x.akhir)||(x.rataPeringkat-y.rataPeringkat)||x.judul.localeCompare(y.judul));
+  let p=0, prev=null;
+  ikut.forEach((r,i)=>{ if(!prev||r.akhir!==prev.akhir||r.rataPeringkat!==prev.rataPeringkat) p=i+1; r.peringkat=p; prev=r; });
+  ikut.forEach(r=>{ r.seri=ikut.filter(o=>o.peringkat===r.peringkat).length>1; r.juara=r.peringkat<=3?r.peringkat:0; });
+  return {reks, baris:ikut.concat(rows.filter(r=>r.akhir==null&&!r.gugur), rows.filter(r=>r.gugur))};
+}
+function isiHasil(kat,otomatis){
+  const h=hitungHasil(kat);
+  return {kategori:kat.id, waktu:Date.now(), otomatis:!!otomatis, oleh:String(uid||""), jumlahRekap:h.reks.length,
+    juri:h.reks.map(r=>({juriId:r.juriId, nama:String((S.juri[r.juriId]||{}).nama||r.namaJuri||""), cara:r.cara==="manual"?"manual":"otomatis", waktu:r.waktu||0, terlambat:!!r.terlambat})),
+    baris:h.baris};
+}
+function hasilTampil(kat){
+  const kunci=S.hasil[kat.id], hidup=hitungHasil(kat);
+  if(kunci&&Array.isArray(kunci.baris)){
+    const ring=b=>b.map(x=>[x.karyaId,x.peringkat,x.akhir,x.gugur?1:0].join("|")).join(";");
+    return {final:true, kunci, baris:kunci.baris, jumlahRekap:kunci.jumlahRekap||0, berubah:ring(kunci.baris)!==ring(hidup.baris), hidup};
+  }
+  return {final:false, kunci:null, baris:hidup.baris, jumlahRekap:hidup.reks.length, berubah:false, hidup};
+}
+async function tetapkanHasil(katId,otomatis){
+  const kat=katById(katId); if(!kat||!panitia) return false;
+  try{ await simpan("hasil",kat.id,isiHasil(kat,otomatis)); return true; }catch(e){ return false; }
+}
+async function cobaTetapkan(){
+  if(sibukTetap||gagalTetap||!panitia||mode!=="bersama"||!bisaTulis||!lewatTenggat()) return;
+  if(!["karya","juri","nilai","rekap","hasil"].every(c=>siapData[c])) return;
+  const perlu=KATEGORI.filter(k=>!S.hasil[k.id]&&hitungHasil(k).reks.length);
+  if(!perlu.length) return;
+  sibukTetap=true;
+  for(const k of perlu){ if(!(await tetapkanHasil(k.id,true))){ gagalTetap=true; break; } }
+  sibukTetap=false;
+  if(!gagalTetap) roti("Batas pengumpulan rekap sudah lewat. Juara ditetapkan otomatis dari rekap yang diterima.");
+  renderData();
+}
+function ketHasil(b){ const k=[]; if(b.gugur) k.push("Digugurkan panitia"); if(b.seri) k.push("Seri, perlu keputusan dewan juri"); if(b.akhir==null&&!b.gugur) k.push("Belum ada rekap juri"); else if(b.dari&&b.n<b.dari) k.push("Hanya dinilai "+b.n+" dari "+b.dari+" juri"); return k.join("; "); }
+function vHasil(){
+  const lewat=lewatTenggat(), kat=katById(katAktif), h=hasilTampil(kat);
+  const kartu=KATEGORI.map(k=>{
+    const x=hasilTampil(k), top=x.baris.filter(b=>b.juara).slice(0,6);
+    return `<div class="kartu"><h3>${esc(k.nama)}</h3>
+      <div>${x.final?'<span class="cip good">Final, sudah dikunci</span>':(lewat?(x.jumlahRekap?'<span class="cip warn">Menunggu dikunci panitia</span>':'<span class="cip bad">Tidak ada rekap diterima</span>'):'<span class="cip netral">Sementara</span>')}</div>
+      ${top.length?top.map(b=>`<span class="kecil"><b>Juara ${b.juara}${b.seri?" (seri)":""}:</b> ${esc(b.judul)} <span class="num redup">${fmt(b.akhir)}</span><br><span class="redup">${esc(b.peserta)} · ${esc(b.satuan)}</span></span>`).join(""):'<span class="kecil redup">Belum ada rekap juri yang diterima.</span>'}</div>`;
+  }).join("");
+  let terima="";
+  if(panitia){
+    let ada=0, harap=0;
+    const brs=Object.entries(S.juri).sort((a,b)=>String(a[1].nama).localeCompare(String(b[1].nama))).map(([id,j])=>{
+      const sel2=KATEGORI.map(k=>{
+        if(!juriKat(j).includes(k.id)) return '<td class="redup">–</td>';
+        harap++; const r=S.rekap[k.id+"__"+id];
+        if(!r) return `<td><span class="cip warn">Belum diterima</span><br><button class="btn mini" data-aksi="buka-rekap" data-id="${esc(id)}" data-kat="${k.id}">Buka rekap</button></td>`;
+        ada++;
+        return `<td><span class="cip good">Diterima</span>${r.terlambat?' <span class="cip warn">Setelah batas</span>':""}<br><span class="kecil redup num">${esc(waktuWIB(r.waktu))}<br>${(r.baris||[]).length} karya · urutan ${r.cara==="manual"?"manual":"otomatis"}${r.belumDinilai?` · ${r.belumDinilai} belum dinilai`:""}${r.atasNama?"<br>dikirim panitia":""}</span>${r.catatan?`<br><span class="kecil">${esc(r.catatan)}</span>`:""}<br><button class="btn mini" data-aksi="buka-rekap" data-id="${esc(id)}" data-kat="${k.id}">Buka rekap</button></td>`;
+      }).join("");
+      return `<tr><td><b>${esc(j.nama)}</b> ${j.ai?'<span class="cip emas">AI</span>':""}${j.jabatan?`<br><span class="kecil redup">${esc(j.jabatan)}</span>`:""}</td>${sel2}</tr>`;
+    }).join("");
+    terima=`<section class="panel kolom"><div class="baris antara"><h2>Penerimaan rekap juri</h2><span class="cip ${ada===harap&&harap?"good":"warn"} num">${ada} dari ${harap} rekap diterima</span></div>
+      <span class="kecil redup" style="max-width:75ch">Setiap juri mengirim satu rekap untuk tiap bidang yang dinilainya lewat tab Rekap Juri. Untuk juri yang tidak memakai akun sendiri dan untuk Penilai AI, panitia mengirim rekapnya lewat tombol Buka rekap. Nilai yang rekapnya tidak diterima tidak ikut dalam penetapan juara.</span>
+      <div class="gulir"><table><thead><tr><th>Juri</th>${KATEGORI.map(k=>`<th>${esc(k.nama)}</th>`).join("")}</tr></thead><tbody>${brs||'<tr><td colspan="5" class="redup">Belum ada juri terdaftar.</td></tr>'}</tbody></table></div></section>`;
+  }
+  const mJ=h.jumlahRekap;
+  const tb=h.baris.map(b=>`<tr class="${b.juara?"juara":""}" ${b.gugur?'style="opacity:.65"':""}><td class="pangkat num">${b.peringkat||"–"}</td>
+    <td><b>${esc(b.judul)}</b><br><span class="kecil redup">${esc(b.peserta)} · ${esc(b.satuan)}</span><br>${b.juara?`<span class="cip emas">Juara ${b.juara}</span> `:""}${b.seri?'<span class="cip warn">Seri, perlu keputusan dewan juri</span> ':""}${b.gugur?'<span class="cip bad">Digugurkan panitia</span> ':""}${b.n&&b.dari&&b.n<b.dari?`<span class="cip warn">Hanya dinilai ${b.n} dari ${b.dari} juri</span> `:""}${S.karya[b.karyaId]?((lengkap(S.karya[b.karyaId])?"":cipLengkap(S.karya[b.karyaId])+" ")+cipSesuai(S.karya[b.karyaId])):""}</td>
+    <td class="kanan"><span class="nilai-akhir num">${fmt(b.akhir)}</span><br><span class="kecil redup">${predikat(b.akhir)}</span></td>
+    <td class="kanan num">${b.rataPeringkat==null?"–":fmt(b.rataPeringkat)}</td><td class="kanan num">${b.n} / ${b.dari==null?mJ:b.dari}</td>
+    ${panitia?`<td class="kanan">${S.karya[b.karyaId]?`<button class="btn mini ${b.gugur?"":"bahaya"}" data-aksi="gugur" data-id="${esc(b.karyaId)}">${b.gugur?"Pulihkan":"Gugurkan"}</button>`:""}</td>`:""}</tr>`).join("");
+  const statusKat=h.final?`<span class="cip good">Final, dikunci ${esc(waktuWIB(h.kunci.waktu))}${h.kunci.otomatis?" (otomatis)":""}</span>`:(lewat?'<span class="cip warn">Dihitung otomatis, menunggu dikunci panitia</span>':'<span class="cip netral">Sementara, belum final</span>');
+  return `<section class="panel kolom">
+      <div class="baris antara"><h2>Hasil akhir dan juara</h2><div class="baris"><button class="btn" data-aksi="hasil-csv">Unduh hasil (CSV)</button><button class="btn" data-aksi="hasil-pdf">Unduh berita acara (PDF)</button></div></div>
+      <div class="pemberitahuan ${lewat?"warn":"info"}"><span><b>Batas pengumpulan rekap juri:</b> ${TEKS_TENGGAT_REKAP}. ${sisaTenggat()} ${lewat?"Juara tiap bidang ditetapkan otomatis dari rekap yang diterima.":"Sebelum batas itu urutan di bawah masih sementara. Setelah batas lewat, juara tiap bidang ditetapkan otomatis."}</span></div>
+    </section>
+    <section class="kartu-kat">${kartu}</section>
+    ${terima}
+    <section class="panel kolom">
+      <div class="baris antara"><h2>Urutan per bidang</h2>${statusKat}</div>
+      ${pilihKat()}
+      ${h.final&&h.berubah?`<div class="pemberitahuan warn"><span>Rekap atau status karya berubah setelah hasil dikunci. Hasil yang tampil masih versi yang dikunci.</span>${panitia?`<button class="btn mini" data-aksi="hitung-ulang" data-id="${kat.id}">Hitung ulang dan kunci lagi</button>`:""}</div>`:""}
+      <p class="redup kecil" style="max-width:75ch">Nilai akhir adalah rata-rata nilai tertimbang dari rekap juri yang diterima. Bila nilai akhir sama, karya dengan rata-rata peringkat juri yang lebih kecil berada di atas. Bila keduanya sama, karya diberi tanda seri untuk diputuskan dewan juri. Juara 1 sampai 3 diambil dari tiga peringkat teratas.</p>
+      <div class="gulir"><table><thead><tr><th>Peringkat</th><th>Karya</th><th class="kanan">Nilai akhir</th><th class="kanan">Rata-rata peringkat juri</th><th class="kanan">Rekap juri</th>${panitia?"<th></th>":""}</tr></thead>
+      <tbody>${tb||`<tr><td colspan="${panitia?6:5}" class="redup">Belum ada karya di bidang ini.</td></tr>`}</tbody></table></div>
+    </section>`;
+}
+
+/* Ekspor rekap juri dan hasil */
+function csvRekapJuri(juriId){
+  const j=S.juri[juriId]||{}, b=[["Bidang","Juri","Cara menyusun urutan","Status kirim","Peringkat","Judul karya","Peserta/Tim","Satuan","Aspek 1","Aspek 2","Aspek 3","Aspek 4","Nilai tertimbang","Predikat","Cara menilai"]];
+  juriKat(j).forEach(c=>{ const kat=katById(c), r=susunRekap(c,juriId);
+    b.push([kat.nama,"","","","","","","",...kat.aspek.map(a=>`${a.nama} (${a.bobot}%)`),"","",""]);
+    r.baris.forEach(x=>b.push([kat.nama,j.nama||"",r.cara==="manual"?"Manual oleh juri":"Otomatis dari nilai",r.terkirim?"Terkirim "+waktuWIB(r.terkirim.waktu):"Belum dikirim",x.peringkat,x.k.judul,x.k.peserta,x.k.satuan,...kat.aspek.map(a=>Number(x.n.skor&&x.n.skor[a.id])||0),angka(x.total),predikat(x.total),x.n.cara==="ai"||juriId==="ai"?"AI":"Manual"]));
+    r.belum.forEach(x=>b.push([kat.nama,j.nama||"","","","belum dinilai",x.k.judul,x.k.peserta,x.k.satuan,"","","","","","",""])); });
+  return "﻿"+b.map(x=>x.map(sel).join(";")).join("\r\n");
+}
+function csvHasil(){
+  const b=[["Bidang","Status","Peringkat","Juara","Judul karya","Peserta/Tim","Satuan","Nilai akhir","Predikat","Rata-rata peringkat juri","Jumlah rekap juri","Keterangan"]];
+  KATEGORI.forEach(k=>{ const h=hasilTampil(k), st=h.final?"Final, dikunci "+waktuWIB(h.kunci.waktu):(lewatTenggat()?"Dihitung otomatis, belum dikunci":"Sementara");
+    h.baris.forEach(x=>b.push([k.nama,st,x.peringkat||"",x.juara?"Juara "+x.juara:"",x.judul,x.peserta,x.satuan,angka(x.akhir),predikat(x.akhir),angka(x.rataPeringkat),x.n,ketHasil(x)])); });
+  return "﻿"+b.map(x=>x.map(sel).join(";")).join("\r\n");
+}
+const pt=s=>String(s==null?"":s).replace(/[–—]/g,"-").replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/…/g,"...").replace(/[^\x00-\xFF]/g,"?");
+function pdfMulai(judul,baris2){
+  if(!(window.jspdf&&window.jspdf.jsPDF)){ roti("Pembuat PDF belum termuat. Periksa sambungan internet, lalu muat ulang halaman."); return null; }
+  const d=new window.jspdf.jsPDF({unit:"mm",format:"a4"});
+  if(typeof d.autoTable!=="function"){ roti("Pembuat PDF belum termuat. Periksa sambungan internet, lalu muat ulang halaman."); return null; }
+  const L=d.internal.pageSize.getWidth();
+  d.setFont("helvetica","bold"); d.setFontSize(11); d.text("KOMANDO ARMADA I",L/2,14,{align:"center"});
+  d.setFontSize(12); d.text("KOMPETISI INOVASI DIGITAL KOARMADA I TAHUN 2026",L/2,20,{align:"center"});
+  d.setFont("helvetica","normal"); d.setFontSize(10); d.text("Dalam Rangka Hari Armada 2026",L/2,25,{align:"center"});
+  d.setLineWidth(.5); d.line(14,28,L-14,28);
+  d.setFont("helvetica","bold"); d.setFontSize(13); d.text(pt(judul),L/2,36,{align:"center"});
+  d.setFont("helvetica","normal"); d.setFontSize(9.5);
+  let y=42; (baris2||[]).forEach(t=>{ d.text(pt(t),L/2,y,{align:"center"}); y+=4.5; });
+  return {d,L,y:y+3};
+}
+function pdfRuang(p,perlu){ if(p.y+perlu>p.d.internal.pageSize.getHeight()-14){ p.d.addPage(); p.y=16; } }
+function pdfTeks(p,teks,opsi){
+  const o=opsi||{}; p.d.setFont("helvetica",o.tebal?"bold":"normal"); p.d.setFontSize(o.ukuran||9.5);
+  const brs=p.d.splitTextToSize(pt(teks),p.L-28), t=(o.ukuran||9.5)*0.45;
+  brs.forEach(b=>{ pdfRuang(p,t+1); p.d.text(b,14,p.y); p.y+=t; }); p.y+=(o.jarak==null?1.5:o.jarak);
+}
+function pdfTabel(p,head,body,kolom){
+  p.d.autoTable({startY:p.y, head:[head.map(pt)], body:body.map(r=>r.map(pt)), margin:{left:14,right:14}, theme:"grid",
+    styles:{font:"helvetica",fontSize:8.5,cellPadding:1.6,overflow:"linebreak",textColor:20,lineColor:120,lineWidth:.1},
+    headStyles:{fillColor:[11,42,74],textColor:255,fontStyle:"bold"}, columnStyles:kolom||{}});
+  p.y=p.d.lastAutoTable.finalY+5;
+}
+function pdfTtd(p,blok){
+  pdfRuang(p,42); const w=(p.L-28)/blok.length;
+  p.d.setFont("helvetica","normal"); p.d.setFontSize(9.5);
+  blok.forEach((b,i)=>{ const x=14+w*i+w/2; p.d.text(pt(b.atas),x,p.y+6,{align:"center"}); p.d.text(pt(b.nama||"(.................................................)"),x,p.y+32,{align:"center"}); if(b.bawah) p.d.text(pt(b.bawah),x,p.y+36.5,{align:"center"}); });
+  p.y+=42;
+}
+function pdfRekapJuri(juriId){
+  const j=S.juri[juriId]||{}, p=pdfMulai("REKAPITULASI PENILAIAN JURI",["Juri: "+(j.nama||"-")+(j.jabatan?" ("+j.jabatan+")":""),"Dicetak "+waktuWIB(Date.now())]);
+  if(!p) return null;
+  juriKat(j).forEach(c=>{
+    const kat=katById(c), r=susunRekap(c,juriId);
+    pdfRuang(p,30); pdfTeks(p,"Bidang: "+kat.nama,{tebal:true,ukuran:11});
+    pdfTeks(p,"Urutan "+(r.cara==="manual"?"disusun manual oleh juri":"disusun otomatis dari nilai tertimbang")+". Status: "+(r.terkirim?"terkirim ke panitia "+waktuWIB(r.terkirim.waktu)+(rekapBerubah(r)?" (ada perubahan setelah dikirim)":""):"belum dikirim ke panitia")+".");
+    if(r.baris.length) pdfTabel(p,["Peringkat","Judul karya","Peserta/Tim","Satuan","A1","A2","A3","A4","Nilai","Predikat"],
+      r.baris.map(x=>[x.peringkat,x.k.judul,x.k.peserta,x.k.satuan,...kat.aspek.map(a=>Number(x.n.skor&&x.n.skor[a.id])||0),angka(x.total),predikat(x.total)]),
+      {0:{halign:"center",cellWidth:18},4:{halign:"right",cellWidth:10},5:{halign:"right",cellWidth:10},6:{halign:"right",cellWidth:10},7:{halign:"right",cellWidth:10},8:{halign:"right",cellWidth:14},9:{cellWidth:20}});
+    else pdfTeks(p,"Belum ada karya yang dinilai di bidang ini.");
+    pdfTeks(p,kat.aspek.map((a,i)=>"A"+(i+1)+" = "+a.nama+" ("+a.bobot+"%)").join("; ")+".",{ukuran:8});
+    if(r.belum.length) pdfTeks(p,"Belum dinilai dan tidak ikut dalam rekap: "+r.belum.map(x=>x.k.judul).join("; ")+".",{ukuran:8.5});
+    const ct=String(catatanRekap(r)).trim(); if(ct) pdfTeks(p,"Catatan juri: "+ct,{ukuran:8.5});
+    p.y+=3;
+  });
+  pdfTtd(p,[{atas:"Juri,",nama:j.ai?"Penilai AI (otomatis)":(j.nama||""),bawah:j.jabatan||""}]);
+  return p.d.output("blob");
+}
+function pdfHasil(){
+  const final=KATEGORI.every(k=>S.hasil[k.id]);
+  const p=pdfMulai(final?"BERITA ACARA HASIL PENILAIAN DAN PENETAPAN JUARA":"HASIL PENILAIAN"+(lewatTenggat()?"":" SEMENTARA"),["Batas pengumpulan rekap juri: "+TEKS_TENGGAT_REKAP,"Dicetak "+waktuWIB(Date.now())]);
+  if(!p) return null;
+  KATEGORI.forEach(k=>{
+    const h=hasilTampil(k);
+    pdfRuang(p,30); pdfTeks(p,"Bidang: "+k.nama,{tebal:true,ukuran:11});
+    pdfTeks(p,"Status: "+(h.final?"final, dikunci "+waktuWIB(h.kunci.waktu)+(h.kunci.otomatis?" secara otomatis":""):(lewatTenggat()?"dihitung otomatis, belum dikunci panitia":"sementara, belum final"))+". Dihitung dari "+h.jumlahRekap+" rekap juri.");
+    const ikut=h.baris.filter(x=>x.akhir!=null||x.gugur);
+    if(ikut.length) pdfTabel(p,["Peringkat","Juara","Judul karya","Peserta/Tim","Satuan","Nilai akhir","Rata-rata peringkat","Rekap juri","Keterangan"],
+      ikut.map(x=>[x.peringkat||"-",x.juara?"Juara "+x.juara:"",x.judul,x.peserta,x.satuan,angka(x.akhir),angka(x.rataPeringkat),x.n,ketHasil(x)]),
+      {0:{halign:"center",cellWidth:17},1:{cellWidth:15},5:{halign:"right",cellWidth:14},6:{halign:"right",cellWidth:17},7:{halign:"right",cellWidth:12},8:{cellWidth:26}});
+    else pdfTeks(p,"Belum ada rekap juri yang diterima untuk bidang ini.");
+    const jr=h.final?(h.kunci.juri||[]):h.hidup.reks.map(r=>({nama:(S.juri[r.juriId]||{}).nama||r.namaJuri,cara:r.cara,waktu:r.waktu,terlambat:r.terlambat}));
+    if(jr.length) pdfTeks(p,"Rekap diterima dari: "+jr.map(x=>x.nama+" ("+waktuWIB(x.waktu)+", urutan "+(x.cara==="manual"?"manual":"otomatis")+(x.terlambat?", setelah batas":"")+")").join("; ")+".",{ukuran:8.5});
+    p.y+=3;
+  });
+  pdfTeks(p,"Nilai akhir adalah rata-rata nilai tertimbang dari rekap juri yang diterima. Nilai akhir yang sama diurutkan menurut rata-rata peringkat juri; bila masih sama, karya dinyatakan seri dan diputuskan dewan juri.",{ukuran:8});
+  pdfTtd(p,[{atas:"Ketua Dewan Juri,"},{atas:"Ketua Panitia,"}]);
+  return p.d.output("blob");
+}
+async function unduhBerkas(nama,blob){
+  if(!blob) return;
+  if(unduhan){ try{ await unduhan.save({filename:nama,data:blob}); roti("Berkas disimpan."); return; }catch(e){ if(e&&e.code==="declined") return; } }
+  roti("Unduhan PDF tidak tersedia di tampilan ini. Pakai unduhan CSV.");
+}
+async function kirimRekap(){
+  if(sibukRekap||!juriAktif||!S.juri[juriAktif]) return;
+  const kat=katById(katAktif), r=susunRekap(katAktif,juriAktif);
+  if(!r.baris.length){ roti("Belum ada karya yang dinilai di bidang ini."); return; }
+  if(lewatTenggat()&&!panitia){ roti("Batas pengumpulan rekap sudah lewat. Hubungi panitia."); return; }
+  const teks=`Rekap bidang ${kat.nama} berisi ${r.baris.length} karya, urutan ${r.cara==="manual"?"manual":"otomatis"}.${r.belum.length?` ${r.belum.length} karya belum dinilai dan tidak ikut terkirim.`:""} Rekap dapat dikirim ulang sampai ${TEKS_TENGGAT_REKAP}.`;
+  if(!(await yakin("Kirim rekap ke panitia?",teks,"Kirim rekap"))) return;
+  sibukRekap=true; render();
+  try{ await simpan("rekap",r.key,isiRekap(katAktif,juriAktif)); delete rjCatatan[r.key]; roti("Rekap terkirim ke panitia."); }catch(e){}
+  sibukRekap=false; render();
+}
+function geserUrut(id,arah){
+  const r=susunRekap(katAktif,juriAktif); if(r.cara!=="manual") return;
+  const u=urutManual[r.key].slice(), i=u.indexOf(id), k=i+arah; if(i<0||k<0||k>=u.length) return;
+  u[i]=u[k]; u[k]=id; urutManual[r.key]=u; render();
+}
+const namaBerkas=s=>String(s||"juri").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)||"juri";
+const AKSI_REKAP={
+  "rj-mode":id=>{ if(!juriAktif) return; modeRekap[kunciRJ()]=id==="manual"?"manual":"otomatis"; if(id!=="manual") delete urutManual[kunciRJ()]; render(); },
+  "rj-naik":id=>geserUrut(id,-1),
+  "rj-turun":id=>geserUrut(id,1),
+  "rj-kirim":()=>kirimRekap(),
+  "rj-csv":()=>{ if(juriAktif) unduh("rekap-juri-"+namaBerkas((S.juri[juriAktif]||{}).nama)+".csv",csvRekapJuri(juriAktif)); },
+  "rj-pdf":()=>{ if(juriAktif) unduhBerkas("rekap-juri-"+namaBerkas((S.juri[juriAktif]||{}).nama)+".pdf",pdfRekapJuri(juriAktif)); },
+  "hasil-csv":()=>unduh("hasil-akhir-lomba-inovasi-digital-koarmada1.csv",csvHasil()),
+  "hasil-pdf":()=>unduhBerkas("berita-acara-hasil-lomba-inovasi-digital-koarmada1.pdf",pdfHasil()),
+  "buka-rekap":(id,b)=>{ if(!panitia) return; juriAktif=id; if(b.dataset.kat) katAktif=b.dataset.kat; try{localStorage.setItem(LS_JURI,juriAktif)}catch(e){} location.hash="rekap-juri"; },
+  "hitung-ulang":async id=>{ if(!panitia) return; if(await yakin("Hitung ulang dan kunci lagi?","Hasil bidang ini dihitung ulang dari rekap juri yang diterima sampai saat ini, lalu dikunci menggantikan hasil sebelumnya.","Hitung ulang")){ if(await tetapkanHasil(id,false)) roti("Hasil dihitung ulang dan dikunci."); render(); } },
+  "gugur":async id=>{ const k=S.karya[id]; if(!k||!panitia) return;
+    if(!k.gugur&&!(await yakin("Gugurkan karya ini?",`"${k.judul}" dikeluarkan dari urutan dan penetapan juara. Nilainya tetap tersimpan dan karya dapat dipulihkan.`,"Gugurkan"))) return;
+    try{ await simpan("karya",id,Object.assign({},k,{gugur:!k.gugur})); roti(k.gugur?"Karya dipulihkan.":"Karya digugurkan."); render(); }catch(e){} }
+};
+(function(){ const d=TENGGAT_REKAP-Date.now(); if(d>0&&d<2e9) setTimeout(()=>{ renderData(); cobaTetapkan(); },d+1500);
+  setInterval(()=>{ if(masuk&&(rute()==="rekap-juri"||rute()==="hasil")) renderData(); },60000); })();
 
 /* ---------- Aksi ---------- */
 let rotiJam=null;
@@ -970,6 +1291,7 @@ document.addEventListener("click",async e=>{
   else if(aksi==="pakai-ai"){ const k=S.karya[karyaAktif]; if(k&&k.ai&&draf){ katById(katAktif).aspek.forEach(a=>{ draf.skor[a.id]=Number(k.ai.skor[a.id])||0; }); draf.alasan=Object.assign({},k.ai.alasan||{}); draf.cara="ai"; render(); } }
   else if(aksi==="mode-nilai"){ modeNilai=id; if(id==="manual"&&draf){ draf.cara="manual"; draf.alasan={}; } render(); }
   else if(aksi==="nilai-ai") nilaiAI();
+  else if(AKSI_REKAP[aksi]) AKSI_REKAP[aksi](id,b);
   else if(aksi==="unduh-rekap") unduh("rekap-lomba-inovasi-digital-koarmada1.csv",csvRekap());
   else if(aksi==="unduh-rinci") unduh("rincian-nilai-per-juri-koarmada1.csv",csvRinci());
 });
@@ -1039,6 +1361,7 @@ document.addEventListener("input",e=>{
   if(t.id==="aEmail") aEmail=t.value;
   if(t.id==="aSandi") aSandi=t.value;
   if(t.id==="bahanAI") bahanAI=t.value;
+  if(t.id==="rjCatatan"&&juriAktif) rjCatatan[kunciRJ()]=t.value;
   if(t.id==="dNama") dNama=t.value;
   if(t.id==="dJabatan") dJabatan=t.value;
 });
@@ -1051,6 +1374,7 @@ document.addEventListener("change",async e=>{
     try{ await simpan("juri",id,Object.assign({},j,{kategori:baru})); roti("Bidang juri diperbarui."); render(); }catch(err){ render(); }
     return;
   }
+  if(e.target.id==="pilihJuriRekap"){ juriAktif=e.target.value; try{localStorage.setItem(LS_JURI,juriAktif)}catch(err){} render(); }
   if(e.target.id==="dPakta") dPakta=e.target.checked;
   if(e.target.id==="eBalas"){ balasOtomatis=e.target.checked; try{localStorage.setItem(LS_BALAS,balasOtomatis?"1":"0")}catch(err){} }
   if(e.target.dataset&&e.target.dataset.dkat) dKat[e.target.dataset.dkat]=e.target.checked;
