@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Animasi Trouble Shooting Sistem Pendingin Kapal · Kabuzen Rumah AI</title>
+<meta name="description" content="Animasi pembelajaran 3 menit 10 detik untuk perwira remaja dan prajurit Departemen Mesin: ke mana panas di kapal mengalir, siklus mesin pendingin, membaca dua manometer, sistem pendingin mesin penggerak, lima langkah pencarian gangguan, dan dua contoh kasus. Tanpa suara, dengan teks di layar.">
+<link rel="canonical" href="https://kabuzen-rumah-ai-37bk.vercel.app/animasi/trouble-shooting-sistem-pendingin-kapal">
+<meta property="og:type" content="product"><meta property="og:site_name" content="Kabuzen Rumah AI">
+<meta property="og:title" content="Animasi Trouble Shooting Sistem Pendingin Kapal"><meta property="og:description" content="Animasi pembelajaran 3 menit 10 detik untuk perwira remaja dan prajurit Departemen Mesin: ke mana panas di kapal mengalir, siklus mesin pendingin, membaca dua manometer, sistem pendingin mesin penggerak, lima langkah pencarian gangguan, dan dua contoh kasus. Tanpa suara, dengan teks di layar."><meta property="og:url" content="https://kabuzen-rumah-ai-37bk.vercel.app/animasi/trouble-shooting-sistem-pendingin-kapal">
+<meta property="og:image" content="https://kabuzen-rumah-ai-37bk.vercel.app/img/video/animasi-pendingin-kapal.webp"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/img/site/logo.webp"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>:root{--ink:#0A0624;--night:#130C3E;--night2:#1B1257;--volt:#1E9BFF;--cyan:#55EEFF;--bolt:#FFD233;--text:#EEEFFF;--muted:#A7A3D4;--line:rgba(150,140,255,.16);--ok:#3EE59A;
+--fd:"Unbounded","Arial Black",system-ui,sans-serif;--fb:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--fm:"JetBrains Mono",ui-monospace,Menlo,monospace;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(900px 500px at 80% -10%,rgba(30,155,255,.18),transparent 60%),var(--ink);color:var(--text);font:16px/1.65 var(--fb)}
+a{color:var(--cyan)}img{max-width:100%;display:block}
+.bar{position:sticky;top:0;z-index:5;background:rgba(10,6,36,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .in{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font:800 15px/1.1 var(--fd)}
+.brand img{width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 3px var(--bolt)}.brand small{display:block;color:var(--bolt);font:500 10px var(--fm);letter-spacing:.2em}
+.bar nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}.bar nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px;padding:8px 12px;border-radius:999px}.bar nav a:hover{color:var(--text);background:var(--night2)}.bar nav a.cta,.bar nav a.cta:hover{color:#1A1040;background:var(--bolt)}
+main{max-width:1120px;margin:0 auto;padding:28px 20px 40px}
+.crumb{font-size:14px;color:var(--muted);margin-bottom:18px}.crumb a{color:var(--muted)}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}
+.kick{font:600 12px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--bolt);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.kick .st{color:var(--ok);border:1px solid rgba(62,229,154,.4);border-radius:6px;padding:1px 7px}
+h1{font:800 clamp(30px,4.4vw,48px)/1.08 var(--fd);margin:12px 0 14px;letter-spacing:-.01em}
+.sub{color:var(--text);font-weight:600;margin:-4px 0 12px}.lead{color:var(--muted);font-size:17px}
+.price{font-weight:800;color:var(--bolt);margin:18px 0 10px}.price.free{color:var(--ok)}
+.acts{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 15px/1 var(--fb);text-decoration:none;padding:13px 20px;border-radius:999px}
+.btn-bolt{background:var(--bolt);color:#1A1040;box-shadow:0 6px 24px rgba(255,210,51,.28)}.btn-ghost{color:var(--text);box-shadow:inset 0 0 0 1.5px var(--line)}.btn-ghost:hover{color:var(--cyan);box-shadow:inset 0 0 0 1.5px var(--cyan)}
+.pic{border-radius:18px;overflow:hidden;box-shadow:0 0 0 1px var(--line),0 30px 80px rgba(0,0,0,.45);background:var(--night)}
+.pic.book{max-width:360px;justify-self:center;border-radius:10px}
+.grid2{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;margin-top:40px}
+.card{background:var(--night);border:1px solid var(--line);border-radius:18px;padding:22px 24px}
+.card h2{font:800 18px var(--fd);margin:0 0 12px}
+.card ul,.card ol{margin:0;padding-left:22px}.card li{margin:8px 0}
+.info{width:100%;border-collapse:collapse;font-size:15px}.info td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}.info td:first-child{color:var(--muted);width:42%}
+.rel{margin-top:44px}.rel h2{font:800 20px var(--fd)}
+.rels{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.rels a{display:block;text-decoration:none;color:var(--text);background:var(--night);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.rels a:hover{border-color:var(--cyan)}.rels img{aspect-ratio:16/10;object-fit:cover;width:100%}.rels .bk img{aspect-ratio:3/4;object-fit:cover}
+.rels b{display:block;padding:12px 14px 2px}.rels span{display:block;padding:0 14px 14px;color:var(--muted);font-size:13px}
+h1+.player,.player{margin-top:6px}
+.player{border-radius:18px;overflow:hidden;background:#000;box-shadow:0 0 0 1px var(--line),0 30px 80px rgba(0,0,0,.45);max-width:960px}
+.player video{width:100%;display:block;aspect-ratio:16/9;background:#000}
+.player.tall{max-width:380px}.player.tall video{aspect-ratio:9/16}
+.player.poster{position:relative;display:block}.player.poster img{width:100%;aspect-ratio:16/9;object-fit:cover;opacity:.85}
+.player .pbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--bolt);color:#1A1040;font-weight:800;padding:14px 22px;border-radius:999px;white-space:nowrap}
+.vtabs{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.vtabs button{font:700 14px var(--fb);background:var(--night);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:8px 14px;cursor:pointer;text-align:left}
+.vtabs button small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.vtabs button[aria-pressed=true]{border-color:var(--bolt);box-shadow:inset 0 0 0 1px var(--bolt)}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center;padding:24px 20px}
+@media(max-width:820px){.hero,.grid2{grid-template-columns:1fr}.bar nav a:not(.cta){display:none}}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "Animasi Trouble Shooting Sistem Pendingin Kapal", "description": "Animasi pembelajaran 3 menit 10 detik untuk perwira remaja dan prajurit Departemen Mesin: ke mana panas di kapal mengalir, siklus mesin pendingin, membaca dua manometer, sistem pendingin mesin penggerak, lima langkah pencarian gangguan, dan dua contoh kasus. Tanpa suara, dengan teks di layar.", "inLanguage": "id", "contentUrl": "https://kabuzen-rumah-ai-37bk.vercel.app/video/animasi-pendingin-kapal.mp4", "embedUrl": "https://kabuzen-rumah-ai-37bk.vercel.app/animasi/trouble-shooting-sistem-pendingin-kapal", "uploadDate": "2026-11-20", "duration": "PT3M10S", "thumbnailUrl": "https://kabuzen-rumah-ai-37bk.vercel.app/img/video/animasi-pendingin-kapal.webp"}</script>
+</head><body>
+<header class="bar"><div class="in"><a class="brand" href="/"><img src="/img/site/logo.webp" alt="KABUZEN"><span>KABUZEN<small>RUMAH AI</small></span></a>
+<nav><a href="/#aplikasi">Aplikasi</a><a href="/#buku">Buku</a><a href="/majalah">Majalah</a><a href="/#animasi">Animasi</a><a href="/#galeri">Video</a><a href="/#layanan">Layanan</a><a class="cta btn btn-bolt" style="padding:9px 14px" href="/#kontak">Kontak</a></nav></div></header>
+<main><div class="crumb"><a href="/">Beranda</a> / <a href="/#animasi">Animasi</a> / Animasi Trouble Shooting Sistem Pendingin Kapal</div>
+<div class="kick">Video animasi 2D</div><h1>Animasi Trouble Shooting Sistem Pendingin Kapal</h1>
+<div class="player " id="pl"><video id="vd" controls playsinline preload="metadata" poster="/img/video/animasi-pendingin-kapal.webp" src="/video/animasi-pendingin-kapal.mp4"></video></div>
+
+<script>document.querySelectorAll('.vtabs button').forEach(b=>b.onclick=()=>{const v=document.getElementById('vd');document.querySelectorAll('.vtabs button').forEach(x=>x.removeAttribute('aria-pressed'));b.setAttribute('aria-pressed','true');document.getElementById('pl').classList.toggle('tall',b.dataset.r==='9:16');v.src=b.dataset.src;v.play().catch(()=>{});});</script>
+<div class="acts" style="margin-top:20px"><a class="btn btn-bolt" href="https://wa.me/628118102019?text=Halo%20Kabuzen%2C%20saya%20sudah%20menonton%20animasi%20%E2%80%9CAnimasi%20Trouble%20Shooting%20Sistem%20Pendingin%20Kapal%E2%80%9D%20dan%20ingin%20memesan%20animasi%20serupa%20untuk%20lembaga/produk%20saya.%20Mohon%20info%20prosesnya." target="_blank" rel="noopener">Pesan animasi serupa</a></div>
+<section class="grid2"><div class="card"><h2>Tentang animasi ini</h2><p style="margin:0;color:var(--muted)">Animasi pembelajaran 3 menit 10 detik untuk perwira remaja dan prajurit Departemen Mesin: ke mana panas di kapal mengalir, siklus mesin pendingin, membaca dua manometer, sistem pendingin mesin penggerak, lima langkah pencarian gangguan, dan dua contoh kasus. Tanpa suara, dengan teks di layar.</p><h2 style="margin-top:22px">Isi animasi</h2><ul><li>Ke mana panas di kapal mengalir</li><li>Siklus mesin pendingin: empat komponen utama</li><li>Membaca dua manometer: empat kemungkinan</li><li>Sistem pendingin mesin: air tawar dan air laut</li><li>Lima langkah pencarian gangguan</li><li>Kasus: pengaman tekanan tinggi memutus saat berlabuh</li><li>Kasus: suhu air tawar pendingin naik</li><li>Keselamatan dan penutup</li></ul></div>
+<div><div class="card"><h2>Cocok untuk</h2><p style="margin:0 0 4px;color:var(--muted)">Perwira remaja dan prajurit muda Departemen Mesin kapal perang, serta pembina.</p><h2 style="margin-top:18px">Info</h2><table class="info"><tr><td>Jenis</td><td>Video animasi 2D</td></tr><tr><td>Durasi</td><td>3:10</td></tr><tr><td>Versi</td><td>16:9 (Paparan · 3:10)</td></tr><tr><td>Rilis</td><td>2026</td></tr></table></div>
+<div class="card" style="margin-top:20px"><h2>Pesan animasi untuk lembaga Anda</h2><p style="margin:0 0 14px;color:var(--muted)">Kabuzen membuat animasi 2D, 3D, dan interaktif untuk sekolah, pelatihan, dan instansi: naskah, narasi, sampai versi 9:16 dan 16:9.</p><a class="btn btn-bolt" href="https://wa.me/628118102019?text=Halo%20Kabuzen%2C%20saya%20sudah%20menonton%20animasi%20%E2%80%9CAnimasi%20Trouble%20Shooting%20Sistem%20Pendingin%20Kapal%E2%80%9D%20dan%20ingin%20memesan%20animasi%20serupa%20untuk%20lembaga/produk%20saya.%20Mohon%20info%20prosesnya." target="_blank" rel="noopener">Konsultasi via WhatsApp</a></div></div></section>
+<section class="rel"><h2>Produk terkait</h2><div class="rels"><a class="bk" href="/buku/kabuzen-trouble-shooting-sistem-pendingin-kapal"><img src="/img/buku/kabuzen-trouble-shooting-sistem-pendingin-kapal.webp" alt="" loading="lazy"><b>KABUZEN Trouble Shooting Sistem Pendingin Kapal</b><span>Buku · Modul</span></a><a href="/aplikasi/kabuzen-pendingin-kapal"><img src="/img/aplikasi/kabuzen-pendingin-kapal.webp" alt="" loading="lazy"><b>KABUZEN PENDINGIN KAPAL — LMS Trouble Shooting Sistem Pendingin Kapal</b><span>Aplikasi · Maritim &amp; SAR</span></a></div></section>
+<section class="rel"><h2>Animasi lainnya</h2><div class="rels"><a href="/animasi/sekolah-islam-cerdas-ai"><img src="/img/video/gais-cerdas-ai.webp" alt="" loading="lazy"><b>Sekolah Islam Cerdas AI di GAIS Montessori</b><span>Video animasi 3D</span></a><a href="/animasi/6-langkah-sigma-gais"><img src="/img/video/animasi-sigma-gais-16x9.webp" alt="" loading="lazy"><b>6 Langkah SIGMA di GAIS Montessori</b><span>Video animasi 2D</span></a><a href="/animasi/air-sumber-kehidupan"><img src="/img/video/animasi-air-sumber-kehidupan.webp" alt="" loading="lazy"><b>Air, Sumber Kehidupan</b><span>Video animasi + versi interaktif</span></a></div></section></main>
+<footer>© 2026 Kabuzen Rumah AI · Batam, Kepulauan Riau · WhatsApp 0811 810 2019</footer>
+<script src="/assets/kz.js" defer></script>
+</body></html>
