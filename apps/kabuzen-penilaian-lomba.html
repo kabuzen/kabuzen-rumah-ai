@@ -395,6 +395,13 @@ function cipLengkap(k){
   if(!lengkap(k)) return '<span class="cip warn">Berkas belum lengkap</span>';
   return '<span class="cip good">Berkas lengkap</span>';
 }
+function htmlLampiran(k){
+  const l=Array.isArray(k.lampiran)?k.lampiran:[]; if(!l.length) return "";
+  const mb=n=>n?" ("+(Number(n)/1048576).toLocaleString("id-ID",{maximumFractionDigits:1})+" MB)":"";
+  return '<div class="kolom" style="gap:3px;margin-top:4px">'+l.map(x=>/^https:\/\/(drive|docs)\.google\.com\//.test(String(x.url||""))
+    ?`<span class="kecil">Lampiran: <a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.nama||"berkas")}</a>${mb(x.ukuran)}</span>`
+    :`<span class="kecil"><span class="cip warn">Lampiran besar belum dapat dibuka</span> ${esc(x.nama||"berkas")}${mb(x.ukuran)}. Peserta sudah diminta mengirim ulang sebagai tautan.</span>`).join("")+"</div>";
+}
 function adaContoh(){ return ["karya","juri","nilai"].some(c=>Object.values(S[c]).some(d=>d.contoh)); }
 
 /* ---------- Tampilan ---------- */
@@ -559,6 +566,7 @@ function vEmail(){
   if(mode==="memuat") badan='<p class="redup">Menghubungkan…</p>';
   else if(!mcp&&ONLINE) badan=`<div class="pemberitahuan info"><span>Di versi online ini kiriman ditarik dari Gmail panitia oleh tugas terjadwal setiap jam. Kiriman baru diperiksa AI, dibalas lewat email, lalu langsung tampil di menu Karya Peserta dan di lembar penilaian juri bidangnya.</span></div>
     <div class="pemberitahuan info"><span><b>Format subjek email untuk peserta:</b> Lomba Inovasi Digital Koarmada I, [Jenis Produk], [Satuan Kerja]. Contoh: Lomba Inovasi Digital Koarmada I, Paket Pelatihan, KRI FTH-361. Jenis produk: Karya Tulis, Paket Pelatihan, Aplikasi, atau Musik Keprajuritan. Satu email untuk tiap produk atau versi, paling lambat 1 Desember 2026.</span></div>
+    <div class="pemberitahuan info"><span><b>Produk dikirim sebagai tautan.</b> Video, audio, aplikasi, dan berkas di atas 3 MB dikirim sebagai tautan Google Drive atau cloud yang dapat dibuka siapa pun yang memiliki tautan. Lampiran kecil seperti proposal dan transkrip prompt disimpan otomatis ke folder Google Drive panitia dan tautannya tampil pada karya. Lampiran besar ditandai, dan peserta diminta mengirim ulang sebagai tautan.</span></div>
     <span class="kecil redup num">${Object.values(S.karya).filter(k=>k.emailId).length} kiriman email sudah tercatat sebagai karya.</span>`;
   else if(!mcp) badan='<div class="pemberitahuan warn">Konektor Gmail tidak tersedia di tampilan ini. Buka halaman ini di claude.ai dengan akun yang konektor Gmail-nya tersambung.</div>';
   else {
@@ -752,7 +760,7 @@ function vKarya(){
   const rows=karyaKat(katAktif).map(([id,k])=>{
     const link=/^https?:\/\//i.test(k.tautan||"")?`<br><a href="${esc(k.tautan)}" target="_blank" rel="noopener">Buka produk</a>`:"";
     const ang=(k.anggota||[]).length?`<br><span class="kecil redup">${(k.anggota||[]).map(esc).join(", ")}</span>`:"";
-    return `<tr><td><b>${esc(k.judul)}</b>${link}</td><td>${esc(k.peserta)}${ang}</td><td>${esc(k.satuan)}</td><td>${cipLengkap(k)} ${cipSesuai(k)}${k.catatanSesuai?`<br><span class="kecil redup">${esc(k.catatanSesuai)}</span>`:""}<br>${cipBalasan(k,id)}</td>
+    return `<tr><td><b>${esc(k.judul)}</b>${link}${htmlLampiran(k)}</td><td>${esc(k.peserta)}${ang}</td><td>${esc(k.satuan)}</td><td>${cipLengkap(k)} ${cipSesuai(k)}${k.catatanSesuai?`<br><span class="kecil redup">${esc(k.catatanSesuai)}</span>`:""}<br>${cipBalasan(k,id)}</td>
       <td class="kanan num">${nilaiKarya(id).length}</td>
       <td class="kanan" style="white-space:nowrap"><button class="btn mini" data-aksi="ubah-karya" data-id="${id}">Ubah</button> <button class="btn mini bahaya" data-aksi="hapus-karya" data-id="${id}">Hapus</button></td></tr>`;
   }).join("");
@@ -784,7 +792,7 @@ function vPenilaian(){
     const k=S.karya[karyaAktif], kunci=karyaAktif+"__"+juriAktif, ada=S.nilai[kunci];
     if(!draf||draf.kunci!==kunci){ draf={kunci, skor:{}, catatan:ada?ada.catatan||"":"", alasan:(ada&&ada.alasan)||{}, cara:(ada&&ada.cara)||"manual"}; kat.aspek.forEach(a=>{ draf.skor[a.id]= ada&&ada.skor&&ada.skor[a.id]!=null ? Number(ada.skor[a.id]) : 0; }); }
     const link=/^https?:\/\//i.test(k.tautan||"")?` · <a href="${esc(k.tautan)}" target="_blank" rel="noopener">Buka produk</a>`:"";
-    form=`<div class="kolom"><div><h3>${esc(k.judul)}</h3><span class="redup kecil">${esc(k.peserta)} · ${esc(k.satuan)}${link}</span></div>
+    form=`<div class="kolom"><div><h3>${esc(k.judul)}</h3><span class="redup kecil">${esc(k.peserta)} · ${esc(k.satuan)}${link}</span>${htmlLampiran(k)}</div>
       <div>${cipLengkap(k)} ${cipSesuai(k)}</div>
       ${k.ai?`<div class="usulan"><div class="baris antara"><b>Usulan nilai AI dari isi email kiriman</b>${k.ai.skor&&kat.aspek.every(a=>k.ai.skor[a.id]!=null)?'<button type="button" class="btn mini" data-aksi="pakai-ai">Isi lembar dengan usulan AI</button>':""}</div>
         <span class="kecil">${esc(k.ai.ringkasan||"")}</span>
