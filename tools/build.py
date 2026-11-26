@@ -101,7 +101,7 @@ h1+.player,.player{margin-top:6px}
 .vtabs button small{display:block;font-weight:500;color:var(--muted);font-size:12px}
 .vtabs button[aria-pressed=true]{border-color:var(--bolt);box-shadow:inset 0 0 0 1px var(--bolt)}
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center;padding:24px 20px}
-.gal{margin-top:44px}.trs{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}.trs>div{flex:1 1 480px;max-width:960px}.trs>div:has(.tall){flex:0 1 300px}.gal h2{font:800 20px var(--fd);margin:0 0 6px}.gal>p{color:var(--muted);margin:0 0 18px;max-width:760px}
+.gal{margin-top:44px}.trs{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}.trs>div{flex:1 1 480px;max-width:960px}.trs>div:has(.tall){flex:0 1 300px}.trs>div.sm{flex:0 1 460px}.gal h2{font:800 20px var(--fd);margin:0 0 6px}.gal>p{color:var(--muted);margin:0 0 18px;max-width:760px}
 .gal .gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
 .gal figure{margin:0;background:var(--night);border:1px solid var(--line);border-radius:16px;overflow:hidden}.gal a{display:block}.gal img{width:100%;aspect-ratio:16/9;object-fit:cover}
 .gal figcaption{padding:10px 14px 12px;font-size:14px;color:var(--muted)}.gal figcaption b{color:var(--bolt);font:500 12px var(--fm);margin-right:8px}
@@ -183,7 +183,7 @@ def book_page(b, data):
     rel = [x for x in data['books'] if x['id'] != b['id'] and x.get('cat') == b.get('cat')][:4]
     rels = ''.join(f'<a class="bk" href="/buku/{E(x["id"].removeprefix("b-"))}">' + (f'<img src="{E(x["cover"])}" alt="" loading="lazy">' if x.get('cover') else '') + f'<b>{E(x["title"])}</b><span>{E(x.get("kind", ""))}</span></a>' for x in rel)
     trs = b.get('trailers') or []
-    trailers = ('<section class="gal"><h2>Trailer buku</h2><div class="trs">' + ''.join(f'<div><div class="player{" tall" if x.get("tall") else ""}"><video controls preload="none" playsinline src="{E(x["url"])}"' + (f' poster="{E(x["poster"])}"' if x.get('poster') else '') + f'></video></div><p style="margin:8px 0 0;color:var(--muted);font-size:14px"><b style="color:var(--text)">{E(x.get("label", ""))}</b> {E(x.get("note", ""))}</p></div>' for x in trs) + '</div></section>') if trs else ''
+    trailers = ('<section class="gal"><h2>Trailer buku</h2><div class="trs">' + ''.join(f'<div{" class=\"sm\"" if x.get("small") else ""}><div class="player{" tall" if x.get("tall") else ""}"><video controls preload="none" playsinline src="{E(x["url"])}"' + (f' poster="{E(x["poster"])}"' if x.get('poster') else '') + f'></video></div><p style="margin:8px 0 0;color:var(--muted);font-size:14px"><b style="color:var(--text)">{E(x.get("label", ""))}</b> {E(x.get("note", ""))}</p></div>' for x in trs) + '</div></section>') if trs else ''
     gal = b.get('gallery') or []
     gallery = (f'<section class="gal"><h2>{E(b.get("galleryTitle") or "Isi buku dalam gambar")}</h2>' + (f'<p>{E(b["galleryNote"])}</p>' if b.get('galleryNote') else '')
                + '<div class="gg">' + ''.join(f'<figure><a href="{E(x["src"])}" target="_blank" rel="noopener"><img src="{E(x["src"])}" alt="{E(x.get("cap", ""))}" loading="lazy"></a><figcaption>' + (f'<b>{E(x["no"])}</b>' if x.get('no') else '') + f'{E(x.get("cap", ""))}</figcaption></figure>' for x in gal) + '</div></section>') if gal else ''
