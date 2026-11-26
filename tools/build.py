@@ -101,6 +101,10 @@ h1+.player,.player{margin-top:6px}
 .vtabs button small{display:block;font-weight:500;color:var(--muted);font-size:12px}
 .vtabs button[aria-pressed=true]{border-color:var(--bolt);box-shadow:inset 0 0 0 1px var(--bolt)}
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center;padding:24px 20px}
+.gal{margin-top:44px}.trs{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}.trs>div{flex:1 1 480px;max-width:960px}.trs>div:has(.tall){flex:0 1 300px}.gal h2{font:800 20px var(--fd);margin:0 0 6px}.gal>p{color:var(--muted);margin:0 0 18px;max-width:760px}
+.gal .gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.gal figure{margin:0;background:var(--night);border:1px solid var(--line);border-radius:16px;overflow:hidden}.gal a{display:block}.gal img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.gal figcaption{padding:10px 14px 12px;font-size:14px;color:var(--muted)}.gal figcaption b{color:var(--bolt);font:500 12px var(--fm);margin-right:8px}
 @media(max-width:820px){.hero,.grid2{grid-template-columns:1fr}.bar nav a:not(.cta){display:none}}
 """
 
@@ -178,12 +182,17 @@ def book_page(b, data):
         acts = f'<a class="btn btn-bolt" href="{E(order)}" target="_blank" rel="noopener">Beli via WhatsApp</a>' + (f'<a class="btn btn-ghost" href="{E(sample)}" target="_blank" rel="noopener">Baca contoh</a>' if sample else '')
     rel = [x for x in data['books'] if x['id'] != b['id'] and x.get('cat') == b.get('cat')][:4]
     rels = ''.join(f'<a class="bk" href="/buku/{E(x["id"].removeprefix("b-"))}">' + (f'<img src="{E(x["cover"])}" alt="" loading="lazy">' if x.get('cover') else '') + f'<b>{E(x["title"])}</b><span>{E(x.get("kind", ""))}</span></a>' for x in rel)
+    trs = b.get('trailers') or []
+    trailers = ('<section class="gal"><h2>Trailer buku</h2><div class="trs">' + ''.join(f'<div><div class="player{" tall" if x.get("tall") else ""}"><video controls preload="none" playsinline src="{E(x["url"])}"' + (f' poster="{E(x["poster"])}"' if x.get('poster') else '') + f'></video></div><p style="margin:8px 0 0;color:var(--muted);font-size:14px"><b style="color:var(--text)">{E(x.get("label", ""))}</b> {E(x.get("note", ""))}</p></div>' for x in trs) + '</div></section>') if trs else ''
+    gal = b.get('gallery') or []
+    gallery = (f'<section class="gal"><h2>{E(b.get("galleryTitle") or "Isi buku dalam gambar")}</h2>' + (f'<p>{E(b["galleryNote"])}</p>' if b.get('galleryNote') else '')
+               + '<div class="gg">' + ''.join(f'<figure><a href="{E(x["src"])}" target="_blank" rel="noopener"><img src="{E(x["src"])}" alt="{E(x.get("cap", ""))}" loading="lazy"></a><figcaption>' + (f'<b>{E(x["no"])}</b>' if x.get('no') else '') + f'{E(x.get("cap", ""))}</figcaption></figure>' for x in gal) + '</div></section>') if gal else ''
     body = f"""<div class="crumb"><a href="/">Beranda</a> / <a href="/#buku">Buku</a> / {E(b['title'])}</div>
 <section class="hero"><div><div class="kick">{E(b.get('cat', ''))}{f'<span>{E(b["kind"])}</span>' if b.get('kind') else ''}</div>
 <h1>{E(b['title'])}</h1>{f'<p class="sub">{E(b["subtitle"])}</p>' if b.get('subtitle') else ''}<p class="lead">{E(b.get('desc', ''))}</p>
 {f'<p style="color:var(--muted);margin:0">Oleh {E(b["author"])}</p>' if b.get('author') else ''}{price}<div class="acts">{acts}</div></div>
 {f'<div class="pic book"><img src="{E(b["cover"])}" alt="Sampul {E(b["title"])}"></div>' if b.get('cover') else ''}</section>
-<section class="grid2"><div class="card"><h2>Tentang buku ini</h2><p style="margin:0;color:var(--muted)">{E(b.get('desc', ''))}</p>{'<p style="margin:14px 0 0;color:var(--muted)">Baca halaman contohnya dulu, lalu pesan versi lengkap dalam format PDF lewat WhatsApp.</p>' if sample and not pdf else ''}</div>
+{trailers}{gallery}<section class="grid2"><div class="card"><h2>Tentang buku ini</h2><p style="margin:0;color:var(--muted)">{E(b.get('desc', ''))}</p>{'<p style="margin:14px 0 0;color:var(--muted)">Baca halaman contohnya dulu, lalu pesan versi lengkap dalam format PDF lewat WhatsApp.</p>' if sample and not pdf else ''}</div>
 <div class="card"><h2>Info buku</h2><table class="info"><tr><td>Penulis</td><td>{E(b.get('author', ''))}</td></tr><tr><td>Jenis</td><td>{E(b.get('kind', ''))}</td></tr><tr><td>Tahun</td><td>{E(str(b.get('year', '')))}</td></tr><tr><td>Tebal</td><td>{E(str(b.get('pages', '')))} halaman</td></tr><tr><td>Format</td><td>PDF</td></tr></table></div></section>
 {f'<section class="rel"><h2>Buku lain di {E(b.get("cat", ""))}</h2><div class="rels">{rels}</div></section>' if rels else ''}"""
     ld = {'@context': 'https://schema.org', '@type': 'Book', 'name': b['title'], 'description': b.get('desc', ''), 'author': {'@type': 'Person', 'name': b.get('author', '')},
